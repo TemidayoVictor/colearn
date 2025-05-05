@@ -1,8 +1,19 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap');
 @import "tailwindcss";
 
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --color-primary-light: #E6F8FF;
+  --color-primary-light-hover: #D9F4FF;
+  --color-primary-light-active: #B0E9FF;
+  --color-primary-normal: #00A6E6;
+  --color-primary-normal-hover: #0093CC;
+  --color-primary-normal-active: #008ABF;
+  --color-primary-dark: #005373;
+  --color-primary-darker: #004059;
+  --color-primary-fill: #00B8FF;
+  --white: #FFFFFF;
 }
 
 @theme inline {
@@ -20,7 +31,74 @@
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  box-sizing: border-box;
+  font-family: "Plus Jakarta Sans", sans-serif;
+}
+
+/* Reuseable styles */
+
+.container {
+  margin: 0 auto;
+  padding: 2em;
+}
+
+.bg-dark {
+  background-color: var(--color-primary-dark);
+}
+
+.bg-normal {
+  background-color: var(--color-primary-normal);
+}
+
+.color-normal {
+  color: var(--color-primary-normal);
+}
+
+.cover {
+  padding-top: 6rem;
+} 
+
+.btn {
+  padding: .5em 1.5em;
+  border: 1px solid white;
+  font-size: .9rem;
+  border-radius: .3rem;
+}
+
+.btn-primary-fill {
+  background-color: var(--color-primary-fill);
+  color: var(--white);
+  border: 1px solid var(--color-primary-fill);
+}
+
+.gradient-border {
+  border: 2px solid var(--color-primary-fill);
+  /* border-image: linear-gradient(
+    to right,
+    #00B8FF,
+    #2F68F5,
+    #473FF0,
+    #5E17EB
+  ); */
+  /* border-image-slice: 1; */
+}
+
+.search-input {
+}
+
+/* Styles */
+
+/* Navigation */
+
+.header {
+  background-color: var(--color-primary-dark);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  padding: 1em 3em;
+  z-index: 1000;
 }
