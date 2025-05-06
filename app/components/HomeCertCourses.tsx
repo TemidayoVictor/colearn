@@ -1,5 +1,6 @@
 import React from "react";
 import Image from "next/image";
+import Link from "next/link";
 
 const HomeCertCourses = () => {
     return (
@@ -111,7 +112,41 @@ const HomeCertCourses = () => {
                     <div className="tab">Information Technology</div>
                     <div className="tab">Leadrship</div>
                     <div className="tab">Communication</div>
-                        
+                </div>
+
+
+                <div className="courses-list">
+                    <div className="course">
+                        <div>
+                            <Image
+                                aria-hidden
+                                src="/assets/images/ui-ux.png"
+                                alt="Colearn Logo"
+                                width={88}
+                                height={64}
+                                className="object-contain"
+                            />
+                        </div>
+                        <h3>The Complete  Guide to cybersecurity:  From Beginner to expert</h3>
+                        <div>
+                           <Image
+                                aria-hidden
+                                src="/assets/images/ui-ux.png"
+                                alt="Colearn Logo"
+                                width={88}
+                                height={64}
+                                className="object-contain"
+                            />
+                            <p>Favi Design</p>
+                        </div>
+                        <div>
+                            <p>$30.00</p>
+                            <Link href='/'>Buy Now</Link>
+                        </div>
+                        <div>
+
+                        </div>
+                    </div>
                 </div>
 
             </div>
