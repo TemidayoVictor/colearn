@@ -14,6 +14,7 @@
   --color-primary-darker: #004059;
   --color-primary-fill: #00B8FF;
   --white: #FFFFFF;
+  --grey: #F7F7F8;
 }
 
 @theme inline {
@@ -30,33 +31,7 @@
   }
 }
 
-/* Animations */
 
-@keyframes scroll-x {
-  0% {
-    transform: translateX(-100%);
-  }
-  100% {
-    transform: translateX(100%);
-  }
-}
-
-@keyframes scroll-y {
-  0% {
-    transform: translateY(100%);
-  }
-  100% {
-    transform: translateY(-100%);
-  }
-}
-
-.animate-scroll-x {
-  animation: scroll-x 20s linear infinite;
-}
-
-.animate-scroll-y {
-  animation: scroll-y 25s linear infinite;
-}
 
 /* Styles start */
 body {
@@ -112,6 +87,10 @@ body {
   /* border-image-slice: 1; */
 }
 
+.title-2 {
+  font-size: 1.2rem;
+  font-weight: 700;
+}
 
 /* Styles */
 
@@ -128,4 +107,41 @@ body {
   right: 0;
   padding: 1em 3em;
   z-index: 1000;
+}
+
+/* Home */
+.home-cert-courses {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(10rem, 1fr));
+  gap: 2em;
+}
+
+.home-cert-courses p {
+  font-size: .8rem;
+  font-weight: 700;
+}
+
+.cert-con {
+  background-color: var(--grey);
+  border-radius: .3em;
+  padding-block: 1em;
+}
+
+.tabs {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1em;
+}
+
+.tab {
+  padding: .3em 1em;
+  border: 1px solid var(--color-primary-normal);
+  border-radius: .3em;
+}
+
+.tab.active, .tab:hover {
+  background-color: var(--color-primary-normal);
+  color: var(--white);
+  cursor: pointer;
 }

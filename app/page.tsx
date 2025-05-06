@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import HomeCourseList from "./components/HomeCourseList";
+import HomeCertCourses from "./components/HomeCertCourses";
 
 export default function Home() {
   return (
@@ -71,6 +72,8 @@ export default function Home() {
         </div>
 
         <HomeCourseList />
+
+        <HomeCertCourses />
 
       </div>
       
