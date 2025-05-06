@@ -30,6 +30,35 @@
   }
 }
 
+/* Animations */
+
+@keyframes scroll-x {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes scroll-y {
+  0% {
+    transform: translateY(100%);
+  }
+  100% {
+    transform: translateY(-100%);
+  }
+}
+
+.animate-scroll-x {
+  animation: scroll-x 20s linear infinite;
+}
+
+.animate-scroll-y {
+  animation: scroll-y 25s linear infinite;
+}
+
+/* Styles start */
 body {
   box-sizing: border-box;
   font-family: "Plus Jakarta Sans", sans-serif;
@@ -83,8 +112,6 @@ body {
   /* border-image-slice: 1; */
 }
 
-.search-input {
-}
 
 /* Styles */
 
