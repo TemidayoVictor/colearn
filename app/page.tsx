@@ -50,7 +50,7 @@ export default function Home() {
                     height={20}
                     className="object-contain"
                   />
-                  <input type="text" placeholder="Search for courses, instructors, or topics..." className="search-input w-[100%] placeholder-gray-400" />
+                  <input type="text" placeholder="Search for anything" className="search-input w-[100%] placeholder-gray-400" />
                 </div>
                 <div>
                   <Link href='/' className="flex gap-2 btn btn-primary-fill">
