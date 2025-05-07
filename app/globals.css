@@ -82,6 +82,11 @@ body {
   border: 1px solid var(--color-primary-normal);
 }
 
+.btn.normal:hover {
+  background-color: var(--color-primary-normal);
+  color: var(--white);
+}
+
 .btn-primary-fill {
   background-color: var(--color-primary-fill);
   color: var(--white);
@@ -211,4 +216,17 @@ body {
 
 .benefit.active:hover .benefit-img-cont {
   background-color: var(--color-primary-normal);
+}
+
+.tutors-container {
+  margin-top: 2.5rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr)); 
+  gap: 1em;
+}
+
+.tutor {
+  border: 1px solid #ccc;
+  border-radius: .3em;
+  padding: 1em;
 }

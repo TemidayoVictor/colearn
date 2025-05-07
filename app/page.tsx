@@ -3,6 +3,8 @@ import Link from "next/link";
 import HomeCourseList from "./components/HomeCourseList";
 import HomeCertCourses from "./components/HomeCertCourses";
 import HomeBenefits from "./components/HomeBenefits";
+import HomeTutors from "./components/HomeTutors";
+import HomeBooking from "./components/HomeBooking";
 
 export default function Home() {
   return (
@@ -77,6 +79,10 @@ export default function Home() {
         <HomeCertCourses />
 
         <HomeBenefits />
+        
+        <HomeTutors />
+
+        <HomeBooking />
 
       </div>
       
