@@ -264,3 +264,27 @@ body {
   padding: .5em;
   border-radius: 50%;
 }
+
+.faq-left, .faq-right {
+  width: 45%;
+} 
+
+.faq-body {
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 1em;
+  margin-bottom: 1em;
+}
+
+.faq-handler {
+  width: 32px;
+  height: 32px;
+  background-color: transparent;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  color: #000;
+  cursor: pointer;
+  border: 1px solid black;
+}

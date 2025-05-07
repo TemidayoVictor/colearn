@@ -39,12 +39,12 @@ const HomeReviews = () => {
 
                         <div className="flex items-center gap-4 mb-[2em]">
                             <Image
-                            aria-hidden
-                            src="/assets/images/avatars.png"
-                            alt="Reviewer Avatar"
-                            width={40}
-                            height={40}
-                            className="object-contain rounded-full border-2 border-white"
+                                aria-hidden
+                                src="/assets/images/avatars.png"
+                                alt="Reviewer Avatar"
+                                width={40}
+                                height={40}
+                                className="object-contain rounded-full border-2 border-white"
                             />
                             <p className="font-medium">Favi Design</p>
                         </div>
