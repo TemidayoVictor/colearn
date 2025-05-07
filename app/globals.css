@@ -15,6 +15,7 @@
   --color-primary-fill: #00B8FF;
   --white: #FFFFFF;
   --grey: #F7F7F8;
+  --grey-light: #5A5C5E;
 }
 
 @theme inline {
@@ -46,12 +47,20 @@ body {
   padding: 2em;
 }
 
+.section {
+  margin-block: 3em;
+}
+
 .bg-dark {
   background-color: var(--color-primary-dark);
 }
 
 .bg-normal {
   background-color: var(--color-primary-normal);
+}
+
+.bg-light {
+  background-color: var(--color-primary-light);
 }
 
 .color-normal {
@@ -67,6 +76,10 @@ body {
   border: 1px solid white;
   font-size: .9rem;
   border-radius: .3rem;
+}
+
+.btn.normal {
+  border: 1px solid var(--color-primary-normal);
 }
 
 .btn-primary-fill {
@@ -87,7 +100,17 @@ body {
   /* border-image-slice: 1; */
 }
 
+.title {
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
 .title-2 {
+  font-size: 1.3rem;
+  font-weight: 700;
+}
+
+.title-3 {
   font-size: 1.2rem;
   font-weight: 700;
 }
@@ -144,4 +167,48 @@ body {
   background-color: var(--color-primary-normal);
   color: var(--white);
   cursor: pointer;
+}
+
+.courses-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr)); 
+  gap: 2em;
+}
+
+.benefits-container {
+  margin-top: 2.5rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr)); 
+  gap: 1em;
+}
+
+.benefit {
+  background-color: var(--white);
+  border-radius: .5em;
+  padding: 1em;
+}
+
+.benefit-img-cont {
+  background-color: var(--color-primary-normal);
+  padding: .5em;
+  border-radius: 50%;
+}
+
+.benefit.active, .benefit:hover {
+  background-color: var(--color-primary-normal);
+  color: var(--white);
+  cursor: pointer;
+}
+
+.benefit.active .benefit-img-cont, .benefit:hover .benefit-img-cont {
+  background-color: var(--white);
+}
+
+.benefit.active:hover {
+  background-color: var(--white);
+  color: initial;
+}
+
+.benefit.active:hover .benefit-img-cont {
+  background-color: var(--color-primary-normal);
 }

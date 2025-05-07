@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import HomeCourseList from "./components/HomeCourseList";
 import HomeCertCourses from "./components/HomeCertCourses";
+import HomeBenefits from "./components/HomeBenefits";
 
 export default function Home() {
   return (
@@ -74,6 +75,8 @@ export default function Home() {
         <HomeCourseList />
 
         <HomeCertCourses />
+
+        <HomeBenefits />
 
       </div>
       
