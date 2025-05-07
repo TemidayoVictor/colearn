@@ -5,6 +5,7 @@ import HomeCertCourses from "./components/HomeCertCourses";
 import HomeBenefits from "./components/HomeBenefits";
 import HomeTutors from "./components/HomeTutors";
 import HomeBooking from "./components/HomeBooking";
+import HomeBanner from "./components/HomeBanner";
 
 export default function Home() {
   return (
@@ -83,6 +84,8 @@ export default function Home() {
         <HomeTutors />
 
         <HomeBooking />
+
+        <HomeBanner />
 
       </div>
       

@@ -13,17 +13,24 @@
   --color-primary-dark: #005373;
   --color-primary-darker: #004059;
   --color-primary-fill: #00B8FF;
+  --secondary-color-light: #EFE8FD ;
+  --secondary-color-light-hover: #E7DCFC;
+  --secondary-color-light-active: #CDB7F9;
+  --secondary-color-normal: #5515D4;
+  --secondary-color-normal-hover: #4B12BC;
+  --secondary-color-dark: #2A0A6A;
+  --secondary-color-darker: #210852;
   --white: #FFFFFF;
   --grey: #F7F7F8;
   --grey-light: #5A5C5E;
 }
 
-@theme inline {
+/* @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-}
+} */
 
 @media (prefers-color-scheme: dark) {
   :root {
@@ -229,4 +236,10 @@ body {
   border: 1px solid #ccc;
   border-radius: .3em;
   padding: 1em;
+}
+
+.home-banner {
+  background-color: var(--secondary-color-dark);
+  border-radius: 1rem;
+  color: var(--white);
 }
