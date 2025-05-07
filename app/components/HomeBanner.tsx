@@ -8,7 +8,7 @@ const HomeBanner= () => {
         <div className="section">
             <div className="home-banner container flex items-center justify-between gap-8">
                 <div className="flex flex-col gap-4">
-                    <h2 className="title italic">Become a Tutor and Instructor on CoLearn</h2>
+                    <h2 className="title italic">Become a Tutor and <br /> Instructor on CoLearn</h2>
                     
                     <p>Lorem ipsum dolor sit amet consectetur. In senectus fames faucibus cursus risus in sit neque. Sed convallis amet est eget. Placerat augue id pellentesque fermentum. Elementum laoreet turpis elit pulvinar in sit ut. </p>
                     

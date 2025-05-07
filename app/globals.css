@@ -243,3 +243,24 @@ body {
   border-radius: 1rem;
   color: var(--white);
 }
+
+.review-body {
+  max-width: 70%;
+  margin: 0 auto;
+  line-height: 2;
+}
+
+.mySwiper .swiper-pagination-bullet {
+  background-color: var(--white);
+  opacity: 1;
+}
+
+.mySwiper .swiper-pagination-bullet-active {
+  background-color: var(--color-primary-normal);
+}
+
+.swiper-btn {
+  border: 1px solid var(--white);
+  padding: .5em;
+  border-radius: 50%;
+}

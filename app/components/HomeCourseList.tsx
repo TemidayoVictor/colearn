@@ -2,10 +2,6 @@
 
 import React from "react";
 import Image from "next/image";
-import 'swiper/css';
-import 'swiper/css/autoplay';
-import { Swiper, SwiperSlide } from 'swiper/react'; 
-import { Autoplay } from 'swiper/modules';
 import { motion } from 'framer-motion';
 const images = ["/assets/images/image-2.png", "/assets/images/image-3.png", "/assets/images/image-4.png", "/assets/images/image-4.png"];
 
