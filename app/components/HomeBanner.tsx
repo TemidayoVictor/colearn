@@ -10,7 +10,7 @@ const HomeBanner= () => {
                 <div className="flex flex-col gap-4">
                     <h2 className="title italic">Become a Tutor and <br /> Instructor on CoLearn</h2>
                     
-                    <p>Lorem ipsum dolor sit amet consectetur. In senectus fames faucibus cursus risus in sit neque. Sed convallis amet est eget. Placerat augue id pellentesque fermentum. Elementum laoreet turpis elit pulvinar in sit ut. </p>
+                    <p>Lorem ipsum dolor sit amet consectetur. In senectus fames faucibus cursus risus in sit neque. Sed convallis amet <br /> est eget. Placerat augue id pellentesque fermentum. Elementum laoreet turpis elit pulvinar in sit ut. </p>
                     
                     <Link href='/' className="btn normal btn-primary-fill flex gap-2 w-fit">
                         Register Now
