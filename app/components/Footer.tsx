@@ -105,14 +105,14 @@ const Footer = () => {
                 </div>
 
                 <div className="footer-3">
-                    <div className="flex gap-2 items-center">
+                    <div className="flex gap-2 footer-base">
                         <div>
                             <Image
                                 aria-hidden
                                 src="/assets/images/favicon-logo.png"
                                 alt="Facebook Logo"
-                                width={20}
-                                height={20}
+                                width={36}
+                                height={32}
                                 className="object-contain"
                             />
                         </div>

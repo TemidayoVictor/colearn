@@ -94,13 +94,13 @@ const HomeBookings = () => {
             <div className="container">
                 <div className="text-center">
                     <h2 className="title">Book a Personal Consultation with Our <br /> Expert Consultant</h2>
-                    <p className="mt-[1em]">Schedule  your one-on-one consultation today and gain valuable insights from our top <br /> expert.</p>
+                    <p className="mt-[1em]">Schedule  your one-on-one consultation today and gain valuable insights from our top expert.</p>
                 </div>
 
-                <div className="tutors-container">
+                <div className="bookings-container">
                     {
                         tutors.map((item, index) => (
-                            <div className="tutor" key={index}>
+                            <div className="booking" key={index}>
                                 <div>
                                     <Image
                                         aria-hidden
@@ -108,13 +108,13 @@ const HomeBookings = () => {
                                         alt="Colearn Logo"
                                         width={265}
                                         height={248}
-                                        className="object-cover rounded-[.3rem]"
+                                        className="object-cover rounded-[.3rem] booking-image"
                                     />
                                 </div>
                                 <div className="mt-[1em] mb-[.5em] flex gap-2 items-center">
                                     <p className="font-bold">{item.name}</p> <span className="text-[.9rem]">({item.country})</span>
                                 </div>
-                                <div className="flex gap-2 items-center">
+                                <div className="flex gap-2 items-start">
                                     <Image
                                         aria-hidden
                                         src="/assets/images/ic_deals.png"
@@ -126,7 +126,7 @@ const HomeBookings = () => {
                                     <p className="text-[.9rem]">{item.title}</p>
                                 </div>
                                 <div className="flex gap-2 justify-between items-center">
-                                    <div className="flex gap-2 items-center">
+                                    <div className="flex gap-2 items-start">
                                         <Image
                                             aria-hidden
                                             src="/assets/images/messages-2.png"

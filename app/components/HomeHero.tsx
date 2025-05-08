@@ -4,14 +4,16 @@ import Link from "next/link";
 
 const HomeHero = () => {
     return (
-        <div className="cover bg-dark ">
+        <div className="cover bg-dark">
             <div className="text-white mt-[2rem] flex flex-col items-center justify-center gap-4 text-center">
                 <div>
-                    <h2 className="font-semibold text-[2rem]">Learn Without <span className="color-normal">Boundaries</span> to reach your <br /> goals faster.</h2>
+                    <h2 className="opening-text font-semibold text-[2rem]">Learn Without <span className="color-normal">Boundaries</span> to reach your goals faster.</h2>
                 </div>
+
                 <div>
-                    <p>Discover a vast library of courses, expert mentors, and instructors who will help <br /> you reach your goals. Unlock your full potential and learn without limits!</p>
+                    <p className="home-hero-p">Discover a vast library of courses, expert mentors, and instructors who will help you reach your goals. Unlock your full potential and learn without limits!</p>
                 </div>
+
                 <div className="flex items-center gap-4">
                     <Link href='/' className="flex gap-2 btn btn-primary-fill">
                     <p>Join for Free</p>
@@ -38,7 +40,7 @@ const HomeHero = () => {
                 </div>
 
                 <div>
-                    <div className="flex items-center justify-between bg-white gradient-border w-[40rem] my-[3em] py-[.5em] px-[1.5em] rounded-[.5rem]">
+                    <div className="search-length flex items-center justify-between bg-white gradient-border my-[3em] py-[.5em] px-[1.5em] rounded-[.5rem]">
                         <div className="flex items-center gap-2">
                             <Image
                                 aria-hidden

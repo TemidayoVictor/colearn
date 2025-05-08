@@ -48,7 +48,7 @@ const HomeBenefits: React.FC = () => {
             <div className="container">
                 <div className="text-center">
                     <h2 className="title">Choose Us For Superior Learning Experiences</h2>
-                    <p className="mt-[1em]">Discover the unique benefits and exceptional features that makes our courses the best <br /> choice for your education.</p>
+                    <p className="mt-[1em] ben-p">Discover the unique benefits and exceptional features that makes our courses the best <br /> choice for your education.</p>
                 </div>
 
                 <div className="benefits-container">
@@ -82,7 +82,7 @@ const HomeBenefits: React.FC = () => {
                                     <p className="font-semibold">{item.title}</p>
                                 </div>
                                 <div className="mt-[1em]">
-                                    <p>{item.text}</p>
+                                    <p className="ben-p">{item.text}</p>
                                 </div>
                             </div>
                         ))

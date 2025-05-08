@@ -9,15 +9,23 @@ import { Pagination, Navigation } from 'swiper/modules';
 
 const HomeReviews = () => {
     return (
-        <div className="bg-dark section text-white">
-            <div className="home-reviews flex flex-col gap-8 py-[3rem]">
+        <div className="bg-dark section text-white relative">
+            <Image
+                aria-hidden
+                src="/assets/images/Icon logo.png"
+                alt="Reviewer Avatar"
+                width={500}
+                height={500}
+                className="object-contain absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+            />
+            <div className="home-reviews relative flex flex-col gap-8 py-[3rem]">
                 <div className="text-center flex flex-col gap-4">   
                     <h2 className="title">What Our Learners Say</h2>
-                    <p>Discover how our courses have transformed their careers <br /> and lives</p>
+                    <p className="review-text">Discover how our courses have transformed their careers and lives</p>
                 </div>
             </div>
 
-            <div className="w-full max-w-3xl mx-auto relative">
+            <div className="review-cont relative">
                 <Swiper
                     slidesPerView={1}
                     spaceBetween={30}
@@ -34,6 +42,7 @@ const HomeReviews = () => {
                     <SwiperSlide key={i}>
                         <div className="flex flex-col gap-6 items-center justify-center p-6">
                         <p className="text-center review-body">
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate hic excepturi tempora, quas saepe quisquam dolorem voluptatum rerum quis nostrum.
                             Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate hic excepturi tempora, quas saepe quisquam dolorem voluptatum rerum quis nostrum.
                         </p>
 

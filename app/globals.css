@@ -51,6 +51,14 @@ body {
   box-sizing: border-box;
 }
 
+.mobile {
+  display: none;
+}
+
+.desktop {
+  display: block;
+}
+
 /* Reuseable styles */
 
 .container {
@@ -135,6 +143,10 @@ body {
   font-weight: 700;
 }
 
+.text-justify {
+  text-align: justify;
+}
+
 /* Styles */
 
 /* Navigation */
@@ -152,11 +164,58 @@ body {
   z-index: 1000;
 }
 
+.header-contents {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.nav-links-cont {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1em;
+  color: var(--white);
+  margin-top: .5em;
+}
+
+.nav-links-other {
+  display: flex;
+  align-items: center;
+  gap: 1em;
+}
+
 /* Home */
+.opening-text {
+  text-align: center;
+  width: 70%;
+  margin: 0 auto;
+}
+
+.home-hero-p {
+  width: 55%;
+  margin: 0 auto;
+}
+
+.search-length {
+  width: 40rem;
+}
+
 .home-cert-courses {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(10rem, 1fr));
   gap: 2em;
+  overflow: visible;
+}
+
+.home-cert-courses::-webkit-scrollbar {
+  display: none;
+}
+
+.home-cert-courses > div {
+  flex: initial;
+  min-width: initial;
+  scroll-snap-align: unset;
 }
 
 .home-cert-courses p {
@@ -173,14 +232,20 @@ body {
 .tabs {
   display: flex;
   align-items: center;
-  justify-content: center;
   gap: 1em;
+  overflow-x: auto;
+  padding-bottom: 0.5em;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
 }
 
 .tab {
-  padding: .3em 1em;
+  flex-shrink: 0;
+  padding: 0.3em 1em;
   border: 1px solid var(--color-primary-normal);
-  border-radius: .3em;
+  border-radius: 0.3em;
+  scroll-snap-align: start;
+  white-space: nowrap;
 }
 
 .tab.active, .tab:hover {
@@ -189,10 +254,15 @@ body {
   cursor: pointer;
 }
 
+.home-cert-courses::-webkit-scrollbar, .tabs::-webkit-scrollbar, .courses-list::-webkit-scrollbar, .tutors-container::-webkit-scrollbar {
+  display: none;
+}
+
 .courses-list {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr)); 
   gap: 2em;
+  overflow-x: unset;
 }
 
 .benefits-container {
@@ -233,14 +303,14 @@ body {
   background-color: var(--color-primary-normal);
 }
 
-.tutors-container {
+.tutors-container, .bookings-container {
   margin-top: 2.5rem;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr)); 
   gap: 1em;
 }
 
-.tutor {
+.tutor, .booking {
   border: 1px solid #ccc;
   border-radius: .3em;
   padding: 1em;
@@ -250,10 +320,22 @@ body {
   background-color: var(--secondary-color-dark);
   border-radius: 1rem;
   color: var(--white);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.home-banner h2 {
+  font-style: italic;
+}
+
+.review-cont {
+  width: 70%;
+  margin: 0 auto;
 }
 
 .review-body {
-  max-width: 70%;
+  padding-inline: 1rem;
   margin: 0 auto;
   line-height: 2;
 }
@@ -271,6 +353,12 @@ body {
   border: 1px solid var(--white);
   padding: .5em;
   border-radius: 50%;
+}
+
+.home-faq {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
 }
 
 .faq-left, .faq-right {
@@ -295,6 +383,7 @@ body {
   color: #000;
   cursor: pointer;
   border: 1px solid black;
+  line-height: 32px;
 }
 
 
@@ -335,6 +424,10 @@ body {
   margin-top: 2em;
 }
 
+.footer-base {
+  align-items: center;
+}
+
 .footer-link {
   text-decoration: underline;
 }
@@ -343,29 +436,153 @@ body {
 /* Media Query */
 
 @media (max-width: 768px) {
+
+  .mobile {
+    display: block;
+  }
+
+  .desktop {
+    display: none;
+  }
+
+  .container {
+    padding: 1.5em;
+  }
+
   .header {
-    flex-direction: column;
-    gap: 1em;
+    padding: 1em;
+  }
+
+  .header-logo {
+    width: 7rem;
+  }
+
+  .nav-links-cont {
+    display: none;
+  }
+
+  .cart-cont {
+    background-color: var(--white);
+    padding: .5em;
+    border-radius: 50%;
+  }
+
+  .cover {
+    padding-top: 4rem;
+    padding-inline: 1rem;
+  }
+
+  .opening-text, .home-hero-p {
+    width: 100%;
+  }
+
+  .search-length {
+    width: 100%;
   }
 
   .home-cert-courses {
-    grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+    display: flex;
+    overflow-x: auto;
+    gap: 2em;
+    scroll-snap-type: x mandatory;
+    padding-bottom: 1em;
+  }
+  
+  .home-cert-courses > div {
+    flex: 0 0 auto;
+    min-width: 10rem;
+    scroll-snap-align: start;
   }
 
   .courses-list {
-    grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr)); 
+    display: flex;
+    overflow-x: auto;
+    gap: 1.5em;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 0.5em;
+  }
+  
+  .course {
+    flex: 0 0 auto;
+    width: 16rem;
+    scroll-snap-align: start;
   }
 
-  .benefits-container {
-    grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr)); 
+  .ben-p {
+    font-size: .9rem;
   }
 
   .tutors-container {
-    grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr)); 
+    display: flex;
+    overflow-x: auto;
+    gap: 1em;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 1em;
+    margin-top: 2.5rem;
+  }
+  
+  .tutor {
+    flex: 0 0 auto;
+    width: 15rem;
+    scroll-snap-align: start;
+    border: 1px solid #ccc;
+    border-radius: .3em;
+    padding: 1em;
+  }
+
+  .booking-image {
+    width: 100%;  
+  }
+
+  .home-banner {
+    flex-direction: column-reverse;
+  }
+
+  .home-banner h2 {
+    font-style: normal;
+  }
+
+  .banner-btn {
+    width: 100%;
+  }
+
+  .review-text {
+    width: 90%;
+    margin: 0 auto;
+  }
+
+  .review-cont {
+    width: 90%;
+    margin: 0 auto;
+  }
+
+  .home-faq {
+    flex-direction: column;
+    gap: 1.5em;
   }
 
   .faq-left, .faq-right {
     width: 100%;
   } 
+
+  .footer-2, .footer-right {
+    flex-direction: column;
+    gap: 1em;
+  }
+
+  .footer-3 {
+    flex-direction: column-reverse;
+    gap: 1em;
+  }
+
+  .footer-left, .footer-right {
+    width: 100%;
+  } 
+
+  .footer-base {
+    align-items: start;
+  }
 
 }

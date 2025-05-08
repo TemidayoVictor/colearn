@@ -1,6 +1,57 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { link } from "fs";
+
+const categories = [
+    {
+        id: 1,
+        name: "All",
+        link: "/",
+    },
+
+    {
+        id: 2,
+        name: "Computer Sciences",
+        link: "/",
+    },
+
+    {
+        id: 3,
+        name: "Data Sciences",
+        link: "/",
+    },
+
+    {
+        id: 4,
+        name: "Python",
+        link: "/",
+    },
+
+    {
+        id: 5,
+        name: "Business",
+        link: "/",
+    },
+
+    {
+        id: 6,
+        name: "Information Technology",
+        link: "/",
+    },
+
+    {
+        id: 7,
+        name: "Leadership",
+        link: "/",
+    },
+
+    {
+        id: 8,
+        name: "Communication",
+        link: "/",
+    }
+]
 
 const HomeCertCourses = () => {
     return (
@@ -104,18 +155,15 @@ const HomeCertCourses = () => {
                 </p>
 
                 <div className="tabs mt-3 px-3">
-                    <div className="tab active">All</div>
-                    <div className="tab">Computer Sciences</div>
-                    <div className="tab">Data Science</div>
-                    <div className="tab">Python</div>
-                    <div className="tab">Business</div>
-                    <div className="tab">Information Technology</div>
-                    <div className="tab">Leadrship</div>
-                    <div className="tab">Communication</div>
+                    {
+                        categories.map((item, index) => (
+                            <Link href={item.link} className="tab" key={index}>{item.name}</Link>
+                        ))
+                    }
                 </div>
 
 
-                <div>
+                <div className="mt-[-1rem]">
                     <div className="courses-list my-[3em]">
                         
                         {

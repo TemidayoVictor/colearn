@@ -12,7 +12,7 @@ const HomeFaq = () => {
     return (
         <div className="section">
             <div className="container">
-                <div className="flex items-start justify-between">
+                <div className="home-faq">
                     <div className="faq-left">
                         <div className="flex items-center gap-2">
                             <Image
@@ -23,9 +23,9 @@ const HomeFaq = () => {
                                 height={40}
                                 className="object-contain rounded-full border-2 border-white"
                             />
-                            <h2 className="title">Frequently asked Question</h2>
+                            <h2 className="title">Frequently asked Questions</h2>
                         </div>
-                        <p className="mt-2">Find answers to commonly asked questions about our courses, <br /> program and platform</p>
+                        <p className="mt-2">Find answers to commonly asked questions about our courses, program and platform</p>
                     </div>
 
                     <div className="faq-right">
@@ -35,7 +35,7 @@ const HomeFaq = () => {
                                     <div className="flex items-center justify-between" onClick={() => toggleFAQ(index)}>
                                         <h3 className="title-3">Lorem ipsum dolor sit amet consectetur.</h3>
                                         <div className="faq-handler">
-                                            <p>{openIndex === index ? '-' : '+'}</p>
+                                            <p className="mt-[-.2rem]">{openIndex === index ? '-' : '+'}</p>
                                         </div>
                                     </div>
                                     {

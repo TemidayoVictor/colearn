@@ -114,7 +114,7 @@ const HomeTutors = () => {
                                 <div className="mt-[1em] mb-[.5em] flex gap-2 items-center">
                                     <p className="font-bold">{item.name}</p> <span className="text-[.9rem]">({item.country})</span>
                                 </div>
-                                <div className="flex gap-2 items-center">
+                                <div className="flex gap-2 items-start">
                                     <Image
                                         aria-hidden
                                         src="/assets/images/ic_deals.png"
@@ -123,10 +123,10 @@ const HomeTutors = () => {
                                         height={24}
                                         className="object-cover"
                                     />
-                                    <p className="text-[.9rem]">{item.title}</p>
+                                    <p className="text-[.9rem] font-semibold">{item.title}</p>
                                 </div>
                                 <div className="flex gap-2 justify-between items-center">
-                                    <div className="flex gap-2 items-center">
+                                    <div className="flex gap-2 items-start">
                                         <Image
                                             aria-hidden
                                             src="/assets/images/messages-2.png"
