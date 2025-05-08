@@ -74,6 +74,10 @@ body {
   background-color: var(--color-primary-light);
 }
 
+.bg-black {
+  background-color: var(--black);
+}
+
 .color-normal {
   color: var(--color-primary-normal);
 }
@@ -291,4 +295,77 @@ body {
   color: #000;
   cursor: pointer;
   border: 1px solid black;
+}
+
+
+/* Footer */
+.footer-2 {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+}
+
+.footer-left, .footer-right {
+  width: 45%;
+}
+
+.footer-input-cover {
+  border: 1px solid var(--white);
+  border-radius: 2.5rem;
+}
+
+.footer-btn {
+  background-color: var(--white);
+  color: var(--color-primary-normal);
+  font-size: .8rem;
+  padding: .3em 1em;
+  border-radius: 2.5rem;
+}
+
+.footer-right {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-around;
+}
+
+.footer-3 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 2em;
+}
+
+.footer-link {
+  text-decoration: underline;
+}
+
+
+/* Media Query */
+
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column;
+    gap: 1em;
+  }
+
+  .home-cert-courses {
+    grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+  }
+
+  .courses-list {
+    grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr)); 
+  }
+
+  .benefits-container {
+    grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr)); 
+  }
+
+  .tutors-container {
+    grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr)); 
+  }
+
+  .faq-left, .faq-right {
+    width: 100%;
+  } 
+
 }
