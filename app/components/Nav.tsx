@@ -1,8 +1,12 @@
-import React from "react";
+'use client';
+import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faXmark } from "@fortawesome/free-solid-svg-icons";
 
 const Nav = () => {
+    const [menuOpen, setMenuOpen] = useState<boolean | null>(false);
     return (
         <div className="header">
             <div className="header-contents">
@@ -15,14 +19,41 @@ const Nav = () => {
                         height={54}
                         className="header-logo"
                     />
+
                 </div>
 
-                <div className="nav-links-cont">
-                    <Link href='/' className="nav-link">Explore</Link>
-                    <Link href='/' className="nav-link">About Us</Link>
-                    <Link href='/' className="nav-link">Blog</Link>
-                    <Link href='/' className="nav-link">Become a Tutor</Link>
-                    <Link href='/' className="nav-link">Contact Us</Link>
+                <div className={`nav-links-cont ${menuOpen ? "active" : ""}`}>
+                    
+                    <div className="w-full">
+                        <div className="mobile-flex items-center justify-between">
+                            <Image
+                                aria-hidden
+                                src="/assets/images/logo-2.png"
+                                alt="Colearn Logo"
+                                width={150}
+                                height={54}
+                                className="header-logo"
+                            />
+
+                            <FontAwesomeIcon icon={faXmark} className="text-[1.5rem]" onClick={() => setMenuOpen(!menuOpen)}/>
+                        </div>
+
+                        <div className="nav-links-cont-inner">
+                            <Link href='/' className="nav-link mobile active">Home</Link>
+                            <Link href='/' className="nav-link">Explore</Link>
+                            <Link href='/' className="nav-link">About Us</Link>
+                            <Link href='/' className="nav-link">Blog</Link>
+                            <Link href='/' className="nav-link">Become a Tutor</Link>
+                            <Link href='/' className="nav-link">Contact Us</Link>
+                            <Link href='/' className="nav-link mobile">Cart</Link>
+                        </div>
+                    </div>
+
+                    <div className="mobile-flex items-center justify-between w-full">
+                        <Link href='/' className="btn normal spec">Login</Link>
+                        <Link href='/' className="btn btn-primary-fill spec">Create Account</Link>
+                    </div>
+
                 </div>
             </div>
 
@@ -60,7 +91,7 @@ const Nav = () => {
                         <p className="text-[1rem]">Login</p>
                     </Link>
                 </div>
-                <div>
+                <div onClick={() => setMenuOpen(!menuOpen)}>
                     <Image
                         aria-hidden
                         src="/assets/images/menu.png"
