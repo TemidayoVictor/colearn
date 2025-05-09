@@ -4,28 +4,28 @@ import Image from "next/image";
 import Link from "next/link";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
+import { usePathname } from "next/navigation";
 
 const Nav = () => {
     const [menuOpen, setMenuOpen] = useState<boolean | null>(false);
+    const pathname = usePathname();
+    const useVariation1 = ["/", "/blog"].includes(pathname);
     return (
-        <div className="header">
+        <div className={`header ${useVariation1 ? 'bg-dark' : 'bg-white'}`}>
             <div className="header-contents">
-                <div>
-                    <Image
-                        aria-hidden
-                        src="/assets/images/logo-1.png"
-                        alt="Colearn Logo"
-                        width={150}
-                        height={54}
-                        className="header-logo"
-                    />
+                <Link href='/'>
+                    {
+                        useVariation1 ? (
+                            <Image
+                                aria-hidden
+                                src="/assets/images/logo-1.png"
+                                alt="Colearn Logo"
+                                width={150}
+                                height={54}
+                                className="header-logo"
+                            />
+                        ) : (
 
-                </div>
-
-                <div className={`nav-links-cont ${menuOpen ? "active" : ""}`}>
-                    
-                    <div className="w-full">
-                        <div className="mobile-flex items-center justify-between">
                             <Image
                                 aria-hidden
                                 src="/assets/images/logo-2.png"
@@ -34,18 +34,37 @@ const Nav = () => {
                                 height={54}
                                 className="header-logo"
                             />
+                        )
+                    }
+
+                </Link>
+
+                <div className={`nav-links-cont ${menuOpen ? "active" : ""}`}>
+                    
+                    <div className="w-full">
+                        <div className="mobile-flex items-center justify-between">
+                            <Link href='/' onClick={() => setMenuOpen(!menuOpen)}>
+                                <Image
+                                    aria-hidden
+                                    src="/assets/images/logo-2.png"
+                                    alt="Colearn Logo"
+                                    width={150}
+                                    height={54}
+                                    className="header-logo"
+                                />
+                            </Link>
 
                             <FontAwesomeIcon icon={faXmark} className="text-[1.5rem]" onClick={() => setMenuOpen(!menuOpen)}/>
                         </div>
 
-                        <div className="nav-links-cont-inner">
-                            <Link href='/' className="nav-link mobile active">Home</Link>
-                            <Link href='/' className="nav-link">Explore</Link>
-                            <Link href='/' className="nav-link">About Us</Link>
-                            <Link href='/' className="nav-link">Blog</Link>
-                            <Link href='/' className="nav-link">Become a Tutor</Link>
-                            <Link href='/' className="nav-link">Contact Us</Link>
-                            <Link href='/' className="nav-link mobile">Cart</Link>
+                        <div className={`nav-links-cont-inner ${useVariation1 ? 'nav-color-white' : 'nav-color-black'}`}>
+                            <Link href='/' className={`nav-link mobile ${pathname == '/' ? 'active' : ''}`} onClick={() => setMenuOpen(!menuOpen)}>Home</Link>
+                            <Link href='/' className={`nav-link ${pathname.startsWith('/explore') ? 'active' : ''}`} onClick={() => setMenuOpen(!menuOpen)}>Explore</Link>
+                            <Link href='/' className={`nav-link ${pathname.startsWith('/about') ? 'active' : ''}`} onClick={() => setMenuOpen(!menuOpen)}>About Us</Link>
+                            <Link href='/blog' className={`nav-link ${pathname.startsWith('/blog') ? 'active' : ''}`} onClick={() => setMenuOpen(!menuOpen)}>Blog</Link>
+                            <Link href='/' className={`nav-link ${pathname.startsWith('/tutor') ? 'active' : ''}`} onClick={() => setMenuOpen(!menuOpen)}>Become a Tutor</Link>
+                            <Link href='/' className={`nav-link ${pathname.startsWith('/contact') ? 'active' : ''}`} onClick={() => setMenuOpen(!menuOpen)}>Contact Us</Link>
+                            <Link href='/' className={`nav-link mobile ${pathname.startsWith('/cart') ? 'active' : ''}`} onClick={() => setMenuOpen(!menuOpen)}>Cart</Link>
                         </div>
                     </div>
 
@@ -59,15 +78,32 @@ const Nav = () => {
 
             <div className="nav-links-other">
                 <div>
-                    <Image
-                        aria-hidden
-                        src="/assets/images/shopping-cart.png"
-                        alt="Colearn Logo"
-                        width={40}
-                        height={40}
-                        className="object-contain desktop"
-                    />
-                    <div className="mobile cart-cont">
+                    <Link href='/'>
+                        {
+                            useVariation1 ? (
+                                <Image
+                                    aria-hidden
+                                    src="/assets/images/shopping-cart.png"
+                                    alt="Colearn Logo"
+                                    width={40}
+                                    height={40}
+                                    className="object-contain desktop"
+                                />
+
+                            ) : (
+                                <Image
+                                    aria-hidden
+                                    src="/assets/images/shopping-cart-3.png"
+                                    alt="Colearn Logo"
+                                    width={40}
+                                    height={40}
+                                    className="object-contain desktop"
+                                />
+                            )
+                        }
+                    </Link>
+
+                    <div className={`mobile cart-cont ${useVariation1 ? 'white' : 'grey'}`}>
                         <Image
                             aria-hidden
                             src="/assets/images/shopping-cart-2.png"
@@ -79,27 +115,53 @@ const Nav = () => {
                     </div>
                 </div>
                 <div>
-                    <Link href='/' className="flex items-center gap-2 btn text-white">
-                        <Image
-                            aria-hidden
-                            src="/assets/images/profile.png"
-                            alt="Colearn Logo"
-                            width={20}
-                            height={20}
-                            className="desktop"
-                        />
+                    <Link href='/' className={`flex items-center gap-2 ${useVariation1 ? 'login-btn-1' : 'login-btn-2'}`}>
+                        {
+                            useVariation1 ? (
+                                <Image
+                                    aria-hidden
+                                    src="/assets/images/profile.png"
+                                    alt="Colearn Logo"
+                                    width={20}
+                                    height={20}
+                                    className="desktop"
+                                />
+                            ) : (
+                                <Image
+                                    aria-hidden
+                                    src="/assets/images/profile-2.png"
+                                    alt="Colearn Logo"
+                                    width={20}
+                                    height={20}
+                                    className="desktop"
+                                />
+                            )
+                        }
                         <p className="text-[1rem]">Login</p>
                     </Link>
                 </div>
                 <div onClick={() => setMenuOpen(!menuOpen)}>
-                    <Image
-                        aria-hidden
-                        src="/assets/images/menu.png"
-                        alt="Colearn Logo"
-                        width={32}
-                        height={32}
-                        className="mobile"
-                    />
+                    {
+                        useVariation1 ? (
+                            <Image
+                                aria-hidden
+                                src="/assets/images/menu.png"
+                                alt="Colearn Logo"
+                                width={32}
+                                height={32}
+                                className="mobile"
+                            />
+                        ) : (
+                            <Image
+                                aria-hidden
+                                src="/assets/images/menu-2.png"
+                                alt="Colearn Logo"
+                                width={32}
+                                height={32}
+                                className="mobile"
+                            />
+                        )
+                    }
                 </div>
             </div>
 

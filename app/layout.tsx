@@ -25,7 +25,11 @@ const plus = Plus_Jakarta_Sans ({
 })
 
 export const metadata: Metadata = {
-  title: "Colearn",
+  title: {
+    absolute: "",
+    default: "Colearn",
+    template: "Colearn - %s", 
+  },
   description: "A modern e-learning platform for students and professionals to learn new skills and earn certifications.",
 };
 
