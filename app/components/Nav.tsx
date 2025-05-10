@@ -9,7 +9,7 @@ import { usePathname } from "next/navigation";
 const Nav = () => {
     const [menuOpen, setMenuOpen] = useState<boolean | null>(false);
     const pathname = usePathname();
-    const useVariation1 = ["/", "/blog"].includes(pathname);
+    const useVariation1 = ["/", "/about", "/blog"].includes(pathname);
     return (
         <div className={`header ${useVariation1 ? 'bg-dark' : 'bg-white'}`}>
             <div className="header-contents">
@@ -60,7 +60,7 @@ const Nav = () => {
                         <div className={`nav-links-cont-inner ${useVariation1 ? 'nav-color-white' : 'nav-color-black'}`}>
                             <Link href='/' className={`nav-link mobile ${pathname == '/' ? 'active' : ''}`} onClick={() => setMenuOpen(!menuOpen)}>Home</Link>
                             <Link href='/' className={`nav-link ${pathname.startsWith('/explore') ? 'active' : ''}`} onClick={() => setMenuOpen(!menuOpen)}>Explore</Link>
-                            <Link href='/' className={`nav-link ${pathname.startsWith('/about') ? 'active' : ''}`} onClick={() => setMenuOpen(!menuOpen)}>About Us</Link>
+                            <Link href='/about' className={`nav-link ${pathname.startsWith('/about') ? 'active' : ''}`} onClick={() => setMenuOpen(!menuOpen)}>About Us</Link>
                             <Link href='/blog' className={`nav-link ${pathname.startsWith('/blog') ? 'active' : ''}`} onClick={() => setMenuOpen(!menuOpen)}>Blog</Link>
                             <Link href='/' className={`nav-link ${pathname.startsWith('/tutor') ? 'active' : ''}`} onClick={() => setMenuOpen(!menuOpen)}>Become a Tutor</Link>
                             <Link href='/' className={`nav-link ${pathname.startsWith('/contact') ? 'active' : ''}`} onClick={() => setMenuOpen(!menuOpen)}>Contact Us</Link>

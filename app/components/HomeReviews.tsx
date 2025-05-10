@@ -9,7 +9,7 @@ import { Pagination, Navigation } from 'swiper/modules';
 
 const HomeReviews = () => {
     return (
-        <div className="bg-dark section text-white relative">
+        <div className="bg-dark text-white relative">
             <Image
                 aria-hidden
                 src="/assets/images/Icon logo.png"
