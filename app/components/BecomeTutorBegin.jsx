@@ -34,7 +34,7 @@ const BecomeTutorBegin = () => {
                     <div className="become-tutor-begin-cont">
                         {
                             begins.map((item, index) => (
-                                <div className="become-tutor-begin">
+                                <div className="become-tutor-begin" key={index}>
                                     <div>
                                         <Image
                                             aria-hidden

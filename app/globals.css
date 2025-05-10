@@ -206,6 +206,10 @@ body {
   z-index: 10000;
 }
 
+.underline-text {
+  text-decoration: underline;
+}
+
 /* Styles */
 
 /* Navigation */
@@ -676,6 +680,51 @@ body {
   width: 100%;
   height: auto;
   object-fit: cover;
+}
+
+/* Contact us */
+
+.contact-p {
+  width: 55%;
+  margin: 0 auto;
+}
+
+.contact {
+  width: 55%;
+  margin: 3em auto;
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+}
+
+.contact-input-flex {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.contact-input-flex-item {
+  width: 49%;
+}
+
+.contact-input-body {
+  margin-block: 1em;
+}
+
+.contact-input {
+  display: block;
+  background-color: var(--white);
+  border-radius: .2rem;
+  padding: .5em;
+  width: 100%;
+  outline: none;
+  color: var(--black);
+  margin-top: .5em;
+}
+
+.contact label {
+  font-size: .9rem;
 }
 
 /* Footer */
