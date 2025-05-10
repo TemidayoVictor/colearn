@@ -2,18 +2,23 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 
+type HomeBannerProps = {
+    title: string;
+    subtitle?: string;
+    link: string;
+    linkTitle?: string;
+};
 
-const HomeBanner= () => {
+const HomeBanner= ({title, subtitle, link, linkTitle}: HomeBannerProps) => {
     return (
         <div className="section container">
-            <div className="home-banner container home-banner">
-                <div className="flex flex-col gap-4">
-                    <h2 className="title ">Become a Tutor and <br /> Instructor on CoLearn</h2>
+            <div className="home-banner container">
+                <div className="flex flex-col gap-4 banner-left">
+                    <h2 className="title">{title}</h2>
+                    <p> {subtitle}</p>
                     
-                    <p>Lorem ipsum dolor sit amet consectetur. In senectus fames faucibus cursus risus in sit neque. Sed convallis amet est eget. Placerat augue id pellentesque fermentum. Elementum laoreet turpis elit pulvinar in sit ut. </p>
-                    
-                    <Link href='/' className="banner-btn btn normal btn-primary-fill flex gap-2 w-fit justify-center">
-                        Register Now
+                    <Link href={link} className="banner-btn btn normal btn-primary-fill flex gap-2 w-fit justify-center">
+                        {linkTitle}
                         <Image
                             aria-hidden
                             src="/assets/images/arrow-right.png"
@@ -25,7 +30,7 @@ const HomeBanner= () => {
                     </Link>
                 </div>
 
-                <div>
+                <div className="banner-right">
                     <Image
                         aria-hidden
                         src="/assets/images/ai.png"

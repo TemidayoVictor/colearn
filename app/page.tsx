@@ -24,7 +24,7 @@ export default function Home() {
 
         <HomeBooking />
 
-        <HomeBanner />
+        <HomeBanner title="Become a Tutor and Instructor on CoLearn" subtitle="Lorem ipsum dolor sit amet consectetur. In senectus fames faucibus cursus risus in sit neque. Sed convallis amet est eget. Placerat augue id pellentesque fermentum. Elementum laoreet turpis elit pulvinar in sit ut." link="/" linkTitle="Register" />
 
         <HomeReviews />
 
