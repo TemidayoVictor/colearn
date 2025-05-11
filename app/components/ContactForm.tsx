@@ -11,7 +11,7 @@ const ContactForm = () => {
                 </div>
 
                 <div className="contact text-white">
-                    <div>
+                    <div className="contact-left border">
                         <div className="contact-input-body">
                             <div className="contact-input-flex">
                                 <div className="contact-input-flex-item">
@@ -29,21 +29,21 @@ const ContactForm = () => {
                         <div className="contact-input-body">
                             <div>
                                 <label htmlFor="">Email</label>
-                                <input type="email" className="text contact-input" placeholder=""/>
+                                <input type="email" className="text contact-input" placeholder="linda@frmaecreative.com"/>
                             </div>
                         </div>
 
                         <div className="contact-input-body">
                             <div>
                                 <label htmlFor="">Phone Number</label>
-                                <input type="number" className="text contact-input" placeholder=""/>
+                                <input type="number" className="text contact-input" placeholder="+1 (555)-000-000"/>
                             </div>
                         </div>
 
                         <div className="contact-input-body">
                             <div>
                                 <label htmlFor="">Description</label>
-                                <textarea className="text contact-input h-[10rem]" placeholder=""></textarea>
+                                <textarea className="text contact-input h-[10rem]" placeholder="Enter a description"></textarea>
                             </div>
                         </div>
 
@@ -65,7 +65,7 @@ const ContactForm = () => {
                         </div>
                     </div>
 
-                    <div className="text-white">
+                    <div className="text-white contact-right">
                         <div>
                             <div>
                                 <h2 className="title">Chat With Us</h2>
@@ -73,27 +73,29 @@ const ContactForm = () => {
                             </div>
 
                             <div className="mt-4">
-                                <div className="flex gap-2">
-                                    <Image
-                                        aria-hidden
-                                        src='/assets/images/messages-2.png'
-                                        alt="Colearn Logo"
-                                        width={24}
-                                        height={24}
-                                    />
-                                    <p className="underline-text text-[.8rem]">Start a live chat</p>
-                                </div>
 
-                                <div className="flex gap-2 mt-2">
-                                    <Image
-                                        aria-hidden
-                                        src='/assets/images/send-2.png'
-                                        alt="Colearn Logo"
-                                        width={24}
-                                        height={24}
-                                    />
-                                    <p className="underline-text text-[.8rem]">Shoot us an email</p>
-                                </div>
+                                    <div className="flex gap-2">
+                                        <Image
+                                            aria-hidden
+                                            src='/assets/images/messages-2.png'
+                                            alt="Colearn Logo"
+                                            width={24}
+                                            height={24}
+                                        />
+                                        <p className="underline-text text-[.8rem]">Start a live chat</p>
+                                    </div>
+
+                                    <div className="flex gap-2 mt-2">
+                                        <Image
+                                            aria-hidden
+                                            src='/assets/images/send-2.png'
+                                            alt="Colearn Logo"
+                                            width={24}
+                                            height={24}
+                                        />
+                                        <p className="underline-text text-[.8rem]">Shoot us an email</p>
+                                    </div>
+                                
 
                                 <div className="mt-4">
                                     <h2 className="title">Call Us</h2>

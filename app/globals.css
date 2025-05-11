@@ -163,6 +163,14 @@ body {
   border: 1px solid var(--color-primary-normal);
 }
 
+.bt-btn {
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  gap: .5em;
+  width: fit-content;
+}
+
 .gradient-border {
   border: 2px solid var(--color-primary-fill);
   /* border-image: linear-gradient(
@@ -647,7 +655,6 @@ body {
   justify-content: center;
   gap: 3rem;
   padding: 2rem;
-  box-sizing: border-box;
   width: 45%;
 }
 
@@ -697,6 +704,14 @@ body {
   justify-content: space-between;
 }
 
+.contact-left {
+  width: 50%;
+}
+
+.contact-right {
+  width: 40%;
+}
+
 .contact-input-flex {
   width: 100%;
   display: flex;
@@ -715,12 +730,13 @@ body {
 .contact-input {
   display: block;
   background-color: var(--white);
-  border-radius: .2rem;
-  padding: .5em;
+  border-radius: .3rem;
+  padding: .8em .5em;
   width: 100%;
   outline: none;
   color: var(--black);
   margin-top: .5em;
+  font-size: .8rem;
 }
 
 .contact label {
@@ -783,6 +799,13 @@ body {
 
   .mobile-flex {
     display: flex;
+  }
+
+  .mob-flex {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: .5em;
   }
 
   .desktop {
@@ -1017,6 +1040,57 @@ body {
   }
 
   .about-do-left, .about-do-right {
+    width: 100%;
+  }
+
+  .become-tutor-hero {
+    padding-top: 4rem;
+    flex-direction: column;
+  }
+
+  .become-tutor-hero-left, .become-tutor-hero-right {
+    width: 100%;
+  }
+
+  .become-tutor-hero-right {
+    gap: 1.5em;
+  }
+
+  .hero-img {
+    object-position: center;
+  }
+
+  .become-tutor-hero-right h2 {
+    text-align: center;
+  }
+
+  .become-tutor-hero-right p {
+    width: 100%;
+  }
+
+  .become-tutor-begin .sub-text {
+    width: 100%;
+  }
+
+  .bt-btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .contact-p {
+    margin-top: .5em;
+    width: 100%;
+  }
+
+  .contact {
+    width: 100%;
+    margin: 2em auto;
+    display: flex;
+    flex-direction: column;
+    gap: 2em;
+  }
+
+  .contact-left, .contact-right {
     width: 100%;
   }
 
