@@ -122,7 +122,7 @@ const Footer = () => {
                     <div className="flex gap-2 text-white text-[.8rem]">
                         <Link href='/' className="footer-link">About Us</Link>
                         <Link href='/' className="footer-link">Privacy Policy</Link>
-                        <Link href='/' className="footer-link">Terms of Use</Link>
+                        <Link href='/terms-of-use' className="footer-link">Terms of Use</Link>
                     </div>
                 </div>
 
