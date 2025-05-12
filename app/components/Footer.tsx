@@ -24,16 +24,17 @@ const Footer = () => {
                             <p className="mt-[1rem] text-[.8rem]">Stay ahead of the curve with exclusive updates and unbeatable course offers from CoLearn. Subscribe now to be the first to discover the latest news from CoLearn.</p>
                         </div>
                         <div className="flex items-center justify-between my-[2em] py-[.5em] px-[1.5em] footer-input-cover">
-                        <div className="flex items-center gap-2">
-                            <input type="text" placeholder="Your Email" className="footer-input w-[100%] placeholder-white text-[.8rem]" />
-                        </div>
-                        <div>
-                            <Link href='/' className="flex gap-2 footer-btn">
-                                Subscribe
-                            </Link>
+                            <div className="flex items-center gap-2 w-[80%]">
+                                <input type="text" placeholder="Your Email" className="footer-input w-[100%] placeholder-white text-[.8rem]" />
+                            </div>
+                            <div>
+                                <Link href='/' className="flex gap-2 footer-btn">
+                                    Subscribe
+                                </Link>
+                            </div>
                         </div>
                     </div>
-                    </div>
+                    
                     <div className="footer-right text-white flex">
                         <div>
                             <h2 className="title-3">Quick Link</h2>

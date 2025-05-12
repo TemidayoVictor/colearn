@@ -1,9 +1,14 @@
 import React from "react";
+import { Metadata } from "next";
 import BecomeTutorHero from "../components/BecomeTutorHero";
 import BecomeTutorBegin from "../components/BecomeTutorBegin";
 import BecomeTutorStart from "../components/BecomeTutorStart";
 import HomeBanner from "../components/HomeBanner";
 import HomeFaq from "../components/HomeFaq";
+
+export const metadata: Metadata = {
+    title: "Become a Tutor",
+}
 
 const BecomeTutor = () => {
     return (

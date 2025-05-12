@@ -64,7 +64,7 @@ const Nav = () => {
                             <Link href='/blog' className={`nav-link ${pathname.startsWith('/blog') ? 'active' : ''}`} onClick={() => setMenuOpen(!menuOpen)}>Blog</Link>
                             <Link href='/become-tutor' className={`nav-link ${pathname.startsWith('/become-tutor') ? 'active' : ''}`} onClick={() => setMenuOpen(!menuOpen)}>Become a Tutor</Link>
                             <Link href='/contact-us' className={`nav-link ${pathname.startsWith('/contact') ? 'active' : ''}`} onClick={() => setMenuOpen(!menuOpen)}>Contact Us</Link>
-                            <Link href='/' className={`nav-link mobile ${pathname.startsWith('/cart') ? 'active' : ''}`} onClick={() => setMenuOpen(!menuOpen)}>Cart</Link>
+                            <Link href='/cart' className={`nav-link mobile ${pathname.startsWith('/cart') ? 'active' : ''}`} onClick={() => setMenuOpen(!menuOpen)}>Cart</Link>
                         </div>
                     </div>
 
@@ -78,7 +78,7 @@ const Nav = () => {
 
             <div className="nav-links-other">
                 <div>
-                    <Link href='/'>
+                    <Link href='/cart'>
                         {
                             useVariation1 ? (
                                 <Image
@@ -103,7 +103,7 @@ const Nav = () => {
                         }
                     </Link>
 
-                    <div className={`mobile cart-cont ${useVariation1 ? 'white' : 'grey'}`}>
+                    <Link href='/cart' className={`mobile cart-cont ${useVariation1 ? 'white' : 'grey'}`}>
                         <Image
                             aria-hidden
                             src="/assets/images/shopping-cart-2.png"
@@ -112,7 +112,7 @@ const Nav = () => {
                             height={20}
                             className="object-contain"
                         />
-                    </div>
+                    </Link>
                 </div>
                 <div>
                     <Link href='/' className={`flex items-center gap-2 ${useVariation1 ? 'login-btn-1' : 'login-btn-2'}`}>

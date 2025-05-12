@@ -11,7 +11,7 @@ const ContactForm = () => {
                 </div>
 
                 <div className="contact text-white">
-                    <div className="contact-left border">
+                    <div className="contact-left">
                         <div className="contact-input-body">
                             <div className="contact-input-flex">
                                 <div className="contact-input-flex-item">

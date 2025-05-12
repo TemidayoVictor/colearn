@@ -177,7 +177,7 @@ const HomeCertCourses = () => {
                                                 alt="Colearn Logo"
                                                 width={400}
                                                 height={264}
-                                                className="object-cover"
+                                                className="object-cover rounded-[.5em]"
                                             />
                                             <div className="absolute right-0 bottom-0 flex gap-2 items-center bg-white p-2 rounded-tl-[.3rem]">
                                                 <Image
