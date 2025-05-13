@@ -1,10 +1,14 @@
+'use client';
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 const Footer = () => {
+    const pathname = usePathname();
+    const hidesNavOn = ["/login"].includes(pathname)
     return (
-        <div className="bg-black">
+        <div className={`bg-black ${hidesNavOn ? 'd-none' : ''}`}>
             <div className="container">
                 <div>
                     <Image

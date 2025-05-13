@@ -259,6 +259,10 @@ input {
   color: var(--succcess-color);
 }
 
+.d-none {
+  display: none;
+}
+
 /* Styles */
 
 /* Navigation */
@@ -273,6 +277,14 @@ input {
   right: 0;
   padding: 1em 3em;
   z-index: 1000;
+}
+
+.header.d-none {
+  display: none;
+}
+
+.header.hiddenNav {
+  justify-content: end;
 }
 
 .header-contents {
@@ -904,6 +916,68 @@ input {
   margin-block: 1em;
 }
 
+/* Auth */
+
+.auth {
+  display: flex;
+  justify-content: space-between;
+  min-height: 100vh;
+}
+
+.auth-left {
+  width: 60%;
+}
+
+.auth-left-img-cont {
+  height: 100%;
+}
+
+.auth-right {
+  width: 40%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(to right, #00B8FF, #2F68F5, #2F68F5, #5E17EB);
+}
+
+.auth-con {
+  background-color: var(--white);
+  border-radius: .8rem;
+  width: 75%;
+  padding: 1em;
+}
+
+.input-box {
+  display: flex;
+  flex-direction: column;
+  gap: .5em;
+  margin-block: 1em;
+}
+
+.input-field {
+  border: 1px solid var(--grey-1);
+  padding: .7em;
+  border-radius: .3em;
+  font-size: .9rem;
+}
+
+.auth-bottom {
+  margin-top: 1.5em;
+  border-top: 1px solid var(--grey-1);
+  padding-top: 1em;
+}
+
+.auth-bottom-cont {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .5rem;
+  padding: .5em;
+  border: 1px solid var(--black);
+  border-radius: .3em;
+  width: 48%;
+}
+
 /* Footer */
 .footer-2 {
   display: flex;
@@ -997,6 +1071,12 @@ input {
 
   .header {
     padding: 1em;
+  }
+
+  .header.hiddenNav {
+    justify-content: start;
+    background-color: var(--white);
+    padding-inline: 1.5rem;
   }
 
   .header-logo {
@@ -1248,6 +1328,10 @@ input {
     object-position: center;
   }
 
+  .hero-img.two {
+    border-radius: .6em;
+  }
+
   .become-tutor-hero-right h2 {
     text-align: center;
   }
@@ -1340,6 +1424,31 @@ input {
     min-width: initial;
     scroll-snap-align: unset;
     font-size: 1rem;
+  }
+
+  .auth {
+    flex-direction: column;
+    min-height: 0;
+  }
+
+  .auth-left, .auth-right {
+    width: 100%;
+  }
+
+  .auth-left {
+    padding: 1.5em;
+    margin-top: 4em;
+  }
+
+  .auth-left-img-cont {
+    height: 13rem;
+    border-radius: .5em;
+  }
+
+  .auth-con {
+    width: 100%;
+    border-radius: 0;
+    padding: 1.5em;
   }
 
   .footer-2, .footer-right {

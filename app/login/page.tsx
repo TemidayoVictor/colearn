@@ -1,0 +1,96 @@
+import React from "react";
+import Image from "next/image";
+import Link from "next/link";
+
+const Login = () => {
+    return (
+        <div className="auth">
+            <div className="auth-left">
+                <div className="auth-left-img-cont relative">
+                    <Image
+                        aria-hidden
+                        src="/assets/images/Sign up slider.png"
+                        alt="Facebook Logo"
+                        fill
+                        className="hero-img two"
+                    />
+                </div>
+            </div>
+            <div className="auth-right">
+                <div className="auth-con">
+                    <h2 className="title-2">Login</h2>
+                    <div className="mt-[1em] mb-[1.5em]">
+                        <div className="input-box">
+                            <label htmlFor="" className="font-bold text-[.9em]">Email</label>
+                            <input type="email" className="input-field" placeholder="linda@framcreative.com"/>
+                        </div>
+
+                        <div className="input-box">
+                            <label htmlFor="" className="font-bold text-[.9em]">Password</label>
+                            <input type="password" className="input-field" placeholder="Password"/>
+                        </div>
+
+                        <div className="flex items-end justify-end text-[.9em] color-normal">
+                            <Link href='/' className="font-semibold">Forgot password?</Link>
+                        </div>
+
+                    </div>
+
+                    <div>
+                    
+                        <div>
+                            <button className="bt-btn two btn btn-primary-fill">
+                                <span>Login</span>
+                                <span>
+                                    <Image
+                                        aria-hidden
+                                        src="/assets/images/arrow-right.png"
+                                        alt="Colearn Logo"
+                                        width={12}
+                                        height={12}
+                                        className="object-contain"
+                                    />
+                                </span>
+                            </button>
+                        </div>
+
+                        <div className="auth-bottom">
+                            <p className="text-center text-[.9rem]">Or Continue with</p>
+
+                            <div className="flex items-center justify-between mt-[1.5em]">
+                                <div className="auth-bottom-cont">
+                                    <Image
+                                        aria-hidden
+                                        src="/assets/images/google.png"
+                                        alt="Colearn Logo"
+                                        width={22}
+                                        height={22}
+                                        className="object-contain"
+                                    />
+                                    <p className="text-[.9rem]">Google</p>
+                                </div>
+                                <div className="auth-bottom-cont">
+                                    <Image
+                                        aria-hidden
+                                        src="/assets/images/apple.png"
+                                        alt="Colearn Logo"
+                                        width={22}
+                                        height={22}
+                                        className="object-contain"
+                                    />
+                                    <p className="text-[.9rem]">Apple</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="mt-4">
+                            <p className="text-[.9rem] font-semibold">Don't have an account? <span> <Link href='/' className="color-normal"> Sign up</Link></span></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    )
+}
+
+export default Login
