@@ -283,10 +283,6 @@ input {
   display: none;
 }
 
-.header.hiddenNav {
-  justify-content: end;
-}
-
 .header-contents {
   display: flex;
   align-items: center;
@@ -1074,7 +1070,6 @@ input {
   }
 
   .header.hiddenNav {
-    justify-content: start;
     background-color: var(--white);
     padding-inline: 1.5rem;
   }
