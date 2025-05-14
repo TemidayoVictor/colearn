@@ -1,8 +1,13 @@
-import React from "react";
+'use client'
+import React, {useState} from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 
 const Login = () => {
+    const [showPassword, setShowPassword] = useState <boolean | null> (false);
+    const togglePassword = () => setShowPassword(prev => !prev);
     return (
         <div className="auth">
             <div className="auth-left">
@@ -25,9 +30,10 @@ const Login = () => {
                             <input type="email" className="input-field" placeholder="linda@framcreative.com"/>
                         </div>
 
-                        <div className="input-box">
+                        <div className="input-box relative">
                             <label htmlFor="" className="font-bold text-[.9em]">Password</label>
-                            <input type="password" className="input-field" placeholder="Password"/>
+                            <input type={showPassword ? "text" : "password"} className="input-field" placeholder="Password"/>
+                            <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} className="text-base w-4 h-4 text-[#96999c] absolute right-[5%] top-[60%]" onClick={togglePassword}/>
                         </div>
 
                         <div className="flex items-end justify-end text-[.9em] color-normal">
@@ -84,7 +90,7 @@ const Login = () => {
                         </div>
 
                         <div className="mt-4">
-                            <p className="text-[.9rem] font-semibold">Don't have an account? <span> <Link href='/' className="color-normal"> Sign up</Link></span></p>
+                            <p className="text-[.9rem] font-semibold">Don't have an account? <span> <Link href='/sign-up' className="color-normal"> Sign up</Link></span></p>
                         </div>
                     </div>
                 </div>

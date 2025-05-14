@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation";
 
 const Footer = () => {
     const pathname = usePathname();
-    const hidesNavOn = ["/login"].includes(pathname)
+    const hidesNavOn = ["/login", "/sign-up"].includes(pathname)
     return (
         <div className={`bg-black ${hidesNavOn ? 'd-none' : ''}`}>
             <div className="container">
