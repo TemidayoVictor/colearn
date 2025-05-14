@@ -943,10 +943,10 @@ input {
   padding: 1em;
 }
 
-.auth-con.two {
-  /* max-height: 35rem;
-  overflow-y: scroll; */
-}
+/* .auth-con.two {
+  max-height: 35rem;
+  overflow-y: scroll;
+} */
 
 /* Chrome, Edge, Safari */
 .auth-con.two::-webkit-scrollbar {

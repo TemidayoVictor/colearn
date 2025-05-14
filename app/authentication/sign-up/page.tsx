@@ -147,7 +147,7 @@ const SignUp = () => {
                             step === 1 ? (
 
                                 <button className="bt-btn two btn btn-primary-fill" onClick={next}>
-                                    <span>Continue</span>
+                                    <span>Proceed</span>
                                     <span>
                                         <Image
                                             aria-hidden
@@ -210,7 +210,7 @@ const SignUp = () => {
                     </div>
 
                     <div className="mt-4">
-                        <p className="text-[.9rem] font-semibold">Have an account? <span> <Link href='/login' className="color-normal">Login</Link></span></p>
+                        <p className="text-[.9rem] font-semibold">Have an account? <span> <Link href='login' className="color-normal">Login</Link></span></p>
                     </div>
                 </div>
             </div>

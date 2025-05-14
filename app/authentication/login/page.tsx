@@ -37,7 +37,7 @@ const Login = () => {
                         </div>
 
                         <div className="flex items-end justify-end text-[.9em] color-normal">
-                            <Link href='/' className="font-semibold">Forgot password?</Link>
+                            <Link href='forgot-password' className="font-semibold">Forgot password?</Link>
                         </div>
 
                     </div>
@@ -90,7 +90,7 @@ const Login = () => {
                         </div>
 
                         <div className="mt-4">
-                            <p className="text-[.9rem] font-semibold">Don't have an account? <span> <Link href='/sign-up' className="color-normal"> Sign up</Link></span></p>
+                            <p className="text-[.9rem] font-semibold">Don't have an account? <span> <Link href='sign-up' className="color-normal"> Sign up</Link></span></p>
                         </div>
                     </div>
                 </div>

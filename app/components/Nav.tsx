@@ -10,7 +10,7 @@ const Nav = () => {
     const [menuOpen, setMenuOpen] = useState<boolean | null>(false);
     const pathname = usePathname();
     const useVariation1 = ["/", "/about", "/blog", "/become-tutor", "/contact-us"].includes(pathname);
-    const hidesNavOn = ["/login", "/sign-up"].includes(pathname)
+    const hidesNavOn = ["/authentication/", "/dropshipper"].some(prefix => pathname.startsWith(prefix));
     return (
         <>
             <Link href='/' className={`header hiddenNav ${!hidesNavOn ? 'd-none' : ''}`}>
@@ -91,8 +91,8 @@ const Nav = () => {
                         </div>
 
                         <div className="mobile-flex items-center justify-between w-full">
-                            <Link href='/login' className="btn normal spec">Login</Link>
-                            <Link href='/' className="btn btn-primary-fill spec">Create Account</Link>
+                            <Link href='/authentication/login' className="btn normal spec">Login</Link>
+                            <Link href='/authentication/sign-up' className="btn btn-primary-fill spec">Create Account</Link>
                         </div>
 
                     </div>
@@ -137,7 +137,7 @@ const Nav = () => {
                         </Link>
                     </div>
                     <div>
-                        <Link href='/login' className={`flex items-center gap-2 ${useVariation1 ? 'login-btn-1' : 'login-btn-2'}`}>
+                        <Link href='/authentication/login' className={`flex items-center gap-2 ${useVariation1 ? 'login-btn-1' : 'login-btn-2'}`}>
                             {
                                 useVariation1 ? (
                                     <Image
