@@ -1,6 +1,8 @@
+'use client'
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 const posts = [
     {
@@ -53,13 +55,22 @@ const posts = [
 ]
 
 const ExplorePopular = () => {
+    const pathname = usePathname();
     return (
         <div className="">
             <div className="container">
                 <div>
-                    <h2 className="title">Explore Our Most popular courses and skills</h2>
+                    {
+                        pathname == '/search' ? (
+                            <p>Search Results: 10,482</p>
+                        ) : (
+                            <h2 className="title">Explore Our Most popular courses and skills</h2>
+                        )
+                    }
                     <div className="tabs mt-3">
+                        
                         {
+                            pathname != '/search' &&
                             posts.map((item, index) => (
                                 <Link href={item.link} className="tab" key={index}>{item.name}</Link>
                             ))
