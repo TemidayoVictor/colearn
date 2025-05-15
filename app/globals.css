@@ -79,6 +79,10 @@ input, textarea {
   padding: 2em;
 }
 
+.container-2 {
+  padding: 2em;
+}
+
 .section {
   margin-block: 3em;
 }
@@ -1241,6 +1245,10 @@ svg.rdp-chevron {
     padding: 1.5em;
   }
 
+  .container-2 {
+    padding: 0;
+  }
+
   .header {
     padding: 1em;
   }
@@ -1357,6 +1365,10 @@ svg.rdp-chevron {
     scroll-snap-align: start;
   }
 
+  .course.two {
+    width: 100%;
+  }
+
   .ben-p {
     font-size: .9rem;
   }
@@ -1423,10 +1435,15 @@ svg.rdp-chevron {
   .blog-hero {
     flex-direction: column;
     gap: 1rem;
+    margin-top: 1em;
   }
   
   .blog-hero-left, .blog-hero-right{
     width: 100%;
+  }
+
+  .blog-hero-right.two {
+    height: 23rem;
   }
 
   .blog-hero-right {

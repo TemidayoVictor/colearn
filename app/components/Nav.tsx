@@ -9,7 +9,7 @@ import { usePathname } from "next/navigation";
 const Nav = () => {
     const [menuOpen, setMenuOpen] = useState<boolean | null>(false);
     const pathname = usePathname();
-    const useVariation1 = ["/", "/about", "/blog", "/become-tutor", "/contact-us"].includes(pathname);
+    const useVariation1 = ["/", "/about", "/blog", "/become-tutor", "/contact-us", "/explore"].includes(pathname);
     const hidesNavOn = ["/authentication/"].some(prefix => pathname.startsWith(prefix));
     return (
         <>
@@ -81,7 +81,7 @@ const Nav = () => {
 
                             <div className={`nav-links-cont-inner ${useVariation1 ? 'nav-color-white' : 'nav-color-black'}`}>
                                 <Link href='/' className={`nav-link mobile ${pathname == '/' ? 'active' : ''}`} onClick={() => setMenuOpen(!menuOpen)}>Home</Link>
-                                <Link href='/' className={`nav-link ${pathname.startsWith('/explore') ? 'active' : ''}`} onClick={() => setMenuOpen(!menuOpen)}>Explore</Link>
+                                <Link href='/explore' className={`nav-link ${pathname.startsWith('/explore') ? 'active' : ''}`} onClick={() => setMenuOpen(!menuOpen)}>Explore</Link>
                                 <Link href='/about' className={`nav-link ${pathname.startsWith('/about') ? 'active' : ''}`} onClick={() => setMenuOpen(!menuOpen)}>About Us</Link>
                                 <Link href='/blog' className={`nav-link ${pathname.startsWith('/blog') ? 'active' : ''}`} onClick={() => setMenuOpen(!menuOpen)}>Blog</Link>
                                 <Link href='/become-tutor' className={`nav-link ${pathname.startsWith('/become-tutor') ? 'active' : ''}`} onClick={() => setMenuOpen(!menuOpen)}>Become a Tutor</Link>
