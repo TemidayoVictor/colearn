@@ -10,7 +10,7 @@ const Nav = () => {
     const [menuOpen, setMenuOpen] = useState<boolean | null>(false);
     const pathname = usePathname();
     const useVariation1 = ["/", "/about", "/blog", "/become-tutor", "/contact-us"].includes(pathname);
-    const hidesNavOn = ["/authentication/", "/dropshipper"].some(prefix => pathname.startsWith(prefix));
+    const hidesNavOn = ["/authentication/"].some(prefix => pathname.startsWith(prefix));
     return (
         <>
             <Link href='/' className={`header hiddenNav ${!hidesNavOn ? 'd-none' : ''}`}>

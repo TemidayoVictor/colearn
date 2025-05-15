@@ -3,6 +3,7 @@ import { Geist, Geist_Mono, Roboto, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import '@fontsource-variable/plus-jakarta-sans';
 import MainLayout from "./components/MainLayout";
+import 'react-datepicker/dist/react-datepicker.css';
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
