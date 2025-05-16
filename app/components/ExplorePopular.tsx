@@ -8,6 +8,8 @@ type ExplorePopularProps = {
     title: string;
     type: string;
     tabs?: boolean
+    addContainerClass: boolean
+    nav?: boolean
 }
 
 const posts = [
@@ -60,11 +62,11 @@ const posts = [
     }
 ]
 
-const ExplorePopular = ({title, type, tabs}: ExplorePopularProps) => {
+const ExplorePopular = ({title, type, tabs, addContainerClass, nav}: ExplorePopularProps) => {
     const pathname = usePathname();
     return (
         <div className="">
-            <div className="container">
+            <div className={`${addContainerClass ? 'container' : ''}`}>
                 <div>
                     {
                         type == "head" ? (
@@ -141,38 +143,42 @@ const ExplorePopular = ({title, type, tabs}: ExplorePopularProps) => {
                     </div>
                 </div>
 
-                <div className="section flex items-end justify-end">
-                    <div className="pagination text-[.8rem]">
-                        <div className="prev btn normal two flex gap-2">
-                            <Image
-                                aria-hidden
-                                src="/assets/images/arrow-short-left.png"
-                                alt="Colearn Logo"
-                                width={12}
-                                height={12}
-                                className="object-contain rounded-[.5em]"
-                            />
+                {
+                    nav &&    
+                    <div className="section flex items-end justify-end">
+                        <div className="pagination text-[.8rem]">
+                            <div className="prev btn normal two flex gap-2">
+                                <Image
+                                    aria-hidden
+                                    src="/assets/images/arrow-short-left.png"
+                                    alt="Colearn Logo"
+                                    width={12}
+                                    height={12}
+                                    className="object-contain rounded-[.5em]"
+                                />
 
-                            <p className="text-[.8rem]">Previous</p>
-                        </div>
-                        <div className="flex items-center justify-between">
-                            <span className="pag-el active">1</span>
-                            <span className="pag-el">2</span>
-                            <span className="pag-el">3</span>
-                        </div>
-                        <div className="prev btn normal two flex gap-2">
-                            <p className="text-[.8rem]">Next</p>
-                            <Image
-                                aria-hidden
-                                src="/assets/images/arrow-short-right.png"
-                                alt="Colearn Logo"
-                                width={12}
-                                height={12}
-                                className="object-contain rounded-[.5em]"
-                            />
+                                <p className="text-[.8rem]">Previous</p>
+                            </div>
+                            <div className="flex items-center justify-between">
+                                <span className="pag-el active">1</span>
+                                <span className="pag-el">2</span>
+                                <span className="pag-el">3</span>
+                            </div>
+                            <div className="prev btn normal two flex gap-2">
+                                <p className="text-[.8rem]">Next</p>
+                                <Image
+                                    aria-hidden
+                                    src="/assets/images/arrow-short-right.png"
+                                    alt="Colearn Logo"
+                                    width={12}
+                                    height={12}
+                                    className="object-contain rounded-[.5em]"
+                                />
+                            </div>
                         </div>
                     </div>
-                </div>
+                }
+
             </div>
         </div>
     )

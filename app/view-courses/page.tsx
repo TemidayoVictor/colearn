@@ -13,7 +13,7 @@ const ViewCourses = () => {
         <div>
             <ViewCoursesHero />
             <ViewCoursesBody />
-            <ExplorePopular title="Student Also Bought" type="head"/>
+            <ExplorePopular title="Student Also Bought" type="head" addContainerClass={true}/>
         </div>
     )
 }

@@ -11,7 +11,7 @@ const Explore = () => {
     return (
         <div>
             <ExploreHero />
-            <ExplorePopular title="Explore Our Most popular courses and skills" type="head" tabs={true}/>
+            <ExplorePopular title="Explore Our Most popular courses and skills" type="head" tabs={true} addContainerClass={true}/>
         </div>   
     )
 }
