@@ -1,8 +1,12 @@
-'use client';
-import React, { useState } from 'react';
+import React from 'react';
+import { Metadata } from "next";
 import 'react-datepicker/dist/react-datepicker.css';
 import Calendar from '../components/Calendar';
 import BookingInfo from '../components/BookingInfo';
+
+export const metadata: Metadata = {
+    title: "Book Session",
+}
 
 const BookingCalendar = () => {
     return (

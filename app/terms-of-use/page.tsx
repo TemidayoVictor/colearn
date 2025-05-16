@@ -1,5 +1,10 @@
 'use client'
 import React, { useState } from "react";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+    title: "Terms of Use",
+}
 
 const Terms = () => {
     const [activeSection, setActiveSection] = useState<string | null>('terms')

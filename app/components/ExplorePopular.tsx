@@ -4,6 +4,12 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
+type ExplorePopularProps = {
+    title: string;
+    type: string;
+    tabs?: boolean
+}
+
 const posts = [
     {
         id: 1,
@@ -54,23 +60,23 @@ const posts = [
     }
 ]
 
-const ExplorePopular = () => {
+const ExplorePopular = ({title, type, tabs}: ExplorePopularProps) => {
     const pathname = usePathname();
     return (
         <div className="">
             <div className="container">
                 <div>
                     {
-                        pathname == '/search' ? (
-                            <p>Search Results: 10,482</p>
+                        type == "head" ? (
+                            <h2 className="title">{title}</h2>
                         ) : (
-                            <h2 className="title">Explore Our Most popular courses and skills</h2>
+                            <p>{title}</p>
                         )
                     }
                     <div className="tabs mt-3">
                         
                         {
-                            pathname != '/search' &&
+                            tabs &&
                             posts.map((item, index) => (
                                 <Link href={item.link} className="tab" key={index}>{item.name}</Link>
                             ))
