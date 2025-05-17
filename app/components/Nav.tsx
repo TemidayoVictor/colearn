@@ -11,9 +11,10 @@ const Nav = () => {
     const pathname = usePathname();
     const useVariation1 = ["/", "/about", "/blog", "/become-tutor", "/contact-us", "/explore", "/search", "/view-courses", "/find-consultant"].includes(pathname);
     const hidesNavOn = ["/authentication/", "/onboarding"].some(prefix => pathname.startsWith(prefix));
+    const hidesNavOnTwo = ["/students"].some(prefix => pathname.startsWith(prefix));
     return (
         <>
-            <Link href='/' className={`header hiddenNav ${!hidesNavOn ? 'd-none' : ''}`}>
+            <Link href='/' className={`header hiddenNav ${!hidesNavOn ? 'd-none' : ''} ${hidesNavOnTwo ? 'd-none' : ''}`}>
                 <Image
                     aria-hidden
                     src="/assets/images/logo-1.png"
@@ -33,7 +34,7 @@ const Nav = () => {
                 />
             </Link>
 
-            <div className={`${hidesNavOn ? 'd-none' : ''} header ${useVariation1 ? 'bg-dark' : 'bg-white'}`}>
+            <div className={`${hidesNavOn ? 'd-none' : ''} ${hidesNavOnTwo ? 'd-none' : ''} header ${useVariation1 ? 'bg-dark' : 'bg-white'}`}>
                 <div className="header-contents">
                     <Link href='/'>
                         {

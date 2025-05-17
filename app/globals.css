@@ -32,6 +32,7 @@
   --grey-2 : #BDBDBD;
   --grey-3: #D0D5DD;
   --grey-4: #E4E7EC;
+  --grey-bg: #F4F5FF;
   --black: #000000;
 }
 
@@ -88,6 +89,14 @@ input, textarea {
   padding: 2em;
 }
 
+.container-3 {
+  padding: 1em 2em;
+}
+
+.container-3.two {
+  padding-block: .7rem;
+}
+
 .section {
   margin-block: 3em;
 }
@@ -122,6 +131,10 @@ input, textarea {
 
 .color-fill {
   color: var(--color-primary-fill);
+}
+
+.color-error {
+  color: var(--error-color);
 }
 
 .nav-olor-black {
@@ -302,6 +315,10 @@ input, textarea {
   color: var(--color-primary-normal);
   font-weight: 700;
   border-bottom: 2px solid var(--color-primary-normal);
+}
+
+.sidebar::-webkit-scrollbar, .main::-webkit-scrollbar {
+  width: 8px;
 }
 
 /* Styles */
@@ -1492,6 +1509,84 @@ svg.rdp-chevron {
   transform: rotate(45deg);
 }
 
+/* User layout */
+
+.user-layout {
+  background-color: var(--grey-bg);
+}
+
+/* Side Bar */
+
+.sidebar {
+  background-color: var(--grey-bg);
+  max-width: 22%;
+  max-height: 100vh;
+  overflow-y: scroll;
+}
+
+/* .sidebar-logo {
+  border-bottom: 1px solid var(--grey-1);
+}  */
+
+.sidebar-body {
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar-link {
+  display: flex;
+  align-items: center;
+  gap: .3em;
+  padding: .5em 1em;
+  margin-block: 1em;
+}
+
+.sidebar-link.active {
+  background-color: var(--white);
+  border: 1px solid var(--grey-1);
+  border-radius: .5em;
+}
+
+.sidebar-break {
+  margin-top: 1.5rem;
+  border-top: 1px solid var(--grey-1);
+  padding-top: 1rem;
+}
+
+/* Main */
+
+.main {
+  background-color: var(--white);
+  position: absolute;
+  top: 2%;
+  left: 21%;
+  right: 1%;
+  max-height: 100vh;
+  overflow-y: scroll;
+  bottom: 3%;
+  border: 1px solid var(--grey-1);
+  border-radius: .5em;
+}
+
+.user-header {
+  border-bottom: 1px solid var(--grey-1);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Dashboard */
+
+.dashboard-performance {
+  border: 1px solid var(--grey-1);
+  padding: 1em;
+  border-radius: .5em;
+}
+
+.perf-detail {
+  border-left: 1px solid var(--grey-1);
+  padding-left: 1em;
+}
 
 /* Footer */
 .footer-2 {
