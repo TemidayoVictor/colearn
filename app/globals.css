@@ -1338,6 +1338,92 @@ svg.rdp-chevron {
   text-align: center;
 }
 
+/* Find Consultant */
+
+.find-consultant {
+  display: flex;
+  align-items: stretch;
+  justify-content: space-between;
+}
+
+.find-consultant .left {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--grey-active);
+  padding: 1em;
+  border-radius: .5em;
+  width: 67%;
+}
+
+.find-consultant .l-l {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 1em;
+}
+
+.find-consultant-profile {
+  background-color: var(--color-primary-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  width: 2rem;
+  height: 2rem;
+  padding: .2em;
+}
+
+.find-consultant-search {
+  border: 1px solid #ccc;
+  width: 74%;
+}
+
+.find-consultant-link {
+  width: 20%;
+}
+
+.find-consultant-select-cont {
+  margin-top: 1rem;
+  display: flex;
+  align-items: center;
+  gap: .5em;
+}
+
+.find-consultant-select-cont {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.find-consultant-select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-color: var(--color-primary-light);
+  border: 1px solid var(--color-primary-light-active);
+  padding: 0.5em;
+  font-size: 0.8rem;
+  font-weight: 500;
+  border-radius: .3em;
+  background-image: url('data:image/svg+xml;utf8,<svg fill="%23666" height="20" viewBox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>');
+  background-repeat: no-repeat;
+  background-position: right 0.8em center;
+  background-size: 1.2em;
+  transition: border-color 0.3s, box-shadow 0.3s;
+  min-width: 7rem;
+}
+
+.find-consultant-select:focus {
+  border-color: var(--color-primary-light-active);
+  outline: none;
+}
+
+
+.find-consultant .right {
+  width: 30%;
+}
+
 /* Footer */
 .footer-2 {
   display: flex;
@@ -1935,6 +2021,19 @@ svg.rdp-chevron {
 
   .view-tutor-footer h2 {
     text-align: start;
+  }
+
+  .find-consultant {
+    margin-top: 1em;
+  }
+
+  .find-consultant .left, .find-consultant-link {
+    width: 100%;
+  }
+
+  .find-consultant-search {
+    width: 85%;
+    font-size: .9rem;
   }
 
   .footer-2, .footer-right {

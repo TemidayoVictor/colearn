@@ -9,7 +9,7 @@ import { usePathname } from "next/navigation";
 const Nav = () => {
     const [menuOpen, setMenuOpen] = useState<boolean | null>(false);
     const pathname = usePathname();
-    const useVariation1 = ["/", "/about", "/blog", "/become-tutor", "/contact-us", "/explore", "/search", "/view-courses"].includes(pathname);
+    const useVariation1 = ["/", "/about", "/blog", "/become-tutor", "/contact-us", "/explore", "/search", "/view-courses", "/find-consultant"].includes(pathname);
     const hidesNavOn = ["/authentication/"].some(prefix => pathname.startsWith(prefix));
     return (
         <>

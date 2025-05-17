@@ -2,7 +2,7 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 
-const ExploreHero = () => {
+const BlogHero = () => {
     return (
         <div className="bg-dark">
             <div className="cover container">
@@ -41,4 +41,4 @@ const ExploreHero = () => {
     )
 }
 
-export default ExploreHero
+export default BlogHero
