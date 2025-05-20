@@ -2,26 +2,41 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 
-const UserSidebar = () => {
+type UserSidebarProps = {
+    onMenuClick: () => void;
+};
+
+const UserSidebar = ({onMenuClick}:UserSidebarProps) => {
     return (
         <div className="">
             <aside>
-                <div className="container-3 sidebar-logo flex">
+                <div className="container-3 sidebar-logo flex items-center justify-between">
+                    <div className="flex">
+                        <Image
+                            aria-hidden
+                            src="/assets/images/favicon-logo-2.png"
+                            alt="Colearn Image"
+                            width={45}
+                            height={40}
+                            className="object-cover desktop"
+                        />
+                        <Image
+                            aria-hidden
+                            src="/assets/images/logo-2-blue.png"
+                            alt="Colearn Image"
+                            width={103}
+                            height={40}
+                            className="object-cover"
+                        />
+                    </div>
                     <Image
                         aria-hidden
-                        src="/assets/images/favicon-logo-2.png"
+                        src="/assets/images/sidebar-close.png"
                         alt="Colearn Image"
-                        width={45}
-                        height={40}
-                        className="object-cover"
-                    />
-                    <Image
-                        aria-hidden
-                        src="/assets/images/full-logo.png"
-                        alt="Colearn Image"
-                        width={103}
-                        height={40}
-                        className="object-cover"
+                        width={24}
+                        height={24}
+                        className="object-cover mobile"
+                        onClick={onMenuClick}
                     />
                 </div>
 

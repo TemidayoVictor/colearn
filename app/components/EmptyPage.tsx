@@ -7,21 +7,43 @@ type EmptyCartProps = {
     image: string,
     linkTitle: string,
     content: string
+    header?: string
+    imageWidth? : number
+    imageHeight? : number
 }
 
-const EmptyPage = ({link, image, linkTitle, content}: EmptyCartProps) => {
+const EmptyPage = ({link, image, linkTitle, content, header, imageWidth, imageHeight}: EmptyCartProps) => {
     return (
         <div className="mb-[2em]">
             <div className="flex flex-col items-center justify-center gap-4">
-                <Image
-                    aria-hidden
-                    src={image}
-                    alt="Colearn Logo"
-                    width={240}
-                    height={240}
-                    className="object-contain"
-                />
-                <p className="text-center">{content}</p>
+                {
+                  imageWidth ? (
+
+                    <Image
+                        aria-hidden
+                        src={image}
+                        alt="Colearn Logo"
+                        width={imageWidth}
+                        height={imageHeight}
+                        className="object-contain"
+                    />
+
+                  ) : (
+                    <Image
+                        aria-hidden
+                        src={image}
+                        alt="Colearn Logo"
+                        width={240}
+                        height={240}
+                        className="object-contain"
+                    />
+                  )  
+                }
+                {
+                    header &&
+                    <h2 className="font-semibold text-[1.5rem]">{header}</h2>
+                }
+                <p className="text-center text-[.9rem] color-grey-text res-text-width">{content}</p>
                 <Link href={link} className="bt-btn btn btn-primary-fill">
                     <span>{linkTitle}</span>
                     <span>

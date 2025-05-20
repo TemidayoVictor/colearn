@@ -4,7 +4,7 @@ const DashboardPerformance = () => {
     return (
         <div className="dashboard-performance">
             <h2 className="font-semibold">Performance Summary</h2>
-            <div className="flex items-center justify-between mt-4">
+            <div className="dashboard-grid">
                 <div className="flex flex-col gap-1">
                     <p className="color-grey-text text-[.9rem]">Total Sales Amount</p>
                     <h3 className="font-semibold">$3429.45</h3>
