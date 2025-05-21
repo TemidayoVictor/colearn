@@ -1779,6 +1779,34 @@ td {
   width: 40%;
 }
 
+/* Upload Course */
+
+.upload-course-form {
+  margin: 2em auto;
+  width: 55%;
+}
+
+.upload-course-body {
+  padding-bottom:  1em;
+  border-bottom: 1px solid var(--grey-1);
+  margin-bottom: 1.5em;
+}
+
+.upload-course-input, .upload-course-textarea {
+  display: block;
+  border: 1px solid var(--grey-1);
+  width: 100%;
+  padding: .5em .8em;
+  font-size: .8rem;
+  border-radius: .5em;
+  margin-top: .5em;
+}
+
+.upload-course-textarea {
+  height: 8rem;
+  resize: none;
+}
+
 /* Footer */
 .footer-2 {
   display: flex;
