@@ -1708,7 +1708,7 @@ svg.rdp-chevron {
 .table-container {
   width: 100%;
   overflow-x: auto;
-  margin: 1.5rem auto;
+  margin: 0 auto;
   border-top-right-radius: .5rem;
 }
 
