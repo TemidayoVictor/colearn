@@ -1807,6 +1807,13 @@ td {
   resize: none;
 }
 
+.upload-course-btns {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 1em;
+}
+
 /* Footer */
 .footer-2 {
   display: flex;
