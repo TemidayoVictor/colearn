@@ -71,9 +71,9 @@ const UserSidebar = ({onMenuClick}:UserSidebarProps) => {
                                 <p className="text-[.9rem]">Dashboard</p>
                             </Link>
 
-                            <Link href='/instructors/courses' className={`sidebar-link ${pathname == '/instructors/courses' ? 'active' : ''}`}>
+                            <Link href='/instructors/courses' className={`sidebar-link ${pathname == '/instructors/courses' || pathname == '/instructors/upload-course' ? 'active' : ''}`}>
                                 {
-                                    pathname == '/instructors/courses' ? (
+                                    pathname == '/instructors/courses' || pathname == '/instructors/upload-course' ? (
 
                                         <Image
                                             aria-hidden
