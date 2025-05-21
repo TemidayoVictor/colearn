@@ -1,12 +1,15 @@
+'use client';
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 type UserSidebarProps = {
     onMenuClick: () => void;
 };
 
 const UserSidebar = ({onMenuClick}:UserSidebarProps) => {
+    const pathname = usePathname();
     return (
         <div className="">
             <aside>
@@ -43,27 +46,57 @@ const UserSidebar = ({onMenuClick}:UserSidebarProps) => {
                 <div className="sidebar-body container-3">
                     <div>
                         <div>
-                            <Link href='/' className="sidebar-link active">
-                                <Image
-                                    aria-hidden
-                                    src="/assets/images/element-2-1.png"
-                                    alt="Colearn Image"
-                                    width={20}
-                                    height={20}
-                                    className="object-cover"
-                                />
+                            <Link href='/instructors/dashboard' className={`sidebar-link ${pathname == '/instructors/dashboard' ? 'active' : ''}`} >
+                                {
+                                    pathname == '/instructors/dashboard' ? (
+                                        <Image
+                                            aria-hidden
+                                            src="/assets/images/element-2-1-active.png"
+                                            alt="Colearn Image"
+                                            width={20}
+                                            height={20}
+                                            className="object-cover"
+                                        />
+                                    ) : (
+                                        <Image
+                                            aria-hidden
+                                            src="/assets/images/element-2-1.png"
+                                            alt="Colearn Image"
+                                            width={20}
+                                            height={20}
+                                            className="object-cover"
+                                        />
+                                    )
+                                }
                                 <p className="text-[.9rem]">Dashboard</p>
                             </Link>
 
-                            <Link href='/' className="sidebar-link">
-                                <Image
-                                    aria-hidden
-                                    src="/assets/images/teacher.png"
-                                    alt="Colearn Image"
-                                    width={20}
-                                    height={20}
-                                    className="object-cover"
-                                />
+                            <Link href='/instructors/courses' className={`sidebar-link ${pathname == '/instructors/courses' ? 'active' : ''}`}>
+                                {
+                                    pathname == '/instructors/courses' ? (
+
+                                        <Image
+                                            aria-hidden
+                                            src="/assets/images/teacher-active.png"
+                                            alt="Colearn Image"
+                                            width={20}
+                                            height={20}
+                                            className="object-cover"
+                                        />
+
+                                    ) : (
+
+                                        <Image
+                                            aria-hidden
+                                            src="/assets/images/teacher.png"
+                                            alt="Colearn Image"
+                                            width={20}
+                                            height={20}
+                                            className="object-cover"
+                                        />
+
+                                    )
+                                }
                                 <p className="text-[.9rem]">Course Management</p>
                             </Link>
 

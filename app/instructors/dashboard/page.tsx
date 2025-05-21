@@ -12,7 +12,7 @@ const InstructorsDashboard = () => {
             <UserLayout>
                 <div className="container-3">
                     <div>
-                        <DashboardPerformance />
+                        <DashboardPerformance type="Dashboard" />
                     </div>
                     <div className="dashboard-flex spacing-inter">
                         <DashboardRevenue />
@@ -25,7 +25,7 @@ const InstructorsDashboard = () => {
                     <div>
                         <EmptyPage image="/assets/images/empty-image.png" link="/" linkTitle="Upload Course" header="Let Get You Started!!" content="Get started! Upload your first course and share your knowledge with the world." imageWidth={400} imageHeight={240}/>
                     </div>
-                    
+
                 </div>
                 
             </UserLayout>
