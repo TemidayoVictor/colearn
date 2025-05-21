@@ -6,6 +6,7 @@ import CoursesBox from "./CoursesBox";
 
 const CoursesBody = () => {
     const [selectedTab, setSelectedTab] = useState<string>('live');
+    const [selectedView, setSelectedView] = useState<string>('grid');
     return (
         <div className="mt-[2em]">
             <div className="in-nav mb-[1.5em] flex items-center justify-between">
@@ -17,26 +18,55 @@ const CoursesBody = () => {
                 </div>
 
                 <div className="desktop-flex items-center gap-3">
-                    <div className="desktop view-toggle active">
-                        <Image
-                            aria-hidden
-                            src="/assets/images/element-2-1-active.png"
-                            alt="Colearn Image"
-                            width={16}
-                            height={16}
-                            className="object-cover"
-                        />
+                    <div className={`desktop view-toggle ${selectedView == 'grid' ? 'active' : ''}`} onClick={() => setSelectedView('grid')}>
+                        {
+                            selectedView == 'grid' ? 
+                            <Image
+                                aria-hidden
+                                src="/assets/images/element-2-1-active.png"
+                                alt="Colearn Image"
+                                width={16}
+                                height={16}
+                                className="object-cover"
+                            /> 
+                            
+                            : 
+                            
+                            <Image
+                                aria-hidden
+                                src="/assets/images/element-2-1.png"
+                                alt="Colearn Image"
+                                width={16}
+                                height={16}
+                                className="object-cover"
+                            />
+                        }
                     </div>
                     
-                    <div className="desktop view-toggle">
-                        <Image
-                            aria-hidden
-                            src="/assets/images/menu-3.png"
-                            alt="Colearn Image"
-                            width={16}
-                            height={16}
-                            className="object-cover"
-                        />
+                    <div className={`desktop view-toggle ${selectedView == 'table' ? 'active' : ''}`} onClick={() => setSelectedView('table')}>
+                        {
+                            selectedView == 'table' ? 
+                            <Image
+                                aria-hidden
+                                src="/assets/images/menu-blue.png"
+                                alt="Colearn Image"
+                                width={16}
+                                height={16}
+                                className="object-cover"
+                            /> 
+                            
+                            : 
+                            
+                            <Image
+                                aria-hidden
+                                src="/assets/images/menu-3.png"
+                                alt="Colearn Image"
+                                width={16}
+                                height={16}
+                                className="object-cover"
+                            />
+                        }
+                
                     </div>
                 </div>
             </div>
@@ -64,7 +94,7 @@ const CoursesBody = () => {
             </div>
 
             <div className="spacing-inter">
-                <CoursesBox />
+                <CoursesBox view={selectedView}  />
             </div>
         </div>
     )

@@ -2,16 +2,26 @@ import React from "react";
 import TableContent from "./TableContent";
 import GridContent from "./GridContent";
 
-const CoursesBox = () => {
+type CoursesBoxProps = {
+    view: string;
+}
+
+const CoursesBox = ({view}: CoursesBoxProps) => {
     return (
         <div>
-            <div>
-                <GridContent />
-            </div>
+            {
+                view == 'grid' &&
+                <div>
+                    <GridContent />
+                </div>
+            }
 
-            <div className="spacing-inter bod-grey p-[1em] rounded-[.5em]">
-                <TableContent />
-            </div>
+            {
+                view == 'table' &&
+                <div className="spacing-inter bod-grey p-[1em] rounded-[.5em]">
+                    <TableContent />
+                </div>
+            }
         </div>
     )
 }
