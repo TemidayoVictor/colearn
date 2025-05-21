@@ -1,8 +1,15 @@
-import React from "react";
+'use client';
+import React, {useState} from "react";
 import Image from "next/image";
 import UploadCourseForm from "./UploadCourseForm";
 
 const UploadCourseBody = () => {
+    const [step, setStep] = useState<number>(0);
+
+    const updateStep = (newstep: number) => {
+        setStep(newstep);
+    }
+    
     return (
         <div>
             
@@ -24,12 +31,12 @@ const UploadCourseBody = () => {
                     <h2 className="title-3">Create Course</h2>
                 </div>
                 <div>
-                    <p className="text-[.9rem] color-grey-text">Step 1 of 3</p>
+                    <p className="text-[.9rem] color-grey-text">Step {step + 1} of 3</p>
                 </div>
             </div>
 
             <div>
-                <UploadCourseForm />
+                <UploadCourseForm sendData={updateStep} />
             </div>
 
         </div>
