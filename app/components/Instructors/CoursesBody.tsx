@@ -88,7 +88,7 @@ const CoursesBody = () => {
                     </div>
 
                     <div>
-                        <Link href="/" className="btn normal ">Upload Course</Link>
+                        <Link href="/instructors/upload-course" className="btn normal ">Upload Course</Link>
                     </div>
                 </div>  
             </div>
