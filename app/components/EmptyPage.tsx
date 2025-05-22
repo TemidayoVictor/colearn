@@ -10,9 +10,10 @@ type EmptyCartProps = {
     header?: string
     imageWidth? : number
     imageHeight? : number
+    centerHeader? : boolean
 }
 
-const EmptyPage = ({link, image, linkTitle, content, header, imageWidth, imageHeight}: EmptyCartProps) => {
+const EmptyPage = ({link, image, linkTitle, content, header, imageWidth, imageHeight, centerHeader}: EmptyCartProps) => {
     return (
         <div className="mb-[2em]">
             <div className="flex flex-col items-center justify-center gap-4">
@@ -41,7 +42,7 @@ const EmptyPage = ({link, image, linkTitle, content, header, imageWidth, imageHe
                 }
                 {
                     header &&
-                    <h2 className="font-semibold text-[1.5rem]">{header}</h2>
+                    <h2 className={`font-semibold text-[1.5rem] ${centerHeader ? 'text-center' : ''}`}>{header}</h2>
                 }
                 <p className="text-center text-[.9rem] color-grey-text res-text-width">{content}</p>
                 <Link href={link} className="bt-btn btn btn-primary-fill">

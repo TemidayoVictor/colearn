@@ -2,6 +2,7 @@
 import React, {useState} from "react";
 import Image from "next/image";
 import UploadCourseForm from "./UploadCourseForm";
+import Link from "next/link";
 
 const UploadCourseBody = () => {
     const [step, setStep] = useState<number>(0);
@@ -15,7 +16,7 @@ const UploadCourseBody = () => {
             
             <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                    <div className="flex items-center gap-2 cursor-pointer">
+                    <Link href='/instructors/courses' className="flex items-center gap-2 cursor-pointer">
                         <div>
                             <Image
                                 aria-hidden
@@ -27,16 +28,25 @@ const UploadCourseBody = () => {
                             />
                         </div>
                         <p className="text-[.9rem] font-semibold">Back</p>
-                    </div>
-                    <h2 className="title-3 desktop">Create Course</h2>
+                    </Link>
+                    {
+                        step < 3 &&
+                        <h2 className="title-3 desktop">Create Course</h2>
+                    }
                 </div>
                 <div>
-                    <p className="text-[.9rem] color-grey-text">Step {step + 1} of 3</p>
+                    {
+                        step < 3 &&
+                        <p className="text-[.9rem] color-grey-text">Step {step + 1} of 3</p>
+                    }
                 </div>
             </div>
 
             <div>
-                <h2 className="title-3 mt-3 mobile">Create Course</h2>
+                {
+                    step < 3 &&
+                    <h2 className="title-3 mt-3 mobile">Create Course</h2>
+                }
                 <UploadCourseForm sendData={updateStep} />
             </div>
 

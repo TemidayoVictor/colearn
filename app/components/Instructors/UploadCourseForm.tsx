@@ -4,6 +4,7 @@ import Image from "next/image";
 import UploadCourseStep1 from "./UploadCourseStep1";
 import UploadCourseStep2 from "./UploadCoursestep2";
 import UploadCourseStep3 from "./UploadCourseStep3";
+import UploadCourseStep4 from "./UploadCourseStep4";
 
 type UploadCourseFormProps = {
     sendData: (step: number) => void;
@@ -16,7 +17,7 @@ const UploadCourseForm = ({sendData}: UploadCourseFormProps) => {
         <UploadCourseStep1 key="details" />,
         <UploadCourseStep2 key="content" />,
         <UploadCourseStep3 key="additions"/>,
-        // <CourseReview key="review" />,
+        <UploadCourseStep4 key="success" />,
     ];
 
     const handleNext = () => {
@@ -41,22 +42,26 @@ const UploadCourseForm = ({sendData}: UploadCourseFormProps) => {
                     sections[step]
                 }
             </div>
-            <div className="upload-course-btns">
-                <button className={`btn normal`} disabled={step === 0} onClick={handleBack}>Back</button>
-                <button className="flex items-center gap-2 btn btn-primary-fill" onClick={handleNext}>
-                    <span>Proceed</span>
-                    <span>
-                        <Image
-                            aria-hidden
-                            src="/assets/images/arrow-right.png"
-                            alt="Colearn Logo"
-                            width={12}
-                            height={12}
-                            className="object-contain"
-                        />
-                    </span>
-                </button>
-            </div>
+            {
+                step < sections.length - 1 &&
+                <div className="upload-course-btns">
+                    <button className={`btn normal`} disabled={step === 0} onClick={handleBack}>Back</button>
+
+                    <button className="flex items-center gap-2 btn btn-primary-fill" onClick={handleNext}>
+                        <span>{step < sections.length - 2 ? 'Proceed' : 'Submit'}</span>
+                        <span>
+                            <Image
+                                aria-hidden
+                                src="/assets/images/arrow-right.png"
+                                alt="Colearn Logo"
+                                width={12}
+                                height={12}
+                                className="object-contain"
+                            />
+                        </span>
+                    </button>
+                </div>  
+            }
         </div>
     )
 }
