@@ -3,6 +3,7 @@ import React, {useState} from "react";
 import Image from "next/image";
 import UploadCourseStep1 from "./UploadCourseStep1";
 import UploadCourseStep2 from "./UploadCoursestep2";
+import UploadCourseStep3 from "./UploadCourseStep3";
 
 type UploadCourseFormProps = {
     sendData: (step: number) => void;
@@ -14,7 +15,7 @@ const UploadCourseForm = ({sendData}: UploadCourseFormProps) => {
     const sections = [
         <UploadCourseStep1 key="details" />,
         <UploadCourseStep2 key="content" />,
-        // <CoursePricing key="pricing" />,
+        <UploadCourseStep3 key="additions"/>,
         // <CourseReview key="review" />,
     ];
 
@@ -42,7 +43,7 @@ const UploadCourseForm = ({sendData}: UploadCourseFormProps) => {
             </div>
             <div className="upload-course-btns">
                 <button className={`btn normal`} disabled={step === 0} onClick={handleBack}>Back</button>
-                <button className="bt-btn btn btn-primary-fill" onClick={handleNext}>
+                <button className="flex items-center gap-2 btn btn-primary-fill" onClick={handleNext}>
                     <span>Proceed</span>
                     <span>
                         <Image

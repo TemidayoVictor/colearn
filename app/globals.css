@@ -1859,6 +1859,14 @@ td {
   border: 2px dashed var(--color-primary-fill);
 }
 
+.upload-course-tab-image {
+  width: 15%;
+}
+
+.upload-course-tab-content {
+  width: 85%;
+}
+
 /* Footer */
 .footer-2 {
   display: flex;
@@ -2583,6 +2591,24 @@ td {
 
   .courses-search-lenght {
     width: 50%;
+  }
+
+  .upload-course-form {
+    margin: 1em auto;
+    width: 95%;
+  }
+
+  .upload-course-tabs-con {
+    flex-direction: column;
+    gap: 1em;
+  }
+
+  .upload-course-tab {
+    width: 100%;
+  }
+
+  .upload-course-tab-content {
+    width: 88%;
   }
 
   .footer-2, .footer-right {

@@ -57,11 +57,11 @@ const UploadCourseStep2 = () => {
                     <div className={`upload-course-tab cursor-pointer ${selected == 'single' ? 'active' : ''}`} onClick={() => handleSelect('single')}>
                         <input 
                             type="checkbox" 
-                            className="custom-checkbox two  w-[15%]" 
+                            className="custom-checkbox two " 
                             checked={selected === 'single'}
                             onChange={() => handleSelect('single')}
                         />
-                        <div className="w-[85%]">
+                        <div className="upload-course-tab-content">
                             <h3 className="font-semibold text-[.9rem]">Single Video</h3>
                             <p>A single clip of a video for the course</p>
                         </div>
@@ -69,11 +69,11 @@ const UploadCourseStep2 = () => {
                     <div className={`upload-course-tab cursor-pointer ${selected == 'series' ? 'active' : ''}`} onClick={() => handleSelect('series')}>
                         <input 
                             type="checkbox" 
-                            className="custom-checkbox two w-[15%]" 
+                            className="custom-checkbox two" 
                             checked={selected === 'series'}
                             onChange={() => handleSelect('series')}
                         />
-                        <div className="w-[85%]">
+                        <div className="upload-course-tab-content">
                             <h3 className="font-semibold text-[.9rem]">Series Version</h3>
                             <p>Breakdown series of video under a single topic</p>
                         </div>
@@ -128,7 +128,7 @@ const UploadCourseStep2 = () => {
                                         />
                                     </div>
                                     <p className="text-[.9rem] font-semibold">Upload a file by clicking the image</p>
-                                    <p className="text-[.8rem] color-grey-text">Supported formats: MP4, AVI,MOV,WMV, FLV, WebM</p>
+                                    <p className="text-[.8rem] color-grey-text text-center">Supported formats: MP4, AVI,MOV,WMV, FLV, WebM</p>
                                     {
                                         item.file && (
                                         <p className="text-center text-[.8rem] font-semibold">
@@ -145,8 +145,8 @@ const UploadCourseStep2 = () => {
                 {
                     selected === 'series' && (
                         <div className="flex items-center justify-between mt-2">
-                            <p className="text-[.9rem] font-semibold mt-4 cursor-pointer btn normal inline-block" onClick={handleAddEpisode}>Add More Episodes</p>
-                            <Link href='/' className="text-[.9rem] font-semibold mt-4 cursor-pointer btn normal inline-block">Add Another Series</Link>
+                            <p className="text-[.9rem] font-semibold mt-4 cursor-pointer btn normal inline-block" onClick={handleAddEpisode}>Add New Episodes</p>
+                            <Link href='/' className="text-[.9rem] font-semibold mt-4 cursor-pointer btn normal inline-block">Add Series</Link>
                         </div>
                     )
                 }

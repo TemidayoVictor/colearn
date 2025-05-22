@@ -28,7 +28,7 @@ const UploadCourseBody = () => {
                         </div>
                         <p className="text-[.9rem] font-semibold">Back</p>
                     </div>
-                    <h2 className="title-3">Create Course</h2>
+                    <h2 className="title-3 desktop">Create Course</h2>
                 </div>
                 <div>
                     <p className="text-[.9rem] color-grey-text">Step {step + 1} of 3</p>
@@ -36,6 +36,7 @@ const UploadCourseBody = () => {
             </div>
 
             <div>
+                <h2 className="title-3 mt-3 mobile">Create Course</h2>
                 <UploadCourseForm sendData={updateStep} />
             </div>
 
