@@ -340,6 +340,7 @@ input, textarea {
   color: var(--color-primary-normal);
   font-weight: 700;
   border-bottom: 2px solid var(--color-primary-normal);
+  padding-inline: .5em;
 }
 
 .in-nav-link.two.active {
@@ -2680,7 +2681,7 @@ td {
     background-color: var(--white);
   }
 
-  .course-content-reviews .testimonials-container {
+  .course-content-reviews .testimonials-container, .in-nav.scrollable {
     display: flex;
     overflow-x: auto;
     gap: 2em;
@@ -2693,6 +2694,10 @@ td {
     padding: 0;
     min-width: 18rem;
     scroll-snap-align: start;
+  }
+
+  .in-nav-link.long {
+    min-width: 10rem;
   }
 
   .footer-2, .footer-right {

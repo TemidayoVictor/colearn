@@ -15,7 +15,7 @@ const CourseContentBody = () => {
                     <span className={`in-nav-link three flex gap-2 items-center two color-grey-text ${selectedTab == 'students' ? 'active' : ''}`} onClick={() => setSelectedTab('students')}> <span>Students</span> <span className="number">3</span></span>
                     <span className={`in-nav-link three flex gap-2 items-center two color-grey-text ${selectedTab == 'articles' ? 'active' : ''}`} onClick={() => setSelectedTab('articles')}> <span>Articles</span> <span className="number">2</span></span>
                     <span className={`in-nav-link three flex gap-2 items-center two color-grey-text ${selectedTab == 'assignments' ? 'active' : ''}`} onClick={() => setSelectedTab('assignments')}> <span>Assignments</span> <span className="number">2</span></span>
-                    <span className={`in-nav-link three flex gap-2 items-center two color-grey-text ${selectedTab == 'tests' ? 'active' : ''}`} onClick={() => setSelectedTab('tests')}> <span>Practical Tests</span> <span className="number">2</span></span>
+                    <span className={`in-nav-link three long flex gap-2 items-center two color-grey-text ${selectedTab == 'tests' ? 'active' : ''}`} onClick={() => setSelectedTab('tests')}> <span>Practical Tests</span> <span className="number">2</span></span>
                 </div>
             </div>
 
