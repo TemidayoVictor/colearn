@@ -346,6 +346,10 @@ input, textarea {
   font-weight: 500;
 }
 
+.in-nav-link.three {
+  font-size: .9rem;
+}
+
 .number {
   background-color: var(--grey-5);
   color: black;
@@ -364,7 +368,7 @@ input, textarea {
   color: var(--white);
 }
 
-.sidebar::-webkit-scrollbar, .main::-webkit-scrollbar {
+.sidebar::-webkit-scrollbar {
   width: 8px;
 }
 
@@ -1643,16 +1647,39 @@ svg.rdp-chevron {
 
 .main {
   background-color: var(--white);
-  position: absolute;
+  position: fixed;
   top: 2%;
   left: 21%;
   right: 1%;
-  max-height: 100vh;
-  overflow-y: scroll;
+  height: auto;
   bottom: 3%;
   border: 1px solid var(--grey-1);
   border-radius: .5em;
-  overflow-x: hidden; 
+  overflow-y: auto;
+}
+
+.main::-webkit-scrollbar {
+  width: 8px;
+}
+
+.main::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+.main::-webkit-scrollbar-thumb {
+  background-color: var(--color-primary-normal);
+  border-radius: 10px;
+}
+
+.main::-webkit-scrollbar-thumb:hover {
+  background-color:var(--color-primary-normal);;
+}
+
+/* Firefox */
+.main {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-primary-darker) #fff;
 }
 
 .user-header {
@@ -1865,6 +1892,36 @@ td {
 
 .upload-course-tab-content {
   width: 85%;
+}
+
+/* Course content */
+
+.course-content {
+  display: flex;
+  justify-content: space-between;
+}
+
+.course-content .left {
+  width: 65%;
+}
+
+.course-content .right {
+  width: 35%;
+}
+
+.course-content-reviews {
+  background-color: var(--grey-active);
+  padding: .7em;
+}
+
+.course-content-reviews .testimonial {
+  background-color: var(--white);
+  padding: 1em;
+  margin-bottom: .5em;
+}
+
+.course-content-reviews .testimonial p {
+  font-size: .9rem;
 }
 
 /* Footer */
@@ -2517,7 +2574,6 @@ td {
 
   .user-cover-mobile {
     margin-top: 4em;
-    border: 10 px solid green;
   }
 
   .sidebar {
@@ -2609,6 +2665,34 @@ td {
 
   .upload-course-tab-content {
     width: 88%;
+  }
+
+  .course-content {
+    flex-direction: column;
+  }
+
+  .course-content .left, .course-content .right {
+    width: 100%;
+  }
+
+  .course-content-reviews {
+    padding-inline: 1.3em;
+    background-color: var(--white);
+  }
+
+  .course-content-reviews .testimonials-container {
+    display: flex;
+    overflow-x: auto;
+    gap: 2em;
+    scroll-snap-type: x mandatory;
+    padding-bottom: 1em;
+    padding: 0;
+  }
+
+  .course-content-reviews .testimonial {
+    padding: 0;
+    min-width: 18rem;
+    scroll-snap-align: start;
   }
 
   .footer-2, .footer-right {

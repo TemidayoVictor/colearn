@@ -3,10 +3,10 @@ import Image from "next/image";
 
 const ViewCoursesTestimonials = () => {
     return (
-        <div>
+        <div className="testimonials-container">
             {
                 [1,2,3].map((item, index) => (
-                    <div className="flex flex-col gap-2 mb-[1.5rem]" key={index}>
+                    <div className="flex flex-col gap-2 mb-[1.5rem] testimonial" key={index}>
                         <div className="flex items-center gap-4">
                             <Image
                                 aria-hidden
