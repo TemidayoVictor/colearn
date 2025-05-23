@@ -1,12 +1,13 @@
 import React from "react";
 import Image from "next/image";
+import Link from "next/link";
 
 const GridContent = () => {
     return (
         <div className="courses-container">
             {
                 [1,2,3,4,5,6,7,8].map((items, index) => (
-                    <div className="course-box" key={index}>
+                    <Link href='course-page' className="course-box" key={index}>
                         <div className="course-top">
                             <Image
                                 aria-hidden
@@ -98,7 +99,7 @@ const GridContent = () => {
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </Link>
                 ))
             }
         </div>

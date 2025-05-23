@@ -1964,6 +1964,69 @@ td {
   font-weight: 600;
 }
 
+/* Subscription */
+
+.subscription-text {
+  width: 70%;
+  margin: 1em auto;
+}
+
+.subscription-cont-cover {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.subscription-tab-cont {
+  display: flex;
+  justify-content: space-between;
+  gap: 1em;
+  padding: .5em 1em;
+  border-radius: .3em;
+  background-color: var(--grey);
+  min-width: 20rem;
+}
+
+.subscription-tab {
+  font-size: .9rem;
+  padding: .5em 4em;
+  cursor: pointer;
+}
+
+.subscription-tab.active {
+  background-color: var(--color-primary-normal);
+  color: var(--white);
+  border-radius: .3em;
+  border: 1px solid var(--color-primary-normal);
+}
+
+.subscription-card-container {
+  display: flex;
+  gap: 2em;
+  margin-top: 3em;
+}
+
+.subscription-card {
+  background-color: var(--white);
+  border: 1px solid var(--color-primary-normal);
+  border-radius: .5em;
+  padding: 1em;
+  min-width: 20rem;
+}
+
+.free-plan {
+  background-color: var(--color-primary-light);
+}
+
+.premium-plan {
+  background-color: var(--color-primary-fill);
+}
+
+.subscription-content {
+  margin-top:  1em;
+}
+
 /* Footer */
 .footer-2 {
   display: flex;
@@ -2737,6 +2800,23 @@ td {
 
   .in-nav-link.long {
     min-width: 10rem;
+  }
+  
+  .subscription-text {
+    width: 95%;
+  }
+
+  .subscription-tab-cont {
+    min-width: 15rem;
+  }
+
+  .subscription-tab {
+    padding: .5em 3em;
+  }
+
+  .subscription-card-container {
+    flex-direction: column;
+    gap: 1em;
   }
 
   .footer-2, .footer-right {

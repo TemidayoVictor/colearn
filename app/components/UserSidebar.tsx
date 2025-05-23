@@ -127,15 +127,28 @@ const UserSidebar = ({onMenuClick}:UserSidebarProps) => {
                                 <p className="text-[.9rem]">Account</p>
                             </Link>
 
-                            <Link href='/' className="sidebar-link">
-                                <Image
-                                    aria-hidden
-                                    src="/assets/images/moneys.png"
-                                    alt="Colearn Image"
-                                    width={20}
-                                    height={20}
-                                    className="object-cover"
-                                />
+                            <Link href='/instructors/subscription' className={`sidebar-link ${pathname == '/instructors/subscription' ? 'active' : ''}`}>
+                                {
+                                    pathname == '/instructors/subscription' ? (
+                                        <Image
+                                            aria-hidden
+                                            src="/assets/images/moneys-active.png"
+                                            alt="Colearn Image"
+                                            width={20}
+                                            height={20}
+                                            className="object-cover"
+                                        />
+                                    ) : (
+                                        <Image
+                                            aria-hidden
+                                            src="/assets/images/moneys.png"
+                                            alt="Colearn Image"
+                                            width={20}
+                                            height={20}
+                                            className="object-cover"
+                                        />
+                                    )
+                                }
                                 <p className="text-[.9rem]">Subscription</p>
                             </Link>
 
