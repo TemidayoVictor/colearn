@@ -2027,6 +2027,17 @@ td {
   margin-top:  1em;
 }
 
+/* Payment Info */
+
+.payment-info {
+  border: 1px solid var(--grey-1);
+  padding: 1em;
+  border-radius: .5em;
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+
 /* Footer */
 .footer-2 {
   display: flex;
