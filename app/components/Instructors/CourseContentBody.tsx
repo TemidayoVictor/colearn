@@ -3,6 +3,7 @@ import React, {useState} from "react";
 import CourseContent from "./CourseContent";
 import ViewCoursesContent from "../ViewCoursesContent";
 import ViewCoursesContentMain from "../ViewCoursesContentMain";
+import CourseStudents from "./CourseStudents";
 
 const CourseContentBody = () => {
     const [selectedTab, setSelectedTab] = useState<string>('overview');
@@ -30,6 +31,13 @@ const CourseContentBody = () => {
                             <ViewCoursesContentMain />
                         </div>
                     </div>   
+                }
+
+                {
+                    selectedTab == 'students' &&
+                    <div className="spacing-inter bod-grey p-[1rem] rounded-[.5rem]">
+                        <CourseStudents />
+                    </div>
                 }
             </div>
         </div>

@@ -21,7 +21,9 @@
   --secondary-color-darker: #210852;
   --error-color: #D42620;
   --succcess-color: #0F973D;
+  --success-color-2: #036B26;
   --success-color-light: #E7F5EC;
+  --success-color-light-active: #E7F6EC;
   --white: #FFFFFF;
   --grey: #F7F7F8;
   --grey-light: #5A5C5E;
@@ -37,6 +39,8 @@
   --grey-6: #B4B8BB;
   --grey-bg: #F4F5FF;
   --black: #000000;
+  --warning-color-light: #FEF6E7;
+  --warning-color-normal: #865503;
 }
 
 /* @theme inline {
@@ -344,7 +348,7 @@ input, textarea {
 }
 
 .in-nav-link.two.active {
-  font-weight: 500;
+  font-weight: 300;
 }
 
 .in-nav-link.three {
@@ -403,6 +407,23 @@ input, textarea {
 
 .text-res-2 {
   font-size: .7em;
+}
+
+.badge {
+  padding: .3em 1em;
+  border-radius: 1em;
+  font-size: .8rem;
+  font-weight: 600;
+}
+
+.badge.ongoing {
+  background-color: var(--warning-color-light);
+  color: var(--warning-color-normal);
+}
+
+.badge.completed {
+  background-color: var(--success-color-light-active);
+  color: var(--success-color-2);
 }
 
 /* Styles */
@@ -1659,10 +1680,6 @@ svg.rdp-chevron {
   overflow-y: auto;
 }
 
-.main::-webkit-scrollbar {
-  width: 8px;
-}
-
 .main::-webkit-scrollbar-track {
   background: #f1f1f1;
   border-radius: 10px;
@@ -1679,7 +1696,7 @@ svg.rdp-chevron {
 
 /* Firefox */
 .main {
-  scrollbar-width: thin;
+  /* scrollbar-width: thin; */
   scrollbar-color: var(--color-primary-darker) #fff;
 }
 
@@ -1749,6 +1766,7 @@ svg.rdp-chevron {
 table {
   border-collapse: collapse;
   width: 100%;
+  min-width: max-content;
 }
 
 thead {
@@ -1772,7 +1790,7 @@ tbody tr:hover {
 th {
   font-weight: 500;
   font-size: .8rem;
-  padding: .8em 1rem;
+  padding: 1rem;
 }
 
 td {
@@ -1923,6 +1941,27 @@ td {
 
 .course-content-reviews .testimonial p {
   font-size: .9rem;
+}
+
+.progress-container {
+  width: 100%;
+  background-color: #e0e0e0;
+  border-radius: .5em;
+  overflow: hidden;
+}
+
+.progress-bar {
+  height: .5em;
+  background-color: var(--secondary-color-normal);
+  width: 0%;
+  transition: width 0.4s ease;
+}
+
+.progress-text {
+  font-size: 0.7rem;
+  color: var(--grey-text);
+  text-align: right;
+  font-weight: 600;
 }
 
 /* Footer */
