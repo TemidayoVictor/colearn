@@ -91,8 +91,8 @@ const SubscriptionBody = () => {
 
                         <div className="subscription-content">
                             {
-                                [1,2,3,4].map((item) => (
-                                    <div className="flex items-center gap-2 mt-2" key={item}>
+                                [1,2,3,4].map((item, index) => (
+                                    <div className="flex items-center gap-2 mt-2" key={index}>
                                         <Image
                                             aria-hidden
                                             src="/assets/images/check.png"

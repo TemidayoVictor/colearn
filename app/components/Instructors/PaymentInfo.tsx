@@ -8,7 +8,7 @@ const PaymentInfo = () => {
     const [showBalance, setShowBalance] = useState<boolean | null>(false);
     const toggleBalance = () => setShowBalance(prev => !prev);
     return (
-        <div className="container-3">
+        <div>
             <div className="payment-info">
                 <div className="flex items-center gap-2">
                     <Image
