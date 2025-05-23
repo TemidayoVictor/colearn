@@ -2056,6 +2056,53 @@ td {
   width: 95%;
 }
 
+/* Help desk */
+
+.help-desk-body {
+  background-color: var(--grey);
+  border-radius: .5em;
+  padding: 1em;
+}
+
+.help-desk-content {
+  background-color: var(--white);
+  border-radius: .5em;
+  padding: 1em;
+  margin-top: 1em;
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+}
+
+.help-desk-content .left, .help-desk-content .right {
+  width: 45%;
+}
+
+.faq-body-2 {
+  margin-block: 1em;
+}
+
+.faq {
+  padding: .5em;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid var(--grey-1);
+  border-radius: .3em;
+}
+
+.faq-content p {
+  color: var(--grey-text);
+  font-size: .9rem;
+  border: 1px solid var(--grey-1);
+  border-top: none;
+  padding: 1em;
+  padding-top: 1.5em;
+  margin-top: -1em;
+  border-bottom-right-radius: .3em;
+  border-bottom-left-radius: .3em;
+}
+
 /* Footer */
 .footer-2 {
   display: flex;
@@ -2863,6 +2910,14 @@ td {
   .subscription-card-container {
     flex-direction: column;
     gap: 1em;
+  }
+
+  .help-desk-content {
+    flex-direction: column;
+  }
+
+  .help-desk-content .left, .help-desk-content .right {
+    width: 100%;
   }
 
   .footer-2, .footer-right {

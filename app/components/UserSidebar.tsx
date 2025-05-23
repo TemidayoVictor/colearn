@@ -192,15 +192,28 @@ const UserSidebar = ({onMenuClick}:UserSidebarProps) => {
                         </div>
                     </div>
                     <div className="sidebar-break">
-                        <Link href='/' className="sidebar-link">
-                            <Image
-                                aria-hidden
-                                src="/assets/images/help-2.png"
-                                alt="Colearn Image"
-                                width={20}
-                                height={20}
-                                className="object-cover"
-                            />
+                        <Link href='/instructors/help-desk' className={`sidebar-link ${pathname == '/instructors/help-desk' ? 'active' : ''}`}>
+                            {
+                                pathname == '/instructors/help-desk' ? (
+                                    <Image
+                                        aria-hidden
+                                        src="/assets/images/help-active.png"
+                                        alt="Colearn Image"
+                                        width={20}
+                                        height={20}
+                                        className="object-cover"
+                                    />
+                                ) : (
+                                    <Image
+                                        aria-hidden
+                                        src="/assets/images/help-2.png"
+                                        alt="Colearn Image"
+                                        width={20}
+                                        height={20}
+                                        className="object-cover"
+                                    />
+                                )
+                            }          
                             <p className="text-[.9rem]">Help Desk</p>
                         </Link>
 
