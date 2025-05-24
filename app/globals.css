@@ -2157,6 +2157,24 @@ td {
   width: 57%;
 }
 
+.skill-tag-cont {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5em;
+  margin-top: 1em;
+}
+
+.skill-tag {
+  background-color: var(--grey-active);
+  color: #1f2937;
+  padding: 0.4em 1.2em;
+  border-radius: .3em;
+  font-weight: 500;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  cursor: default;
+}
+
 /* Footer */
 .footer-2 {
   display: flex;

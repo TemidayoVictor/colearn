@@ -1,6 +1,7 @@
 'use client';
 import React, {useState} from "react";
 import AccountAbout from "./AccountAbout";
+import AccountCareer from "./AccountCareer";
 
 const AccountBody = () => {
     const [selectedTab, setSelectedTab] = useState<string>('about');
@@ -15,6 +16,11 @@ const AccountBody = () => {
                 {
                    selectedTab == 'about' &&
                    <AccountAbout />
+                }
+
+                {
+                    selectedTab == 'career' &&
+                    <AccountCareer />
                 }
             </div>
         </div>
