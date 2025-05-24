@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 const ViewTutors = () => {
     return (
         <div>
-            <ViewTutorsHero />
+            <ViewTutorsHero marginTop/>
             <ViewTutorsBody />
         </div>
     )

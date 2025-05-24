@@ -343,13 +343,14 @@ input, textarea {
   padding-bottom: 1em;
   cursor: pointer;
   position: relative;
+  padding-inline: .5em;
+  border-bottom: 1px solid transparent;
 }
 
 .in-nav-link.active {
   color: var(--color-primary-normal);
-  font-weight: 700;
+  font-weight: 300;
   border-bottom: 2px solid var(--color-primary-normal);
-  padding-inline: .5em;
 }
 
 .in-nav-link.two.active {

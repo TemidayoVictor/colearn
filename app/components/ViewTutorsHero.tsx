@@ -1,9 +1,13 @@
 import React from "react";
 import Image from "next/image";
 
-const ViewTutorsHero = () => {
+type ViewTutorsHeroProps = {
+    marginTop?: boolean;
+}
+
+const ViewTutorsHero = ({marginTop}: ViewTutorsHeroProps) => {
     return (
-        <div className="view-tutor-banner">
+        <div className={`${marginTop ? 'view-tutor-banner' : ''}`}>
                 <div>
                     <Image
                         aria-hidden

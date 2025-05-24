@@ -115,15 +115,29 @@ const UserSidebar = ({onMenuClick}:UserSidebarProps) => {
 
                         <div className="sidebar-break">
 
-                            <Link href='/' className="sidebar-link">
-                                <Image
-                                    aria-hidden
-                                    src="/assets/images/profile-circle.png"
-                                    alt="Colearn Image"
-                                    width={20}
-                                    height={20}
-                                    className="object-cover"
-                                />
+                            <Link href='/instructors/account' className={`sidebar-link ${pathname == '/instructors/account' ? 'active' : ''}`}>
+                                {
+                                    pathname == '/instructors/account' ? (
+                                        <Image
+                                            aria-hidden
+                                            src="/assets/images/profile-circle-active.png"
+                                            alt="Colearn Image"
+                                            width={20}
+                                            height={20}
+                                            className="object-cover"
+                                        />
+
+                                    ) : (
+                                        <Image
+                                            aria-hidden
+                                            src="/assets/images/profile-circle.png"
+                                            alt="Colearn Image"
+                                            width={20}
+                                            height={20}
+                                            className="object-cover"
+                                        />
+                                    )
+                                }
                                 <p className="text-[.9rem]">Account</p>
                             </Link>
 
