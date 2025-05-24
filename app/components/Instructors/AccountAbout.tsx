@@ -1,15 +1,19 @@
-import React from "react";
+import React, {useState} from "react";
 import Image from "next/image";
 import Link from "next/link";
+import AccountModal from "./AccountModal";
 
 const AccountAbout = () => {
+    const [showModal, setShowModal] = useState<string | null>(null);
+    const openModal = (key: string) => setShowModal(key);
+    const closeModal = () => setShowModal(null);
     return (
         <div className="res-flex justify-between items-start">
             <div className="view-course-content left-1">
                 <div>
                     <div className="flex items-center justify-between">
                         <p className="font-bold">Personal Information</p>
-                        <div>
+                        <div onClick={() => openModal("personal")} className="cursor-pointer">
                             <Image
                                 aria-hidden
                                 src="/assets/images/edit-2.png"
@@ -55,7 +59,7 @@ const AccountAbout = () => {
                 <div className="mt-4">
                     <div className="flex items-center justify-between">
                         <p className="font-bold">Social Media</p>
-                        <div>
+                        <div onClick={() => openModal("social")} className="cursor-pointer">
                             <Image
                                 aria-hidden
                                 src="/assets/images/edit-2.png"
@@ -107,7 +111,7 @@ const AccountAbout = () => {
             <div className="view-course-content right-1">
                 <div className="flex items-center justify-between">
                     <p className="font-bold">Bio</p>
-                    <div>
+                    <div onClick={() => openModal("bio")} className="cursor-pointer">
                         <Image
                             aria-hidden
                             src="/assets/images/edit-2.png"
@@ -123,6 +127,10 @@ const AccountAbout = () => {
                     <p>Lorem ipsum dolor sit amet consectetur. In senectus fames faucibus cursus risus in sit neque. Sed convallis amet est eget. Placerat augue id pellentesque fermentum. Elementum laoreet turpis elit pulvinar in sit ut. Feugiat arcu rhoncus urna ultricies magna fermentum curabitur. Ac consequat vitae orci malesuada viverra. Et leo proin scelerisque imperdiet ullamcorper quam. Ac habitasse tortor sed quis gravida. Nunc massa sapien eget bibendum sagittis integer et ante diam.</p>
                 </div>
             </div>
+            {
+                showModal && 
+                <AccountModal modalType={showModal} modalClose={closeModal}/>
+            }
         </div>
     )
 }
