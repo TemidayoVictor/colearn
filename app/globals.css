@@ -2138,6 +2138,25 @@ td {
   padding: .5em;
 }
 
+/* Account */
+
+.account-about-body {
+  width: 48%;
+}
+
+.account-bio p{
+  font-size: .9rem;
+  margin-block: .5em;
+}
+
+.view-course-content.left-1 {
+  width: 42%;
+}
+
+.view-course-content.right-1 {
+  width: 57%;
+}
+
 /* Footer */
 .footer-2 {
   display: flex;
@@ -2274,6 +2293,10 @@ td {
 
   .in-nav {
     justify-content: space-between;
+  }
+
+  .in-nav.three {
+    justify-content: flex-start;
   }
 
   .in-nav.two {
@@ -2962,6 +2985,10 @@ td {
     top: 0;
     max-height: 100vh;
     z-index: 100000;
+  }
+
+  .view-course-content.left-1, .view-course-content.right-1{
+    width: 100%;
   }
 
   .footer-2, .footer-right {
