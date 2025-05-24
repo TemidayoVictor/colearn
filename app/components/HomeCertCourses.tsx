@@ -195,7 +195,7 @@ const HomeCertCourses = () => {
                                     </div>
                                     <h3 className="mt-2 text-[1rem] font-bold">The Complete  Guide to cybersecurity:  From Beginner to expert</h3>
                                     <div className="flex gap-2 items-center mt-2">
-                                    <Image
+                                        <Image
                                             aria-hidden
                                             src="/assets/images/avatars.png"
                                             alt="Colearn Logo"

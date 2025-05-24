@@ -1,11 +1,14 @@
-import React from "react";
+'use client';
+import React, {useState}  from "react";
 import Image from "next/image";
+import Notification from "./Instructors/Notification";
 
 type UserHeaderProps = {
     onMenuClick: () => void;
 };
 
 const UserHeader = ({onMenuClick}:UserHeaderProps) => {
+    const [openNotification, setOpenNotification] = useState<boolean | null>(false);
     return (
         <div>
             <div className="container-3 two user-header desktop">
@@ -37,7 +40,8 @@ const UserHeader = ({onMenuClick}:UserHeaderProps) => {
                         alt="Colearn Logo"
                         width={24}
                         height={24}
-                        className="object-cover"
+                        className="object-cover cursor-pointer"
+                        onClick={() => setOpenNotification(prev => !prev)}
                     />
                     <Image
                         aria-hidden
@@ -69,6 +73,7 @@ const UserHeader = ({onMenuClick}:UserHeaderProps) => {
                         width={32}
                         height={32}
                         className="object-contain mobile"
+                        onClick={() => setOpenNotification(prev => !prev)}
                     />
 
                     <Image
@@ -83,6 +88,7 @@ const UserHeader = ({onMenuClick}:UserHeaderProps) => {
 
                 </div>
             </div>
+            <Notification onNotificationClick={() => setOpenNotification(prev => !prev)} openNotification={openNotification} />
         </div>
     )
 }

@@ -2103,6 +2103,40 @@ td {
   border-bottom-left-radius: .3em;
 }
 
+/* Notification */
+
+.notification-box-container {
+  background-color: var(--white);
+  width: 22rem;
+  position: fixed;
+  right: 2%;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border-radius: .5em;
+  transition: transform 0.5s ease-in-out;
+  max-height: 80vh;
+  overflow-y: scroll;
+  transform: translateX(120%);
+}
+
+.notification-box-container.active {
+  transform: translateX(0);
+}
+
+.notification-content {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: .5em;
+  margin-top: .5em;
+  border-bottom: 1px solid var(--grey-1);
+  padding-bottom: .5em;
+}
+
+.notification-content.two {
+  display: block;
+  padding: .5em;
+}
+
 /* Footer */
 .footer-2 {
   display: flex;
@@ -2918,6 +2952,15 @@ td {
 
   .help-desk-content .left, .help-desk-content .right {
     width: 100%;
+  }
+
+  .notification-box-container{
+    left: 0;
+    right: 0;
+    width: 100%;
+    top: 0;
+    max-height: 100vh;
+    z-index: 100000;
   }
 
   .footer-2, .footer-right {
