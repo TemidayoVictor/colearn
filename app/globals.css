@@ -456,6 +456,8 @@ input, textarea {
   max-width: 600px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   position: relative;
+  max-height: 35rem;
+  overflow-y: auto;
 }
 
 .modal-close {
@@ -1213,6 +1215,7 @@ input, textarea {
   padding: .7em;
   border-radius: .3em;
   font-size: .9rem;
+  outline: none;
 }
 
 .input-flex-item {
@@ -1896,11 +1899,19 @@ td {
   resize: none;
 }
 
+.upload-course-textarea.two {
+  font-size: .9rem;
+}
+
 .upload-course-btns {
   display: flex;
   align-items: center;
   justify-content: space-between;
   margin-top: 1em;
+}
+
+.upload-course-btns.two {
+  margin-top: 1.5em;
 }
 
 .upload-course-tabs-con {
@@ -2192,6 +2203,10 @@ td {
   margin-top: 1em;
 }
 
+.skill-tag-cont.two {
+  margin-top: 0;
+}
+
 .skill-tag {
   background-color: var(--grey-active);
   color: #1f2937;
@@ -2201,6 +2216,17 @@ td {
   transition: background-color 0.3s ease, transform 0.2s ease;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
   cursor: default;
+}
+
+.experience-box {
+  border-bottom: 1px solid var(--grey-1);
+  padding-bottom: .5em;
+  margin-bottom: .5em;
+}
+
+.experience-box:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
 }
 
 /* Footer */
@@ -2363,6 +2389,22 @@ td {
 
   .res-w-full {
     width: 100%;
+  }
+
+  .modal-container {
+    background-color: rgba(0, 0, 0, .7);
+    z-index: 1000000000;
+  }
+
+  .modal {
+    width: 100%;
+    max-height: 100vh;
+    overflow-y: auto;
+    border-radius: 0;
+  }
+
+  .modal-close {
+    top: 5%;
   }
 
   .nav-links-cont {

@@ -1,15 +1,26 @@
-'use client';
-import React,  { useState, useRef, useEffect } from "react";
+import React, {useState} from "react";
 import Image from "next/image";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
+import MultiDropdownSelector from "../MultiDropdownSelector";
+import { Experience } from "@/app/Types/types";
 
 type AccountModalProps = {
     modalType: string;
     modalClose: () => void;
+    experience?: Experience | null;
 }
 
-const AccountModal = ({modalType, modalClose}: AccountModalProps) => {
+const AccountModal = ({modalType, modalClose, experience}: AccountModalProps) => {
+    const [selectedItems, setSelectedItems] = useState<string[]>([]);
+    
+    const [formData, setFormData] = useState({
+        company: experience?.company || "",
+        title: experience?.title || "",
+        duration: experience?.duration || "",
+        description: experience?.description || "",
+    });
+
     return (
         <div className="modal-container">
             <div className="modal">
@@ -18,7 +29,7 @@ const AccountModal = ({modalType, modalClose}: AccountModalProps) => {
                     modalType == 'personal' &&
                     <div>
                         <div>
-                            <h2 className="title">Edit Personal Information</h2>
+                            <h2 className="title-3">Edit Personal Information</h2>
                             <p className="color-grey-text text-[.8rem]">Provide course information.</p>
                         </div>
 
@@ -50,6 +61,36 @@ const AccountModal = ({modalType, modalClose}: AccountModalProps) => {
                                 </div>
 
                                 <div className="input-box">
+                                    <label htmlFor="">What Languages do you speak? <span className="text-red-500">*</span></label>
+                                    <MultiDropdownSelector
+                                        options={["English", "French", "Yoruba", "Igbo", "Hausa", "German", "Spanish", "Chinese", "Japanese", "Korean"]}
+                                        selected={selectedItems}
+                                        setSelected={setSelectedItems}
+                                    />
+                                </div>
+
+                                <div className="input-box">
+                                    <label htmlFor="">What gender do you identify as? <span className="text-red-500">*</span></label>
+                                    <select name="" id="" className="input-field">
+                                        <option value="">Select one</option>
+                                    </select>
+                                </div>
+
+                                <div className="input-box">
+                                    <label htmlFor="">What gender do you identify as? <span className="text-red-500">*</span></label>
+                                    <select name="" id="" className="input-field">
+                                        <option value="">Select one</option>
+                                    </select>
+                                </div>
+
+                                <div className="input-box">
+                                    <label htmlFor="">What gender do you identify as? <span className="text-red-500">*</span></label>
+                                    <select name="" id="" className="input-field">
+                                        <option value="">Select one</option>
+                                    </select>
+                                </div>
+
+                                <div className="input-box">
                                     <label htmlFor="">What gender do you identify as? <span className="text-red-500">*</span></label>
                                     <select name="" id="" className="input-field">
                                         <option value="">Select one</option>
@@ -73,13 +114,150 @@ const AccountModal = ({modalType, modalClose}: AccountModalProps) => {
                         </div>
                     </div>
                 }
+
+                {
+                    modalType == 'social' && 
+                    <div>
+                        <div>
+                            <h2 className="title-3">Edit Social Media Information</h2>
+                            <p className="color-grey-text text-[.8rem]">Update Social Media information.</p>
+                        </div>
+
+                        <div className="mt-[1rem]">
+
+                            <div className="mt-4">
+                                <div className="input-box">
+                                    <label htmlFor="">Facebook URL label <span className="text-red-500">*</span></label>
+                                    <input type="text" className="input-field" placeholder="Enter Facebook URL" />
+                                </div>
+
+                                <div className="input-box">
+                                    <label htmlFor="">Instagram URL label  <span className="text-red-500">*</span></label>
+                                    <input type="text" className="input-field" placeholder="Enter Instagram URL" />
+                                </div>
+
+                                <div className="input-box">
+                                    <label htmlFor="">X URL label  <span className="text-red-500">*</span></label>
+                                    <input type="text" className="input-field" placeholder="Enter X URL" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+                {
+                    modalType == 'bio' && 
+                    <div>
+                        <div>
+                            <h2 className="title-3">Edit Bio</h2>
+                            <p className="color-grey-text text-[.8rem]">Update Bio information.</p>
+                        </div>
+
+                        <div className="mt-[1rem]">
+
+                            <div className="mt-4">
+                                <div className="input-box">
+                                    <label htmlFor="">Bio <span className="text-red-500">*</span></label>
+                                    <textarea name="" id="" className="upload-course-textarea two"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+                {
+                    modalType == 'experience' &&
+                    <div>
+                        <div>
+                            <h2 className="title-3">Edit Work Experience</h2>
+                            <p className="color-grey-text text-[.8rem]">Update Work Experience.</p>
+                        </div>
+
+                        <div className="mt-[1rem]">
+                            <div className="mt-4">
+                                
+                                <div className="input-box">
+                                    <label htmlFor="">Company <span className="text-red-500">*</span></label>
+                                    <input type="text" className="input-field" value={experience?.company} onChange={(e) => setFormData({ ...formData, company: e.target.value })} />
+                                </div>
+
+                                <div className="input-box">
+                                    <label htmlFor="">Position <span className="text-red-500">*</span></label>
+                                    <input type="text" className="input-field" value={experience?.title} onChange={(e) => setFormData({ ...formData, title: e.target.value })}/>
+                                </div>
+
+                                <div className="input-box">
+                                    <label htmlFor="">Time Period <span className="text-red-500">*</span></label>
+                                    <input type="text" className="input-field" value={experience?.duration} onChange={(e) => setFormData({ ...formData, duration: e.target.value })}/>
+                                </div>
+
+                                <div className="input-box">
+                                    <label htmlFor="">Experience<span className="text-red-500">*</span></label>
+                                    <textarea name="" id="" className="upload-course-textarea two" onChange={(e) => setFormData({ ...formData, description: e.target.value })} defaultValue={experience?.description}></textarea>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                }
+
+                {
+                    modalType == 'career' &&
+                    <div>
+                        <div>
+                            <h2 className="title-3">Edit Career Information</h2>
+                            <p className="color-grey-text text-[.8rem]">Update Career information.</p>
+                        </div>
+
+                        <div className="mt-[1rem]">
+                            <div className="mt-4">
+                                <div className="input-box">
+                                    <label htmlFor="">Primary Discipline / Expertise <span className="text-red-500">*</span></label>
+                                    <input type="text" className="input-field"/>
+                                </div>
+
+                                <div className="input-box">
+                                    <label htmlFor="">Which disciplines are relevant in your expertise(s)? <span className="text-red-500">*</span></label>
+                                    <MultiDropdownSelector
+                                        options={["English", "French", "Yoruba", "Igbo", "Hausa", "German", "Spanish", "Chinese", "Japanese", "Korean"]}
+                                        selected={selectedItems}
+                                        setSelected={setSelectedItems}
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+{
+                    modalType == 'skills' &&
+                    <div>
+                        <div>
+                            <h2 className="title-3">Edit Skills</h2>
+                            <p className="color-grey-text text-[.8rem]">Update Skills.</p>
+                        </div>
+
+                        <div className="mt-[1rem]">
+                            <div className="mt-4">
+                                <div className="input-box">
+                                    <label htmlFor="">Which skill(s) do you have experience in? <span className="text-red-500">*</span></label>
+                                    <MultiDropdownSelector
+                                        options={["English", "French", "Yoruba", "Igbo", "Hausa", "German", "Spanish", "Chinese", "Japanese", "Korean"]}
+                                        selected={selectedItems}
+                                        setSelected={setSelectedItems}
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
                 
                 <div className="modal-close">
                     <FontAwesomeIcon icon={faXmark} className="text-[1.5rem]" onClick={modalClose}/>
                 </div>
 
-                <div className="upload-course-btns mt-4">
-                    <button className="btn normal">Cancel</button>
+                <div className="upload-course-btns two">
+                    <button className="btn normal" onClick={modalClose}>Cancel</button>
 
                     <button className="flex items-center gap-2 btn btn-primary-fill">
                         <span>Update</span>
