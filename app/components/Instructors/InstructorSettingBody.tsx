@@ -1,0 +1,19 @@
+'use client';
+import React, {useState} from "react";
+
+const InstructorSettingBody = () => {
+    const [selectedTab, setSelectedTab] = useState<string>('security');
+    return (
+        <div className="container-3">
+            <div className="in-nav mt-[1.5em] flex items-center justify-between">
+                <div className="in-nav two scrollable">
+                    <span className={`in-nav-link three flex gap-2 items-center two color-grey-text ${selectedTab == 'security' ? 'active' : ''}`} onClick={() => setSelectedTab('security')}> <span>Security</span></span>
+                    <span className={`in-nav-link three flex gap-2 items-center two color-grey-text ${selectedTab == 'bank' ? 'active' : ''}`} onClick={() => setSelectedTab('bank')}> <span>Bank & Payment Settings</span></span>
+                    <span className={`in-nav-link three flex gap-2 items-center two color-grey-text ${selectedTab == 'notification' ? 'active' : ''}`} onClick={() => setSelectedTab('notification')}> <span>Notification Settings</span></span>
+                </div>
+            </div>
+        </div>
+    )
+}
+
+export default InstructorSettingBody

@@ -191,15 +191,30 @@ const UserSidebar = ({onMenuClick}:UserSidebarProps) => {
                                 <p className="text-[.9rem]">Payment Transaction</p>
                             </Link>
 
-                            <Link href='/' className="sidebar-link">
-                                <Image
-                                    aria-hidden
-                                    src="/assets/images/setting-2.png"
-                                    alt="Colearn Image"
-                                    width={20}
-                                    height={20}
-                                    className="object-cover"
-                                />
+                            <Link href='/instructors/settings' className={`sidebar-link ${pathname == '/instructors/settings' ? 'active' : ''}`}>
+                                
+                                {
+                                    pathname == '/instructors/settings' ? (
+                                        <Image
+                                            aria-hidden
+                                            src="/assets/images/setting-active.png"
+                                            alt="Colearn Image"
+                                            width={20}
+                                            height={20}
+                                            className="object-cover"
+                                        />
+                                    ) : (
+                                        <Image
+                                            aria-hidden
+                                            src="/assets/images/setting-2.png"
+                                            alt="Colearn Image"
+                                            width={20}
+                                            height={20}
+                                            className="object-cover"
+                                        />
+                                    )
+                                }
+                                
                                 <p className="text-[.9rem]">Settings</p>
                             </Link>
 

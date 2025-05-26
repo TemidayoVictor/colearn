@@ -333,6 +333,7 @@ input, textarea {
 
 .in-nav.two {
   border: 0;
+  gap: .5em;
 }
 
 .in-nav-link {
