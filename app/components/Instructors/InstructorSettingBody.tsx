@@ -1,5 +1,6 @@
 'use client';
 import React, {useState} from "react";
+import SecuritySettings from "./SecuritySettings";
 
 const InstructorSettingBody = () => {
     const [selectedTab, setSelectedTab] = useState<string>('security');
@@ -11,6 +12,10 @@ const InstructorSettingBody = () => {
                     <span className={`in-nav-link three flex gap-2 items-center two color-grey-text ${selectedTab == 'bank' ? 'active' : ''}`} onClick={() => setSelectedTab('bank')}> <span>Bank & Payment Settings</span></span>
                     <span className={`in-nav-link three flex gap-2 items-center two color-grey-text ${selectedTab == 'notification' ? 'active' : ''}`} onClick={() => setSelectedTab('notification')}> <span>Notification Settings</span></span>
                 </div>
+            </div>
+
+            <div className="spacing-inter">
+                
             </div>
         </div>
     )
