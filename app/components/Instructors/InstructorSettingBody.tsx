@@ -15,7 +15,12 @@ const InstructorSettingBody = () => {
             </div>
 
             <div className="spacing-inter">
-                
+                {
+                    selectedTab === 'security' &&
+                    <div>
+                        <SecuritySettings />
+                    </div>
+                }
             </div>
         </div>
     )
