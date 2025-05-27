@@ -82,7 +82,10 @@ const SecuritySettings = () => {
                     </div>
 
                     <div className="security-settings-content">
-                        <ChangeEmail />
+                        {
+                            selectedTab === 'email' &&
+                            <ChangeEmail />
+                        }
                     </div>
                 </div>
             </div>
