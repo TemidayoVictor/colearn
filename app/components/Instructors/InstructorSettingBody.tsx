@@ -1,6 +1,7 @@
 'use client';
 import React, {useState} from "react";
 import SecuritySettings from "./SecuritySettings";
+import BankSettings from "./BankSettings";
 
 const InstructorSettingBody = () => {
     const [selectedTab, setSelectedTab] = useState<string>('security');
@@ -19,6 +20,13 @@ const InstructorSettingBody = () => {
                     selectedTab === 'security' &&
                     <div>
                         <SecuritySettings />
+                    </div>
+                }
+
+                {
+                    selectedTab == 'bank' &&
+                    <div>
+                        <BankSettings />
                     </div>
                 }
             </div>

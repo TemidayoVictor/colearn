@@ -3,15 +3,16 @@ import Image from "next/image";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import MultiDropdownSelector from "../MultiDropdownSelector";
-import { Experience } from "@/app/Types/types";
+import { Experience, Bank } from "@/app/Types/types";
 
 type AccountModalProps = {
     modalType: string;
     modalClose: () => void;
     experience?: Experience | null;
+    bank?: Bank | null;
 }
 
-const AccountModal = ({modalType, modalClose, experience}: AccountModalProps) => {
+const AccountModal = ({modalType, modalClose, experience, bank}: AccountModalProps) => {
     const [selectedItems, setSelectedItems] = useState<string[]>([]);
     
     const [formData, setFormData] = useState({
@@ -19,6 +20,7 @@ const AccountModal = ({modalType, modalClose, experience}: AccountModalProps) =>
         title: experience?.title || "",
         duration: experience?.duration || "",
         description: experience?.description || "",
+        bank: bank?.bank || "",
     });
 
     return (
@@ -265,7 +267,7 @@ const AccountModal = ({modalType, modalClose, experience}: AccountModalProps) =>
                     </div>
                 }
 
-{
+                {
                     modalType == 'skills' &&
                     <div>
                         <div>
@@ -282,6 +284,90 @@ const AccountModal = ({modalType, modalClose, experience}: AccountModalProps) =>
                                         selected={selectedItems}
                                         setSelected={setSelectedItems}
                                     />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+                {
+                    modalType == 'addBank' &&
+                    <div>
+                        <div>
+                            <h2 className="title-3">Add Bank Information</h2>
+                            <p className="color-grey-text text-[.8rem]">Select your country before you provide Bank Information</p>
+                        </div>
+
+                        <div className="mt-[1rem]">
+                            <div className="mt-4">
+                                <div className="input-box">
+                                    <label htmlFor="">Select Country <span className="text-red-500">*</span></label>
+                                    <select name="" id="" className="input-field">
+                                        <option value="">Select one</option>
+                                    </select>
+                                </div>
+
+                                <div className="input-box">
+                                    <label htmlFor="">Select Bank<span className="text-red-500">*</span></label>
+                                    <select name="" id="" className="input-field">
+                                        <option value="">Select one</option>
+                                    </select>
+                                </div>
+
+                                <div className="input-box">
+                                    <label htmlFor="">Account Name <span className="text-red-500">*</span></label>
+                                    <input name="" id="" className="input-field" />
+                                </div>
+
+                                <div className="input-box">
+                                    <label htmlFor="">Account Number <span className="text-red-500">*</span></label>
+                                    <input name="" id="" className="input-field" />
+                                </div>
+
+                                <div className="alert notification">
+                                    <p className="head">Note</p>
+                                    <p className="bod">Ensure your name on your CoLearn account is the same as your bank account details.</p>          
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+                {
+                    modalType == 'editbank' &&
+                    <div>
+                        <div>
+                            <h2 className="title-3">Edit Bank Information</h2>
+                            <p className="color-grey-text text-[.8rem]">Select your country before you provide Bank Information</p>
+                        </div>
+
+                        <div className="mt-[1rem]">
+                            <div className="mt-4">
+                                <div className="input-box">
+                                    <label htmlFor="">Select Country <span className="text-red-500">*</span></label>
+                                    <select name="" id="" className="input-field">
+                                        <option value="">Select one</option>
+                                    </select>
+                                </div>
+
+                                <div className="input-box">
+                                    <label htmlFor="">Bank<span className="text-red-500">*</span></label>
+                                    <input name="" id="" className="input-field" value={bank?.bank} onChange={(e) => setFormData({ ...formData, bank: e.target.value })}/>
+                                </div>
+
+                                <div className="input-box">
+                                    <label htmlFor="">Account Name <span className="text-red-500">*</span></label>
+                                    <input name="" id="" className="input-field" />
+                                </div>
+
+                                <div className="input-box">
+                                    <label htmlFor="">Account Number <span className="text-red-500">*</span></label>
+                                    <input name="" id="" className="input-field" />
+                                </div>
+
+                                <div className="alert notification">
+                                    <p className="head">Note</p>
+                                    <p className="bod">Ensure your name on your CoLearn account is the same as your bank account details.</p>          
                                 </div>
                             </div>
                         </div>
