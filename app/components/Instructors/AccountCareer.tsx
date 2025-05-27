@@ -39,6 +39,17 @@ const AccountCareer = () => {
                 <div>
                     <div className="flex items-center justify-between">
                         <p className="font-bold">Experiences</p>
+                        <div className="flex items-center gap-2 cursor-pointer" onClick={() => openModal("addexperience")}>
+                            <Image
+                                aria-hidden
+                                src="/assets/images/add-icon.png"
+                                alt="Colearn Logo"
+                                width={20}
+                                height={20}
+                                className="object-contain"
+                            />
+                            <p className="font-semibold color-grey-text text-[.9rem]">Add New</p>
+                        </div>
                     </div>
 
                     {

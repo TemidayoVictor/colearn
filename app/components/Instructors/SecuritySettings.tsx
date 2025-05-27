@@ -2,6 +2,8 @@
 import React, {useState} from "react";
 import Image from "next/image";
 import ChangeEmail from "./ChangeEmail";
+import ChangePassword from "./ChangePassword";
+import DeactivateAccount from "./DeactivateAccount";
 
 const SecuritySettings = () => {
     const [selectedTab, setSelectedTab] = useState<string>('email');
@@ -85,6 +87,16 @@ const SecuritySettings = () => {
                         {
                             selectedTab === 'email' &&
                             <ChangeEmail />
+                        }
+
+                        {
+                            selectedTab === 'password' &&
+                            <ChangePassword />
+                        }
+
+                        {
+                            selectedTab === 'deactivate' &&
+                            <DeactivateAccount />
                         }
                     </div>
                 </div>

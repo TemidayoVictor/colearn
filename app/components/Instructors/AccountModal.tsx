@@ -166,6 +166,42 @@ const AccountModal = ({modalType, modalClose, experience}: AccountModalProps) =>
                 }
 
                 {
+                    modalType == 'addexperience' &&
+                    <div>
+                        <div>
+                            <h2 className="title-3">Add Work Experience</h2>
+                            <p className="color-grey-text text-[.8rem]">Add Work Experience.</p>
+                        </div>
+
+                        <div className="mt-[1rem]">
+                            <div className="mt-4">
+                                
+                                <div className="input-box">
+                                    <label htmlFor="">Company <span className="text-red-500">*</span></label>
+                                    <input type="text" className="input-field" />
+                                </div>
+
+                                <div className="input-box">
+                                    <label htmlFor="">Position <span className="text-red-500">*</span></label>
+                                    <input type="text" className="input-field"/>
+                                </div>
+
+                                <div className="input-box">
+                                    <label htmlFor="">Time Period <span className="text-red-500">*</span></label>
+                                    <input type="text" className="input-field"/>
+                                </div>
+
+                                <div className="input-box">
+                                    <label htmlFor="">Experience<span className="text-red-500">*</span></label>
+                                    <textarea name="" id="" className="upload-course-textarea two"></textarea>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                }
+
+                {
                     modalType == 'experience' &&
                     <div>
                         <div>
