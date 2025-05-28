@@ -5,6 +5,7 @@ import Notification from "./Instructors/Notification";
 
 type UserHeaderProps = {
     onMenuClick: () => void;
+    userType?: string;
 };
 
 const UserHeader = ({onMenuClick}:UserHeaderProps) => {
