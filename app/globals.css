@@ -1882,6 +1882,12 @@ svg.rdp-chevron {
 .perf-detail {
   border-left: 1px solid var(--grey-1);
   padding-left: 1em;
+  min-width: max-content;
+}
+
+.perf-detail.none {
+  border-left: none;
+  padding-left: 0;
 }
 
 .dashboard-rev {
@@ -2455,6 +2461,24 @@ td {
 .bg-image-div p {
   color: var(--white);
   width: 70%;
+}
+
+.student-dashboard-performance {
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch;
+}
+
+.student-dashboard-performance .left {
+  width: 20%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.student-dashboard-performance .right {
+  width: 78%;
 }
 
 /* Footer */
@@ -3184,10 +3208,6 @@ td {
     gap: 2em;
     scroll-snap-type: x mandatory;
     padding-bottom: 1em;
-  }
-
-  .dashboard-grid div {
-    min-width: 12rem;
   }
 
   .dashboard-flex {
