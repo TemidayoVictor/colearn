@@ -9,7 +9,7 @@ const StudentCourseBox = () => {
                 <h2 className="font-semibold text-[.9rem]">Your Course</h2>
                 <Link href="/" className="text-[.9rem] underline color-normal">All Courses</Link>
             </div>
-            <div className="courses-container ">
+            <div className="courses-container student">
                 {
                     [1,2,3,4].map((items, index) => (
                         <Link href='course-page' className="course-box" key={index}>

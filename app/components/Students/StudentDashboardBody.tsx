@@ -3,6 +3,7 @@ import DashboardHeader from "@/app/components/Students/DashboardHeader";
 import StudentDashboardPerformance from "@/app/components/Students/StudentDashboardPerformance";
 import StudentCourseBox from "@/app/components/Students/StudentCourseBox";
 import StudentPopularCertificatesBox from "./StudentPopularCertificatesBox";
+import StudentBestInstructor from "./StudentBestInstructors";
 
 const StudentDashboardBody = () => {
     return (
@@ -14,6 +15,7 @@ const StudentDashboardBody = () => {
                 <StudentDashboardPerformance />
                 <StudentCourseBox />
                 <StudentPopularCertificatesBox />
+                <StudentBestInstructor />
             </div>
         </div>
     )

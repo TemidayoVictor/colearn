@@ -11,7 +11,7 @@ const DashboardHeader = () => {
                     </p>
 
                     <Link href='/' className="bt-btn btn btn-primary-fill">
-                        <span>Become a Tutor</span>
+                        <span>Explore Courses</span>
                         <span>
                             <Image
                                 aria-hidden

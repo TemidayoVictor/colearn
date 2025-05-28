@@ -2494,6 +2494,34 @@ td {
   width: 78%;
 }
 
+.best-instructor-cont{
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr)); 
+  gap: 1em;
+  overflow-x: unset;
+}
+
+.best-instructor-box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: var(--grey);
+  border: 1px solid var(--color-primary-normal);
+  border-radius: .5em;
+  padding: .5em;
+}
+
+.best-instructor-box .left {
+  width: 64%;
+}
+
+.best-instructor-box .right {
+  width: 34%;
+  display: flex;
+  justify-content: end;
+  align-items: end;
+}
+
 /* Footer */
 .footer-2 {
   display: flex;
@@ -3373,6 +3401,52 @@ td {
     align-items: start;
   }
 
+  .dashboard-header {
+    padding: 1em 0;
+  }
+
+  .bg-image-div {
+    border-radius: 0;
+    min-height: max-content;
+  }
+
+  .bg-image-div p {
+    width: 100%;
+    font-size: .95rem;
+  }
+
+  .student-dashboard-performance {
+    flex-direction: column;
+    gap: 1em;
+  }
+
+  .student-dashboard-performance .right {
+    width: 100%;
+  }
+
+  .student-dashboard-performance .left {
+    display: none;
+  }
+
+  .courses-container.student, .blog-cont.two.scrollable {
+    display: flex;
+    overflow-x: auto;
+    gap: 1em;
+    scroll-snap-type: x mandatory;
+    padding-bottom: 1em;
+  }
+
+  .courses-container.student .course-box, .course.two {
+    flex: 0 0 auto;
+    min-width: 16rem;
+    max-width: 16rem;
+    scroll-snap-align: start;
+  }
+
+  .best-instructor-box {
+    align-items: start;
+  }
+  
   .footer-2, .footer-right {
     flex-direction: column;
     gap: 1em;

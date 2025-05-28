@@ -9,7 +9,7 @@ const StudentPopularCertificatesBox = () => {
                 <h2 className="font-semibold text-[.9rem]">Most Popular Certificates</h2>
                 <Link href="/" className="text-[.9rem] underline color-normal">See More</Link>
             </div>
-            <div className="blog-cont two">
+            <div className="blog-cont two scrollable">
                 {
                     [1,2,3,4].map((item, index) => (
                         <div className="course two" key={index}>
