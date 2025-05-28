@@ -2431,6 +2431,32 @@ td {
   justify-content: end;
 }
 
+/* Student Dashboard */
+
+.dashboard-header {
+  padding: 1em 2em;
+}
+
+.bg-image-div {
+  /* background-image: url('/assets/images/student-banner.png'); */
+  background-color: var(--color-primary-dark);
+  background-size: cover;
+  background-position: center;
+  width: 100%;
+  height: 12rem;
+  border-radius: .5rem;
+  padding: 1em;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1em;
+}
+
+.bg-image-div p {
+  color: var(--white);
+  width: 70%;
+}
+
 /* Footer */
 .footer-2 {
   display: flex;
