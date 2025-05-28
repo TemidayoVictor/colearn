@@ -4,7 +4,7 @@ import DashboardPerformance from "../Instructors/DashboardPerformance";
 
 const StudentDashboardPerformance = () => {
     return (
-        <div className="container-3">
+        <div>
             <div className="student-dashboard-performance">
                 <div className="left">
                     <h2 className="font-semibold text-[.9rem]">Overall Course Performance</h2>

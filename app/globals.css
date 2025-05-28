@@ -189,6 +189,11 @@ input, textarea {
   cursor: pointer;
 } 
 
+.btn.btn-small {
+  font-size: .8rem;
+  padding: .3em 1em;
+}
+
 .btn.normal {
   border: 1px solid var(--color-primary-normal);
 }
@@ -872,6 +877,10 @@ input, textarea {
   gap: 2em;
   row-gap: 2.5em;
   overflow-x: unset;
+}
+
+.blog-cont.two {
+  grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr));
 }
 
 .blog-tab {
@@ -2119,7 +2128,11 @@ td {
   height: .5em;
   background-color: var(--secondary-color-normal);
   width: 0%;
-  transition: width 0.4s ease;
+  transition: width 1.5s ease;
+}
+
+.progress-bar.two {
+  background-color: var(--color-primary-normal);
 }
 
 .progress-text {

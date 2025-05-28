@@ -1,17 +1,12 @@
 import React from "react";
 import UserLayout from "@/app/components/UserLayout";
-import DashboardHeader from "@/app/components/Students/DashboardHeader";
-import StudentDashboardPerformance from "@/app/components/Students/StudentDashboardPerformance";
+import StudentDashboardBody from "@/app/components/Students/StudentDashboardBody";
+
 
 const StudentDashboard = () => (
     <div>
         <UserLayout userType="student">
-            <div>
-                <DashboardHeader />
-            </div>
-            <div>
-                <StudentDashboardPerformance />
-            </div>
+            <StudentDashboardBody />
         </UserLayout>
     </div>
 )
