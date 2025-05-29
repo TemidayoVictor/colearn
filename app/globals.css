@@ -576,6 +576,12 @@ input, textarea {
   transform: translateX(24px);
 }
 
+ol {
+  display: flex;
+  flex-direction: column;
+  gap: .3em;
+}
+
 /* Styles */
 
 /* Navigation */
@@ -2589,7 +2595,7 @@ td {
   border: 1px solid transparent;
 }
 
-.student-view-course-body .left .left-content.active, .student-view-course-body .left div:hover {
+.student-view-course-body .left .left-content.active, .student-view-course-body .left .left-content:hover {
   background-color: var(--white);
   border: 1px solid var(--color-primary-normal);
   border-radius: .3em;

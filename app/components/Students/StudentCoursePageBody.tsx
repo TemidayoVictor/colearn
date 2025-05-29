@@ -21,7 +21,7 @@ const StudentCoursePageBody = () => {
                     <StudentCoursePageBox courseType="inprogress" />
                 }
 
-{
+                {
                     selectedTab == 'completed' &&
                     <StudentCoursePageBox courseType="completed" />
                 }

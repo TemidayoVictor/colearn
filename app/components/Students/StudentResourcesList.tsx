@@ -6,9 +6,10 @@ type StudentResourcesList = {
     linkName: string
     link: string
     description: string
+    changeContentFn: (content: string) => void
 }
 
-const StudentResourcesList = ({title, linkName, link, description}:StudentResourcesList) => {
+const StudentResourcesList = ({title, linkName, link, description, changeContentFn}:StudentResourcesList) => {
     return (
         <div>
             <div className="best-instructor-box two">
@@ -18,14 +19,14 @@ const StudentResourcesList = ({title, linkName, link, description}:StudentResour
                         <p className="color-grey-text text-[.8rem]">{description}</p>
                     </div>
                 </div>
-                <div className="right-2">
-                    <Link href={link} className="bt-btn btn btn-primary-fill desktop">
+                <div className="right-2" onClick={() => changeContentFn('resource')}>
+                    <p className="bt-btn btn btn-primary-fill desktop">
                         <span>{linkName}</span>
-                    </Link>
+                    </p>
 
-                    <Link href={link} className="mobile">
+                    <p className="mobile" onClick={() => changeContentFn('resource')}>
                         <span className="underline text-[.8rem]">{linkName}</span>
-                    </Link>
+                    </p>
                 </div>
             </div>
         </div>
