@@ -1857,7 +1857,7 @@ svg.rdp-chevron {
 /* Firefox */
 .main {
   /* scrollbar-width: thin; */
-  scrollbar-color: var(--color-primary-darker) #fff;
+  scrollbar-color: var(--color-primary-normal) #fff;
 }
 
 .user-header {
@@ -2522,6 +2522,47 @@ td {
   align-items: end;
 }
 
+/* Students Course Page */
+.student-course-page-box .top .left {
+width: 75%;
+}
+
+.student-course-page-box .top .right {
+  width: 20%;
+}
+
+.student-course-page-box .middle{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-block: 1em;
+}
+
+.student-course-page-box .middle .left {
+  width: 8%;
+}
+
+.student-course-page-box .middle .right {
+  width: 78%;
+}
+
+.student-course-page-box .middle .right.full {
+  width: 91%;
+}
+
+.student-course-page-box .middle .cert {
+  width: 12%;
+}
+
+.student-course-page-box .bottom {
+  border-top: 1px solid var(--grey-1);
+  padding-top: 1em;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+  gap: 1em;
+  overflow: visible;
+}
+
 /* Footer */
 .footer-2 {
   display: flex;
@@ -2658,6 +2699,10 @@ td {
 
   .in-nav {
     justify-content: space-between;
+  }
+
+  .in-nav.no {
+    justify-content: start;
   }
 
   .in-nav.three {
@@ -3445,6 +3490,22 @@ td {
 
   .best-instructor-box {
     align-items: start;
+  }
+
+  .student-course-page-box .top .left {
+    width: 100%;
+  }
+
+  .student-course-page-box .middle .left {
+    width: 20%;
+  }
+  
+  .student-course-page-box .middle .right, .student-course-page-box .middle .right.full {
+    width: 78%;
+  }
+
+  .student-course-page-box .middle .right p {
+    font-size: .9rem;
   }
   
   .footer-2, .footer-right {

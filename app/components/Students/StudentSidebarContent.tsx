@@ -35,9 +35,9 @@ const StudentSidebarContent = () => {
                         <p className="text-[.9rem]">Dashboard</p>
                     </Link>
 
-                    <Link href='/instructors/courses' className={`sidebar-link ${pathname == '/instructors/courses' || pathname == '/instructors/upload-course' || pathname == '/instructors/course-page' ? 'active' : ''}`}>
+                    <Link href='/students/course-page' className={`sidebar-link ${pathname == '/students/course-page'  ? 'active' : ''}`}>
                         {
-                            pathname == '/instructors/courses' || pathname == '/instructors/upload-course' || pathname == '/instructors/course-page' ? (
+                            pathname == '/students/course-page'  ? (
 
                                 <Image
                                     aria-hidden
@@ -61,7 +61,7 @@ const StudentSidebarContent = () => {
 
                             )
                         }
-                        <p className="text-[.9rem]">Course Management</p>
+                        <p className="text-[.9rem]">My Courses</p>
                     </Link>
 
                     <Link href='/' className="sidebar-link">
