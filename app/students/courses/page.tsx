@@ -2,7 +2,7 @@ import React from "react";
 import UserLayout from "@/app/components/UserLayout";
 import StudentCoursePageBody from "@/app/components/Students/StudentCoursePageBody";
 
-const StudentCoursePage = () => {
+const StudentCourses = () => {
     return (
         <div>
             <UserLayout userType="student">
@@ -10,9 +10,8 @@ const StudentCoursePage = () => {
                     <StudentCoursePageBody />
                 </div>
             </UserLayout>
-
         </div>
     )
 }
 
-export default StudentCoursePage;
+export default StudentCourses;

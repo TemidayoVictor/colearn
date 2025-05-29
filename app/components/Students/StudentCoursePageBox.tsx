@@ -17,7 +17,7 @@ const StudentCoursePageBox = ({courseType}: StudentCoursePageBoxProps) => {
                                 <p className="font-bold">Google Cybersecurity Professional Certificate</p>    
                             </div>
                             <div className="right flex items-end justify-end desktop-flex">
-                                <Link href='/' className="bt-btn btn normal">
+                                <Link href='/students/view-course' className="bt-btn btn normal">
                                     <span>View Course</span>
                                     <span>
                                         <Image
@@ -147,7 +147,7 @@ const StudentCoursePageBox = ({courseType}: StudentCoursePageBoxProps) => {
                         </div>
                         <div className="mobile">
                             <div className="flex items-center gap-2 justify-between">
-                                <Link href='/' className="mt-3 bt-btn btn normal">
+                                <Link href='/students/view-course' className="mt-3 bt-btn btn normal">
                                     <span>View Course</span>
                                     <span>
                                         <Image

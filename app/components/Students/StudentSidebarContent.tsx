@@ -35,9 +35,9 @@ const StudentSidebarContent = () => {
                         <p className="text-[.9rem]">Dashboard</p>
                     </Link>
 
-                    <Link href='/students/course-page' className={`sidebar-link ${pathname == '/students/course-page'  ? 'active' : ''}`}>
+                    <Link href='/students/courses' className={`sidebar-link ${pathname == '/students/courses' || pathname == '/students/view-course'  ? 'active' : ''}`}>
                         {
-                            pathname == '/students/course-page'  ? (
+                            pathname == '/students/courses' || pathname == '/students/view-course'  ? (
 
                                 <Image
                                     aria-hidden
