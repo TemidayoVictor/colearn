@@ -2610,6 +2610,19 @@ td {
   width: 73%;
 }
 
+.resource section {
+  margin-top: 1.5em;
+}
+
+.resource p {
+  margin-top: .5em;
+  font-size: .9rem;
+}
+
+.resource p.title-3 {
+  font-size: 1.1rem;
+} 
+
 /* Footer */
 .footer-2 {
   display: flex;

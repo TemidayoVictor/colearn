@@ -28,7 +28,7 @@ const StudentViewCourseArticle = () => {
 
             {
                 content == 'resource' &&
-                <StudentViewCourseArticleView />
+                <StudentViewCourseArticleView back={changeContent}/>
             }
         </div>
     )

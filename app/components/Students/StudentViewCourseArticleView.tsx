@@ -2,60 +2,52 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 
-const StudentViewCourseArticleView = () => {
+type StudentViewCourseArticleViewProps = {
+    back: (tab: string) => void
+}
+
+const StudentViewCourseArticleView = ({back}:StudentViewCourseArticleViewProps ) => {
     return (
-        <div>
+        <div className="resource">
             <div>
-                <h2 className="title-3 mt-2">Article Name</h2>
-                <div className="mt-3">
-                    <p className="text-[.9rem]">Download our practice questions to test your knowledge and identify areas for improvement. Our practice questions cover all the key topics you need to know to succeed.</p>
-                </div>
-
-                <div className="mt-3">
-                    <p className="font-semibold">Instructions:</p>
-                    <ol>
-                        <li className="text-[.9rem]">Download the practice questions and answer them to the best of your ability.</li>
-                        <li className="text-[.9rem]">Review your answers using the answer key provided.</li>
-                        <li className="text-[.9rem]">Identify areas where you need improvement and focus your studying on those topics.</li>
-                    </ol>
-                </div>
-
-                <div className="mt-3">
-                    <p className="font-semibold">Practice Questions &  Answers</p>
-                    <div className="flex items-center gap-2">
-                        <Link href='/students/view-course' className="mt-3 bt-btn btn btn-primary-fill ">
-                            <span>
-                                <Image
-                                    aria-hidden
-                                    src="/assets/images/download-2.png"
-                                    alt="Colearn Logo"
-                                    width={20}
-                                    height={20}
-                                    className="object-contain"
-                                />
-                            </span>
-                            <span>Download Practice Question</span>
-                        </Link>
-                        
-                        <Link href='/' className="mt-3 bt-btn btn normal">
-                            <span>
-                                <Image
-                                    aria-hidden
-                                    src="/assets/images/download-1.png"
-                                    alt="Colearn Logo"
-                                    width={20}
-                                    height={20}
-                                    className="object-contain"
-                                />
-                            </span>
-                            <span>Download Practice Answers</span>
-                        </Link>
-                        
+                <Link href='#' className="flex items-center gap-2 cursor-pointer" onClick={() => back('list')}>
+                    <div>
+                        <Image
+                            aria-hidden
+                            src="/assets/images/left-arrow.png"
+                            alt="Colearn Logo"
+                            width={16}
+                            height={16}
+                            className="object-contain"
+                        />
                     </div>
-                </div>
-                <div className="mt-3">
-                    <p className="title-3">Good Luck!</p>
-                </div>
+                    <span className="font-semibold">Back</span>
+                </Link>
+                <h2 className="title-3 mt-2">Article Name</h2>
+                
+                <section className="">
+                    <p className="title-3">What to Expect:</p>
+                    <p >This article delves into [briefly mention the topic] and provides valuable information on [key takeaway]. Whether you're a [target audience] or simply looking to expand your knowledge, this article is a must-read.</p>
+                </section>
+
+                <section>
+                    <p>Download our practice questions to test your knowledge and identify areas for improvement. Our practice questions cover all the key topics you need to know to succeed.</p>
+                </section>
+
+                <section>
+                    <p className="title-3">Access the Full Article</p>
+                    <p>
+                        We're excited to share this insightful article with you. To read the complete piece and dive deeper into the topic, please click on the link below:
+                    </p>
+                    <p>
+                        Alternatively, you can download a PDF copy of the article here:
+                    </p>
+                    <button className="underline color-normal font-bold mt-4 text-[.9rem]"> Click Here</button>
+                </section>
+
+                <section>
+                    <p className="title-3">Happy Reading!</p>
+                </section>
             </div>
         </div>
     )
