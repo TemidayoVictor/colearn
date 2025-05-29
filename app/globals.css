@@ -2509,11 +2509,15 @@ td {
   padding: .5em;
 }
 
-.best-instructor-box .left {
+.best-instructor-box.two {
+  border: var(--border-grey);
+}
+
+.best-instructor-box .left, .best-instructor-box .left-2 {
   width: 64%;
 }
 
-.best-instructor-box .right {
+.best-instructor-box .right, .best-instructor-box .right-2 {
   width: 34%;
   display: flex;
   justify-content: end;
@@ -2579,13 +2583,13 @@ td {
   width: 25%;
 }
 
-.student-view-course-body .left div {
+.student-view-course-body .left .left-content {
   margin-block: .5em;
   padding: .5em;
   border: 1px solid transparent;
 }
 
-.student-view-course-body .left div.active, .student-view-course-body .left div:hover {
+.student-view-course-body .left .left-content.active, .student-view-course-body .left div:hover {
   background-color: var(--white);
   border: 1px solid var(--color-primary-normal);
   border-radius: .3em;

@@ -3,6 +3,7 @@ import React, {useState} from "react";
 import Image from "next/image";
 import Link from "next/link";
 import StudentViewCourseContent from "./StudentViewCourseContent";
+import StudentViewCourseArticle from "./StudentViewCourseArticle";
 
 const StudentViewCourseBody = () => {
     const [selectedTab, setSelectedTab] = useState<string>('overview');
@@ -28,10 +29,10 @@ const StudentViewCourseBody = () => {
 
                 <div className="student-view-course-body">
                     <div className="left">
-                        <div className={`${selectedTab == "overview" ? 'active' : ''}`} onClick={() => setSelectedTab('overview')}>
+                        <div className={`left-content ${selectedTab == "overview" ? 'active' : ''}`} onClick={() => setSelectedTab('overview')}>
                             <p className="text-[.9rem]">Course Overview</p>
                         </div>
-                        <div className="flex items-center justify-between">
+                        <div className="left-content flex items-center justify-between">
                             <p className="text-[.9rem]">Course Material</p>
                             <Image
                                 aria-hidden
@@ -42,10 +43,10 @@ const StudentViewCourseBody = () => {
                                 className="object-contain"
                             />
                         </div>
-                        <div className={`${selectedTab == "articles" ? 'active' : ''}`} onClick={() => setSelectedTab('articles')}>
+                        <div className={`left-content ${selectedTab == "articles" ? 'active' : ''}`} onClick={() => setSelectedTab('articles')}>
                             <p className="text-[.9rem]">Articles</p>
                         </div>
-                        <div className={`${selectedTab == "test" ? 'active' : ''}`} onClick={() => setSelectedTab('test')}>
+                        <div className={`left-content ${selectedTab == "test" ? 'active' : ''}`} onClick={() => setSelectedTab('test')}>
                             <p className="text-[.9rem]">Quiz / Practice Test</p>
                         </div>
                     </div>
@@ -58,7 +59,10 @@ const StudentViewCourseBody = () => {
                         }
 
                         {
-                            
+                            selectedTab == "articles" &&
+                            <div>
+                                <StudentViewCourseArticle />
+                            </div>
                         }
                     </div>
                 </div>
