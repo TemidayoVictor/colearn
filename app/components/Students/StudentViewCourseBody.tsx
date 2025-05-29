@@ -6,6 +6,7 @@ import StudentViewCourseContent from "./StudentViewCourseContent";
 import StudentViewCourseArticle from "./StudentViewCourseArticle";
 import StudentViewCourseTest from "./StudentViewCourseTest";
 import StudentViewCourseMenu from "./StudentViewCourseMenu";
+import StudentViewCourseMaterial from "./StudentViewCourseMaterial";
 
 const StudentViewCourseBody = () => {
     const [selectedTab, setSelectedTab] = useState<string>('overview');
@@ -42,6 +43,11 @@ const StudentViewCourseBody = () => {
                             <div>
                                 <StudentViewCourseContent />
                             </div>
+                        }
+
+                        {
+                            selectedTab == "material" &&
+                            <StudentViewCourseMaterial />
                         }
 
                         {

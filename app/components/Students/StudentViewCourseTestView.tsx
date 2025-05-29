@@ -39,8 +39,8 @@ const StudentViewCourseTestView = ({back}: StudentViewCourseTestViewProps) => {
 
                 <section>
                     <p className="title-3">Practice Questions &  Answers</p>
-                    <div className="res-flex gap-2">
-                        <Link href='/students/view-course' className="mt-3 bt-btn btn btn-primary-fill ">
+                    <div className="res-flex gap-2 mt-3">
+                        <Link href='/students/view-course' className="bt-btn btn btn-primary-fill ">
                             <span>
                                 <Image
                                     aria-hidden
@@ -54,7 +54,7 @@ const StudentViewCourseTestView = ({back}: StudentViewCourseTestViewProps) => {
                             <span>Download Practice Question</span>
                         </Link>
                         
-                        <Link href='/' className="mt-3 bt-btn btn normal">
+                        <Link href='/' className="bt-btn btn normal">
                             <span>
                                 <Image
                                     aria-hidden

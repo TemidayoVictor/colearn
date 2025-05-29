@@ -582,6 +582,10 @@ ol {
   gap: .3em;
 }
 
+ol li {
+  font-size: .9rem;
+}
+
 /* Styles */
 
 /* Navigation */
@@ -2587,6 +2591,7 @@ td {
   padding: .5em;
   border-radius: .5em;
   width: 25%;
+  transition: all 0.3s ease;
 }
 
 .student-view-course-body .left .left-content {
@@ -2600,6 +2605,10 @@ td {
   border: 1px solid var(--color-primary-normal);
   border-radius: .3em;
   cursor: pointer;
+}
+
+.student-view-course-body .left .left-content.active {
+  font-weight: bold;
 }
 
 .student-view-course-body .right {
@@ -2622,6 +2631,42 @@ td {
 .resource p.title-3 {
   font-size: 1.1rem;
 } 
+
+.module {
+  font-size: .9rem;
+  margin-block: .5em;
+  background-color: var(--color-primary-light);
+  border: 1px solid var(--color-primary-normal);
+  border-left: 3px solid var(--color-primary-normal);
+  padding: .5em 1em;
+  border-top-right-radius: .3em;
+  border-bottom-right-radius: .3em;
+}
+
+.student-view-course-body .left .left-content.active .module {
+  font-weight: normal;
+}
+
+.student-course-material {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: var(--border-grey);
+  padding: .5em;
+  border-radius: .5em;
+  margin-block: .5em;
+}
+
+.student-course-material .left-3 {
+  width: 90%;
+}
+
+.student-course-material .right-3 {
+  width: 10%;
+  display: flex;
+  align-items: end;
+  justify-content: end;
+}
 
 /* Footer */
 .footer-2 {
@@ -3552,7 +3597,7 @@ td {
     align-items: start;
   }
 
-  .student-course-page-box .top .left {
+  .student-course-page-box .top .left,   .student-view-course-body .right {
     width: 100%;
   }
 
@@ -3568,6 +3613,31 @@ td {
     font-size: .9rem;
   }
   
+  .student-view-course-body {
+    flex-direction: column;
+    gap: .5em;
+    background-color: var(--white);
+  }
+
+  .student-view-course-body .left {
+    width: 100%;
+    background-color: var(--grey);
+    padding: .3em .8em;
+  }
+
+  .student-view-course-body .left .student-view-course-menu {
+    display: flex;
+    overflow-x: auto;
+    gap: 1em;
+    scroll-snap-type: x mandatory;
+  }
+
+  .student-view-course-body .left .student-view-course-menu div{
+    flex: 0 0 auto;
+    max-width: max-content;
+    scroll-snap-align: start;
+  }
+
   .footer-2, .footer-right {
     flex-direction: column;
     gap: 1em;
