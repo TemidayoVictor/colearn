@@ -2611,6 +2611,11 @@ td {
   font-weight: bold;
 }
 
+.student-view-course-body .left .left-content .number {
+  background-color: var(--color-primary-normal);
+  color: var(--white);
+}
+
 .student-view-course-body .right {
   border: var(--border-grey);
   border-radius: .5em;
@@ -2666,6 +2671,36 @@ td {
   display: flex;
   align-items: end;
   justify-content: end;
+}
+
+.material-content {
+  border: var(--border-grey);
+  border-top: none;
+  padding: 1em;
+  padding-top: 1.5em;
+  margin-top: -1em;
+  border-bottom-right-radius: .3em;
+  border-bottom-left-radius: .3em;
+}
+
+.material-box {
+  display: flex;
+  align-items: start;
+  gap: .7em;
+  margin-bottom: .5em;
+  padding: .5em;
+  border: 1px solid transparent;
+}
+
+.material-box:last-child {
+  margin-bottom: 0;
+}
+
+.material-box:hover {
+  background-color: var(--color-primary-light);
+  cursor: pointer;
+  border: 1px solid var(--color-primary-normal);
+  border-radius: .3em;
 }
 
 /* Footer */
@@ -3595,6 +3630,15 @@ td {
 
   .best-instructor-box {
     align-items: start;
+  }
+
+  .best-instructor-box.two {
+    flex-direction: column;
+    gap: 1em;
+  }
+
+  .best-instructor-box.two .left-2, .best-instructor-box.two .right-2 {
+    width: 100%;
   }
 
   .student-course-page-box .top .left,   .student-view-course-body .right {

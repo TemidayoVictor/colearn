@@ -20,12 +20,8 @@ const StudentResourcesList = ({title, linkName, link, description, changeContent
                     </div>
                 </div>
                 <div className="right-2" onClick={() => changeContentFn('resource')}>
-                    <p className="bt-btn btn btn-primary-fill desktop">
+                    <p className="bt-btn btn btn-primary-fill btn-small">
                         <span>{linkName}</span>
-                    </p>
-
-                    <p className="mobile" onClick={() => changeContentFn('resource')}>
-                        <span className="underline text-[.8rem]">{linkName}</span>
                     </p>
                 </div>
             </div>
