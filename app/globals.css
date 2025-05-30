@@ -2638,14 +2638,19 @@ td {
 } 
 
 .module {
-  font-size: .9rem;
+  font-size: .8rem;
   margin-block: .5em;
   background-color: var(--color-primary-light);
-  border: 1px solid var(--color-primary-normal);
+  border: 1px solid transparent;
   border-left: 3px solid var(--color-primary-normal);
-  padding: .5em 1em;
+  padding: .5em .1em;
   border-top-right-radius: .3em;
   border-bottom-right-radius: .3em;
+}
+
+.module.active, .module:hover {
+  border: 1px solid var(--color-primary-normal);
+  border-left: 3px solid var(--color-primary-normal);
 }
 
 .student-view-course-body .left .left-content.active .module {
@@ -2701,6 +2706,10 @@ td {
   cursor: pointer;
   border: 1px solid var(--color-primary-normal);
   border-radius: .3em;
+}
+
+.lecture-video {
+  margin-top: 1em;
 }
 
 /* Footer */
@@ -3680,6 +3689,14 @@ td {
     flex: 0 0 auto;
     max-width: max-content;
     scroll-snap-align: start;
+  }
+
+  .student-view-course-body .left.two .student-view-course-menu {
+    display: block;
+  }
+
+  .student-view-course-body .left.two .student-view-course-menu div {
+    max-width: 100%;
   }
 
   .footer-2, .footer-right {

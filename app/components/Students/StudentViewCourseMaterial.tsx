@@ -33,7 +33,7 @@ const StudentViewCourseMaterial = () => {
                             <div className="material-content">
                                 {
                                     [1,2,3].map((item, index) => (
-                                        <Link href="/" key={index} className="material-box">
+                                        <Link href={`/students/view-course/lecture/${index}`} key={index} className="material-box">
                                             <div>
                                                 <Image
                                                     aria-hidden
