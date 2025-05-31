@@ -2624,6 +2624,46 @@ td {
   width: 73%;
 }
 
+.student-certificate-body {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+}
+
+.student-certificate-body .left, .student-certificate-body .right {
+  width: 49%;
+}
+
+.student-certificate-body .left {
+  background-color: var(--grey);
+  padding: 1em;
+  border: 1px dashed var(--color-primary-normal);
+  border-radius: .5em;
+}
+
+.student-certificate-body .certificate-box {
+  height: 20rem;
+  border: 1px solid var(--color-primary-normal);
+}
+
+.cerificate-content {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  position: relative;
+}
+
+.cerificate-content .left-2 {
+  width: 10%;
+}
+
+.cerificate-content .right-2 {
+  width: 88%;
+  display: flex;
+  flex-direction: column;
+  gap: .5em;
+}
+
 .resource section {
   margin-top: 1.5em;
 }
@@ -2711,6 +2751,7 @@ td {
 .lecture-video {
   margin-top: 1em;
 }
+
 
 /* Footer */
 .footer-2 {
@@ -3697,6 +3738,23 @@ td {
 
   .student-view-course-body .left.two .student-view-course-menu div {
     max-width: 100%;
+  }
+
+  .student-certificate-body {
+    flex-direction: column;
+    gap: 1em
+  }
+
+  .student-certificate-body .left, .student-certificate-body .right {
+    width: 100%;
+  }
+
+  .cerificate-content .left-2 {
+    width: 16%;
+  }
+
+  .cerificate-content .right-2 {
+    width: 83%;
   }
 
   .footer-2, .footer-right {

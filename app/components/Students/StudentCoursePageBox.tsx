@@ -56,7 +56,7 @@ const StudentCoursePageBox = ({courseType}: StudentCoursePageBoxProps) => {
                             {
                                 courseType == "completed" &&
                                 <div className="cert desktop">
-                                    <Link href="/" className="underline color-normal text-[.9rem]" >View Certificate</Link>
+                                    <Link href="/students/courses/certificate" className="underline color-normal text-[.9rem]" >View Certificate</Link>
                                 </div>
                             }
                         </div>
@@ -162,7 +162,7 @@ const StudentCoursePageBox = ({courseType}: StudentCoursePageBoxProps) => {
                                 </Link>
                                 {
                                     courseType == "completed" &&
-                                    <Link href='/' className="mt-3 bt-btn btn btn-primary-fill">
+                                    <Link href='/students/courses/certificate' className="mt-3 bt-btn btn btn-primary-fill">
                                         <span>View Certificate</span>
                                     </Link>
                                 }
