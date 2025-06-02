@@ -150,6 +150,10 @@ input, textarea {
   color: var(--color-primary-normal);
 }
 
+.color-darker {
+  color: var(--color-primary-darker);
+}
+
 .color-grey-text {
   color: var(--grey-text);
 }
@@ -251,6 +255,17 @@ input, textarea {
 .btn.remove:hover {
   color: var(--white);
   background-color: var(--error-color);
+}
+
+.btn.error {
+  border: 1px solid var(--error-color);
+  color: var(--white);
+  background-color: var(--error-color);
+}
+
+.btn.error:hover {
+  background-color: var(--white);
+  color: var(--error-color);
 }
 
 .btn.spec {
@@ -761,6 +776,11 @@ ol li {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr)); 
   gap: 1em;
+}
+
+.bookings-container.two {
+  margin-top: 1em;
+  grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr));
 }
 
 .tutor, .booking {
@@ -2752,6 +2772,21 @@ td {
   margin-top: 1em;
 }
 
+/* Student Booking */
+
+.booking-cont {
+  border: var(--border-grey);
+  padding: 1em;
+  border-radius: .5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  margin-bottom: 1em;
+}
+
+.booking-cont:last-child {
+  margin-bottom: 0;
+}
 
 /* Footer */
 .footer-2 {
@@ -3041,7 +3076,7 @@ td {
     font-size: .9rem;
   }
 
-  .tutors-container {
+  .tutors-container, .bookings-container.two {
     display: flex;
     overflow-x: auto;
     gap: 1em;
@@ -3051,7 +3086,7 @@ td {
     margin-top: 2.5rem;
   }
   
-  .tutor {
+  .tutor, .bookings-container.two .booking {
     flex: 0 0 auto;
     width: 15rem;
     scroll-snap-align: start;

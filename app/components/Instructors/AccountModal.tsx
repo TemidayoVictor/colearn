@@ -4,15 +4,17 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import MultiDropdownSelector from "../MultiDropdownSelector";
 import { Experience, Bank } from "@/app/Types/types";
+import BookingDetails from "../BookingDetails";
 
 type AccountModalProps = {
     modalType: string;
     modalClose: () => void;
     experience?: Experience | null;
     bank?: Bank | null;
+    subType?: string | null;
 }
 
-const AccountModal = ({modalType, modalClose, experience, bank}: AccountModalProps) => {
+const AccountModal = ({modalType, modalClose, experience, bank, subType}: AccountModalProps) => {
     const [selectedItems, setSelectedItems] = useState<string[]>([]);
     
     const [formData, setFormData] = useState({
@@ -373,28 +375,35 @@ const AccountModal = ({modalType, modalClose, experience, bank}: AccountModalPro
                         </div>
                     </div>
                 }
+
+                {
+                    modalType == 'booking' &&
+                    <BookingDetails displayType={subType} />
+                }
                 
                 <div className="modal-close">
                     <FontAwesomeIcon icon={faXmark} className="text-[1.5rem]" onClick={modalClose}/>
                 </div>
+                {
+                    modalType != 'booking' &&
+                    <div className="upload-course-btns two">
+                        <button className="btn normal" onClick={modalClose}>Cancel</button>
 
-                <div className="upload-course-btns two">
-                    <button className="btn normal" onClick={modalClose}>Cancel</button>
-
-                    <button className="flex items-center gap-2 btn btn-primary-fill">
-                        <span>Update</span>
-                        <span>
-                            <Image
-                                aria-hidden
-                                src="/assets/images/arrow-right.png"
-                                alt="Colearn Logo"
-                                width={12}
-                                height={12}
-                                className="object-contain"
-                            />
-                        </span>
-                    </button>
-                </div>
+                        <button className="flex items-center gap-2 btn btn-primary-fill">
+                            <span>Update</span>
+                            <span>
+                                <Image
+                                    aria-hidden
+                                    src="/assets/images/arrow-right.png"
+                                    alt="Colearn Logo"
+                                    width={12}
+                                    height={12}
+                                    className="object-contain"
+                                />
+                            </span>
+                        </button>
+                    </div>
+                }
             
             </div>
             

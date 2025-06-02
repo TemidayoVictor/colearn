@@ -64,6 +64,35 @@ const StudentSidebarContent = () => {
                         <p className="text-[.9rem]">My Courses</p>
                     </Link>
 
+                    <Link href='/students/bookings' className={`sidebar-link ${pathname.startsWith('/students/bookings')  ? 'active' : ''}`}>
+                        {
+                            pathname.startsWith('/students/bookings')  ? (
+
+                                <Image
+                                    aria-hidden
+                                    src="/assets/images/calendar-3-active.png"
+                                    alt="Colearn Image"
+                                    width={20}
+                                    height={20}
+                                    className="object-cover"
+                                />
+
+                            ) : (
+
+                                <Image
+                                    aria-hidden
+                                    src="/assets/images/calendar-3b.png"
+                                    alt="Colearn Image"
+                                    width={20}
+                                    height={20}
+                                    className="object-cover"
+                                />
+
+                            )
+                        }
+                        <p className="text-[.9rem]">Booking</p>
+                    </Link>
+
                     <Link href='/' className="sidebar-link">
                         <Image
                             aria-hidden
