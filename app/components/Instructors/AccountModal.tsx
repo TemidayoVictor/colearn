@@ -30,11 +30,14 @@ const AccountModal = ({modalType, modalClose, experience, bank, subType}: Accoun
             <div className="modal">
                 
                 {
-                    modalType == 'personal' &&
+                    (modalType == 'personal' || modalType == 'personal2') &&
                     <div>
                         <div>
                             <h2 className="title-3">Edit Personal Information</h2>
-                            <p className="color-grey-text text-[.8rem]">Provide course information.</p>
+                            {
+                                modalType == 'personal' &&
+                                <p className="color-grey-text text-[.8rem]">Provide course information.</p>
+                            }
                         </div>
 
                         <div className="mt-[1rem]">

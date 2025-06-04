@@ -1,7 +1,14 @@
-import React from "react";
+'use client';
+import React, {useState} from "react";
 import Image from "next/image";
+import AccountModal from "../Instructors/AccountModal";
 
 const StudentAccountBody = () => {
+    const [showModal, setShowModal] = useState<string | null>(null);
+    const openModal = (key: string) => {
+        setShowModal(key);
+    }
+    const closeModal = () => setShowModal(null);
     return (
         <div className="student-account">
             <div>
@@ -22,7 +29,7 @@ const StudentAccountBody = () => {
 
             <div className="flex items-center justify-between">
                 <h2 className="title-3">Account Information</h2>
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2 cursor-pointer" onClick={() => openModal("personal2")}>
                     <Image
                         aria-hidden
                         src="/assets/images/edit-pen.png"
@@ -56,6 +63,13 @@ const StudentAccountBody = () => {
                     <p className="left">Certifications</p>
                     <p className="right">5</p>
                 </div>
+            </div>
+
+            <div>
+                {
+                    showModal && 
+                    <AccountModal modalType={showModal} modalClose={closeModal}/>
+                }
             </div>
         </div>
     )
