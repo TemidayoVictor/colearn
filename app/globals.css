@@ -2803,6 +2803,44 @@ td {
   font-size: .85rem;
 }
 
+/* Student Account */
+
+.student-account {
+  border: var(--border-grey);
+  border-radius: .5em;
+  padding: 1em;
+}
+
+.student-account .details-sect {
+  margin-block: 1em;
+  display: flex;
+  align-items: center;
+  gap: 1em;
+}
+
+.student-account .acct-details {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: var(--border-grey);
+  padding-bottom: 1em;
+  margin-top: 1em;
+}
+
+.student-account .acct-details:last-child {
+  border-bottom: none;
+}
+
+.student-account .acct-details .left {
+  font-size: .9rem;
+  color: var(--grey-text);
+}
+
+.student-account .acct-details .right {
+  font-size: .9rem;
+  font-weight: 600;
+}
+
 /* Footer */
 .footer-2 {
   display: flex;

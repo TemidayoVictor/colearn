@@ -108,9 +108,9 @@ const StudentSidebarContent = () => {
 
                 <div className="sidebar-break">
 
-                    <Link href='/instructors/account' className={`sidebar-link ${pathname == '/instructors/account' ? 'active' : ''}`}>
+                    <Link href='/students/account' className={`sidebar-link ${pathname == '/students/account' ? 'active' : ''}`}>
                         {
-                            pathname == '/instructors/account' ? (
+                            pathname == '/students/account' ? (
                                 <Image
                                     aria-hidden
                                     src="/assets/images/profile-circle-active.png"
