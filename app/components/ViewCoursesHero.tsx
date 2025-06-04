@@ -2,11 +2,15 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 
-const ViewCoursesHero = () => {
+type ViewCoursesHeroProps = {
+    loggedIn?: boolean
+}
+
+const ViewCoursesHero = ({loggedIn}: ViewCoursesHeroProps) => {
     return (
         <div>
-            <div className="bg-dark">
-                <div className="cover container">
+            <div className={`${loggedIn ? 'bod-dark' : 'bg-dark'}`}>
+                <div className={`${loggedIn ? '' : 'cover container'}`}>
                     <div className="bg-white rounded-[.5rem] blog-hero two p-[1em]">
                         <Image
                             aria-hidden
