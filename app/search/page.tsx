@@ -11,7 +11,7 @@ const Search = () => {
     return (
         <div>
             <ExploreHero />
-            <ExplorePopular title="Search Results: 10,482" type="sub" />
+            <ExplorePopular title="Search Results: 10,482" type="sub" addContainerClass={true} />
         </div>
     )
 }

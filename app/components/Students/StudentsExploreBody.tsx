@@ -3,11 +3,19 @@ import ExploreHero from "../ExploreHero";
 import ExplorePopular from "../ExplorePopular";
 import StudentPopularConsultant from "./StudentsPopularConsultants";
 
-const StudentsExploreBody = () => {
+type StudentsExploreBodyProps = {
+   title: string 
+   type: string
+   tabs: boolean
+   addContainerClass: boolean
+   loggedIn?: boolean 
+}
+
+const StudentsExploreBody = ({title, type, tabs, addContainerClass, loggedIn}: StudentsExploreBodyProps) => {
     return (
         <div>
-            <ExploreHero loggedIn={true}/>
-            <ExplorePopular title="Explore Our Most popular courses and skills" type="head" tabs={true} addContainerClass={true} loggedIn={true}/>
+            <ExploreHero loggedIn={loggedIn}/>
+            <ExplorePopular title={title} type={type} tabs={tabs} addContainerClass={addContainerClass} loggedIn={loggedIn}/>
             <div className="container-3">
                 <StudentPopularConsultant />
             </div>
