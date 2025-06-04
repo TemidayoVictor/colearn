@@ -1,29 +1,29 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Roboto, Plus_Jakarta_Sans } from "next/font/google";
+// import { Geist, Geist_Mono, Roboto, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import '@fontsource-variable/plus-jakarta-sans';
 import MainLayout from "./components/MainLayout";
 import 'react-datepicker/dist/react-datepicker.css';
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
+// const geistSans = Geist({
+//   variable: "--font-geist-sans",
+//   subsets: ["latin"],
+// });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+// const geistMono = Geist_Mono({
+//   variable: "--font-geist-mono",
+//   subsets: ["latin"],
+// });
 
-const roboto = Roboto ({
-  subsets: ["latin"],
-  weight: ["100", "300", "400", "500", "700"],
-})
+// const roboto = Roboto ({
+//   subsets: ["latin"],
+//   weight: ["100", "300", "400", "500", "700"],
+// })
 
-const plus = Plus_Jakarta_Sans ({
-  subsets: ["latin"],
-  weight: ["200", "300", "400", "500", "700"],
-})
+// const plus = Plus_Jakarta_Sans ({
+//   subsets: ["latin"],
+//   weight: ["200", "300", "400", "500", "700"],
+// })
 
 export const metadata: Metadata = {
   title: {

@@ -2788,6 +2788,21 @@ td {
   margin-bottom: 0;
 }
 
+/* Student Booking Details */
+.booking-sect {
+  margin-block: 1em;
+}
+
+.booking-header {
+  font-size: .8rem;
+  color: var(--grey-text);
+  font-weight: 700;
+}
+
+.booking-body, .booking-details p {
+  font-size: .85rem;
+}
+
 /* Footer */
 .footer-2 {
   display: flex;

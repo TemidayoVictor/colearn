@@ -36,7 +36,7 @@ const StudentBookingBody = () => {
                         <div className="booking-cont" key={index}>
                             <div className="flex items-start justify-between">
                                 <p className="w-[70%]">Mentorship session with <span className="color-darker font-bold">Favi Ayomide</span></p>
-                                <div className="flex items-center gap-1">
+                                <div className="flex items-center gap-1 cursor-pointer" onClick={() => openModal("booking", "details")}>
                                     <p>Details</p>
                                     <Image
                                         aria-hidden
