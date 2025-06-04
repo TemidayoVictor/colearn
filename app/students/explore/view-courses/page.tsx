@@ -5,7 +5,7 @@ import StudentViewCoursesBody from "@/app/components/Students/StudentViewCourses
 const StudentViewCourses = () => {
     return (
         <div>
-            <UserLayout>
+            <UserLayout userType="student">
                 <div>
                     <StudentViewCoursesBody />
                 </div>

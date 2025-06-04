@@ -2,10 +2,14 @@ import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 
-const FindConsultantHero = () => {
+type FindConsultantHeroProps = {
+    loggedIn?: boolean
+}
+
+const FindConsultantHero = ({loggedIn}: FindConsultantHeroProps) => {
     return (
-        <div className="bg-dark">
-            <div className="cover container">
+        <div className={`${loggedIn ? 'bod-dark' : 'bg-dark'}`}>
+            <div className={`${loggedIn ? '' : 'cover container'}`}>
                 <div className="find-consultant bg-white rounded-[.5rem] p-[1em]">
                     <div className="left">
                         <h2 className="title-2">Find a Consultant</h2>

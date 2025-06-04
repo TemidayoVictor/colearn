@@ -88,11 +88,15 @@ const tutors  = [
     
 ]
 
-const FindConsultantExplore = () => {
+type FindConsultantExploreProps = {
+    loggedIn?: boolean
+}
+
+const FindConsultantExplore = ({loggedIn}: FindConsultantExploreProps) => {
     return (
         <div className="container">
             <h2 className="title">Explore Consultant</h2>
-            <div className="bookings-container">
+            <div className={`bookings-container ${loggedIn ? 'two' : ''}`}>
                 {
                     tutors.map((item, index) => (
                         <div className="booking" key={index}>
