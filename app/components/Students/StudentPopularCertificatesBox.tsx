@@ -6,7 +6,7 @@ const StudentPopularCertificatesBox = () => {
     return (
         <div className="mt-[2em]">
             <div className="flex items-center justify-between mb-4">
-                <h2 className="font-semibold text-[.9rem]">Most Popular Certificates</h2>
+                <h2 className="title-3">Most Popular Certificates</h2>
                 <Link href="/" className="text-[.9rem] underline color-normal">See More</Link>
             </div>
             <div className="blog-cont two scrollable">

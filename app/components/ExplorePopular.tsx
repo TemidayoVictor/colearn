@@ -10,6 +10,7 @@ type ExplorePopularProps = {
     tabs?: boolean
     addContainerClass: boolean
     nav?: boolean
+    loggedIn?: boolean
 }
 
 const posts = [
@@ -48,21 +49,9 @@ const posts = [
         name: "Information Technology",
         link: "/",
     },
-
-    {
-        id: 7,
-        name: "Leadership",
-        link: "/",
-    },
-
-    {
-        id: 8,
-        name: "Communication",
-        link: "/",
-    }
 ]
 
-const ExplorePopular = ({title, type, tabs, addContainerClass, nav}: ExplorePopularProps) => {
+const ExplorePopular = ({title, type, tabs, addContainerClass, nav, loggedIn}: ExplorePopularProps) => {
     const pathname = usePathname();
     return (
         <div className="">
@@ -87,10 +76,10 @@ const ExplorePopular = ({title, type, tabs, addContainerClass, nav}: ExplorePopu
                 </div>
 
                 <div>
-                    <div className="blog-cont mt-[2em]">
+                    <div className={`${loggedIn ? 'blog-cont three' : 'blog-cont'} mt-[2em]`}>
                         {
                             [1,2,3,4,5,6].map((item, index) => (
-                                <div className="course two" key={index}>
+                                <div className="course three" key={index}>
                                     <div className="relative w-fit">
                                         <div className="relative">
                                             <Image
@@ -132,7 +121,7 @@ const ExplorePopular = ({title, type, tabs, addContainerClass, nav}: ExplorePopu
                                             <span className="line-through mr-2 text-[#5A5C5E] font-semibold">$30.00</span>
                                             <span className="font-semibold">$30.00</span>
                                         </div>
-                                        <Link href='/' className="btn normal">Buy Now</Link>
+                                        <Link href='/' className={`btn normal`}>Buy Now</Link>
                                     </div>
                                     <div>
 

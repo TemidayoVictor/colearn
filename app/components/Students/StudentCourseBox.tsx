@@ -6,7 +6,7 @@ const StudentCourseBox = () => {
     return (
         <div className="mt-[2em]">
             <div className="flex items-center justify-between mb-4">
-                <h2 className="font-semibold text-[.9rem]">Your Course</h2>
+                <h2 className="title-3">Your Course</h2>
                 <Link href="/" className="text-[.9rem] underline color-normal">All Courses</Link>
             </div>
             <div className="courses-container student">

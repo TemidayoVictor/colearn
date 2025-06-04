@@ -35,6 +35,31 @@ const StudentSidebarContent = () => {
                         <p className="text-[.9rem]">Dashboard</p>
                     </Link>
 
+                    <Link href='/students/explore' className={`sidebar-link ${pathname == '/students/explore' ? 'active' : ''}`} >
+                        {
+                            pathname == '/students/explore' ? (
+                                <Image
+                                    aria-hidden
+                                    src="/assets/images/global--active.png"
+                                    alt="Colearn Image"
+                                    width={20}
+                                    height={20}
+                                    className="object-cover"
+                                />
+                            ) : (
+                                <Image
+                                    aria-hidden
+                                    src="/assets/images/global-3.png"
+                                    alt="Colearn Image"
+                                    width={20}
+                                    height={20}
+                                    className="object-cover"
+                                />
+                            )
+                        }
+                        <p className="text-[.9rem]">Explore</p>
+                    </Link>
+
                     <Link href='/students/courses' className={`sidebar-link ${pathname.startsWith('/students/courses') || pathname.startsWith('/students/view-course')  ? 'active' : ''}`}>
                         {
                             pathname.startsWith('/students/courses') || pathname.startsWith('/students/view-course')  ? (
