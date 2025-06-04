@@ -15,8 +15,12 @@ const BookingCalendar = () => {
             <div className="booking-session">
                 <h2 className='title'>Book  a session with a Consultant</h2>
                 <div className="booking-session-cont mt-[1.5em]">
-                    <Calendar />
-                    <BookingInfo/>
+                    <div className="component">
+                        <Calendar />
+                    </div>
+                    <div className="component">
+                        <BookingInfo/>
+                    </div>
                 </div>
             </div>
         </div>

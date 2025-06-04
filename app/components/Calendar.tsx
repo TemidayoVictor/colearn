@@ -1,26 +1,28 @@
-// components/DayCalendar.tsx
 'use client';
-import { useState } from 'react';
-import { DayPicker } from 'react-day-picker';
-import 'react-day-picker/dist/style.css';
+import * as React from 'react';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import TextField from '@mui/material/TextField';
+import dayjs, { Dayjs } from 'dayjs';
 
 export default function Calendar() {
-  const [selected, setSelected] = useState<Date | undefined>();
+  const [value, setValue] = React.useState<Dayjs | null>(dayjs());
 
   return (
-    <div className='calendar'>
-      <DayPicker
-        mode="single"
-        selected={selected}
-        onSelect={setSelected}
-        disabled={{ before: new Date() }} // ⛔ disables all dates before today
-        showOutsideDays
-        modifiersClassNames={{
-          selected: 'bg-blue-500 text-white',
-          today: 'text-blue-500 font-semibold',
-          disabled: 'text-gray-400 opacity-50 cursor-not-allowed',
-        }}
-      />
+    <div className="calendar">
+      <h2 className="title-2 mb-4">Choose a Date</h2>
+      <LocalizationProvider dateAdapter={AdapterDayjs}>
+        <DatePicker
+          label="Pick a date"
+          value={value}
+          onChange={(newValue) => setValue(newValue)}
+          minDate={dayjs()}
+          slotProps={{
+            textField: { fullWidth: true },
+          }}
+        />
+      </LocalizationProvider>
     </div>
   );
 }

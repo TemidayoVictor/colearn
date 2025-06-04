@@ -43,7 +43,7 @@ const StudentAccountBody = () => {
             </div>
 
             <div className="mt-4">
-                <div className="acct-details">
+                <div className="acct-details res">
                     <p className="left">Email Address</p>
                     <p className="right">faviayomide@gmail.com</p>
                 </div>

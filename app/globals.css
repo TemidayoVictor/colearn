@@ -1424,7 +1424,12 @@ ol li {
 .booking-session-cont {
   display: flex;
   gap: 1rem;
-  align-items: stretch;
+  align-items: start;
+  justify-content: space-between;
+}
+
+.booking-session-cont .component {
+  width: 50%;
 }
 
 .booking-info {
@@ -1489,34 +1494,6 @@ ol li {
   background-color: var(--white);
   padding: 1em 2em;
   border-radius: .5rem;
-}
-
-.rdp-focused {
-  background-color: var(--color-primary-normal);
-  color: white;
-  border-radius: 50%;
-}
-
-/* Style for current day */
-
-/* .rdp-day.text-blue-500 {
-  background-color: var(--grey-active-dark);
-  border-radius: 50%;
-  color: var(--white);
-} */  
-
-.rdp-month_caption {
-  border-bottom: 1px solid var(--grey-2); 
-}
-
-.rdp-caption_label {
-  color: var(--color-primary-fill);
-  font-weight: 500;
-}
-
-svg.rdp-chevron {
-  fill: var(--black);
-  width: 1.3em;
 }
 
 /* View Courses */
@@ -3413,6 +3390,10 @@ td {
     flex-direction: column;
   }
 
+  .booking-session-cont .component {
+    width: 100%;
+  }
+
   .booking-info-cont {
     flex-direction: column;
     gap: .5em;
@@ -3435,7 +3416,7 @@ td {
   }
 
   .calendar {
-    padding: .5em;
+    padding: 1em;
   }
 
   .booking-time {
@@ -3843,6 +3824,11 @@ td {
 
   .cerificate-content .right-2 {
     width: 83%;
+  }
+
+  .student-account .acct-details.res{
+    flex-direction: column;
+    align-items: start;
   }
 
   .footer-2, .footer-right {
