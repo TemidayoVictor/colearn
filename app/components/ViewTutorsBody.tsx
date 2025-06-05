@@ -7,7 +7,11 @@ import ViewTutorFooter from "./ViewTutorFooter";
 import ViewTutorsTestimonials from "./ViewTutorsTestimonials";
 import ExplorePopular from "./ExplorePopular";
 
-const ViewTutorsBody = () => {
+type ViewTutorsBodyProps = {
+    loggedIn?: boolean
+}
+
+const ViewTutorsBody = ({loggedIn}: ViewTutorsBodyProps) => {
     const [selectedTab, setSelectedTab] = useState<string>('overview');
     
     return (
@@ -32,14 +36,17 @@ const ViewTutorsBody = () => {
                 {
                     selectedTab == 'library' &&
                     <div className="mt-[-3rem]">
-                        <ExplorePopular type="sub" title="" addContainerClass={false} />
+                        <ExplorePopular type="sub" title="" addContainerClass={false} loggedIn={loggedIn}/>
                     </div>
                 }
             </div>
 
-            <div>
-                <ViewTutorFooter />
-            </div>
+            {
+                !loggedIn &&
+                <div>
+                    <ViewTutorFooter />
+                </div>
+            }
 
         </div>
     )

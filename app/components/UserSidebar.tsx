@@ -14,8 +14,8 @@ const UserSidebar = ({onMenuClick, userType}:UserSidebarProps) => {
     return (
         <div className="">
             <aside>
-                <Link href='/' className="container-3 sidebar-logo flex items-center justify-between">
-                    <div className="flex">
+                <div className="container-3 sidebar-logo flex items-center justify-between">
+                    <Link href='/' className="flex">
                         <Image
                             aria-hidden
                             src="/assets/images/favicon-logo-2.png"
@@ -32,7 +32,7 @@ const UserSidebar = ({onMenuClick, userType}:UserSidebarProps) => {
                             height={40}
                             className="object-cover"
                         />
-                    </div>
+                    </Link>
                     <Image
                         aria-hidden
                         src="/assets/images/sidebar-close.png"
@@ -42,7 +42,7 @@ const UserSidebar = ({onMenuClick, userType}:UserSidebarProps) => {
                         className="object-cover mobile"
                         onClick={onMenuClick}
                     />
-                </Link>
+                </div>
 
                 {
                     !userType &&  
