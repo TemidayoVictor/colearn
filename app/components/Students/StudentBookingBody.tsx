@@ -5,7 +5,11 @@ import Link from "next/link";
 import StudentPopularConsultant from "./StudentsPopularConsultants";
 import AccountModal from "../Instructors/AccountModal";
 
-const StudentBookingBody = () => {
+type StudentBookingBodyProps = {
+    userType?: string
+}
+
+const StudentBookingBody = ({userType}: StudentBookingBodyProps) => {
     const [selectedTab, setSelectedTab] = useState<string>('upcoming');
     const [showModal, setShowModal] = useState<string | null>(null);
     const [subSelected, setSubSelected] = useState<string | null>(null);
@@ -19,7 +23,7 @@ const StudentBookingBody = () => {
     return (
         <div>
             <div>
-                <h2 className="title-2">Booking</h2>
+                <h2 className="title-2">Bookings</h2>
                 <p className="color-grey-text text-[.8rem]">The session timings are following your local timezone Africa/Lagos</p>
             </div>
 
@@ -77,21 +81,23 @@ const StudentBookingBody = () => {
                                 <Link href="/" className="bt-btn btn btn-primary-fill">Join Meeting</Link>
                                 <div className="items-center gap-2 desktop-flex">
                                     <button className=" btn normal" onClick={() => openModal("booking", "reschedule")}>Reschedule meeting</button>
-                                    <button className="btn error font-semibold" onClick={() => openModal("booking", "cancel")}>Cancel</button>
+                                    <button className="color-error font-semibold" onClick={() => openModal("booking", "cancel")}>Cancel</button>
                                 </div>
                                 <div className="mobile-flex items-center justify-between w-full gap-2">
                                     <button className=" btn normal w-[65%]" onClick={() => openModal("booking", "reschedule")}>Reschedule meeting</button>
-                                    <button className="btn error w-[34%]" onClick={() => openModal("booking", "cancel")}>Cancel</button>
+                                    <button className="color-error font-semibold w-[34%]" onClick={() => openModal("booking", "cancel")}>Cancel</button>
                                 </div>
                             </div>
                         </div>
                     ))
                 }
             </div>
-
-            <div className="spacing-inter">
-                <StudentPopularConsultant/>
-            </div>
+            {
+                userType !== 'instructor' &&
+                <div className="spacing-inter">
+                    <StudentPopularConsultant/>
+                </div>
+            }
 
             {
                 showModal && 
