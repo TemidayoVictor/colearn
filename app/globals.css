@@ -2480,7 +2480,7 @@ td {
 }
 
 .bg-image-div {
-  /* background-image: url('/assets/images/student-banner.png'); */
+  background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('/assets/images/student-dashboard.png');
   background-color: var(--color-primary-dark);
   background-size: cover;
   background-position: center;
