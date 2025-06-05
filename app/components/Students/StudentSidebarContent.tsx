@@ -159,12 +159,12 @@ const StudentSidebarContent = () => {
                         <p className="text-[.9rem]">Account</p>
                     </Link>
 
-                    <Link href='/instructors/subscription' className={`sidebar-link ${pathname == '/instructors/subscription' ? 'active' : ''}`}>
+                    <Link href='/students/cart' className={`sidebar-link ${pathname == '/students/cart' ? 'active' : ''}`}>
                         {
-                            pathname == '/instructors/subscription' ? (
+                            pathname == '/students/cart' ? (
                                 <Image
                                     aria-hidden
-                                    src="/assets/images/moneys-active.png"
+                                    src="/assets/images/cart-icon-active.png"
                                     alt="Colearn Image"
                                     width={20}
                                     height={20}
@@ -173,7 +173,7 @@ const StudentSidebarContent = () => {
                             ) : (
                                 <Image
                                     aria-hidden
-                                    src="/assets/images/moneys.png"
+                                    src="/assets/images/cart-icon.png"
                                     alt="Colearn Image"
                                     width={20}
                                     height={20}
@@ -181,7 +181,7 @@ const StudentSidebarContent = () => {
                                 />
                             )
                         }
-                        <p className="text-[.9rem]">Subscription</p>
+                        <p className="text-[.9rem]">Cart</p>
                     </Link>
 
                     <Link href='/instructors/payment-transactions' className={`sidebar-link ${pathname == '/instructors/payment-transactions' ? 'active' : ''}`}>

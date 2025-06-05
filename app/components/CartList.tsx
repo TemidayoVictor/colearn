@@ -25,8 +25,8 @@ const CartList = () => {
                                             aria-hidden
                                             src="/assets/images/star.png"
                                             alt="Colearn Logo"
-                                            width={30}
-                                            height={30}
+                                            width={20}
+                                            height={20}
                                             className="object-contain"
                                         />
                                         <p className="text-[1.1rem] font-bold">4.3</p>
