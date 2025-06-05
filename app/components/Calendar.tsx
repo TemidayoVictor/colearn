@@ -11,7 +11,7 @@ export default function Calendar() {
 
   return (
     <div className="calendar">
-      <h2 className="title-2 mb-4">Choose a Date</h2>
+      <h2 className="title-3 mb-4">Choose a Date</h2>
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <DatePicker
           label="Pick a date"

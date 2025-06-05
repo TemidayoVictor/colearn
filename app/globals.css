@@ -1442,6 +1442,14 @@ ol li {
   width: 50%;
 }
 
+.booking-session-cont .component.one {
+  width: 40%;
+}
+
+.booking-session-cont .component.two {
+  width: 60%;
+}
+
 .booking-info {
   background-color: var(--white);
   border-radius: .5em;
@@ -3405,11 +3413,16 @@ td {
     padding: .7em;
   }
 
+  .booking-session.two {
+    margin-top: 0;
+    border-radius: .3em;
+  }
+
   .booking-session-cont {
     flex-direction: column;
   }
 
-  .booking-session-cont .component {
+  .booking-session-cont .component, .booking-session-cont .component.one, .booking-session-cont .component.two {
     width: 100%;
   }
 

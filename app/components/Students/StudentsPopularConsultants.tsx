@@ -143,7 +143,7 @@ const StudentPopularConsultant = () => {
                                 </div>
                                 <div className="mt-[1em] flex justify-between items-center">
                                     <p className="font-bold" >$30.00 / hr </p>
-                                    <Link href='/' className="btn normal btn-small">Book Now</Link>
+                                    <Link href='/students/bookings/session' className="btn normal btn-small">Book Now</Link>
                                 </div>
                             </div>
                         ))

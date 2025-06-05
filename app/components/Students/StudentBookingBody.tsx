@@ -75,9 +75,13 @@ const StudentBookingBody = () => {
                             </div>
                             <div className="res-flex items-center gap-2 ">
                                 <Link href="/" className="bt-btn btn btn-primary-fill">Join Meeting</Link>
-                                <div className="flex items-center gap-2">
+                                <div className="items-center gap-2 desktop-flex">
                                     <button className=" btn normal" onClick={() => openModal("booking", "reschedule")}>Reschedule meeting</button>
                                     <button className="btn error font-semibold" onClick={() => openModal("booking", "cancel")}>Cancel</button>
+                                </div>
+                                <div className="mobile-flex items-center justify-between w-full gap-2">
+                                    <button className=" btn normal w-[65%]" onClick={() => openModal("booking", "reschedule")}>Reschedule meeting</button>
+                                    <button className="btn error w-[34%]" onClick={() => openModal("booking", "cancel")}>Cancel</button>
                                 </div>
                             </div>
                         </div>
