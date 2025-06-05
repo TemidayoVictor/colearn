@@ -184,31 +184,6 @@ const StudentSidebarContent = () => {
                         <p className="text-[.9rem]">Cart</p>
                     </Link>
 
-                    <Link href='/instructors/payment-transactions' className={`sidebar-link ${pathname == '/instructors/payment-transactions' ? 'active' : ''}`}>
-                    {
-                        pathname == '/instructors/payment-transactions' ? (
-                            <Image
-                                aria-hidden
-                                src="/assets/images/note-active.png"
-                                alt="Colearn Image"
-                                width={20}
-                                height={20}
-                                className="object-cover"
-                            />
-                        ) : (
-                            <Image
-                                aria-hidden
-                                src="/assets/images/note.png"
-                                alt="Colearn Image"
-                                width={20}
-                                height={20}
-                                className="object-cover"
-                            />
-                        )
-                    }
-                        <p className="text-[.9rem]">Payment Transaction</p>
-                    </Link>
-
                     <Link href='/students/settings' className={`sidebar-link ${pathname == '/students/settings' ? 'active' : ''}`}>
                         
                         {
