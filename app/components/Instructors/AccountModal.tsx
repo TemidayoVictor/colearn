@@ -383,6 +383,19 @@ const AccountModal = ({modalType, modalClose, experience, bank, subType}: Accoun
                     modalType == 'booking' &&
                     <BookingDetails displayType={subType} />
                 }
+
+                {
+                    modalType == 'block-course' &&
+                    <div>
+                        <div>
+                            <h2 className="title-3">Please provide a reason for blocking this Course </h2>
+                        </div>
+                        <div className="input-box">
+                            <label htmlFor="">Provide Reason</label>
+                            <textarea name="" id="" className="textarea"></textarea>
+                        </div>
+                    </div>
+                }
                 
                 <div className="modal-close">
                     <FontAwesomeIcon icon={faXmark} className="text-[1.5rem]" onClick={modalClose}/>

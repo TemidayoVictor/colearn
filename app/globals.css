@@ -2193,6 +2193,7 @@ td {
 .course-content-reviews {
   background-color: var(--grey-active);
   padding: .7em;
+  border-radius: .5em;
 }
 
 .course-content-reviews .testimonial {

@@ -1,7 +1,9 @@
-import React from "react";
+'use client';
+import React, {useState} from "react";
 import Image from "next/image";
 import Link from "next/link";
 import DashboardPerformance from "./DashboardPerformance";
+import AccountModal from "./AccountModal";
 
 type CourseRevenueProps = {
     link: string
@@ -9,6 +11,11 @@ type CourseRevenueProps = {
 }
 
 const CourseRevenue = ({link, type}: CourseRevenueProps) => {
+    const [showModal, setShowModal] = useState<string | null>(null);
+    const openModal = (key: string) => {
+        setShowModal(key);
+    }
+    const closeModal = () => setShowModal(null);
     return (
         <div className="container-3">
             <div className="flex items-center justify-between">
@@ -27,12 +34,17 @@ const CourseRevenue = ({link, type}: CourseRevenueProps) => {
                 </Link>
                 {
                     type == "admin" &&
-                    <button className="btn remove">Block</button>
+                    <button className="btn remove" onClick={() => openModal("block-course")}>Block</button>
                 }
             </div>
             <div className="spacing-inter">
                 <DashboardPerformance type="Course-2"/>
             </div>
+
+            {
+                showModal && 
+                <AccountModal modalType={showModal} modalClose={closeModal}/>
+            }
         </div>
     )
 }
