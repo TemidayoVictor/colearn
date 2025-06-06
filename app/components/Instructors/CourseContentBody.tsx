@@ -8,7 +8,7 @@ import CourseStudents from "./CourseStudents";
 const CourseContentBody = () => {
     const [selectedTab, setSelectedTab] = useState<string>('overview');
     return (
-        <div className="container-3">
+        <div className="">
             <CourseContent />
             <div className="in-nav mt-[1.5em] flex items-center justify-between">
                 <div className="in-nav two scrollable">

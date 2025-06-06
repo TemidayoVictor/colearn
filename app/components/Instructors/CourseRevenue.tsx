@@ -1,0 +1,35 @@
+import React from "react";
+import Image from "next/image";
+import Link from "next/link";
+import DashboardPerformance from "./DashboardPerformance";
+
+type CourseRevenueProps = {
+    link: string
+}
+
+const CourseRevenue = ({link}: CourseRevenueProps) => {
+    return (
+        <div className="container-3">
+            <div>
+                <Link href={link} className="flex items-center gap-2 cursor-pointer">
+                    <div>
+                        <Image
+                            aria-hidden
+                            src="/assets/images/left-arrow.png"
+                            alt="Colearn Logo"
+                            width={16}
+                            height={16}
+                            className="object-contain"
+                        />
+                    </div>
+                    <p className="text-[.9rem] font-semibold">Back</p>
+                </Link>
+            </div>
+            <div className="spacing-inter">
+                <DashboardPerformance type="Course-2"/>
+            </div>
+        </div>
+    )
+}
+
+export default CourseRevenue

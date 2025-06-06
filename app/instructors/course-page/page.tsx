@@ -2,13 +2,17 @@ import React from "react";
 import UserLayout from "@/app/components/UserLayout";
 import CourseContentBody from "@/app/components/Instructors/CourseContentBody";
 import CourseContentReviews from "@/app/components/Instructors/CourseContentReviews";
+import CourseRevenue from "@/app/components/Instructors/CourseRevenue";
 
 const CoursePage = () => {
     return (
         <div>
             <UserLayout>
                 <div>
-                    <div className="course-content">
+                    <div>
+                        <CourseRevenue link='/instructors/courses'/>
+                    </div>
+                    <div className="course-content container-3b">
                         <div className="left">
                             <CourseContentBody />
                         </div>

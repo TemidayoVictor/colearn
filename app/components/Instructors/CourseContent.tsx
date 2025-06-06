@@ -5,20 +5,6 @@ import Link from "next/link";
 const CourseContent = () => {
     return (
         <div>
-            <Link href='/instructors/courses' className="flex items-center gap-2 cursor-pointer">
-                <div>
-                    <Image
-                        aria-hidden
-                        src="/assets/images/left-arrow.png"
-                        alt="Colearn Logo"
-                        width={16}
-                        height={16}
-                        className="object-contain"
-                    />
-                </div>
-                <p className="text-[.9rem] font-semibold">Back</p>
-            </Link>
-
             <div className="flex flex-col gap-2">
                 <div className="mt-3 flex flex-col gap-2">
 

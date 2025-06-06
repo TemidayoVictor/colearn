@@ -102,6 +102,10 @@ input, textarea {
   padding: 1em 2em;
 }
 
+.container-3b {
+  padding: 0 2em;
+}
+
 .container-3.two {
   padding-block: .7rem;
 }
@@ -417,6 +421,7 @@ input, textarea {
   justify-content: center;
   align-items: center;
   border-radius: 50%;
+  margin-left: .3em;
 }
 
 .in-nav-link.active .number {
@@ -2178,7 +2183,7 @@ td {
 }
 
 .course-content .left {
-  width: 65%;
+  width: 63%;
 }
 
 .course-content .right {
@@ -3029,6 +3034,10 @@ td {
 
   .container-3 {
     padding: 1em;
+  }
+
+  .container-3b {
+    padding: 0 1em;
   }
 
   .res-flex {

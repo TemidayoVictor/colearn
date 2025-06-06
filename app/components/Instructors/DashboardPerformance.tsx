@@ -9,15 +9,26 @@ type DashboardPerformanceProps = {
 const DashboardPerformance = ({type, user}: DashboardPerformanceProps) => {
     return (
         <div className="dashboard-performance">
-            <h2 className="font-semibold"> {`${type == "Course" ? "Course" : ""}`} Performance Summary</h2>
+            <h2 className="font-semibold"> {`${type == "Course" || type == "Course-2" ? "Course" : ""}`} Performance Summary</h2>
             {
                 !user &&
                 <div className="dashboard-grid">
-                    <div className="flex flex-col gap-1 perf-detail none">
-                        <p className="color-grey-text text-[.9rem]">Total Sales Amount</p>
-                        <h3 className="font-semibold">$3429.45</h3>
-                        <p className="color-grey-text text-[.7rem]">Total Sales Amount</p>
-                    </div>
+                    {
+                       type !== "Course-2" &&
+                        <div className="flex flex-col gap-1 perf-detail none">
+                            <p className="color-grey-text text-[.9rem]">Total Sales Amount</p>
+                            <h3 className="font-semibold">$3429.45</h3>
+                            <p className="color-grey-text text-[.7rem]">Total Sales Amount</p>
+                        </div> 
+                    }
+                    {
+                       type == "Course-2" &&
+                        <div className="flex flex-col gap-1 perf-detail none">
+                            <p className="color-grey-text text-[.9rem]">Total Course Sales</p>
+                            <h3 className="font-semibold">$3429.45</h3>
+                            <p className="color-grey-text text-[.7rem]">Total Course Sales</p>
+                        </div> 
+                    }
                     {
                         type == "Dashboard" &&
                         <div className="flex flex-col gap-1 perf-detail">
@@ -26,11 +37,14 @@ const DashboardPerformance = ({type, user}: DashboardPerformanceProps) => {
                             <p className="color-grey-text text-[.7rem]">Wallet Balance</p>
                         </div>
                     }
-                    <div className="flex flex-col gap-1 perf-detail">
-                        <p className="color-grey-text text-[.9rem]">Total Course Upload</p>
-                        <h3 className="font-semibold">24</h3>
-                        <p className="color-grey-text text-[.7rem]">Total Course Upload</p>
-                    </div>
+                    {
+                        type !== "Course-2" &&
+                        <div className="flex flex-col gap-1 perf-detail">
+                            <p className="color-grey-text text-[.9rem]">Total Course Upload</p>
+                            <h3 className="font-semibold">24</h3>
+                            <p className="color-grey-text text-[.7rem]">Total Course Upload</p>
+                        </div>
+                    }
                     <div className="flex flex-col gap-1 perf-detail">
                         <p className="color-grey-text text-[.9rem]">Total Enrollment</p>
                         <h3 className="font-semibold">155</h3>
@@ -42,7 +56,7 @@ const DashboardPerformance = ({type, user}: DashboardPerformanceProps) => {
                         <p className="color-grey-text text-[.7rem]">Total Course Completed</p>
                     </div>
                     {
-                        type == "Course" &&
+                        (type == "Course" || type == "Course-2") &&
                         <div className="flex flex-col gap-1 perf-detail">
                             <p className="color-grey-text text-[.9rem]">Total Comments</p>
                             <div className="flex items-center gap-3">
