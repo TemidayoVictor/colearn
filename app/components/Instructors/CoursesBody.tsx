@@ -73,7 +73,7 @@ const CoursesBody = () => {
 
             <div className="spacing-inter">
                 <div className="flex items-center justify-between">
-                    <div className="flex items-center justify-between gap-2 bg-white py-[.1em] px-[.7em] rounded-[.3rem] bod-grey courses-search-lenght">
+                    <div className="flex items-center justify-between gap-2 bg-white py-[.3em] px-1 rounded-[.3rem] bod-grey courses-search-lenght">
                         <Image
                             aria-hidden
                             src="/assets/images/search-normal-2.png"
@@ -85,6 +85,7 @@ const CoursesBody = () => {
                         <div className="w-[100%]">
                             <input type="text" placeholder="Search" className="w-[100%] color-grey-text text-[.9rem] p-[.3em]" />
                         </div>
+                        <button className="btn btn-small btn-primary-fill">Search</button>
                     </div>
 
                     <div>

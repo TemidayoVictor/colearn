@@ -2075,6 +2075,10 @@ td {
   width: 40%;
 }
 
+.courses-search-lenght.two {
+  width: 60%;
+}
+
 /* Upload Course */
 
 .upload-course-form {
@@ -3703,6 +3707,10 @@ td {
 
   .courses-search-lenght {
     width: 50%;
+  }
+
+  .courses-search-lenght.two {
+    width: 100%;
   }
 
   .upload-course-form {

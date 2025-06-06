@@ -38,7 +38,7 @@ const AdminSideBarContent = () => {
 
                     <Link href='/admin/courses' className={`sidebar-link ${pathname.startsWith('/admin/courses')  ? 'active' : ''}`}>
                         {
-                            pathname.startsWith('/students/courses')  ? (
+                            pathname.startsWith('/admin/courses')  ? (
 
                                 <Image
                                     aria-hidden

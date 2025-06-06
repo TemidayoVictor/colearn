@@ -1,14 +1,25 @@
 import React from "react";
 import Image from "next/image";
 
-const TableContent = () => {
+type TableContentProps = {
+    type?: string
+}
+
+const TableContent = ({type}: TableContentProps) => {
     return (
         <div className="table-container">
             <table>
                 <thead>
                     <tr>
                         <th>S/N</th>
-                        <th>Product</th>
+                        <th>Course Title</th>
+                        {
+                            type == "admin" &&
+                            <>
+                                <th>Uploaded by</th>
+                                <th>Course Price</th>                            
+                            </>
+                        }
                         <th>Total Revenue</th>
                         <th>Total  Enrollment</th>
                         <th>Total Completion</th>
@@ -39,6 +50,13 @@ const TableContent = () => {
                                     </span>
                                     </span>
                                 </td>
+                                {
+                                    type == "admin" &&
+                                    <>
+                                        <td>Joe Doe</td>
+                                        <td>$400</td>                            
+                                    </>
+                                }
                                 <td>$4000</td>
                                 <td>23</td>
                                 <td>23</td>

@@ -9,7 +9,7 @@ type DashboardPerformanceProps = {
 const DashboardPerformance = ({type, user}: DashboardPerformanceProps) => {
     return (
         <div className="dashboard-performance">
-            <h2 className="font-semibold">Performance Summary</h2>
+            <h2 className="font-semibold"> {`${type == "Course" ? "Course" : ""}`} Performance Summary</h2>
             {
                 !user &&
                 <div className="dashboard-grid">

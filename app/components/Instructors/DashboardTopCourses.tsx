@@ -5,9 +5,10 @@ import Link from "next/link";
 
 type DashboardTopCoursesProps = {
     type?: string
+    title?: string
 }
 
-const DashboardTopCourses = ({type}: DashboardTopCoursesProps) => {
+const DashboardTopCourses = ({type, title="Top Courses"}: DashboardTopCoursesProps) => {
     const [selectedTab, setSelectedTab] = useState<string>('courses');
     return (
         <div className="bod-grey p-[1em] rounded-[.5em] dashboard-top-courses">
@@ -57,7 +58,7 @@ const DashboardTopCourses = ({type}: DashboardTopCoursesProps) => {
                                         className="object-contain"
                                     />
                                 </div>
-                                <p className="font-semibold">Top Courses</p>
+                                <p className="font-semibold">{title}</p>
                             </div>
                         )
                     }
@@ -93,11 +94,17 @@ const DashboardTopCourses = ({type}: DashboardTopCoursesProps) => {
                                         />
                                     </div>
                                     <p className="text-[.9rem]">
-                                        Data Science and machine learning
+                                        {
+                                            type ==  "sellers" ? ("John Doe") : ("Data Science and machine learning")
+                                        }
                                     </p>
                                 </div>
                                 <div className="bg-grey-normal bod-grey py-[.2em] px-[.5em] rounded-[.3em] text-center top-courses-body-right">
-                                    <p className="color-grey-text text-[.7rem]">4 Total Sales</p>
+                                    <p className="color-grey-text text-[.7rem]">
+                                        {
+                                            type ==  "sellers" ? ("$12,000") : ("4 total Sales")
+                                        }
+                                    </p>
                                 </div>
                             </div>
                         ))
