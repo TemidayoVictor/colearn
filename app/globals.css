@@ -2883,6 +2883,24 @@ td {
   font-weight: 600;
 }
 
+/* Admin */
+
+.admin-dashboard {
+  display: flex;
+  justify-content: space-between;
+}
+
+.admin-dashboard .left {
+  width: 25%;
+}
+
+.admin-dashboard .right {
+  width: 73%;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(10rem, 1fr)); 
+  gap: 2em;
+}
+
 /* Footer */
 .footer-2 {
   display: flex;

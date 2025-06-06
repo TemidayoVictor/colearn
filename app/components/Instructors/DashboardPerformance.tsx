@@ -37,9 +37,9 @@ const DashboardPerformance = ({type, user}: DashboardPerformanceProps) => {
                         <p className="color-grey-text text-[.7rem]">Total Enrollment</p>
                     </div>
                     <div className="flex flex-col gap-1 perf-detail">
-                        <p className="color-grey-text text-[.9rem]">Total Course Uploaded</p>
+                        <p className="color-grey-text text-[.9rem]">Total Course Completed</p>
                         <h3 className="font-semibold">124</h3>
-                        <p className="color-grey-text text-[.7rem]">Total Course Uploaded</p>
+                        <p className="color-grey-text text-[.7rem]">Total Course Completed</p>
                     </div>
                     {
                         type == "Course" &&

@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import InstructorSidebarContent from "./Instructors/InstructorSidebarContent";
 import StudentSidebarContent from "./Students/StudentSidebarContent";
+import AdminSideBarContent from "./Admin/AdminSideBarContent";
 
 type UserSidebarProps = {
     onMenuClick: () => void;
@@ -52,6 +53,11 @@ const UserSidebar = ({onMenuClick, userType}:UserSidebarProps) => {
                 {
                     userType == "student" &&
                     <StudentSidebarContent />
+                }
+
+                {
+                    userType == "admin" &&
+                    <AdminSideBarContent />
                 }
             </aside>
         </div>
