@@ -13,3 +13,5 @@ const AdminCoursePage = () => {
         </div>
     )
 }
+
+export default AdminCoursePage

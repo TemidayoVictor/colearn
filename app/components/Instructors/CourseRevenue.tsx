@@ -5,12 +5,13 @@ import DashboardPerformance from "./DashboardPerformance";
 
 type CourseRevenueProps = {
     link: string
+    type?: string
 }
 
-const CourseRevenue = ({link}: CourseRevenueProps) => {
+const CourseRevenue = ({link, type}: CourseRevenueProps) => {
     return (
         <div className="container-3">
-            <div>
+            <div className="flex items-center justify-between">
                 <Link href={link} className="flex items-center gap-2 cursor-pointer">
                     <div>
                         <Image
@@ -24,6 +25,10 @@ const CourseRevenue = ({link}: CourseRevenueProps) => {
                     </div>
                     <p className="text-[.9rem] font-semibold">Back</p>
                 </Link>
+                {
+                    type == "admin" &&
+                    <button className="btn remove">Block</button>
+                }
             </div>
             <div className="spacing-inter">
                 <DashboardPerformance type="Course-2"/>
