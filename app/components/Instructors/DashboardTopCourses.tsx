@@ -3,52 +3,64 @@ import React, {useState} from "react";
 import Image from "next/image";
 import Link from "next/link";
 
-const DashboardTopCourses = () => {
+type DashboardTopCoursesProps = {
+    type?: string
+}
+
+const DashboardTopCourses = ({type}: DashboardTopCoursesProps) => {
     const [selectedTab, setSelectedTab] = useState<string>('courses');
     return (
         <div className="bod-grey p-[1em] rounded-[.5em] dashboard-top-courses">
             <div className="flex items-center justify-between">
                 <div className="flex gap-2 items-center">
-                    {/* <div className="bg-secondary-light p-[.5em] rounded-[.3em]">
-                        <Image
-                            aria-hidden
-                            src="/assets/images/teacher-colored.png"
-                            alt="Colearn Logo"
-                            width={24}
-                            height={24}
-                            className="object-contain"
-                        />
-                    </div> */}
-                    <div className="course-tabs">
-                        <div className={`course-tab ${selectedTab == 'courses' ? 'active' : '' }`} onClick={() => setSelectedTab('courses')}>
-                            {
-                                selectedTab == 'courses' &&
-                                <Image
-                                    aria-hidden
-                                    src="/assets/images/courses-icon.png"
-                                    alt="Colearn Logo"
-                                    width={24}
-                                    height={24}
-                                    className="object-contain"
-                                />
-                            }
-                            <p>Top Courses</p>
-                        </div>
-                        <div className={`course-tab ${selectedTab == 'bookings' ? 'active' : '' }`} onClick={() => setSelectedTab('bookings')}>
-                            {
-                                selectedTab == 'bookings' &&
-                                <Image
-                                    aria-hidden
-                                    src="/assets/images/booking-icon.png"
-                                    alt="Colearn Logo"
-                                    width={24}
-                                    height={24}
-                                    className="object-contain"
-                                />
-                            }
-                            <p>Bookings</p>
-                        </div>
-                    </div>
+                    {
+                        type == "consultant" ? (
+                            <div className="course-tabs">
+                                <div className={`course-tab ${selectedTab == 'courses' ? 'active' : '' }`} onClick={() => setSelectedTab('courses')}>
+                                    {
+                                        selectedTab == 'courses' &&
+                                        <Image
+                                            aria-hidden
+                                            src="/assets/images/courses-icon.png"
+                                            alt="Colearn Logo"
+                                            width={24}
+                                            height={24}
+                                            className="object-contain"
+                                        />
+                                    }
+                                    <p>Top Courses</p>
+                                </div>
+                                <div className={`course-tab ${selectedTab == 'bookings' ? 'active' : '' }`} onClick={() => setSelectedTab('bookings')}>
+                                    {
+                                        selectedTab == 'bookings' &&
+                                        <Image
+                                            aria-hidden
+                                            src="/assets/images/booking-icon.png"
+                                            alt="Colearn Logo"
+                                            width={24}
+                                            height={24}
+                                            className="object-contain"
+                                        />
+                                    }
+                                    <p>Bookings</p>
+                                </div>
+                            </div>
+                        ) : (
+                            <div className="flex items-center gap-2">
+                                <div className="bg-secondary-light p-[.5em] rounded-[.3em]">
+                                    <Image
+                                        aria-hidden
+                                        src="/assets/images/teacher-colored.png"
+                                        alt="Colearn Logo"
+                                        width={24}
+                                        height={24}
+                                        className="object-contain"
+                                    />
+                                </div>
+                                <p className="font-semibold">Top Courses</p>
+                            </div>
+                        )
+                    }
                 </div>
                 <div className="bg-light flex py-[.2em] px-[.5em] items-center text-[.8rem] bod-normal rounded-[.3em]">
                     <p>See All</p>

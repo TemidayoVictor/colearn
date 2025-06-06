@@ -7,7 +7,7 @@ const AdminDashboardPerformance = () => {
         <div className="admin-dashboard">
             <div className="left">
                 <h2 className="text-[.9rem] font-bold mb-2">Attendance</h2>
-                <div className="flex items-center gap-[1em]">
+                <div className="flex items-center justify-around gap-[1em]">
                     <div>
                         <CircularProgressBar percentage={90}/>
                         <div className="flex items-center gap-1 mt-2">

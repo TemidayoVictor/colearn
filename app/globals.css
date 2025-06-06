@@ -442,6 +442,11 @@ input, textarea {
   margin: 1em;
 }
 
+.bod-bot {
+  border-bottom: var(--border-grey);
+  padding-bottom: .5em;
+}
+
 .res-text-width {
   width: 60%;
 }
@@ -1927,6 +1932,10 @@ ol li {
   padding: 1em;
 }
 
+.dashboard-rev.two {
+  width: 100%;
+}
+
 .dashboard-top-courses {
   width: 49%;
 }
@@ -2885,7 +2894,7 @@ td {
 
 /* Admin */
 
-.admin-dashboard {
+.admin-dashboard, .admin-dashboard-details {
   display: flex;
   justify-content: space-between;
 }
@@ -2899,6 +2908,17 @@ td {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(10rem, 1fr)); 
   gap: 2em;
+}
+
+.admin-dashboard-details .left {
+  width: 30%;
+  border: var(--border-grey);
+  border-radius: .5em;
+  padding: 1em;
+}
+
+.admin-dashboard-details .right {
+  width: 68%;
 }
 
 /* Footer */
@@ -3926,6 +3946,26 @@ td {
   .student-account .acct-details.res{
     flex-direction: column;
     align-items: start;
+  }
+
+  .admin-dashboard, .admin-dashboard-details {
+    flex-direction: column;
+    gap: 1em;
+  }
+
+  .admin-dashboard .left, .admin-dashboard-details .left,  .admin-dashboard .right, .admin-dashboard-details .right {
+    width: 100%;
+  }
+
+  .admin-dashboard .right {
+    grid-template-columns: repeat(auto-fill, minmax(8rem, 1fr)); 
+    gap: 1em;
+  }
+
+  .admin-dashboard .right > div {
+    border: var(--border-grey);
+    padding: .5em;
+    border-radius: .5em;
   }
 
   .footer-2, .footer-right {
