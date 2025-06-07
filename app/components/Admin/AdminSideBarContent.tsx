@@ -65,7 +65,34 @@ const AdminSideBarContent = () => {
                         <p className="text-[.9rem]">Course Management</p>
                     </Link>
 
-                    <Link href='/admin/users' className={`sidebar-link ${pathname.startsWith('/admin/users')  ? 'active' : ''}`}>
+                    <Link href='/admin/user-verification' className={`sidebar-link ${pathname == '/admin/user-verification' ? 'active' : ''}`}>
+                        {
+                            pathname == '/admin/user-verification' ? (
+                                <Image
+                                    aria-hidden
+                                    src="/assets/images/profile-admin-active.png"
+                                    alt="Colearn Image"
+                                    width={20}
+                                    height={20}
+                                    className="object-cover"
+                                />
+
+                            ) : (
+                                <Image
+                                    aria-hidden
+                                    src="/assets/images/profile-admin.png"
+                                    alt="Colearn Image"
+                                    width={20}
+                                    height={20}
+                                    className="object-cover"
+                                />
+                            )
+                        }
+                        <p className="text-[.9rem]">User Verification</p>
+                    </Link>
+                </div>
+
+                <Link href='/admin/users' className={`sidebar-link ${pathname.startsWith('/admin/users')  ? 'active' : ''}`}>
                         {
                             pathname.startsWith('/admin/users')  ? (
 
@@ -82,7 +109,7 @@ const AdminSideBarContent = () => {
 
                                 <Image
                                     aria-hidden
-                                    src="/assets/images/profile-admin.png"
+                                    src="/assets/images/people.png"
                                     alt="Colearn Image"
                                     width={20}
                                     height={20}
@@ -91,21 +118,8 @@ const AdminSideBarContent = () => {
 
                             )
                         }
-                        <p className="text-[.9rem]">User Verification</p>
-                    </Link>
-
-                    <Link href='/' className="sidebar-link">
-                        <Image
-                            aria-hidden
-                            src="/assets/images/people.png"
-                            alt="Colearn Image"
-                            width={20}
-                            height={20}
-                            className="object-cover"
-                        />
                         <p className="text-[.9rem]">User Management</p>
                     </Link>
-                </div>
 
                 <div className="sidebar-break">
                 <Link href='/students/account' className={`sidebar-link ${pathname == '/students/account' ? 'active' : ''}`}>

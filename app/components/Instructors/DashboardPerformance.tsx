@@ -9,10 +9,16 @@ type DashboardPerformanceProps = {
 const DashboardPerformance = ({type, user}: DashboardPerformanceProps) => {
     return (
         <div className="dashboard-performance">
-            <h2 className="font-semibold"> {`${type == "Course" || type == "Course-2" ? "Course" : ""}`} Performance Summary</h2>
+            {
+                type == 'verification' ? (
+                    <h2 className="font-semibold"> User Verification</h2>
+                ) : (
+                    <h2 className="font-semibold"> {`${type == "Course" || type == "Course-2" ? "Course" : ""}`} Performance Summary</h2>
+                )
+            }
             {
                 !user &&
-                <div className="dashboard-grid">
+                <div className={`dashboard-grid ${type == 'Course' || type == "Course-2"  ? 'one' : ''}`}>
                     {
                        type !== "Course-2" &&
                         <div className="flex flex-col gap-1 perf-detail none">
@@ -96,6 +102,32 @@ const DashboardPerformance = ({type, user}: DashboardPerformanceProps) => {
                         <p className="color-grey-text text-[.9rem]">Active Enrolled Courses</p>
                         <h3 className="font-semibold">2</h3>
                         <p className="color-grey-text text-[.7rem]">Your Active enrolled courses</p>
+                    </div>
+                </div>
+            }
+
+            {
+                user == "admin" &&
+                <div className="dashboard-grid">
+                    <div className="flex flex-col gap-1 perf-detail none">
+                        <p className="color-grey-text text-[.9rem]">Total Users</p>
+                        <h3 className="font-semibold">4</h3>
+                        <p className="color-grey-text text-[.7rem]">Total Users</p>
+                    </div>
+                    <div className="flex flex-col gap-1 perf-detail">
+                        <p className="color-grey-text text-[.9rem]">Total Pending Verification</p>
+                        <h3 className="font-semibold">4</h3>
+                        <p className="color-grey-text text-[.7rem]">Total Pending Verification</p>
+                    </div>
+                    <div className="flex flex-col gap-1 perf-detail">
+                        <p className="color-grey-text text-[.9rem]">Total Declined</p>
+                        <h3 className="font-semibold">2</h3>
+                        <p className="color-grey-text text-[.7rem]">Total Declined</p>
+                    </div>
+                    <div className="flex flex-col gap-1 perf-detail">
+                        <p className="color-grey-text text-[.9rem]">Total Verified User</p>
+                        <h3 className="font-semibold">2</h3>
+                        <p className="color-grey-text text-[.7rem]">Total Verified User</p>
                     </div>
                 </div>
             }

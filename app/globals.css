@@ -1916,9 +1916,13 @@ ol li {
 
 .dashboard-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(10rem, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr));
   gap: 1em;
   margin-top: 1em;
+}
+
+.dashboard-grid.one {
+  grid-template-columns: repeat(auto-fill, minmax(10rem, 1fr));
 }
 
 .perf-detail {
@@ -2081,7 +2085,7 @@ td {
 }
 
 .courses-search-lenght.two {
-  width: 60%;
+  width: 50%;
 }
 
 /* Upload Course */
