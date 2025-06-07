@@ -65,9 +65,9 @@ const AdminSideBarContent = () => {
                         <p className="text-[.9rem]">Course Management</p>
                     </Link>
 
-                    <Link href='/admin/user-verification' className={`sidebar-link ${pathname == '/admin/user-verification' ? 'active' : ''}`}>
+                    <Link href='/admin/user-verification' className={`sidebar-link ${pathname.startsWith('/admin/user-verification') ? 'active' : ''}`}>
                         {
-                            pathname == '/admin/user-verification' ? (
+                            pathname.startsWith('/admin/user-verification') ? (
                                 <Image
                                     aria-hidden
                                     src="/assets/images/profile-admin-active.png"

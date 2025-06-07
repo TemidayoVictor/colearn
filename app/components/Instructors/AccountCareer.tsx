@@ -4,6 +4,10 @@ import Image from "next/image";
 import AccountModal from "./AccountModal";
 import { Experience } from "@/app/Types/types";
 
+type AccountCareerprops = {
+    type?: string
+}
+
 const experiences = [
     {
       title: "Frontend Developer",
@@ -25,7 +29,7 @@ const experiences = [
     },
   ];
 
-const AccountCareer = () => {
+const AccountCareer = ({type}: AccountCareerprops) => {
     const [showModal, setShowModal] = useState<string | null>(null);
     const [selectedExperience, setSelectedExperience] = useState<Experience | null>(null);
     const openModal = (key: string, item?: Experience | null) => {
@@ -35,21 +39,24 @@ const AccountCareer = () => {
     const closeModal = () => setShowModal(null);
     return (
         <div className="res-flex justify-between items-start">
-            <div className="view-course-content left-1">
+            <div className={`view-course-content left-1 ${type == "admin" ? "admin" : ""}`}>
                 <div>
                     <div className="flex items-center justify-between">
                         <p className="font-bold">Experiences</p>
-                        <div className="flex items-center gap-2 cursor-pointer" onClick={() => openModal("addexperience")}>
-                            <Image
-                                aria-hidden
-                                src="/assets/images/add-icon.png"
-                                alt="Colearn Logo"
-                                width={20}
-                                height={20}
-                                className="object-contain"
-                            />
-                            <p className="font-semibold color-grey-text text-[.9rem]">Add New</p>
-                        </div>
+                        {
+                            type != "admin" &&
+                            <div className="flex items-center gap-2 cursor-pointer" onClick={() => openModal("addexperience")}>
+                                <Image
+                                    aria-hidden
+                                    src="/assets/images/add-icon.png"
+                                    alt="Colearn Logo"
+                                    width={20}
+                                    height={20}
+                                    className="object-contain"
+                                />
+                                <p className="font-semibold color-grey-text text-[.9rem]">Add New</p>
+                            </div>
+                        }
                     </div>
 
                     {
@@ -57,16 +64,24 @@ const AccountCareer = () => {
                             <div className="experience-box" key={index}>
                                 <div className="flex items-center justify-between">
                                     <p className="font-semibold my-[.8em] text-[.9rem]">{item.title}</p>
-                                    <div onClick={() => openModal("experience", item)} className="cursor-pointer">
-                                        <Image
-                                            aria-hidden
-                                            src="/assets/images/edit-2.png"
-                                            alt="Colearn Logo"
-                                            width={20}
-                                            height={20}
-                                            className="object-contain"
-                                        />
-                                    </div>
+                                    {
+                                        type != "admin" ? (
+                                            <div onClick={() => openModal("experience", item)} className="cursor-pointer">
+                                                <Image
+                                                    aria-hidden
+                                                    src="/assets/images/edit-2.png"
+                                                    alt="Colearn Logo"
+                                                    width={20}
+                                                    height={20}
+                                                    className="object-contain"
+                                                />
+                                            </div>
+                                        ) : (
+                                            <div onClick={() => openModal("view-experience", item)}>
+                                                <p className="underline text-[.9rem] color-normal font-semibold">View</p>
+                                            </div>
+                                        )
+                                    }
                                 </div>
                                 <p className="color-grey-text font-semibold text-[.8rem]">{item.company}</p>
                                 <div className="flex items-center gap-2 my-[.5em]">
@@ -87,20 +102,23 @@ const AccountCareer = () => {
                 </div>
             </div>
 
-            <div className="view-course-content right-1">
+            <div className={`view-course-content right-1 ${type == "admin" ? "admin" : ""}`}>
                 <div>
                     <div className="flex items-center justify-between">
                         <p className="font-bold">Career Information</p>
-                        <div onClick={() => openModal("career")}>
-                            <Image
-                                aria-hidden
-                                src="/assets/images/edit-2.png"
-                                alt="Colearn Logo"
-                                width={20}
-                                height={20}
-                                className="object-contain"
-                            />
-                        </div>
+                        {
+                            type != "admin" &&
+                            <div onClick={() => openModal("career")}>
+                                <Image
+                                    aria-hidden
+                                    src="/assets/images/edit-2.png"
+                                    alt="Colearn Logo"
+                                    width={20}
+                                    height={20}
+                                    className="object-contain"
+                                />
+                            </div>
+                        }
                     </div>
 
                     <div className="my-[1em]">
@@ -111,16 +129,20 @@ const AccountCareer = () => {
                     <div>
                         <div className="flex items-center justify-between">
                             <p className="font-bold">Skills</p>
-                            <div onClick={() => openModal("skills")}>
-                                <Image
-                                    aria-hidden
-                                    src="/assets/images/edit-2.png"
-                                    alt="Colearn Logo"
-                                    width={20}
-                                    height={20}
-                                    className="object-contain"
-                                />
-                            </div>
+                            
+                            {
+                                type != "admin" &&
+                                <div onClick={() => openModal("skills")}>
+                                    <Image
+                                        aria-hidden
+                                        src="/assets/images/edit-2.png"
+                                        alt="Colearn Logo"
+                                        width={20}
+                                        height={20}
+                                        className="object-contain"
+                                    />
+                                </div>
+                            }
                         </div>
 
                         <div className="mt-[1em]">

@@ -3,26 +3,33 @@ import Image from "next/image";
 import Link from "next/link";
 import AccountModal from "./AccountModal";
 
-const AccountAbout = () => {
+type AccountAboutprops = {
+    type?: string
+}
+
+const AccountAbout = ({type}:AccountAboutprops) => {
     const [showModal, setShowModal] = useState<string | null>(null);
     const openModal = (key: string) => setShowModal(key);
     const closeModal = () => setShowModal(null);
     return (
         <div className="res-flex justify-between items-start">
-            <div className="view-course-content left-1">
+            <div className={`view-course-content left-1 ${type == "admin" ? "admin" : ""}`}>
                 <div>
                     <div className="flex items-center justify-between">
                         <p className="font-bold">Personal Information</p>
-                        <div onClick={() => openModal("personal")} className="cursor-pointer">
-                            <Image
-                                aria-hidden
-                                src="/assets/images/edit-2.png"
-                                alt="Colearn Logo"
-                                width={20}
-                                height={20}
-                                className="object-contain"
-                            />
-                        </div>
+                        {
+                            type != "admin" &&
+                            <div onClick={() => openModal("personal")} className="cursor-pointer">
+                                <Image
+                                    aria-hidden
+                                    src="/assets/images/edit-2.png"
+                                    alt="Colearn Logo"
+                                    width={20}
+                                    height={20}
+                                    className="object-contain"
+                                />
+                            </div>
+                        }
                     </div>
 
                     <div className="mt-3">
@@ -59,16 +66,19 @@ const AccountAbout = () => {
                 <div className="mt-4">
                     <div className="flex items-center justify-between">
                         <p className="font-bold">Social Media</p>
-                        <div onClick={() => openModal("social")} className="cursor-pointer">
-                            <Image
-                                aria-hidden
-                                src="/assets/images/edit-2.png"
-                                alt="Colearn Logo"
-                                width={20}
-                                height={20}
-                                className="object-contain"
-                            />
-                        </div>
+                        {
+                            type != "admin" &&
+                            <div onClick={() => openModal("social")} className="cursor-pointer">
+                                <Image
+                                    aria-hidden
+                                    src="/assets/images/edit-2.png"
+                                    alt="Colearn Logo"
+                                    width={20}
+                                    height={20}
+                                    className="object-contain"
+                                />
+                            </div>
+                        }
                     </div>
 
                     <div className="flex items-center gap-2 mt-4">
@@ -108,19 +118,22 @@ const AccountAbout = () => {
                 </div>
 
             </div>
-            <div className="view-course-content right-1">
+            <div className={`view-course-content right-1 ${type == "admin" ? "admin" : ""}`}>
                 <div className="flex items-center justify-between">
                     <p className="font-bold">Bio</p>
-                    <div onClick={() => openModal("bio")} className="cursor-pointer">
-                        <Image
-                            aria-hidden
-                            src="/assets/images/edit-2.png"
-                            alt="Colearn Logo"
-                            width={20}
-                            height={20}
-                            className="object-contain"
-                        />
-                    </div>
+                    {
+                        type != "admin" &&
+                        <div onClick={() => openModal("bio")} className="cursor-pointer">
+                            <Image
+                                aria-hidden
+                                src="/assets/images/edit-2.png"
+                                alt="Colearn Logo"
+                                width={20}
+                                height={20}
+                                className="object-contain"
+                            />
+                        </div>
+                    }
                 </div>
                 <div className="account-bio">
                     <p>Lorem ipsum dolor sit amet consectetur. In senectus fames faucibus cursus risus in sit neque. Sed convallis amet est eget. Placerat augue id pellentesque fermentum. Elementum laoreet turpis elit pulvinar in sit ut. Feugiat arcu rhoncus urna ultricies magna fermentum curabitur. Ac consequat vitae orci malesuada viverra. Et leo proin scelerisque imperdiet ullamcorper quam. Ac habitasse tortor sed quis gravida. Nunc massa sapien eget bibendum sagittis integer et ante diam.</p>

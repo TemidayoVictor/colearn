@@ -20,6 +20,7 @@
   --secondary-color-dark: #2A0A6A;
   --secondary-color-darker: #210852;
   --error-color: #D42620;
+  --error-color-light-active: #FBEAE9;
   --succcess-color: #0F973D;
   --success-color-2: #036B26;
   --success-color-light: #E7F5EC;
@@ -38,6 +39,8 @@
   --grey-5: #F0F2F5;
   --grey-6: #B4B8BB;
   --grey-bg: #F4F5FF;
+  --grey-muted: #F4F4F5;
+  --grey-lighter: #FAFAFA;
   --black: #000000;
   --warning-color-light: #FEF6E7;
   --warning-color-normal: #865503;
@@ -272,6 +275,17 @@ input, textarea {
   color: var(--error-color);
 }
 
+.btn.btn-success {
+  border: 1px solid var(--succcess-color);
+  color: var(--white);
+  background-color: var(--succcess-color);
+}
+
+.btn.btn-success:hover {
+  background-color: var(--white);
+  color: var(--succcess-color);
+}
+
 .btn.spec {
   padding: .7rem 2.3rem;
 }
@@ -372,6 +386,11 @@ input, textarea {
   border-bottom: 1px solid var(--grey-4);
 }
 
+.in-nav.admin {
+  margin-top: 1em;
+  border-bottom: none;
+}
+
 .in-nav.two {
   border: 0;
   gap: .5em;
@@ -408,6 +427,21 @@ input, textarea {
 
 .in-nav-link.three {
   font-size: .9rem;
+}
+
+.in-nav-link.admin {
+  border: 1px solid transparent;
+  color: var(--grey-text);
+  font-size: .9rem;
+  padding-bottom: 0;
+  padding: .7em 1em;
+  font-weight: 400;
+}
+
+.in-nav-link.admin.active {
+  border: 1px solid var(--color-primary-fill);
+  color: var(--color-primary-fill);
+  border-radius: .3em;
 }
 
 .number {
@@ -481,6 +515,15 @@ input, textarea {
   border-radius: 1em;
   font-size: .8rem;
   font-weight: 600;
+}
+
+.badge.normal {
+  border: var(--border-grey);
+}
+
+.badge.declined {
+  background-color: var(--error-color-light-active);
+  color: var(--error-color);
 }
 
 .badge.ongoing {
@@ -1532,6 +1575,10 @@ ol li {
   border-radius: .5em;
 }
 
+.view-course-content.admin {
+  border: var(--border-grey);
+  background-color: var(--white);
+}
 
 .content-sect ul {
   margin-top: .7em;
@@ -2933,6 +2980,12 @@ td {
 
 .admin-dashboard-details .right {
   width: 68%;
+}
+
+/* admin user verification */
+
+.admin-profile-body {
+  background-color: var(--grey-lighter);
 }
 
 /* Footer */
