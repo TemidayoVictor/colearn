@@ -396,6 +396,41 @@ const AccountModal = ({modalType, modalClose, experience, bank, subType}: Accoun
                         </div>
                     </div>
                 }
+
+{
+                    modalType == 'view-experience' &&
+                    <div>
+                        <div>
+                            <h2 className="title-3">Work Experience - Favi Ayomide</h2>
+                        </div>
+
+                        <div className="mt-[1rem]">
+                            <div className="mt-4">
+                                
+                                <div className="input-box">
+                                    <label htmlFor="">Company <span className="text-red-500">*</span></label>
+                                    <input type="text" className="input-field" value={experience?.company} onChange={(e) => setFormData({ ...formData, company: e.target.value })} readOnly/>
+                                </div>
+
+                                <div className="input-box">
+                                    <label htmlFor="">Position <span className="text-red-500">*</span></label>
+                                    <input type="text" className="input-field" value={experience?.title} onChange={(e) => setFormData({ ...formData, title: e.target.value })} readOnly/>
+                                </div>
+
+                                <div className="input-box">
+                                    <label htmlFor="">Time Period <span className="text-red-500">*</span></label>
+                                    <input type="text" className="input-field" value={experience?.duration} onChange={(e) => setFormData({ ...formData, duration: e.target.value })} readOnly/>
+                                </div>
+
+                                <div className="input-box">
+                                    <label htmlFor="">Experience<span className="text-red-500">*</span></label>
+                                    <textarea name="" id="" className="upload-course-textarea two" onChange={(e) => setFormData({ ...formData, description: e.target.value })} defaultValue={experience?.description} readOnly></textarea>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                }
                 
                 <div className="modal-close">
                     <FontAwesomeIcon icon={faXmark} className="text-[1.5rem]" onClick={modalClose}/>

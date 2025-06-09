@@ -78,7 +78,7 @@ const AccountCareer = ({type}: AccountCareerprops) => {
                                             </div>
                                         ) : (
                                             <div onClick={() => openModal("view-experience", item)}>
-                                                <p className="underline text-[.9rem] color-normal font-semibold">View</p>
+                                                <p className="underline text-[.9rem] color-normal font-semibold cursor-pointer">View</p>
                                             </div>
                                         )
                                     }

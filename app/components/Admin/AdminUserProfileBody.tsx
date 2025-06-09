@@ -26,9 +26,9 @@ const AdminuserProfileBody = () => {
                     </Link>
                 </div>
 
-                <div className="res-flex items-start justify-between mt-4">
-                    <div className="flex items-start gap-2">
-                        <div>
+                <div className="res-flex items-start justify-between mt-4 gap-4">
+                    <div className="res-flex items-start gap-2">
+                        <div className="res-box">
                             <Image
                                 aria-hidden
                                 src="/assets/images/avatars-big.png"
@@ -36,6 +36,15 @@ const AdminuserProfileBody = () => {
                                 width={80}
                                 height={80}
                                 className="object-contain"
+                            />
+
+                            <Image
+                                aria-hidden
+                                src="/assets/images/dots-big.png"
+                                alt="Colearn Logo"
+                                width={24}
+                                height={24}
+                                className="object-contain mobile"
                             />
                         </div>
                         <div className="flex flex-col gap-2">
@@ -70,7 +79,7 @@ const AdminuserProfileBody = () => {
                             alt="Colearn Logo"
                             width={24}
                             height={24}
-                            className="object-contain"
+                            className="object-contain desktop"
                         />
                         <button className="btn btn-success">Verify User</button>
                     </div>
@@ -81,7 +90,9 @@ const AdminuserProfileBody = () => {
                     <div className="in-nav two scrollable">
                         <span className={`in-nav-link admin  ${selectedTab == 'personal' ? 'active' : ''}`} onClick={() => setSelectedTab('personal')}> <span>Personal Information</span></span>
                         <span className={`in-nav-link admin  ${selectedTab == 'professional' ? 'active' : ''}`} onClick={() => setSelectedTab('professional')}> <span>Professional Information</span></span>
-                        <span className={`in-nav-link admin ${selectedTab == 'skills' ? 'active' : ''}`} onClick={() => setSelectedTab('skills')}> <span>Skills & Expertise</span></span>
+                        <span className={`in-nav-link admin  ${selectedTab == 'education' ? 'active' : ''}`} onClick={() => setSelectedTab('education')}> <span>Educational Information</span></span>
+                        <span className={`in-nav-link admin  ${selectedTab == 'video' ? 'active' : ''}`} onClick={() => setSelectedTab('video')}> <span>Intro'd Video</span></span>
+                        <span className={`in-nav-link admin  ${selectedTab == 'decline' ? 'active' : ''}`} onClick={() => setSelectedTab('decline')}> <span>Reason for Decline</span></span>
                     </div>
                 </div>
 

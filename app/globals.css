@@ -389,6 +389,9 @@ input, textarea {
 .in-nav.admin {
   margin-top: 1em;
   border-bottom: none;
+  background-color: var(--grey-muted);
+  padding: .5em;
+  border-radius: .5em;
 }
 
 .in-nav.two {
@@ -4041,6 +4044,12 @@ td {
     border: var(--border-grey);
     padding: .5em;
     border-radius: .5em;
+  }
+
+  .res-box {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
   }
 
   .footer-2, .footer-right {
