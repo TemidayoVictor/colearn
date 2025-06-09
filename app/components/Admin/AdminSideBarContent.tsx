@@ -92,13 +92,13 @@ const AdminSideBarContent = () => {
                     </Link>
                 </div>
 
-                <Link href='/admin/users' className={`sidebar-link ${pathname.startsWith('/admin/users')  ? 'active' : ''}`}>
+                <Link href='/admin/user-management' className={`sidebar-link ${pathname.startsWith('/admin/user-management')  ? 'active' : ''}`}>
                         {
-                            pathname.startsWith('/admin/users')  ? (
+                            pathname.startsWith('/admin/user-management')  ? (
 
                                 <Image
                                     aria-hidden
-                                    src="/assets/images/calendar-3-active.png"
+                                    src="/assets/images/people-active.png"
                                     alt="Colearn Image"
                                     width={20}
                                     height={20}

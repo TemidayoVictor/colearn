@@ -2,7 +2,24 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 
-const AdminVerificationTable = () => {
+type AdminVerificationTableProps = {
+    type?: string
+}
+
+const userLink = (type: string | undefined) => {
+    switch (type) {
+        case 'verification':
+            return 'user-verification/user'
+            break;
+        case 'management':
+            return 'user-management/user'
+            break;
+        default:
+        return 'user-verification/user'
+    }
+}
+
+const AdminVerificationTable = ({type}: AdminVerificationTableProps) => {
     return (
         <div className="spacing-inter">
             <div className="res-flex items-center justify-between gap-2">
@@ -51,7 +68,7 @@ const AdminVerificationTable = () => {
                                     <tr key={index}>
                                         <td>{index + 1}</td>
                                         <td className="flex items-center gap-2">
-                                            <Link href="user-verification/user" className="flex gap-2 items-center">
+                                            <Link href={userLink(type)} className="flex gap-2 items-center">
                                                 <Image
                                                     aria-hidden
                                                     src="/assets/images/avatars.png"

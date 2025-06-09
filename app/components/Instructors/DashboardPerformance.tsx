@@ -2,20 +2,25 @@ import React from "react";
 import Image from "next/image";
 
 type DashboardPerformanceProps = {
-    type?: string
+    type?: string | null
     user?: string 
 }
+
+const renderHeading = (type: string | null | undefined) => {
+    switch (type) {
+      case 'verification':
+        return <h2 className="font-semibold"> User Verification</h2>;
+      case 'management':
+        return <h2 className="font-semibold"> User Management</h2>;
+      default:
+        return <h2 className="font-semibold"> {`${type == "Course" || type == "Course-2" ? "Course" : ""}`} Performance Summary</h2>;
+    }
+  };
 
 const DashboardPerformance = ({type, user}: DashboardPerformanceProps) => {
     return (
         <div className="dashboard-performance">
-            {
-                type == 'verification' ? (
-                    <h2 className="font-semibold"> User Verification</h2>
-                ) : (
-                    <h2 className="font-semibold"> {`${type == "Course" || type == "Course-2" ? "Course" : ""}`} Performance Summary</h2>
-                )
-            }
+            { renderHeading(type) }
             {
                 !user &&
                 <div className={`dashboard-grid ${type == 'Course' || type == "Course-2"  ? 'one' : ''}`}>
@@ -107,7 +112,7 @@ const DashboardPerformance = ({type, user}: DashboardPerformanceProps) => {
             }
 
             {
-                user == "admin" &&
+                user == "admin" && type == "verification" &&
                 <div className="dashboard-grid">
                     <div className="flex flex-col gap-1 perf-detail none">
                         <p className="color-grey-text text-[.9rem]">Total Users</p>
@@ -128,6 +133,37 @@ const DashboardPerformance = ({type, user}: DashboardPerformanceProps) => {
                         <p className="color-grey-text text-[.9rem]">Total Verified User</p>
                         <h3 className="font-semibold">2</h3>
                         <p className="color-grey-text text-[.7rem]">Total Verified User</p>
+                    </div>
+                </div>
+            }
+
+            {
+                user == "admin" && type == "management" &&
+                <div className="dashboard-grid one">
+                    <div className="flex flex-col gap-1 perf-detail none">
+                        <p className="color-grey-text text-[.9rem]">Total Users</p>
+                        <h3 className="font-semibold">4</h3>
+                        <p className="color-grey-text text-[.7rem]">Total Users</p>
+                    </div>
+                    <div className="flex flex-col gap-1 perf-detail">
+                        <p className="color-grey-text text-[.9rem]">Total Active Users</p>
+                        <h3 className="font-semibold">4</h3>
+                        <p className="color-grey-text text-[.7rem]">Total Active Users</p>
+                    </div>
+                    <div className="flex flex-col gap-1 perf-detail">
+                        <p className="color-grey-text text-[.9rem]">Total Students</p>
+                        <h3 className="font-semibold">2</h3>
+                        <p className="color-grey-text text-[.7rem]">Total Students</p>
+                    </div>
+                    <div className="flex flex-col gap-1 perf-detail">
+                        <p className="color-grey-text text-[.9rem]">Total Instructors</p>
+                        <h3 className="font-semibold">2</h3>
+                        <p className="color-grey-text text-[.7rem]">Total Instructors</p>
+                    </div>
+                    <div className="flex flex-col gap-1 perf-detail">
+                        <p className="color-grey-text text-[.9rem]">Total Consultants</p>
+                        <h3 className="font-semibold">2</h3>
+                        <p className="color-grey-text text-[.7rem]">Total Consultants</p>
                     </div>
                 </div>
             }
