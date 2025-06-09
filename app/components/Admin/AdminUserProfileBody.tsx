@@ -1,12 +1,30 @@
 'use client';
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import Image from "next/image";
 import Link from "next/link";
 import AccountAbout from "../Instructors/AccountAbout";
 import AccountCareer from "../Instructors/AccountCareer";
+import DashboardPerformance from "../Instructors/DashboardPerformance";
+import DashboardTopCoursesTable from "../Instructors/DashboardTopCoursesTable";
 
-const AdminuserProfileBody = () => {
-    const [selectedTab, setSelectedTab] = useState<string>('personal');
+type AdminuserProfileBodyProps = {
+    type?: string
+}
+
+
+const AdminuserProfileBody = ({type}: AdminuserProfileBodyProps) => {
+    const [selectedTab, setSelectedTab] = useState<string>('');
+    
+    useEffect(() => {
+        if(type == 'management') {
+            setSelectedTab('overview')
+        }
+
+        else {
+            setSelectedTab('personal')
+        }
+    }, []);
+
     return (
         <div className="">
             <div className="container-3">
@@ -88,6 +106,10 @@ const AdminuserProfileBody = () => {
             <div className="container-3 admin-profile-body">
                 <div className="in-nav admin flex items-center justify-between">
                     <div className="in-nav two scrollable">
+                        {
+                            type == 'management' &&
+                            <span className={`in-nav-link admin  ${selectedTab == 'overview' ? 'active' : ''}`} onClick={() => setSelectedTab('overview')}> <span>Overview</span></span>
+                        }
                         <span className={`in-nav-link admin  ${selectedTab == 'personal' ? 'active' : ''}`} onClick={() => setSelectedTab('personal')}> <span>Personal Information</span></span>
                         <span className={`in-nav-link admin  ${selectedTab == 'professional' ? 'active' : ''}`} onClick={() => setSelectedTab('professional')}> <span>Professional Information</span></span>
                         <span className={`in-nav-link admin  ${selectedTab == 'education' ? 'active' : ''}`} onClick={() => setSelectedTab('education')}> <span>Educational Information</span></span>
@@ -97,6 +119,16 @@ const AdminuserProfileBody = () => {
                 </div>
 
                 <div className="mt-[1em]">
+                    {
+                        selectedTab == 'overview' &&
+                        <div>
+                            <DashboardPerformance />
+                            <div className="spacing-inter">
+                                <DashboardTopCoursesTable type="instructor-view"/>
+                            </div>
+                        </div>
+                    }
+
                     {
                         selectedTab == 'personal' &&
                         <AccountAbout type="admin" />

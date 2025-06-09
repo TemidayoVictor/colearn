@@ -7,7 +7,7 @@ const AdminUserManagement = () => {
         <div>
             <UserLayout userType="admin" >
                 <div>
-                    <AdminManagementBody />
+                    <AdminManagementBody/>
                 </div>
             </UserLayout>
         </div>
