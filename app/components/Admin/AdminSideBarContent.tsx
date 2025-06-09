@@ -122,12 +122,12 @@ const AdminSideBarContent = () => {
                     </Link>
 
                 <div className="sidebar-break">
-                <Link href='/students/account' className={`sidebar-link ${pathname == '/students/account' ? 'active' : ''}`}>
+                <Link href='/admin/admin-users' className={`sidebar-link ${pathname == '/admin/admin-users' ? 'active' : ''}`}>
                         {
-                            pathname == '/students/account' ? (
+                            pathname == '/admin/admin-users' ? (
                                 <Image
                                     aria-hidden
-                                    src="/assets/images/profile-2user.png"
+                                    src="/assets/images/profile-2user-active.png"
                                     alt="Colearn Image"
                                     width={20}
                                     height={20}

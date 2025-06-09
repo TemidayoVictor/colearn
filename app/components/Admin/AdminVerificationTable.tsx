@@ -1,6 +1,8 @@
-import React from "react";
+'use client';
+import React, {useState} from "react";
 import Image from "next/image";
 import Link from "next/link";
+import AccountModal from "../Instructors/AccountModal";
 
 type AdminVerificationTableProps = {
     type?: string
@@ -15,11 +17,17 @@ const userLink = (type: string | undefined) => {
             return 'user-management/user'
             break;
         default:
-        return 'user-verification/user'
+        return '#';
     }
 }
 
 const AdminVerificationTable = ({type}: AdminVerificationTableProps) => {
+    const [showModal, setShowModal] = useState<string | null>(null);
+    const openModal = (key: string) => {
+        setShowModal(key);
+    }
+
+    const closeModal = () => setShowModal(null);
     return (
         <div className="spacing-inter">
             <div className="res-flex items-center justify-between gap-2">
@@ -37,17 +45,25 @@ const AdminVerificationTable = ({type}: AdminVerificationTableProps) => {
                     </div>
                     <button className="btn btn-small btn-primary-fill">Search</button>
                 </div>
-                <div className="flex items-center gap-2 bod-grey px-2 py-[.3em] rounded-[.3em]">
-                    <p className="text-[.9rem]">Filter</p>
-                    <Image
-                        aria-hidden
-                        src="/assets/images/arrow-down.png"
-                        alt="Colearn Logo"
-                        width={16}
-                        height={16}
-                        className="object-contain"
-                    />
-                </div>
+                {
+                    type != 'admin-users' &&
+                    <div className="flex items-center gap-2 bod-grey px-2 py-[.3em] rounded-[.3em]">
+                        <p className="text-[.9rem]">Filter</p>
+                        <Image
+                            aria-hidden
+                            src="/assets/images/arrow-down.png"
+                            alt="Colearn Logo"
+                            width={16}
+                            height={16}
+                            className="object-contain"
+                        />
+                    </div>
+                }
+
+                {
+                    type == 'admin-users' &&
+                    <button className="btn btn-primary-fill" onClick={() => openModal("add-admin")}>Add User</button>
+                }
             </div>
             <div className="bod-grey p-[1em] rounded-[.5em] spacing-inter">
                 <div className="table-container">
@@ -58,7 +74,10 @@ const AdminVerificationTable = ({type}: AdminVerificationTableProps) => {
                                 <th>Name</th>
                                 <th>Email</th>
                                 <th>Role</th>
-                                <th>Country</th>
+                                {
+                                    type != 'admin-users' &&
+                                    <th>Country</th>
+                                }
                                 <th>Status</th>
                             </tr>
                         </thead>
@@ -87,7 +106,10 @@ const AdminVerificationTable = ({type}: AdminVerificationTableProps) => {
                                         </td>
                                         <td>faviayomide11@gmail.com</td>
                                         <td>Instructor</td>
-                                        <td>Nigeria</td>
+                                        {
+                                            type != 'admin-users' &&
+                                            <td>Nigeria</td>
+                                        }
                                         <td>
                                             <span className="badge completed">Active</span>
                                         </td>
@@ -98,6 +120,11 @@ const AdminVerificationTable = ({type}: AdminVerificationTableProps) => {
                     </table>
                 </div>
             </div>
+
+            {
+                showModal && 
+                <AccountModal modalType={showModal} modalClose={closeModal}/>
+            }
         </div>
     )
 }
