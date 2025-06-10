@@ -397,7 +397,7 @@ const AccountModal = ({modalType, modalClose, experience, bank, subType}: Accoun
                     </div>
                 }
 
-{
+                {
                     modalType == 'view-experience' &&
                     <div>
                         <div>
@@ -427,6 +427,39 @@ const AccountModal = ({modalType, modalClose, experience, bank, subType}: Accoun
                                     <textarea name="" id="" className="upload-course-textarea two" onChange={(e) => setFormData({ ...formData, description: e.target.value })} defaultValue={experience?.description} readOnly></textarea>
                                 </div>
 
+                            </div>
+                        </div>
+                    </div>
+                }
+
+                {
+                    modalType == 'add-admin' &&
+                    <div>
+                        <div>
+                            <h2 className="title-3">Add Team Member</h2>
+                        </div>
+
+                        <div className="mt-[1rem]">
+                            <div className="mt-4">
+                                
+                                <div className="input-box">
+                                    <label htmlFor="">Name <span className="text-red-500">*</span></label>
+                                    <input type="text" className="input-field" />
+                                </div>
+
+                                <div className="input-box">
+                                    <label htmlFor="">Email<span className="text-red-500">*</span></label>
+                                    <input type="email" className="input-field" />
+                                </div>
+
+                                <div className="input-box">
+                                    <label htmlFor="">Role<span className="text-red-500">*</span></label>
+                                    <select name="" id="" className="input-field">
+                                        <option value="">Select Role</option>
+                                        <option value="">Administrator</option>
+                                        <option value="">Staff</option>
+                                    </select>
+                                </div>
                             </div>
                         </div>
                     </div>
