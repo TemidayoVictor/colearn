@@ -5,12 +5,14 @@ import Link from "next/link";
 import { motion, AnimatePresence, Variants  } from "framer-motion";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+import axiosInstance from "@/utils/api";
 
 const SignUp = () => {
     const [password, setPassword] = useState<string> ('');
     const [showPassword, setShowPassword] = useState <boolean | null> (false);
     const [step, setStep] = useState<number> (1);
     const [hasMounted, setHasMounted] = useState<boolean | null> (false);
+    const [direction, setDirection] = useState(1);
 
     const togglePassword = () => setShowPassword(prev => !prev);
 
@@ -50,7 +52,19 @@ const SignUp = () => {
         setStep(1);
     };
 
-    const [direction, setDirection] = useState(1);
+    const signUp = async () => {
+        try {
+            const response = await axiosInstance.post('/add-brand-verify', {
+              name: 'My Brand',
+              category: 'Fashion',
+            });
+            console.log(response.data);
+        } 
+        
+        catch (error) {
+            console.error('Failed to add brand', error);
+        }
+    }
 
     useEffect(() => {
         setHasMounted(true);
@@ -162,7 +176,7 @@ const SignUp = () => {
 
                             ) : (
 
-                                <button className="bt-btn two btn btn-primary-fill">
+                                <button className="bt-btn two btn btn-primary-fill" onClick={signUp}>
                                     <span>Create Account</span>
                                     <span>
                                         <Image
