@@ -1429,6 +1429,10 @@ ol li {
   position: relative;
 }
 
+.input-field.error {
+  border: 1px solid var(--error-color);
+}
+
 .input-field-2 {
   width: 90%;
   margin-left: 2rem;

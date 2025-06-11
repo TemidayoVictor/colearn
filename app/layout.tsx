@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 // import { Geist, Geist_Mono, Roboto, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import '@fontsource-variable/plus-jakarta-sans';
@@ -47,6 +49,7 @@ export default function RootLayout({
       <body>
         <MainLayout>
           {children}
+          <ToastContainer />
         </MainLayout>
       </body>
     </html>
