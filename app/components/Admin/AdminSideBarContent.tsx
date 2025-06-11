@@ -147,9 +147,9 @@ const AdminSideBarContent = () => {
                         }
                         <p className="text-[.9rem]">Roles and Permissions</p>
                     </Link>
-                    <Link href='/students/account' className={`sidebar-link ${pathname == '/students/account' ? 'active' : ''}`}>
+                    <Link href='/admin/account' className={`sidebar-link ${pathname == '/admin/account' ? 'active' : ''}`}>
                         {
-                            pathname == '/students/account' ? (
+                            pathname == '/admin/account' ? (
                                 <Image
                                     aria-hidden
                                     src="/assets/images/profile-circle-active.png"

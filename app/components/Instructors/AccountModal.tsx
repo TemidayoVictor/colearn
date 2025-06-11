@@ -5,6 +5,7 @@ import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import MultiDropdownSelector from "../MultiDropdownSelector";
 import { Experience, Bank } from "@/app/Types/types";
 import BookingDetails from "../BookingDetails";
+import ChangePassword from "./ChangePassword";
 
 type AccountModalProps = {
     modalType: string;
@@ -460,6 +461,17 @@ const AccountModal = ({modalType, modalClose, experience, bank, subType}: Accoun
                                         <option value="">Staff</option>
                                     </select>
                                 </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+                {
+                    modalType == 'admin-change-password' &&
+                    <div>
+                        <div className="mt-[1rem]">
+                            <div className="mt-4">
+                                <ChangePassword type="admin"/>
                             </div>
                         </div>
                     </div>

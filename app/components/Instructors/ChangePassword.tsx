@@ -3,7 +3,11 @@ import Image from "next/image";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 
-const ChangePassword = () => {
+type ChangePasswordProps = {
+    type?: string
+}
+
+const ChangePassword = ({type}: ChangePasswordProps) => {
     const [showSuccess, setShowSuccess] = useState<boolean>(false);
     const [password, setPassword] = useState<string> ('');
     const [showPassword, setShowPassword] = useState <boolean | null> (false);
@@ -25,20 +29,23 @@ const ChangePassword = () => {
                     <p className="color-grey-text text-[.8rem]">Enter your current password and the new password you want too.</p>
 
                     <div>
-                        <div className="input-box">
-                            <label htmlFor="" className="font-semibold text-[.9rem]">Current Password</label>
-                            <div className="input-field">
-                                <Image
-                                    aria-hidden
-                                    src="/assets/images/lock-2.png"
-                                    alt="Colearn Image"
-                                    width={20}
-                                    height={20}
-                                    className="object-cover ab-img"
-                                />
-                                <input type="password" className="input-field-2" placeholder="Enter your current password"/>
+                        {
+                            type != "admin" &&
+                            <div className="input-box">
+                                <label htmlFor="" className="font-semibold text-[.9rem]">Current Password</label>
+                                <div className="input-field">
+                                    <Image
+                                        aria-hidden
+                                        src="/assets/images/lock-2.png"
+                                        alt="Colearn Image"
+                                        width={20}
+                                        height={20}
+                                        className="object-cover ab-img"
+                                    />
+                                    <input type="password" className="input-field-2" placeholder="Enter your current password"/>
+                                </div>
                             </div>
-                        </div>
+                        }
 
                         <div className="input-box relative">
                             <label className="font-bold text-[.9em]">New Password</label>
