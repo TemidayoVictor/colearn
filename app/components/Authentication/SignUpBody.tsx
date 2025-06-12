@@ -12,6 +12,7 @@ const SignUpBody = () => {
     const {
         showPassword,
         step,
+        buttonLoader,
         hasMounted,
         setHasMounted,
         direction,
@@ -159,17 +160,27 @@ const SignUpBody = () => {
                             ) : (
 
                                 <button className="bt-btn two btn btn-primary-fill" onClick={handleSubmit}>
-                                    <span>Create Account</span>
-                                    <span>
-                                        <Image
-                                            aria-hidden
-                                            src="/assets/images/arrow-right.png"
-                                            alt="Colearn Logo"
-                                            width={12}
-                                            height={12}
-                                            className="object-contain"
-                                        />
-                                    </span>
+                                    {
+                                        buttonLoader ? (
+                                            <p>Please wait . . . </p>
+                                        ) : 
+                                        
+                                        (
+                                            <div className="bt-btn two">
+                                                <span>Create Account</span>
+                                                <span>
+                                                    <Image
+                                                        aria-hidden
+                                                        src="/assets/images/arrow-right.png"
+                                                        alt="Colearn Logo"
+                                                        width={12}
+                                                        height={12}
+                                                        className="object-contain"
+                                                    />
+                                                </span>
+                                            </div>                                        
+                                        )
+                                    }
                                 </button>
 
                             )

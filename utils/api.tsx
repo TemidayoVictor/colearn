@@ -9,6 +9,7 @@ const axiosInstance = axios.create({
         'Content-Type': 'application/json',
     },
     withCredentials: true, 
+    validateStatus: () => true,
 });
 
 axiosInstance.interceptors.response.use(

@@ -1,6 +1,9 @@
 import React, {useState} from "react";
 import { toast } from 'react-toastify';
 import { motion, AnimatePresence, Variants  } from "framer-motion";
+import { createAccount } from "@/services/auth";
+import { showErrorToast } from "@/utils/errorToast";
+import { showSuccessToast } from "@/utils/successToast";
 
 export const useSignUpForm = () => {
     const [password, setPassword] = useState<string> ('');
@@ -9,6 +12,7 @@ export const useSignUpForm = () => {
     const [step, setStep] = useState<number> (1);
     const [hasMounted, setHasMounted] = useState<boolean | null> (false);
     const [direction, setDirection] = useState(1);
+    const [buttonLoader, setButtonLoader] = useState<boolean>(false);
 
     const togglePassword = () => setShowPassword(prev => !prev);
 
@@ -101,7 +105,7 @@ export const useSignUpForm = () => {
         }
     }
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
         // check if password is strong
@@ -125,9 +129,25 @@ export const useSignUpForm = () => {
         }
     
         else {
-            toast.success('Form submitted successfully!');
-            console.log(formData);
-            // You could call your API handler function here
+            // create account
+            setButtonLoader(true);
+            try {
+                const response = await createAccount(formData);
+                if (response.success) {
+                    setButtonLoader(false)
+                    showSuccessToast(response.message)
+                } 
+
+                else {
+                    setButtonLoader(false)
+                    showErrorToast(response.message)
+                }
+            }
+
+            catch (err: any) {
+                setButtonLoader(false)
+                showErrorToast('Unexpected error occurred');
+            }
         }
 
     };
@@ -136,6 +156,7 @@ export const useSignUpForm = () => {
         password,
         setPassword,
         showPassword,
+        buttonLoader,
         step,
         hasMounted,
         setHasMounted,
