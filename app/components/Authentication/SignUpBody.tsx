@@ -5,7 +5,6 @@ import Link from "next/link";
 import { motion, AnimatePresence, Variants  } from "framer-motion";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
-import axiosInstance from "@/utils/api";
 import { useSignUpForm } from "@/hooks/useSignupForm";
 
 const SignUpBody = () => {

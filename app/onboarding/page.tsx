@@ -2,9 +2,12 @@
 import React, {useState} from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { useLogout } from "@/hooks/useLogout";
  
 const Onboarding = () => {
-
+    const {
+        logoutHook
+    } = useLogout();
     const [selected, setSelected] = useState<string | null>(null);
 
     const handleSelect = (id: string) => {
@@ -74,7 +77,7 @@ const Onboarding = () => {
                                 <p className="w-[62%] font-semibold">Join the community as a Consultant / Instructor</p>
                             </div>
 
-                            <div className="flex justify-end mt-[1.5rem]">
+                            <div className="res-flex justify-between mt-[1.5rem]">
                                 <Link href='/' className="bt-btn btn btn-primary-fill">
                                     <span>Continue</span>
                                     <span>
@@ -88,6 +91,32 @@ const Onboarding = () => {
                                         />
                                     </span>
                                 </Link>
+                                
+                                <button className="items-center gap-2 desktop-flex cursor-pointer" onClick={logoutHook}>
+                                    <Image
+                                        aria-hidden
+                                        src="/assets/images/logout.png"
+                                        alt="Colearn Image"
+                                        width={20}
+                                        height={20}
+                                        className="object-contain"
+                                    />
+                                    <p className="text-[.9rem] color-error">Log Out</p>
+                                </button>
+                            </div>
+
+                            <div className="mobile-flex justify-end mt-4">
+                                <button className="flex items-center gap-2" onClick={logoutHook}>
+                                    <Image
+                                        aria-hidden
+                                        src="/assets/images/logout.png"
+                                        alt="Colearn Image"
+                                        width={20}
+                                        height={20}
+                                        className="object-contain"
+                                    />
+                                    <p className="text-[.9rem] color-error">Log Out</p>
+                                </button>
                             </div>
                         </div>
                     </div>

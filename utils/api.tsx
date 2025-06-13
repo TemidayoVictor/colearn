@@ -1,12 +1,14 @@
 import axios from 'axios';
+import Cookies from 'js-cookie';
+
+const token = Cookies.get('XSRF-TOKEN');
 
 const axiosInstance = axios.create({
     baseURL: 'http://localhost:8000/api/v1',
     headers: {
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
-        'Access-Control-Allow-Headers': 'Content-Type, X-Requested-With',
         'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'X-XSRF-TOKEN': token || '',
     },
     withCredentials: true, 
     validateStatus: () => true,

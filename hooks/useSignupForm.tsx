@@ -1,11 +1,13 @@
+'use client';
 import React, {useState} from "react";
 import { toast } from 'react-toastify';
 import { motion, AnimatePresence, Variants  } from "framer-motion";
 import { createAccount } from "@/services/auth";
-import { showErrorToast } from "@/utils/errorToast";
-import { showSuccessToast } from "@/utils/successToast";
+import { showErrorToast, showSuccessToast } from "@/utils/toastTypes";
+import { useRouter } from 'next/navigation';
 
 export const useSignUpForm = () => {
+    const router = useRouter();
     const [password, setPassword] = useState<string> ('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [showPassword, setShowPassword] = useState <boolean | null> (false);
@@ -136,11 +138,14 @@ export const useSignUpForm = () => {
                 if (response.success) {
                     setButtonLoader(false)
                     showSuccessToast(response.message)
+                    router.push('/onboarding');
                 } 
 
                 else {
                     setButtonLoader(false)
-                    showErrorToast(response.message)
+                    back();
+                    showErrorToast(response.errors)
+                    console.log(response)
                 }
             }
 

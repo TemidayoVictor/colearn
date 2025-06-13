@@ -1,20 +1,40 @@
-import React from "react";
+import axios from 'axios';
 import axiosInstance from "@/utils/api";
+import { handleApiResponse, handleApiError } from '@/utils/handleApiResponse';
 
 export const createAccount = async (formData: {
-  firstName: string,
-  lastName: string,
-  email: string,
-  password: string,
-  confirmPassword: string,
-}) => {
-    const response = await axiosInstance.post("/createAccount", formData);
-    const {status, message, data} = response.data;
+    firstName: string;
+    lastName: string;
+    email: string;
+    password: string;
+    confirmPassword: string;
+  }) => {
+  try {
+    await axios.get('http://localhost:8000/sanctum/csrf-cookie', {
+      withCredentials: true,
+    });
 
-    if (status === 'success') {
-      return { success: true, message, data };
-    } else {
-      // handle if status is 'error' even though it's in try block
-      return { success: false, message: message || 'Something went wrong', errors: data?.errors || {} };
-    }
+    const response = await axiosInstance.post("/createAccount", formData);
+    return handleApiResponse(response);
+  } 
+  
+  catch (error: any) {
+    return handleApiError(error)
+  }
+};
+
+export const logout = async() => {
+  try {
+    
+    await axios.get('http://localhost:8000/sanctum/csrf-cookie', {
+      withCredentials: true,
+    });
+
+    const response = await axiosInstance.post("/logout");
+    return handleApiResponse(response);
+  }
+
+  catch(error: any) {
+    return handleApiError(error)
+  }
 }

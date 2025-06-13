@@ -24,6 +24,7 @@
     "date-fns": "^4.1.0",
     "dayjs": "^1.11.13",
     "framer-motion": "^12.9.7",
+    "js-cookie": "^3.0.5",
     "next": "^15.3.1",
     "react": "^19.1.0",
     "react-apexcharts": "^1.7.0",
@@ -32,10 +33,12 @@
     "react-dom": "^19.1.0",
     "react-toastify": "^11.0.5",
     "recharts": "^2.15.3",
-    "swiper": "^11.2.6"
+    "swiper": "^11.2.6",
+    "zustand": "^5.0.5"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
+    "@types/js-cookie": "^3.0.6",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-datepicker": "^6.2.0",
