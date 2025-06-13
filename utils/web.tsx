@@ -1,20 +1,17 @@
 import axios from 'axios';
 import Cookies from 'js-cookie';
 
-const token = Cookies.get('XSRF-TOKEN');
-
-const axiosInstance = axios.create({
-    baseURL: 'http://localhost:8000/api/v1',
+const axiosInstanceWeb = axios.create({
+    baseURL: 'http://localhost:8000',
     headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
-        'X-XSRF-TOKEN': token || '',
     },
     withCredentials: true, 
     validateStatus: () => true,
 });
 
-axiosInstance.interceptors.request.use(config => {
+axiosInstanceWeb.interceptors.request.use(config => {
     const freshToken = Cookies.get('XSRF-TOKEN');
     if (freshToken) {
       config.headers['X-XSRF-TOKEN'] = decodeURIComponent(freshToken);
@@ -22,4 +19,4 @@ axiosInstance.interceptors.request.use(config => {
     return config;
 });
   
-export default axiosInstance;
+export default axiosInstanceWeb;

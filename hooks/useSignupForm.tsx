@@ -126,7 +126,7 @@ export const useSignUpForm = () => {
         const hasError = Object.values(newErrors).some(Boolean);
 
         if (hasError) {
-            toast.error('Please fill in all required fields');
+            showErrorToast('Please fill in all required fields');
             return;
         }
     
