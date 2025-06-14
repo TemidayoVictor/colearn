@@ -1,9 +1,13 @@
-import React, {useState, useRef} from "react";
+import React, {useState, useRef, useEffect} from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useLogout } from "@/hooks/useLogout";
+import { useAuth } from "@/hooks/useAuth";
+import Loader from "./Loader";
 
 const OnboardingBody = () => {
+    const checkAuth = useAuth();
+    const [loading, setLoading] = useState<boolean>(true);
     const {
         logoutHook
     } = useLogout();
@@ -37,6 +41,13 @@ const OnboardingBody = () => {
             inputsRef.current[index - 1]?.focus();
         }
     };
+
+    useEffect(() => {
+        checkAuth();
+        setLoading(false);
+    }, []);
+
+    if (loading) return <Loader />
     
     return (
         <div>

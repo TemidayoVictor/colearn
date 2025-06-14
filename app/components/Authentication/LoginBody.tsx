@@ -68,7 +68,10 @@ const LoginBody = () => {
                             <button className="bt-btn two btn btn-primary-fill" onClick={handleLogin}>
                                 {
                                     buttonLoader ? (
-                                        <p>Authenticating . . . </p>
+                                        <div className="flex items-center justify-center gap-2">
+                                            <span className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
+                                            <span>Authenticating...</span>
+                                        </div>
                                     ) : 
                                     
                                     (
