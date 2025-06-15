@@ -11,7 +11,7 @@ export const createAccount = async (formData: {
     confirmPassword: string;
   }) => {
   try {
-    await axios.get('http://localhost:8000/sanctum/csrf-cookie', {
+    await axios.get(`http://localhost:8000/sanctum/csrf-cookie?refresh=${Date.now()}`, {
       withCredentials: true,
     });
 

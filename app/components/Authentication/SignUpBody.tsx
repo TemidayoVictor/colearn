@@ -161,7 +161,10 @@ const SignUpBody = () => {
                                 <button className="bt-btn two btn btn-primary-fill" onClick={handleSubmit}>
                                     {
                                         buttonLoader ? (
-                                            <p>Please wait . . . </p>
+                                            <div className="flex items-center justify-center gap-2">
+                                                <span className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
+                                                <span>Please Wait...</span>
+                                            </div>
                                         ) : 
                                         
                                         (

@@ -1,8 +1,4 @@
-'use client';
-import React, {useState} from "react";
-import Image from "next/image";
-import Link from "next/link";
-import { useLogout } from "@/hooks/useLogout";
+import React from "react";
 import OnboardingBody from "../components/OnboardingBody";
  
 const Onboarding = () => {

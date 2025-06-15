@@ -1373,6 +1373,11 @@ ol li {
   padding: 1em;
 }
 
+.base-btns {
+  padding-inline: 1em;
+  padding-bottom: 1em;
+}
+
 /* .auth-con.two {
   max-height: 35rem;
   overflow-y: scroll;
@@ -1403,7 +1408,7 @@ ol li {
   scrollbar-color: #888 #fff;
 }
 
-.auth-con.three {
+.auth-con.three, .base-btns {
   width: 90%;
 }
 
@@ -3562,7 +3567,7 @@ td {
     padding: 1.5em;
   }
 
-  .auth-con.three {
+  .auth-con.three, .base-btns {
     width: 100%;
   }
 

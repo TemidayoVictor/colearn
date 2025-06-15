@@ -2,6 +2,8 @@ import { logout } from "@/services/auth";
 import { useRouter } from 'next/navigation';
 import { showErrorToast, showSuccessToast } from "@/utils/toastTypes";
 import { handleCsrfError } from "@/utils/handleCsrfTokenError";
+import { authStore } from "@/zustand/authStore";
+
 export const useLogout = () => {
     const router = useRouter();
     const logoutHook = async(e: React.MouseEvent<HTMLButtonElement>) => {
@@ -10,6 +12,7 @@ export const useLogout = () => {
         try {
             const response = await logout();
             if (response.success) {
+                authStore.getState().clearUser();
                 showSuccessToast(response.message)
                 router.push('/authentication/login');
             } 
