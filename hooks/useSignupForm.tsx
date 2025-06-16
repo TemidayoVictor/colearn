@@ -150,6 +150,7 @@ export const useSignUpForm = () => {
             }
 
             catch (err: any) {
+                console.log(err)
                 setButtonLoader(false)
                 showErrorToast('Unexpected error occurred');
             }

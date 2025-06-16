@@ -63,6 +63,7 @@ const useLogin = () => {
 
             catch (err: any) {
                 setButtonLoader(false)
+                console.log(err);
                 showErrorToast('Unexpected error occurred');
             }
         }

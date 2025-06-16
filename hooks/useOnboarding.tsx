@@ -1,11 +1,15 @@
 'use client';
 import React, {useState, useRef} from "react";
-import { logout } from "@/services/auth";
-import { useRouter } from 'next/navigation';
 import { showErrorToast, showSuccessToast } from "@/utils/toastTypes";
+import { authStore } from "@/zustand/authStore";
+import { verify_otp, resend_otp, select_account } from "@/services/onboarding";
 
 export const useOnboarding = () => {
+    const user = authStore((state) => state.user);
+    const userId = user?.id;
     const [selected, setSelected] = useState<string | null>(null);
+    const [buttonLoader, setButtonLoader] = useState<boolean>(false);
+    const [newUpdate, setNewUpdate] = useState<string>('reset');
 
     const handleSelect = (id: string) => {
         setSelected(prev => (prev === id ? null : id));
@@ -47,8 +51,93 @@ export const useOnboarding = () => {
         return `${visiblePart}${maskedPart}@${domain ?? "domain"}`;
     }
 
-    const submitOtp = () => {
-        alert(otp);
+    const submitOtp = async () => {
+        const isOtpComplete = otp.every(digit => digit.trim() !== '');
+
+        if (!isOtpComplete) {
+            showErrorToast('Please enter the full 6-digit OTP');
+            return;
+        }
+
+        const otpValue = Number(otp.join(''));
+
+        // check if otp is correct
+        setButtonLoader(true);
+        try {
+            const response = await verify_otp(otpValue, userId);
+            if (response.success) {
+                setButtonLoader(false)
+                showSuccessToast(response.message)
+                setNewUpdate('set');
+            } 
+
+            else {
+                setButtonLoader(false)
+                showErrorToast(response.message)
+                console.log(response)
+            }
+        }
+
+        catch (err: any) {
+            console.log(err)
+            setButtonLoader(false)
+            showErrorToast('Unexpected error occurred');
+        }
+
+    }
+
+    const resendOtp = async () => {
+        setButtonLoader(true);
+        try {
+            const response = await resend_otp(userId);
+            if (response.success) {
+                setButtonLoader(false)
+                showSuccessToast(response.message)
+                setNewUpdate('set');
+            } 
+
+            else {
+                setButtonLoader(false)
+                showErrorToast(response.message)
+                console.log(response)
+            }
+        }
+
+        catch (err: any) {
+            console.log(err)
+            setButtonLoader(false)
+            showErrorToast('Unexpected error occurred');
+        }
+    }
+
+    const submitUser = async() => {
+        if (selected == null) {
+            showErrorToast('Please select an account type');
+            return;
+        }
+
+        setButtonLoader(true);
+        try {
+            const response = await select_account(userId, selected);
+            if (response.success) {
+                setButtonLoader(false)
+                showSuccessToast(response.message)
+                setNewUpdate('set');
+            } 
+
+            else {
+                setButtonLoader(false)
+                showErrorToast(response.message)
+                console.log(response)
+            }
+        }
+
+        catch (err: any) {
+            console.log(err)
+            setButtonLoader(false)
+            showErrorToast('Unexpected error occurred');
+        }
+        
     }
 
     return {
@@ -60,5 +149,10 @@ export const useOnboarding = () => {
         inputsRef,
         submitOtp,
         selected,
+        buttonLoader,
+        newUpdate,
+        setNewUpdate,
+        resendOtp,
+        submitUser,
     }
 }

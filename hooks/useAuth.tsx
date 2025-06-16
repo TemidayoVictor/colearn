@@ -5,13 +5,21 @@ import { authStore } from "@/zustand/authStore";
 
 export const useAuth = () => {
     const router = useRouter();
+    const { setUser, setStudent } = authStore.getState();
 
     const checkAuth = async () => {
         try {
             const response = await axiosInstanceWeb.get("/user");
             if (response.status === 200) {
+                const { user, student } = response.data;
+
                 // store user globally
-                authStore.getState().setUser(response.data);   
+                setUser(user);
+                
+                // check userType and store
+                if (user.type === 'student' && student) {
+                    setStudent(student);
+                }
             }
 
             else {
@@ -19,6 +27,7 @@ export const useAuth = () => {
                 router.push('/authentication/login');
             }
         } catch (error) {
+            console.log(error);
             showErrorToast("Unauthorized Access. Please Log in");
             router.push('/authentication/login');
         }

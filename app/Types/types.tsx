@@ -10,3 +10,7 @@ export type Bank = {
     account_number: string;
     account_name: string;
 }
+
+export type ApiResponseType =
+  | { success: true; message: any; data: any }
+  | { success: false; message: any; errors: any };

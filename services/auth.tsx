@@ -1,4 +1,3 @@
-import axios from 'axios';
 import axiosInstance from "@/utils/api";
 import axiosInstanceWeb from '@/utils/web';
 import { handleApiResponse, handleApiError } from '@/utils/handleApiResponse';
@@ -11,7 +10,7 @@ export const createAccount = async (formData: {
     confirmPassword: string;
   }) => {
   try {
-    await axios.get(`http://localhost:8000/sanctum/csrf-cookie?refresh=${Date.now()}`, {
+    await axiosInstanceWeb.get(`/sanctum/csrf-cookie?refresh=${Date.now()}`, {
       withCredentials: true,
     });
 
@@ -29,7 +28,7 @@ export const login = async (loginData: {
     password: string;
   }) => {
   try {
-    await axios.get(`http://localhost:8000/sanctum/csrf-cookie?refresh=${Date.now()}`, {
+    await axiosInstanceWeb.get(`/sanctum/csrf-cookie?refresh=${Date.now()}`, {
       withCredentials: true,
     });
 
@@ -44,7 +43,7 @@ export const login = async (loginData: {
 
 export const logout = async() => {
   try {
-    await axios.get(`http://localhost:8000/sanctum/csrf-cookie?refresh=${Date.now()}`, {
+    await axiosInstanceWeb.get(`/sanctum/csrf-cookie?refresh=${Date.now()}`, {
       withCredentials: true,
     });
 

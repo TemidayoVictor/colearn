@@ -6,6 +6,7 @@ import { motion, AnimatePresence, Variants  } from "framer-motion";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import { useSignUpForm } from "@/hooks/useSignupForm";
+import ButtonLoader from "../buttonLoader";
 
 const SignUpBody = () => {
     const {
@@ -161,10 +162,7 @@ const SignUpBody = () => {
                                 <button className="bt-btn two btn btn-primary-fill" onClick={handleSubmit}>
                                     {
                                         buttonLoader ? (
-                                            <div className="flex items-center justify-center gap-2">
-                                                <span className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
-                                                <span>Please Wait...</span>
-                                            </div>
+                                            <ButtonLoader content="Please Wait . . ." />
                                         ) : 
                                         
                                         (

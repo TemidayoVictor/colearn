@@ -2,29 +2,44 @@ import {create} from 'zustand';
 import { persist } from 'zustand/middleware';
 
 type User = {
-    id: number;
-    name: string;
-    email: string;
-    type: string | null;
-    email_verified_at: string | null;
-    email_verification_code: number;
+  id: number;
+  name: string;
+  email: string;
+  type: string | null;
+  email_verified_at: string | null;
+  email_verification_code: number;
 };
+
+type Student = {
+  id: number;
+  user_id: number;
+  phone: string | null;
+  profile_photo: string | null;
+  bio: string | null;
+  country: string | null;
+  gender: string | null;
+  is_active: string | null;
+}
   
 type AuthState = {
-    user: User | null;
-    isInitialized: boolean;
-    setUser: (user: User) => void;
-    clearUser: () => void;
+  user: User | null;
+  student: Student | null;
+  isInitialized: boolean;
+  setUser: (user: User) => void;
+  setStudent: (student: Student) => void;
+  clearUser: () => void;
 };
 
 export const authStore = create<AuthState>()(
   persist(
     (set) => ({
       user: null,
+      student: null,
       isInitialized: false,
       setUser: (user) => set({ user, isInitialized: true }),
+      setStudent: (student) => set({ student }),
       clearUser: () => {
-        set({ user: null, isInitialized: false });
+        set({ user: null, student: null, isInitialized: false });
         localStorage.removeItem('auth-storage'); // Remove persisted state
       }
     }),

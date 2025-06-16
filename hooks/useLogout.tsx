@@ -27,6 +27,7 @@ export const useLogout = () => {
         }
 
         catch(err:any) {
+            console.log(err);
             showErrorToast('Unexpected error occurred');
         }
     }

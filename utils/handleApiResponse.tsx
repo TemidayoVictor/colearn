@@ -1,4 +1,5 @@
-export const handleApiResponse = (response: any) => {
+import { ApiResponseType } from "@/app/Types/types";
+export const handleApiResponse = (response: any): ApiResponseType => {
     const { status, message, data, errors } = response?.data || {};
   
     if (status === "success") {
@@ -12,7 +13,7 @@ export const handleApiResponse = (response: any) => {
     };
 };
 
-export const handleApiError = (error: any) => {
+export const handleApiError = (error: any): ApiResponseType => {
     return {
       success: false,
       message: error?.message || "Unexpected error occurred",
