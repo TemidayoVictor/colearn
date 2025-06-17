@@ -178,29 +178,22 @@ const OnboardingBody = () => {
 
             case user?.email_verified_at != null && user?.type != "Inactive":
             return (
-                <button className="bt-btn btn btn-primary-fill" onClick={submitUser}>
-                    {
-                        buttonLoader ? (
-                            <ButtonLoader content="Please Wait . . ." />
-                        ) : 
-                        
-                        (
-                            <div className="bt-btn two">
-                                <span>Continue</span>
-                                <span>
-                                    <Image
-                                        aria-hidden
-                                        src="/assets/images/arrow-right.png"
-                                        alt="Colearn Logo"
-                                        width={12}
-                                        height={12}
-                                        className="object-contain"
-                                    />
-                                </span>
-                            </div>                                        
-                        )
-                    }
-                </button>
+                <Link href={`/onboarding/${user?.type}`} className="bt-btn btn btn-primary-fill">
+                    
+                    <div className="bt-btn two">
+                        <span>Continue</span>
+                        <span>
+                            <Image
+                                aria-hidden
+                                src="/assets/images/arrow-right.png"
+                                alt="Colearn Logo"
+                                width={12}
+                                height={12}
+                                className="object-contain"
+                            />
+                        </span>
+                    </div>                                            
+                </Link>
             )
 
             default:

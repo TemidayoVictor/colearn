@@ -3,6 +3,7 @@ import React, {useState, useRef} from "react";
 import { showErrorToast, showSuccessToast } from "@/utils/toastTypes";
 import { authStore } from "@/zustand/authStore";
 import { verify_otp, resend_otp, select_account } from "@/services/onboarding";
+import { utilitiesStore } from "@/zustand/utilitiesStore";
 
 export const useOnboarding = () => {
     const user = authStore((state) => state.user);
@@ -10,6 +11,33 @@ export const useOnboarding = () => {
     const [selected, setSelected] = useState<string | null>(null);
     const [buttonLoader, setButtonLoader] = useState<boolean>(false);
     const [newUpdate, setNewUpdate] = useState<string>('reset');
+
+    const [selectedCountryCode, setSelectedCountryCode] = useState<string | null>("");
+    const [dialCode, setDialCode] = useState<number | null>();
+    const countries = utilitiesStore((state) => state.countries);
+    const languages = utilitiesStore((state) => state.languages);
+
+    const [formData, setFormData] = useState({
+        profilePhoto: null,
+        gender: '',
+        languages: '',
+        country: '',
+        phone: '',
+    });
+
+    const [errors, setErrors] = useState({
+        profilePhoto: false,
+        gender: false,
+        languages: false,
+        country: false,
+        phone:false
+    });
+
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+        const { name, value } = e.target;
+        setFormData((prev) => ({ ...prev, [name]: value }));
+        setErrors((prev) => ({ ...prev, [name]: false }));
+    };
 
     const handleSelect = (id: string) => {
         setSelected(prev => (prev === id ? null : id));
@@ -140,10 +168,75 @@ export const useOnboarding = () => {
         
     }
 
+    const handleSubjectChange = (selected: string[]) => {
+        console.log('Selected Subjects:', selected);
+        // You can save to localStorage, context, or send to API
+    };
+
+    const fileInputRef = useRef<HTMLInputElement | null>(null);
+    const [preview, setPreview] = useState<string | null>(null);
+
+    const handleClick = () => {
+        fileInputRef.current?.click(); // triggers hidden input
+    };
+
+    const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const file = event.target.files?.[0];
+        if (file && file.type.startsWith("image/")) {
+          const imageUrl = URL.createObjectURL(file);
+          setPreview(imageUrl);
+
+            setFormData((prev) => ({
+                ...prev,
+                profile_photo: file
+            }));
+        }
+    };
+
+    const handleCountryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        const name = e.target.value;
+        setSelectedCountryCode(name);
+      
+        const selectedCountry = countries?.find((c) => c.name === name);
+        if (selectedCountry) {
+          setDialCode(selectedCountry.phonecode);
+        } else {
+          setDialCode(0); // fallback in case no match is found
+        }
+
+        setFormData((prev) => ({ ...prev, country: name }));
+        setErrors((prev) => ({ ...prev, country: false }));
+    };
+
+    const submitDetails = (e: React.FormEvent) => {
+        e.preventDefault();
+
+        const newErrors = {
+            profilePhoto: formData.profilePhoto === null,
+            gender: formData.gender.trim() === '',
+            languages: formData.languages.length === 0,
+            country: formData.country.trim() === '',
+            phone:  formData.phone.trim() === '',
+        };
+      
+        setErrors(newErrors);
+
+        const hasError = Object.values(newErrors).some(Boolean);
+
+        if (hasError) {
+            showErrorToast('Please fill in all fields');
+            return;
+        }
+    }
+      
+
     return {
         handleSelect,
         otp,
         handleChange,
+        handleInputChange,
+        formData,
+        errors,
         handleKeyDown,
         maskEmail,
         inputsRef,
@@ -154,5 +247,15 @@ export const useOnboarding = () => {
         setNewUpdate,
         resendOtp,
         submitUser,
+        handleSubjectChange,
+        handleClick,
+        handleFileChange,
+        preview,
+        fileInputRef,
+        countries,
+        dialCode,
+        handleCountryChange,
+        languages,
+        submitDetails,
     }
 }

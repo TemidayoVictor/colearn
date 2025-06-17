@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation";
 
 const Footer = () => {
     const pathname = usePathname();
-    const hidesNavOn = ["/authentication/", "/student", "/instructors", "/admin"].some(prefix => pathname.startsWith(prefix));
+    const hidesNavOn = ["/authentication/", "/onboarding/",  "/student", "/instructors", "/admin"].some(prefix => pathname.startsWith(prefix));
     
     return (
         <div className={`bg-black ${hidesNavOn ? 'd-none' : ''}`}>

@@ -3,6 +3,7 @@ import React, {useState} from "react";
 import { showErrorToast, showSuccessToast } from "@/utils/toastTypes";
 import { useRouter } from 'next/navigation';
 import { login } from "@/services/auth";
+import { utilitiesStore } from "@/zustand/utilitiesStore";
 
 const useLogin = () => {
     const router = useRouter();
@@ -51,7 +52,18 @@ const useLogin = () => {
                     setButtonLoader(false)
                     showSuccessToast(response.message)
                     console.log(response);
-                    router.push('/onboarding');
+
+                    // store countries in the global state
+                    utilitiesStore.getState().setCountry(response.data.countries);
+                    utilitiesStore.getState().setLanguage(response.data.languages);
+                    
+                    if(response.data.user.type != "Inactive" && response.data.user.profile_progress != "completed") {
+                        router.push(`/onboarding/${response.data.user.type}`);
+                    }
+
+                    else {
+                        router.push('/onboarding');
+                    }
                 } 
 
                 else {

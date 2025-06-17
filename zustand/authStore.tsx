@@ -3,11 +3,13 @@ import { persist } from 'zustand/middleware';
 
 type User = {
   id: number;
-  name: string;
+  first_name: string;
+  last_name: string;
   email: string;
   type: string | null;
   email_verified_at: string | null;
   email_verification_code: number;
+  profile_progress: string | null;
 };
 
 type Student = {

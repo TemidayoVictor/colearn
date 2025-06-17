@@ -3,8 +3,13 @@ import React,  { useState, useRef, useEffect } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 
+type Language = {
+    id: number;
+    name: string;
+}
+
 type Props = {
-    options: string[];
+    options: Language[];
     selected: string[];
     setSelected: (values: string[]) => void;
   };
@@ -23,7 +28,7 @@ const MultiDropdownSelector: React.FC<Props> = ({options, selected, setSelected}
     };
 
     const filteredOptions = options.filter((option) =>
-        option.toLowerCase().includes(searchTerm.toLowerCase())
+        option.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
     
 
@@ -75,12 +80,12 @@ const MultiDropdownSelector: React.FC<Props> = ({options, selected, setSelected}
                         filteredOptions.map((option, index) => (
                             <li
                                 key={index}
-                                onClick={() => toggleSelect(option)}
+                                onClick={() => toggleSelect(option.name)}
                                 className={`px-4 py-2 cursor-pointer hover:bg-gray-100 ${
-                                    selected.includes(option) ? "bg-gray-100 font-semibold" : ""
+                                    selected.includes(option.name) ? "bg-gray-100 font-semibold" : ""
                                 }`}
                             >
-                            {option}
+                            {option.name}
                             </li>
                         ))
                     ) : (
