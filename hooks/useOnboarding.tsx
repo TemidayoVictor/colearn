@@ -2,10 +2,12 @@
 import React, {useState, useRef} from "react";
 import { showErrorToast, showSuccessToast } from "@/utils/toastTypes";
 import { authStore } from "@/zustand/authStore";
-import { verify_otp, resend_otp, select_account } from "@/services/onboarding";
+import { verify_otp, resend_otp, select_account, submit_details, add_preferences } from "@/services/onboarding";
 import { utilitiesStore } from "@/zustand/utilitiesStore";
+import { useRouter } from 'next/navigation';
 
 export const useOnboarding = () => {
+    const router = useRouter();
     const user = authStore((state) => state.user);
     const userId = user?.id;
     const [selected, setSelected] = useState<string | null>(null);
@@ -17,12 +19,24 @@ export const useOnboarding = () => {
     const countries = utilitiesStore((state) => state.countries);
     const languages = utilitiesStore((state) => state.languages);
 
-    const [formData, setFormData] = useState({
+    const [selectedItems, setSelectedItems] = useState<string[]>([]);
+
+    const [formData, setFormData] = useState<{
+        profilePhoto: File | null;
+        gender: string;
+        country: string;
+        phone: string;
+        country_phone_code: number;
+        country_iso: string;
+        country_iso3: string;
+      }>({
         profilePhoto: null,
         gender: '',
-        languages: '',
         country: '',
         phone: '',
+        country_phone_code: 0,
+        country_iso: '',
+        country_iso3: '',
     });
 
     const [errors, setErrors] = useState({
@@ -32,6 +46,9 @@ export const useOnboarding = () => {
         country: false,
         phone:false
     });
+
+    const initialSelected: any = [];
+    const [selectedSubjects, setSelectedSubjects] = useState<string[]>(initialSelected);
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const { name, value } = e.target;
@@ -78,6 +95,49 @@ export const useOnboarding = () => {
         const maskedPart = "*".repeat(username.length - 4);
         return `${visiblePart}${maskedPart}@${domain ?? "domain"}`;
     }
+
+    const handleSubjectChange = (selected: string[]) => {
+        console.log('Selected Subjects:', selected);
+    };
+
+    const fileInputRef = useRef<HTMLInputElement | null>(null);
+    const [preview, setPreview] = useState<string | null>(null);
+
+    const handleClick = () => {
+        fileInputRef.current?.click(); // triggers hidden input
+    };
+
+    const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const file = event.target.files?.[0];
+        if (file && file.type.startsWith("image/")) {
+          const imageUrl = URL.createObjectURL(file);
+          setPreview(imageUrl);
+
+            setFormData((prev) => ({
+                ...prev,
+                profilePhoto: file
+            }));
+        }
+    };
+
+    const handleCountryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        const name = e.target.value;
+        setSelectedCountryCode(name);
+      
+        const selectedCountry = countries?.find((c) => c.name === name);
+        if (selectedCountry) {
+          setDialCode(selectedCountry.phonecode);
+          setFormData((prev) => ({ ...prev, 
+            country: selectedCountry.nicename,
+            country_phone_code: selectedCountry.phonecode,
+            country_iso: selectedCountry.iso,
+            country_iso3: selectedCountry.iso3,    
+        }));
+          setErrors((prev) => ({ ...prev, country: false }));
+        } else {
+          setDialCode(0); // fallback in case no match is found
+        }
+    };
 
     const submitOtp = async () => {
         const isOtpComplete = otp.every(digit => digit.trim() !== '');
@@ -168,53 +228,13 @@ export const useOnboarding = () => {
         
     }
 
-    const handleSubjectChange = (selected: string[]) => {
-        console.log('Selected Subjects:', selected);
-        // You can save to localStorage, context, or send to API
-    };
-
-    const fileInputRef = useRef<HTMLInputElement | null>(null);
-    const [preview, setPreview] = useState<string | null>(null);
-
-    const handleClick = () => {
-        fileInputRef.current?.click(); // triggers hidden input
-    };
-
-    const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const file = event.target.files?.[0];
-        if (file && file.type.startsWith("image/")) {
-          const imageUrl = URL.createObjectURL(file);
-          setPreview(imageUrl);
-
-            setFormData((prev) => ({
-                ...prev,
-                profile_photo: file
-            }));
-        }
-    };
-
-    const handleCountryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        const name = e.target.value;
-        setSelectedCountryCode(name);
-      
-        const selectedCountry = countries?.find((c) => c.name === name);
-        if (selectedCountry) {
-          setDialCode(selectedCountry.phonecode);
-        } else {
-          setDialCode(0); // fallback in case no match is found
-        }
-
-        setFormData((prev) => ({ ...prev, country: name }));
-        setErrors((prev) => ({ ...prev, country: false }));
-    };
-
-    const submitDetails = (e: React.FormEvent) => {
+    const submitDetails = async (e: React.FormEvent) => {
         e.preventDefault();
 
         const newErrors = {
             profilePhoto: formData.profilePhoto === null,
             gender: formData.gender.trim() === '',
-            languages: formData.languages.length === 0,
+            languages: selectedItems.length === 0,
             country: formData.country.trim() === '',
             phone:  formData.phone.trim() === '',
         };
@@ -226,6 +246,57 @@ export const useOnboarding = () => {
         if (hasError) {
             showErrorToast('Please fill in all fields');
             return;
+        }
+
+        else {
+            // submit
+            setButtonLoader(true);
+            try {
+                const response = await submit_details(formData, selectedItems, userId);
+                if (response.success) {
+                    setButtonLoader(false)
+                    showSuccessToast(response.message)
+                    setNewUpdate('set');
+                } 
+
+                else {
+                    setButtonLoader(false)
+                    showErrorToast(response.message)
+                    console.log(response)
+                }
+            }
+
+            catch (err: any) {
+                console.log(err)
+                setButtonLoader(false)
+                showErrorToast('Unexpected error occurred');
+            }
+        }
+    }
+
+    const addPreferences = async (e: React.FormEvent) => {
+        e.preventDefault();
+        
+        setButtonLoader(true);
+        try {
+            const response = await add_preferences(selectedSubjects, userId);
+            if (response.success) {
+                setButtonLoader(false)
+                showSuccessToast(response.message)
+                router.push('/students/dashboard');
+            } 
+
+            else {
+                setButtonLoader(false)
+                showErrorToast(response.message)
+                console.log(response)
+            }
+        }
+
+        catch (err: any) {
+            console.log(err)
+            setButtonLoader(false)
+            showErrorToast('Unexpected error occurred');
         }
     }
       
@@ -257,5 +328,10 @@ export const useOnboarding = () => {
         handleCountryChange,
         languages,
         submitDetails,
+        selectedItems,
+        setSelectedItems,
+        addPreferences,
+        selectedSubjects, 
+        setSelectedSubjects,
     }
 }

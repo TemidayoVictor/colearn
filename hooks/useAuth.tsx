@@ -23,12 +23,12 @@ export const useAuth = () => {
             }
 
             else {
-                showErrorToast("Unauthorized Access. Please Log in");
+                showErrorToast("Session Expired. Please Log in");
                 router.push('/authentication/login');
             }
         } catch (error) {
             console.log(error);
-            showErrorToast("Unauthorized Access. Please Log in");
+            showErrorToast("Session Expired. Please Log in");
             router.push('/authentication/login');
         }
     };

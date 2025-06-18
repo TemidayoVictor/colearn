@@ -22,8 +22,6 @@ const StudentOnboardingBody = () => {
     
     const [loading, setLoading] = useState<boolean>(true);
     
-    const [selectedItems, setSelectedItems] = useState<string[]>([]);
-
     const {
         logoutHook
     } = useLogout();
@@ -36,7 +34,6 @@ const StudentOnboardingBody = () => {
         buttonLoader,
         newUpdate,
         setNewUpdate,
-        submitUser,
         handleSubjectChange,
         handleClick,
         handleFileChange,
@@ -46,6 +43,11 @@ const StudentOnboardingBody = () => {
         dialCode,
         handleCountryChange,
         languages,
+        selectedItems,
+        setSelectedItems,
+        addPreferences,
+        selectedSubjects, 
+        setSelectedSubjects,
     } = useOnboarding()
 
     const renderContent = () => {
@@ -54,9 +56,9 @@ const StudentOnboardingBody = () => {
             return (
                 <div className="auth-con three">
                     <div className="mt-[1rem]">
-                        <h2 className="title-3">To help us personalise your experience with us, What subjects are you interested in?</h2>
+                        <h2 className="title-3">To help personalise your experience with us, What subjects are you interested in?</h2>
                         <div className="mt-3">
-                            <SubjectSelector onChange={handleSubjectChange}/>
+                            <SubjectSelector onChange={handleSubjectChange} selectedSubjects={selectedSubjects} setSelectedSubjects={setSelectedSubjects} />
                         </div>
                     </div>
                 </div>
@@ -146,10 +148,10 @@ const StudentOnboardingBody = () => {
     }
 
     const renderButton = () => {
-        switch(true) {
-            case user?.email_verified_at == null:
+        switch(profileProgress) {
+            case '2':
             return (
-                <button className="bt-btn btn btn-primary-fill" onClick={submitDetails}>
+                <button className="bt-btn btn btn-primary-fill" onClick={addPreferences}>
                     {
                         buttonLoader ? (
                             <ButtonLoader content="Please Wait . . ." />
@@ -157,7 +159,7 @@ const StudentOnboardingBody = () => {
                         
                         (
                             <div className="bt-btn two">
-                                <span>Continue</span>
+                                <span>Complete</span>
                                 <span>
                                     <Image
                                         aria-hidden
@@ -172,34 +174,7 @@ const StudentOnboardingBody = () => {
                         )
                     }
                 </button>
-            );
-
-            case user?.email_verified_at != null && user?.type != "Inactive":
-            return (
-                <button className="bt-btn btn btn-primary-fill" onClick={submitDetails}>
-                    {
-                        buttonLoader ? (
-                            <ButtonLoader content="Please Wait . . ." />
-                        ) : 
-                        
-                        (
-                            <div className="bt-btn two">
-                                <span>Continue</span>
-                                <span>
-                                    <Image
-                                        aria-hidden
-                                        src="/assets/images/arrow-right.png"
-                                        alt="Colearn Logo"
-                                        width={12}
-                                        height={12}
-                                        className="object-contain"
-                                    />
-                                </span>
-                            </div>                                        
-                        )
-                    }
-                </button>
-            )
+            )   
 
             default:
             return (

@@ -56,9 +56,14 @@ const useLogin = () => {
                     // store countries in the global state
                     utilitiesStore.getState().setCountry(response.data.countries);
                     utilitiesStore.getState().setLanguage(response.data.languages);
+                    utilitiesStore.getState().setPreference(response.data.preferences);
                     
                     if(response.data.user.type != "Inactive" && response.data.user.profile_progress != "completed") {
                         router.push(`/onboarding/${response.data.user.type}`);
+                    }
+
+                    else if(response.data.user.type != "Inactive" && response.data.user.profile_progress == "completed") {
+                        router.push(`/${response.data.user.type}s/dashboard`);
                     }
 
                     else {

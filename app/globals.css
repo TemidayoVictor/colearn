@@ -1417,6 +1417,11 @@ ol li {
   width: 90%;
 }
 
+.auth-con.three {
+  max-height: 90vh;
+  overflow-y: scroll;
+}
+
 .auth-flex {
   display: flex;
   align-items: center;
@@ -3572,10 +3577,15 @@ td {
     width: 100%;
     border-radius: 0;
     padding: 1.5em;
+    padding-top: .5em;
   }
 
   .auth-con.three, .base-btns {
     width: 100%;
+  }
+
+  .auth-con.three {
+    max-height: none;
   }
 
   .auth-con.two {

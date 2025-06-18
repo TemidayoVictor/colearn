@@ -42,3 +42,68 @@ export const select_account = async (userId: number | null | undefined, selected
         return handleApiError(error)
     }
 }
+
+export const submit_details = async (
+    formData: {
+        profilePhoto: File | null;
+        gender: string;
+        country: string;
+        phone: string;
+        country_phone_code: number;
+        country_iso: string;
+        country_iso3: string;
+    }, 
+    languages: string[], userId: number | undefined) => {
+    
+    try {
+        const data = new FormData();
+
+        if (formData.profilePhoto) {
+            data.append('profile_photo', formData.profilePhoto);
+        }
+      
+        data.append('gender', formData.gender);
+        data.append('country', formData.country);
+        data.append('phone', formData.phone);
+        data.append('country_phone_code', String(formData.country_phone_code));
+        data.append('country_iso', formData.country_iso);
+        data.append('country_iso3', formData.country_iso3);
+        data.append('userId', String(userId));
+
+        languages.forEach((language, index) => {
+            data.append(`languages[${index}]`, language);
+        });
+
+        const response = await axiosInstance.post("/submit-student-details", data, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+        });
+
+        return handleApiResponse(response);
+    }
+
+    catch(error: any) {
+        return handleApiError(error)
+    }
+}
+
+export const add_preferences = async ( preferences: string[] | null, userId: number | undefined) => {
+    try {
+        const data = new FormData();
+
+        preferences?.forEach((preferences, index) => {
+            data.append(`preferences[${index}]`, preferences);
+        });
+
+        data.append('userId', String(userId));
+
+        const response = await axiosInstance.post("/add-preferences", data);
+
+        return handleApiResponse(response);
+    }
+
+    catch(error: any) {
+        return handleApiError(error)
+    }
+}
