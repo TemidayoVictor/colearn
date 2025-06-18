@@ -178,7 +178,6 @@ const OnboardingBody = () => {
             case user?.email_verified_at != null && user?.type != "Inactive":
             return (
                 <Link href={`/onboarding/${user?.type}`} className="bt-btn btn btn-primary-fill">
-                    
                     <div className="bt-btn two">
                         <span>Continue</span>
                         <span>

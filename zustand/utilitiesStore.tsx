@@ -21,13 +21,22 @@ type Preference = {
   name: string;
 }
 
+type Category = {
+  id: number;
+  name: string;
+  slug: string;
+  description: string;
+}
+
 type utilitiesState = {
   countries: Country[];
   languages: Language[];
   preferences: Preference[];
+  categories: Category[];
   setCountry: (country: Country[]) => void;
   setLanguage: (language: Language[]) => void;
   setPreference: (preferences: Preference[]) => void;
+  setCategory: (categories: Category[]) => void;
 };
 
 export const utilitiesStore = create<utilitiesState>()(
@@ -36,9 +45,11 @@ export const utilitiesStore = create<utilitiesState>()(
       countries: [],
       languages: [],
       preferences: [],
+      categories: [],
       setCountry: (countries) => set({ countries }),
       setLanguage: (languages) => set({ languages }),
       setPreference: (preferences) => set({ preferences }),
+      setCategory: (categories) => set({ categories }),
     }),
     {
       name: 'utility-storage', // Key in localStorage

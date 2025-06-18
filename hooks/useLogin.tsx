@@ -57,6 +57,7 @@ const useLogin = () => {
                     utilitiesStore.getState().setCountry(response.data.countries);
                     utilitiesStore.getState().setLanguage(response.data.languages);
                     utilitiesStore.getState().setPreference(response.data.preferences);
+                    utilitiesStore.getState().setCategory(response.data.categories);
                     
                     if(response.data.user.type != "Inactive" && response.data.user.profile_progress != "completed") {
                         router.push(`/onboarding/${response.data.user.type}`);
