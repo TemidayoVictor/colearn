@@ -12,11 +12,10 @@ import ButtonLoader from "./buttonLoader";
 import MultiDropdownSelector from "./MultiDropdownSelector";
 import SubjectSelector from "./SubjectSelector";
 
-const StudentOnboardingBody = () => {
+const InstructorOnboardingBody = () => {
     const checkAuth = useAuth();
 
     const user = authStore((state) => state.user);
-    const student = authStore((state) => state.student);
     const profileProgress = user?.profile_progress;
 
     
@@ -96,7 +95,7 @@ const StudentOnboardingBody = () => {
                         />
 
                         <div className="alert notification">
-                            <p className="bod">Kindly upload  a clear picture, this picture might probably be used on your certifications.</p>
+                            <p className="bod">Kindly upload a clearer picture, this gives your application a higher chance of being successful.</p>
                         </div>
                         
                         <div className="mt-4">
@@ -276,4 +275,4 @@ const StudentOnboardingBody = () => {
     )
 }
 
-export default StudentOnboardingBody
+export default InstructorOnboardingBody

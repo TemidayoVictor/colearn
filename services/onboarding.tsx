@@ -74,7 +74,7 @@ export const submit_details = async (
             data.append(`languages[${index}]`, language);
         });
 
-        const response = await axiosInstance.post("/submit-student-details", data, {
+        const response = await axiosInstance.post("/submit-details", data, {
             headers: {
                 'Content-Type': 'multipart/form-data',
             },

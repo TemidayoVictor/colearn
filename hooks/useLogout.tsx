@@ -3,6 +3,7 @@ import { useRouter } from 'next/navigation';
 import { showErrorToast, showSuccessToast } from "@/utils/toastTypes";
 import { handleCsrfError } from "@/utils/handleCsrfTokenError";
 import { authStore } from "@/zustand/authStore";
+import { utilitiesStore } from "@/zustand/utilitiesStore";
 
 export const useLogout = () => {
     const router = useRouter();
@@ -13,6 +14,7 @@ export const useLogout = () => {
             const response = await logout();
             if (response.success) {
                 authStore.getState().clearUser();
+                utilitiesStore.getState().clearUtilities();
                 showSuccessToast(response.message)
                 router.push('/authentication/login');
             } 

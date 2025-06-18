@@ -10,6 +10,8 @@ export const useOnboarding = () => {
     const router = useRouter();
     const user = authStore((state) => state.user);
     const userId = user?.id;
+    const userType = user?.type;
+
     const [selected, setSelected] = useState<string | null>(null);
     const [buttonLoader, setButtonLoader] = useState<boolean>(false);
     const [newUpdate, setNewUpdate] = useState<string>('reset');

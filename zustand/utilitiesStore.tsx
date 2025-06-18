@@ -37,6 +37,7 @@ type utilitiesState = {
   setLanguage: (language: Language[]) => void;
   setPreference: (preferences: Preference[]) => void;
   setCategory: (categories: Category[]) => void;
+  clearUtilities: () => void;
 };
 
 export const utilitiesStore = create<utilitiesState>()(
@@ -50,6 +51,10 @@ export const utilitiesStore = create<utilitiesState>()(
       setLanguage: (languages) => set({ languages }),
       setPreference: (preferences) => set({ preferences }),
       setCategory: (categories) => set({ categories }),
+      clearUtilities: () => {
+        set({ countries: [], languages: [], preferences: [], categories: [] });
+        localStorage.removeItem('utility-storage'); // Remove persisted state
+      }
     }),
     {
       name: 'utility-storage', // Key in localStorage
