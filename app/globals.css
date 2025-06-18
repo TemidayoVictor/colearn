@@ -1417,7 +1417,7 @@ ol li {
   width: 90%;
 }
 
-.auth-con.three {
+.auth-con.three.three-b {
   max-height: 90vh;
   overflow-y: scroll;
 }
@@ -3584,7 +3584,7 @@ td {
     width: 100%;
   }
 
-  .auth-con.three {
+  .auth-con.three.three-b {
     max-height: none;
   }
 

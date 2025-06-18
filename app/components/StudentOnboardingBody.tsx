@@ -54,7 +54,7 @@ const StudentOnboardingBody = () => {
         switch(profileProgress) {
             case '2':
             return (
-                <div className="auth-con three">
+                <div className="auth-con three three-b">
                     <div className="mt-[1rem]">
                         <h2 className="title-3">To help personalise your experience with us, What subjects are you interested in?</h2>
                         <div className="mt-3">
