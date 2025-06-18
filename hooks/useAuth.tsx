@@ -5,13 +5,13 @@ import { authStore } from "@/zustand/authStore";
 
 export const useAuth = () => {
     const router = useRouter();
-    const { setUser, setStudent } = authStore.getState();
+    const { setUser, setStudent, setInstructor } = authStore.getState();
 
     const checkAuth = async () => {
         try {
             const response = await axiosInstanceWeb.get("/user");
             if (response.status === 200) {
-                const { user, student } = response.data;
+                const { user, student, instructor } = response.data;
 
                 // store user globally
                 setUser(user);
@@ -19,6 +19,11 @@ export const useAuth = () => {
                 // check userType and store
                 if (user.type === 'student' && student) {
                     setStudent(student);
+                }
+
+                // check userType and store
+                if (user.type === 'instructor' && instructor) {
+                    setInstructor(instructor);
                 }
             }
 

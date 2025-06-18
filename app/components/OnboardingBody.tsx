@@ -12,7 +12,6 @@ import ButtonLoader from "./buttonLoader";
 const OnboardingBody = () => {
     const checkAuth = useAuth();
     const user = authStore((state) => state.user);
-    const student = authStore((state) => state.student);
     const [loading, setLoading] = useState<boolean>(true);
     const {
         logoutHook
