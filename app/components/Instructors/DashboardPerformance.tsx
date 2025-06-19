@@ -23,7 +23,7 @@ const DashboardPerformance = ({type, user}: DashboardPerformanceProps) => {
             { renderHeading(type) }
             {
                 !user &&
-                <div className={`dashboard-grid ${type == 'Course' || type == "Course-2"  ? 'one' : ''}`}>
+                <div className={`dashboard-grid ${type == 'Course' || type == "Course-2" || type == 'Dashboard'  ? 'one' : ''}`}>
                     {
                        type !== "Course-2" &&
                         <div className="flex flex-col gap-1 perf-detail none">

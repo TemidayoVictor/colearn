@@ -3,8 +3,12 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useLogout } from "@/hooks/useLogout";
 
 const InstructorSidebarContent = () => {
+    const {
+        logoutHook
+    } = useLogout()
     const pathname = usePathname();
     return (
         <div className="sidebar-body container-3">
@@ -250,7 +254,7 @@ const InstructorSidebarContent = () => {
                     />
                     <p className="text-[.9rem]">Become a Consultant</p>
                 </Link>
-                <Link href='/' className="sidebar-link">
+                <button className="sidebar-link" onClick={logoutHook}>
                     <Image
                         aria-hidden
                         src="/assets/images/logout.png"
@@ -260,7 +264,7 @@ const InstructorSidebarContent = () => {
                         className="object-cover"
                     />
                     <p className="text-[.9rem] color-error">Log Out</p>
-                </Link>
+                </button>
             </div>
         </div>
     )
