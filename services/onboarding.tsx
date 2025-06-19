@@ -1,6 +1,6 @@
 import axiosInstance from "@/utils/api";
 import { handleApiResponse, handleApiError } from '@/utils/handleApiResponse';
-import { ApiResponseType } from "@/app/Types/types";
+import { ApiResponseType, ExperienceType } from "@/app/Types/types";
 
 export const verify_otp = async (otp: number, userId: number | null | undefined): Promise<ApiResponseType> => {
     try {
@@ -99,6 +99,48 @@ export const add_preferences = async ( preferences: string[] | null, userId: num
         data.append('userId', String(userId));
 
         const response = await axiosInstance.post("/add-preferences", data);
+
+        return handleApiResponse(response);
+    }
+
+    catch(error: any) {
+        return handleApiError(error)
+    }
+}
+
+export const submit_professional_details = async (
+    formData: {
+        title: string;
+        headline: string;
+        category: string;
+    }, 
+    userId: number | undefined) => {
+    
+    try {
+        const data = new FormData();
+
+        data.append('title', formData.title);
+        data.append('headline', formData.headline);
+        data.append('category', formData.category);
+        data.append('userId', String(userId));
+
+        const response = await axiosInstance.post("/submit-professional-details", data);
+
+        return handleApiResponse(response);
+    }
+
+    catch(error: any) {
+        return handleApiError(error)
+    }
+}
+
+export const submit_experiences = async (experiences: ExperienceType[], userId: number | undefined) => {
+    
+    try {
+        const response = await axiosInstance.post("/submit-experiences", {
+            experiences,
+            userId,
+          });
 
         return handleApiResponse(response);
     }

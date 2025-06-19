@@ -2976,6 +2976,15 @@ td {
   font-weight: 600;
 }
 
+.exp {
+  border-bottom: var(--border-grey);
+  padding-bottom: 1.5em;
+}
+
+.exp:last-child {
+  border-bottom: none;
+}
+
 
 /* Admin */
 
@@ -3576,8 +3585,8 @@ td {
   .auth-con {
     width: 100%;
     border-radius: 0;
-    padding: 1.5em;
-    padding-top: .5em;
+    padding-inline: 1.5em;
+    padding-block: .5em;
   }
 
   .auth-con.three, .base-btns {

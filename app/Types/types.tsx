@@ -5,6 +5,15 @@ export type Experience = {
     description: string;
 };
 
+export type ExperienceType = {
+    title: String,
+    organization: String,
+    description: String,
+    start_date: String,
+    end_date: String,
+    currently_working: boolean,
+}
+
 export type Bank = {
     bank: string;
     account_number: string;

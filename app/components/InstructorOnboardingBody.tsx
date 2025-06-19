@@ -26,8 +26,9 @@ const InstructorOnboardingBody = () => {
     } = useLogout();
 
     const {
-        handleInputChange,
         formData,
+        formData2,
+        errors2,
         submitDetails,
         errors,
         buttonLoader,
@@ -47,6 +48,15 @@ const InstructorOnboardingBody = () => {
         addPreferences,
         selectedSubjects, 
         setSelectedSubjects,
+        categories,
+        handleInputChange,
+        handleInputChange2,
+        submitProfessionalDetails,
+        experiences,
+        handleExperienceChange,
+        addExperience,
+        submitExperiences,
+        removeExperience,
     } = useOnboarding()
 
     const renderContent = () => {
@@ -55,13 +65,139 @@ const InstructorOnboardingBody = () => {
             return (
                 <div className="auth-con three three-b">
                     <div className="mt-[1rem]">
-                        <h2 className="title-3">To help personalise your experience with us, What subjects are you interested in?</h2>
+                        <h2 className="title-3">Professional Information</h2>
                         <div className="mt-3">
-                            <SubjectSelector onChange={handleSubjectChange} selectedSubjects={selectedSubjects} setSelectedSubjects={setSelectedSubjects} />
+                            <div className="input-box">
+                                <label htmlFor="">Title<span className="text-red-500">*</span></label>
+                                <input name="title" className={`input-field ${errors2.title ? 'error' : ''}`} placeholder="Mr., Ms., Dr., . . ." value={formData2.title} onChange={handleInputChange2}/>
+                            </div>
+
+                            <div className="input-box">
+                                <label htmlFor="">Professional Headline<span className="text-red-500">*</span></label>
+                                <input name="headline" className={`input-field ${errors2.headline ? 'error' : ''}`} placeholder="Software Engineer, Copywriter, . . ." value={formData2.headline} onChange={handleInputChange2}/>
+                            </div>
+
+                            <div className="input-box">
+                                <label htmlFor="">Select Category<span className="text-red-500">*</span></label>
+                                <select name="category" className={`input-field ${errors2.category ? 'error' : ''}`} value={formData2.category} onChange={handleInputChange2}>
+                                    <option value="">Select one</option>
+                                    {
+                                        Array.isArray(categories) && categories.map((category) => (
+                                            <option key={category.id} value={category.slug}>
+                                                {category.name}
+                                            </option>
+                                        ))
+                                    }
+                                </select>
+                            </div>
                         </div>
                     </div>
                 </div>
             );
+
+            case '3':
+            return (
+            <div className="auth-con three three-b">
+                <div className="mt-[1rem]">
+                    <h2 className="title-3">Share your Experience with us</h2>
+                    {
+                        experiences.map((exp, index) => (
+                            <div key={index} className="exp">
+                                <div className="input-box">
+                                    <label htmlFor="title">Position <span className="text-red-500">*</span></label>
+                                    <input
+                                        name="title"
+                                        className={`input-field`}
+                                        placeholder="e.g. Senior Developer"
+                                        value={exp.title}
+                                        onChange={(e) => handleExperienceChange(index, 'title', e.target.value)}
+                                    />
+                                </div>
+        
+                                <div className="input-box">
+                                    <label htmlFor="organization">Organization <span className="text-red-500">*</span></label>
+                                    <input
+                                        name="organization"
+                                        className={`input-field`}
+                                        placeholder="e.g. Google, Udemy"
+                                        value={exp.organization}
+                                        onChange={(e) => handleExperienceChange(index, 'organization', e.target.value)}
+                                    />
+                                </div>
+        
+                                <div className="input-box">
+                                    <label htmlFor="description">Description <span className="text-red-500">*</span></label>
+                                    <textarea
+                                        name="description"
+                                        className={`textarea`}
+                                        placeholder="Briefly describe your role..."
+                                        value={exp.description}
+                                        onChange={(e) => handleExperienceChange(index, 'description', e.target.value)}
+                                    />
+                                </div>
+        
+                                <div className="auth-flex">
+                                    <div className="input-flex-item">
+                                    <label htmlFor="start_date">Start Date</label>
+                                    <input
+                                        type="date"
+                                        name="start_date"
+                                        className={`input-field`}
+                                        value={exp.start_date}
+                                        onChange={(e) => handleExperienceChange(index, 'start_date', e.target.value)}
+                                    />
+                                    </div>
+        
+                                    <div className="input-flex-item">
+                                        <label htmlFor="end_date">End Date</label>
+                                        <input
+                                            type="date"
+                                            name="end_date"
+                                            className={`input-field`}
+                                            value={exp.end_date}
+                                            onChange={(e) => handleExperienceChange(index, 'end_date', e.target.value)}
+                                            disabled={exp.currently_working}
+                                        />
+                                    </div>
+                                </div>
+        
+                                <div className="mt-3">
+                                    <label className="flex items-center gap-2 text-sm cursor-pointer">
+                                    <input
+                                        type="checkbox"
+                                        name="currently_working"
+                                        checked={exp.currently_working}
+                                        onChange={(e) => handleExperienceChange(index, 'currently_working', e.target.checked) }
+                                    />
+                                    I’m currently working in this role
+                                    </label>
+                                </div>
+
+                                <div className="mt-3">
+                                {
+                                    experiences.length > 1 && (
+                                        <div className="flex items-end justify-end">
+                                            <button
+                                                type="button"
+                                                className="text-[.9rem] text-red-500 underline"
+                                                onClick={() => removeExperience(index)}
+                                            >
+
+                                            Remove
+                                            </button>
+                                        </div>
+                                    )
+                                }
+                                </div>
+                            </div>
+                        ))
+                    }
+
+                    <button className="btn normal mt-4" onClick={addExperience}>+ Add Experience</button>
+                </div>
+            </div>
+ 
+            )
 
             default:
             return (
@@ -150,7 +286,7 @@ const InstructorOnboardingBody = () => {
         switch(profileProgress) {
             case '2':
             return (
-                <button className="bt-btn btn btn-primary-fill" onClick={addPreferences}>
+                <button className="bt-btn btn btn-primary-fill" onClick={submitProfessionalDetails}>
                     {
                         buttonLoader ? (
                             <ButtonLoader content="Please Wait . . ." />
@@ -158,7 +294,7 @@ const InstructorOnboardingBody = () => {
                         
                         (
                             <div className="bt-btn two">
-                                <span>Complete</span>
+                                <span>Continue</span>
                                 <span>
                                     <Image
                                         aria-hidden
@@ -173,7 +309,34 @@ const InstructorOnboardingBody = () => {
                         )
                     }
                 </button>
-            )   
+            )  
+            
+            case '3':
+            return (
+                <button className="bt-btn btn btn-primary-fill" onClick={submitExperiences}>
+                    {
+                        buttonLoader ? (
+                            <ButtonLoader content="Please Wait . . ." />
+                        ) : 
+                        
+                        (
+                            <div className="bt-btn two">
+                                <span>Continue</span>
+                                <span>
+                                    <Image
+                                        aria-hidden
+                                        src="/assets/images/arrow-right.png"
+                                        alt="Colearn Logo"
+                                        width={12}
+                                        height={12}
+                                        className="object-contain"
+                                    />
+                                </span>
+                            </div>                                        
+                        )
+                    }
+                </button>
+            )
 
             default:
             return (

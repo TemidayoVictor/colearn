@@ -2,9 +2,18 @@
 import React, {useState, useRef} from "react";
 import { showErrorToast, showSuccessToast } from "@/utils/toastTypes";
 import { authStore } from "@/zustand/authStore";
-import { verify_otp, resend_otp, select_account, submit_details, add_preferences } from "@/services/onboarding";
+import { 
+    verify_otp, 
+    resend_otp, 
+    select_account, 
+    submit_details, 
+    add_preferences, 
+    submit_professional_details,
+    submit_experiences, 
+} from "@/services/onboarding";
 import { utilitiesStore } from "@/zustand/utilitiesStore";
 import { useRouter } from 'next/navigation';
+import { title } from "process";
 
 export const useOnboarding = () => {
     const router = useRouter();
@@ -20,6 +29,7 @@ export const useOnboarding = () => {
     const [dialCode, setDialCode] = useState<number | null>();
     const countries = utilitiesStore((state) => state.countries);
     const languages = utilitiesStore((state) => state.languages);
+    const categories = utilitiesStore((state) => state.categories);
 
     const [selectedItems, setSelectedItems] = useState<string[]>([]);
 
@@ -41,6 +51,27 @@ export const useOnboarding = () => {
         country_iso3: '',
     });
 
+    const [formData2, setFormData2] = useState<{
+        title: string;
+        headline: string;
+        category: string;
+      }>({
+        title: '',
+        headline: '',
+        category: '',
+    });
+
+    const [experiences, setExperiences] = useState([
+        {
+          title: '',
+          organization: '',
+          description: '',
+          start_date: '',
+          end_date: '',
+          currently_working: false,
+        },
+    ]);
+
     const [errors, setErrors] = useState({
         profilePhoto: false,
         gender: false,
@@ -49,6 +80,22 @@ export const useOnboarding = () => {
         phone:false
     });
 
+    const [errors2, setErrors2] = useState({
+        title: false,
+        headline: false,
+        category: false,
+    });
+
+    const [expErrors, setExpErrors] = useState(
+        experiences.map(() => ({
+          title: false,
+          organization: false,
+          description: false,
+          start_date: false,
+          end_date: false,
+        }))
+    );
+
     const initialSelected: any = [];
     const [selectedSubjects, setSelectedSubjects] = useState<string[]>(initialSelected);
 
@@ -56,6 +103,39 @@ export const useOnboarding = () => {
         const { name, value } = e.target;
         setFormData((prev) => ({ ...prev, [name]: value }));
         setErrors((prev) => ({ ...prev, [name]: false }));
+    };
+
+    const handleInputChange2 = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+        const { name, value } = e.target;
+        setFormData2((prev) => ({ ...prev, [name]: value }));
+        setErrors2((prev) => ({ ...prev, [name]: false }));
+    };
+
+    const handleExperienceChange = (index: number, field: string, value: any) => {
+        setExperiences((prev) =>
+          prev.map((exp, idx) =>
+            idx === index ? { ...exp, [field]: value } : exp
+          )
+        );
+    };
+
+    const addExperience = () => {
+        setExperiences((prev) => [
+            ...prev,
+            {
+              title: '',
+              organization: '',
+              description: '',
+              start_date: '',
+              end_date: '',
+              currently_working: false,
+            },
+        ])
+    }
+
+    const removeExperience = (index: number) => {
+        setExperiences((prev) => prev.filter((_, idx) => idx !== index));
+        setExpErrors((prev) => prev.filter((_, idx) => idx !== index)); 
     };
 
     const handleSelect = (id: string) => {
@@ -140,6 +220,23 @@ export const useOnboarding = () => {
           setDialCode(0); // fallback in case no match is found
         }
     };
+
+    const validateExperiences = () => {
+        const newErrors = experiences.map((exp) => ({
+          title: exp.title.trim() === '',
+          organization: exp.organization.trim() === '',
+          description: exp.description.trim() === '',
+          start_date: exp.start_date.trim() === '',
+          end_date: !exp.currently_working && exp.end_date.trim() === '',
+        }));
+      
+        setExpErrors(newErrors);
+      
+        // Return true if all experiences are valid
+        return newErrors.every((errorObj) =>
+          Object.values(errorObj).every((fieldError) => fieldError === false)
+        );
+      };
 
     const submitOtp = async () => {
         const isOtpComplete = otp.every(digit => digit.trim() !== '');
@@ -301,6 +398,83 @@ export const useOnboarding = () => {
             showErrorToast('Unexpected error occurred');
         }
     }
+
+    const submitProfessionalDetails = async (e: React.FormEvent) => {
+        e.preventDefault();
+
+        const newErrors = {
+            title: formData2.title === null,
+            headline: formData2.headline.trim() === '',
+            category: formData2.category === '',
+        };
+      
+        setErrors2(newErrors);
+
+        const hasError = Object.values(newErrors).some(Boolean);
+
+        if (hasError) {
+            showErrorToast('Please fill in all fields');
+            return;
+        }
+
+        else {
+            // submit
+            setButtonLoader(true);
+            try {
+                const response = await submit_professional_details(formData2, userId);
+                if (response.success) {
+                    setButtonLoader(false)
+                    showSuccessToast(response.message)
+                    setNewUpdate('set');
+                } 
+
+                else {
+                    setButtonLoader(false)
+                    showErrorToast(response.message)
+                    console.log(response)
+                }
+            }
+
+            catch (err: any) {
+                console.log(err)
+                setButtonLoader(false)
+                showErrorToast('Unexpected error occurred');
+            }
+        }
+    }
+
+    const submitExperiences = async () => {
+        if (!validateExperiences()) {
+                showErrorToast('Please fill in all fields');
+            return;
+        }
+
+        // submit
+        setButtonLoader(true);
+        try {
+            const response = await submit_experiences(experiences, userId);
+            if (response.success) {
+                setButtonLoader(false)
+                showSuccessToast(response.message)
+                setNewUpdate('set');
+            } 
+
+            else {
+                setButtonLoader(false)
+                showErrorToast(response.message)
+                console.log(response)
+            }
+        }
+
+        catch (err: any) {
+            console.log(err)
+            setButtonLoader(false)
+            showErrorToast('Unexpected error occurred');
+        }
+
+
+        console.log(experiences);
+    }
       
 
     return {
@@ -309,7 +483,9 @@ export const useOnboarding = () => {
         handleChange,
         handleInputChange,
         formData,
+        formData2,
         errors,
+        errors2,
         handleKeyDown,
         maskEmail,
         inputsRef,
@@ -335,5 +511,13 @@ export const useOnboarding = () => {
         addPreferences,
         selectedSubjects, 
         setSelectedSubjects,
+        categories,
+        handleInputChange2,
+        submitProfessionalDetails,
+        experiences,
+        handleExperienceChange,
+        addExperience,
+        submitExperiences,
+        removeExperience,
     }
 }
