@@ -113,6 +113,11 @@ export const submit_professional_details = async (
         title: string;
         headline: string;
         category: string;
+        bio: string;
+        linkedin: string | undefined;
+        youtube: string | undefined;
+        twitter: string | undefined;
+        website: string | undefined;
     }, 
     userId: number | undefined) => {
     
@@ -122,6 +127,11 @@ export const submit_professional_details = async (
         data.append('title', formData.title);
         data.append('headline', formData.headline);
         data.append('category', formData.category);
+        data.append('bio', formData.bio);
+        data.append('linkedin', String(formData.linkedin));
+        data.append('youtube', String(formData.youtube));
+        data.append('twitter', String(formData.twitter));
+        data.append('website', String(formData.website));
         data.append('userId', String(userId));
 
         const response = await axiosInstance.post("/submit-professional-details", data);

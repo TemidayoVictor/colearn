@@ -1575,6 +1575,10 @@ ol li {
   height: 10rem;
 }
 
+.textarea.error {
+  border: 1px solid var(--error-color);
+}
+
 .booking-time {
   display: flex;
   justify-content: space-between;

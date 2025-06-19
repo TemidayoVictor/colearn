@@ -13,7 +13,6 @@ import {
 } from "@/services/onboarding";
 import { utilitiesStore } from "@/zustand/utilitiesStore";
 import { useRouter } from 'next/navigation';
-import { title } from "process";
 
 export const useOnboarding = () => {
     const router = useRouter();
@@ -55,10 +54,20 @@ export const useOnboarding = () => {
         title: string;
         headline: string;
         category: string;
+        bio: string;
+        linkedin: string | undefined;
+        youtube: string | undefined;
+        twitter: string | undefined;
+        website: string | undefined;
       }>({
         title: '',
         headline: '',
         category: '',
+        bio: '',
+        linkedin: '',
+        youtube: '',
+        twitter: '',
+        website: '',
     });
 
     const [experiences, setExperiences] = useState([
@@ -84,6 +93,7 @@ export const useOnboarding = () => {
         title: false,
         headline: false,
         category: false,
+        bio: false,
     });
 
     const [expErrors, setExpErrors] = useState(
@@ -105,7 +115,7 @@ export const useOnboarding = () => {
         setErrors((prev) => ({ ...prev, [name]: false }));
     };
 
-    const handleInputChange2 = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const handleInputChange2 = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
         setFormData2((prev) => ({ ...prev, [name]: value }));
         setErrors2((prev) => ({ ...prev, [name]: false }));
@@ -382,7 +392,7 @@ export const useOnboarding = () => {
             if (response.success) {
                 setButtonLoader(false)
                 showSuccessToast(response.message)
-                router.push('/students/dashboard');
+                router.push(`/${userType}s/dashboard`);
             } 
 
             else {
@@ -403,9 +413,10 @@ export const useOnboarding = () => {
         e.preventDefault();
 
         const newErrors = {
-            title: formData2.title === null,
+            title: formData2.title === '',
             headline: formData2.headline.trim() === '',
             category: formData2.category === '',
+            bio: formData2.bio === '',
         };
       
         setErrors2(newErrors);
@@ -413,7 +424,7 @@ export const useOnboarding = () => {
         const hasError = Object.values(newErrors).some(Boolean);
 
         if (hasError) {
-            showErrorToast('Please fill in all fields');
+            showErrorToast('Please fill in all required fields');
             return;
         }
 

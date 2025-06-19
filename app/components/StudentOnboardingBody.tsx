@@ -56,6 +56,9 @@ const StudentOnboardingBody = () => {
             return (
                 <div className="auth-con three three-b">
                     <div className="mt-[1rem]">
+                        <div className="flex items-end justify-end">
+                            <p className="text-[.8rem] color-grey-text">Step {profileProgress} of 4 </p>
+                        </div>
                         <h2 className="title-3">To help personalise your experience with us, What subjects are you interested in?</h2>
                         <div className="mt-3">
                             <SubjectSelector onChange={handleSubjectChange} selectedSubjects={selectedSubjects} setSelectedSubjects={setSelectedSubjects} />
@@ -68,6 +71,9 @@ const StudentOnboardingBody = () => {
             return (
                 <div className="auth-con three three-b">
                     <div className="mt-[1rem]">
+                        <div className="flex items-end justify-end">
+                            <p className="text-[.8rem] color-grey-text">Step {profileProgress} of 4 </p>
+                        </div>
                         <h2 className="title-3">Welcome, {`${ user?.first_name } ${user?.last_name}`}. Let's set you up and get you ready!</h2>
                         <p className="font-nomral text-[.9rem] mt-3">Update Profile Picture <span className="text-red-500">*</span></p>
                         <div className="mt-3 flex items-center gap-3 cursor-pointer" onClick={handleClick}>

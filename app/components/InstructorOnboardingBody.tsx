@@ -65,20 +65,29 @@ const InstructorOnboardingBody = () => {
             return (
                 <div className="auth-con three three-b">
                     <div className="mt-[1rem]">
+                        <div className="flex items-end justify-end">
+                            <p className="text-[.8rem] color-grey-text">Step {profileProgress} of 4 </p>
+                        </div>
                         <h2 className="title-3">Professional Information</h2>
                         <div className="mt-3">
                             <div className="input-box">
-                                <label htmlFor="">Title<span className="text-red-500">*</span></label>
-                                <input name="title" className={`input-field ${errors2.title ? 'error' : ''}`} placeholder="Mr., Ms., Dr., . . ." value={formData2.title} onChange={handleInputChange2}/>
+                                <label htmlFor="" className="font-semibold">Title<span className="text-red-500">*</span></label>
+                                <select name="title" className={`input-field ${errors2.title ? 'error' : ''}`} value={formData2.title} onChange={handleInputChange2}>
+                                    <option value="">Select one</option>
+                                    <option value="Mr">Mr.</option>
+                                    <option value="Mrs">Mrs.</option>
+                                    <option value="Ms">Ms.</option>
+                                    <option value="Dr">Dr.</option>
+                                </select>
                             </div>
 
                             <div className="input-box">
-                                <label htmlFor="">Professional Headline<span className="text-red-500">*</span></label>
+                                <label htmlFor="" className="font-semibold">Professional Headline<span className="text-red-500">*</span></label>
                                 <input name="headline" className={`input-field ${errors2.headline ? 'error' : ''}`} placeholder="Software Engineer, Copywriter, . . ." value={formData2.headline} onChange={handleInputChange2}/>
                             </div>
 
                             <div className="input-box">
-                                <label htmlFor="">Select Category<span className="text-red-500">*</span></label>
+                                <label htmlFor="" className="font-semibold">Select Category<span className="text-red-500">*</span></label>
                                 <select name="category" className={`input-field ${errors2.category ? 'error' : ''}`} value={formData2.category} onChange={handleInputChange2}>
                                     <option value="">Select one</option>
                                     {
@@ -90,6 +99,34 @@ const InstructorOnboardingBody = () => {
                                     }
                                 </select>
                             </div>
+
+                            <div className="input-box">
+                                <label htmlFor="description" className="font-semibold">Bio <span className="text-red-500">*</span></label>
+                                <textarea
+                                    name="bio"
+                                    className={`textarea ${errors2.bio ? 'error' : ''}`}
+                                    placeholder="Let us get to meet you."
+                                    value={formData2.bio}
+                                    onChange={handleInputChange2}
+                                />
+                            </div>
+                            <p className="font-semibold my-4">Add Social Media Accounts (Optional)</p>
+                            <div className="input-box">
+                                <label htmlFor="" className="font-semibold">LinkedIn URL</label>
+                                <input name="linkedin" className={`input-field`} value={formData2.linkedin} onChange={handleInputChange2}/>
+                            </div>
+                            <div className="input-box">
+                                <label htmlFor="" className="font-semibold">YouTube URL</label>
+                                <input name="youtube" className={`input-field`} value={formData2.youtube} onChange={handleInputChange2}/>
+                            </div>
+                            <div className="input-box">
+                                <label htmlFor="" className="font-semibold">X URL</label>
+                                <input name="twitter" className={`input-field`} value={formData2.twitter} onChange={handleInputChange2}/>
+                            </div>
+                            <div className="input-box">
+                                <label htmlFor="" className="font-semibold">Personal Website</label>
+                                <input name="website" className={`input-field`} value={formData2.website} onChange={handleInputChange2}/>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -99,12 +136,15 @@ const InstructorOnboardingBody = () => {
             return (
             <div className="auth-con three three-b">
                 <div className="mt-[1rem]">
+                    <div className="flex items-end justify-end">
+                        <p className="text-[.8rem] color-grey-text">Step {profileProgress} of 4 </p>
+                    </div>
                     <h2 className="title-3">Share your Experience with us</h2>
                     {
                         experiences.map((exp, index) => (
                             <div key={index} className="exp">
                                 <div className="input-box">
-                                    <label htmlFor="title">Position <span className="text-red-500">*</span></label>
+                                    <label htmlFor="title" className="font-semibold">Position <span className="text-red-500">*</span></label>
                                     <input
                                         name="title"
                                         className={`input-field`}
@@ -115,7 +155,7 @@ const InstructorOnboardingBody = () => {
                                 </div>
         
                                 <div className="input-box">
-                                    <label htmlFor="organization">Organization <span className="text-red-500">*</span></label>
+                                    <label htmlFor="organization" className="font-semibold">Organization <span className="text-red-500">*</span></label>
                                     <input
                                         name="organization"
                                         className={`input-field`}
@@ -126,7 +166,7 @@ const InstructorOnboardingBody = () => {
                                 </div>
         
                                 <div className="input-box">
-                                    <label htmlFor="description">Description <span className="text-red-500">*</span></label>
+                                    <label htmlFor="description" className="font-semibold">Description <span className="text-red-500">*</span></label>
                                     <textarea
                                         name="description"
                                         className={`textarea`}
@@ -138,7 +178,7 @@ const InstructorOnboardingBody = () => {
         
                                 <div className="auth-flex">
                                     <div className="input-flex-item">
-                                    <label htmlFor="start_date">Start Date</label>
+                                    <label htmlFor="start_date" className="font-semibold">Start Date</label>
                                     <input
                                         type="date"
                                         name="start_date"
@@ -149,7 +189,7 @@ const InstructorOnboardingBody = () => {
                                     </div>
         
                                     <div className="input-flex-item">
-                                        <label htmlFor="end_date">End Date</label>
+                                        <label htmlFor="end_date" className="font-semibold">End Date</label>
                                         <input
                                             type="date"
                                             name="end_date"
@@ -199,10 +239,28 @@ const InstructorOnboardingBody = () => {
  
             )
 
+            case '4': 
+            return (
+                <div className="auth-con three three-b">
+                    <div className="mt-[1rem]">
+                        <div className="flex items-end justify-end">
+                            <p className="text-[.8rem] color-grey-text">Step {profileProgress} of 4 </p>
+                        </div>
+                        <h2 className="title-3">To enhance your visibility, please select the disciplines that align with your area of expertise.</h2>
+                        <div className="mt-3">
+                            <SubjectSelector onChange={handleSubjectChange} selectedSubjects={selectedSubjects} setSelectedSubjects={setSelectedSubjects} />
+                        </div>
+                    </div>
+                </div>
+            )
+
             default:
             return (
                 <div className="auth-con three three-b">
                     <div className="mt-[1rem]">
+                        <div className="flex items-end justify-end">
+                            <p className="text-[.8rem] color-grey-text">Step {profileProgress} of 4 </p>
+                        </div>
                         <h2 className="title-3">Welcome, {`${ user?.first_name } ${user?.last_name}`}. Let's set you up and get you ready!</h2>
                         <p className="font-nomral text-[.9rem] mt-3">Update Profile Picture <span className="text-red-500">*</span></p>
                         <div className="mt-3 flex items-center gap-3 cursor-pointer" onClick={handleClick}>
@@ -235,8 +293,8 @@ const InstructorOnboardingBody = () => {
                         </div>
                         
                         <div className="mt-4">
-                            <div className="input-box">
-                                <label htmlFor="">What gender do you identify as? <span className="text-red-500">*</span></label>
+                            <div className="input-box" >
+                                <label htmlFor="" className="font-semibold">What gender do you identify as? <span className="text-red-500">*</span></label>
                                 <select name="gender" className={`input-field ${errors.gender ? 'error' : ''}`} value={formData.gender} onChange={handleInputChange}>
                                     <option value="">Select one</option>
                                     <option value="Male">Male</option>
@@ -246,7 +304,7 @@ const InstructorOnboardingBody = () => {
                             </div>
 
                             <div className="input-box">
-                                <label htmlFor="">What languages do you speak? <span className="text-red-500">*</span></label>
+                                <label htmlFor="" className="font-semibold">What languages do you speak? <span className="text-red-500">*</span></label>
                                 <MultiDropdownSelector
                                     options={languages}
                                     selected={selectedItems}
@@ -255,7 +313,7 @@ const InstructorOnboardingBody = () => {
                             </div>
 
                             <div className="input-box">
-                                <label htmlFor="country">Which country are you from? <span className="text-red-500">*</span></label>
+                                <label htmlFor="country" className="font-semibold">Which country are you from? <span className="text-red-500">*</span></label>
                                 <select name="country" className={`input-field ${errors.country ? 'error' : ''}`} value={formData.country} onChange={handleCountryChange}>
                                     <option value="">Select one</option>
                                     {
@@ -269,7 +327,7 @@ const InstructorOnboardingBody = () => {
                             </div>
 
                             <div className="input-box">
-                                <label htmlFor="">Phone number <span className="text-red-500">*</span></label>
+                                <label htmlFor="" className="font-semibold">Phone number <span className="text-red-500">*</span></label>
                                 <div className="flex items-center gap-2">
                                     <span className="input-field">+ {dialCode}</span>
                                     <input name="phone" className={`input-field flex-1 ${errors.phone ? 'error' : ''}`} placeholder="Enter your phone number" value={formData.phone} onChange={handleInputChange}/>
@@ -322,6 +380,33 @@ const InstructorOnboardingBody = () => {
                         (
                             <div className="bt-btn two">
                                 <span>Continue</span>
+                                <span>
+                                    <Image
+                                        aria-hidden
+                                        src="/assets/images/arrow-right.png"
+                                        alt="Colearn Logo"
+                                        width={12}
+                                        height={12}
+                                        className="object-contain"
+                                    />
+                                </span>
+                            </div>                                        
+                        )
+                    }
+                </button>
+            )
+
+            case '4':
+            return (
+                <button className="bt-btn btn btn-primary-fill" onClick={addPreferences}>
+                    {
+                        buttonLoader ? (
+                            <ButtonLoader content="Please Wait . . ." />
+                        ) : 
+                        
+                        (
+                            <div className="bt-btn two">
+                                <span>Complete</span>
                                 <span>
                                     <Image
                                         aria-hidden
@@ -398,7 +483,6 @@ const InstructorOnboardingBody = () => {
                         
                         <div className="base-btns">
                             <div className="res-flex justify-between mt-[1.5rem]">
-
                                 {
                                     renderButton()
                                 }
