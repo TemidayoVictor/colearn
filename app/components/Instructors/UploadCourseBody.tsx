@@ -1,15 +1,32 @@
 'use client';
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import Image from "next/image";
 import UploadCourseForm from "./UploadCourseForm";
 import Link from "next/link";
+import { authStore } from "@/zustand/authStore";
+import { useAuthInstructors } from "@/hooks/useAuth";
+import Loader from "../Loader";
+import { useRouter } from "next/navigation";
+
 
 const UploadCourseBody = () => {
+    const router = useRouter(); 
     const [step, setStep] = useState<number>(0);
+    const [newUpdate, setNewUpdate] = useState<string>('reset');
+    const [loading, setLoading] = useState<boolean>(true);
 
     const updateStep = (newstep: number) => {
         setStep(newstep);
     }
+
+    useEffect(() => {
+        const init = async () => {
+          await useAuthInstructors(router); // ✅ valid usage
+          setLoading(false);
+          setNewUpdate("reset");
+        };
+        init();
+    }, [newUpdate]);
     
     return (
         <div>

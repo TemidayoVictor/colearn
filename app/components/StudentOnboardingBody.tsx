@@ -1,30 +1,21 @@
 'use client';
-import React, {useState, useRef, useEffect, use} from "react";
-import Link from "next/link";
+import React, {useState, useEffect} from "react";
 import Image from "next/image";
 import { useLogout } from "@/hooks/useLogout";
 import { useAuth } from "@/hooks/useAuth";
 import Loader from "./Loader";
 import { authStore } from "@/zustand/authStore";
-import { utilitiesStore } from "@/zustand/utilitiesStore";
 import { useOnboarding } from "@/hooks/useOnboarding";
 import ButtonLoader from "./buttonLoader";
 import MultiDropdownSelector from "./MultiDropdownSelector";
 import SubjectSelector from "./SubjectSelector";
+import { useRouter } from "next/navigation";
 
 const StudentOnboardingBody = () => {
-    const checkAuth = useAuth();
-
+    const router = useRouter();
     const user = authStore((state) => state.user);
     const student = authStore((state) => state.student);
     const profileProgress = user?.profile_progress;
-
-    
-    const [loading, setLoading] = useState<boolean>(true);
-    
-    const {
-        logoutHook
-    } = useLogout();
 
     const {
         handleInputChange,
@@ -48,6 +39,9 @@ const StudentOnboardingBody = () => {
         addPreferences,
         selectedSubjects, 
         setSelectedSubjects,
+        loading, 
+        setLoading,
+        handleLogout,
     } = useOnboarding()
 
     const renderContent = () => {
@@ -212,9 +206,12 @@ const StudentOnboardingBody = () => {
     }
 
     useEffect(() => {
-        checkAuth();
-        setLoading(false);
-        setNewUpdate('reset');
+        const init = async () => {
+            await useAuth(router); // ✅ valid usage
+            setLoading(false);
+            setNewUpdate("reset");
+        };
+        init();
     }, [newUpdate]);
 
     if (loading) return <Loader />
@@ -247,7 +244,7 @@ const StudentOnboardingBody = () => {
                                     renderButton()
                                 }
                                 
-                                <button className="items-center gap-2 desktop-flex cursor-pointer" onClick={logoutHook}>
+                                <button className="items-center gap-2 desktop-flex cursor-pointer" onClick={handleLogout}>
                                     <Image
                                         aria-hidden
                                         src="/assets/images/logout.png"
@@ -261,7 +258,7 @@ const StudentOnboardingBody = () => {
                             </div>
 
                             <div className="mobile-flex justify-end mt-4">
-                                <button className="flex items-center gap-2" onClick={logoutHook}>
+                                <button className="flex items-center gap-2" onClick={handleLogout}>
                                     <Image
                                         aria-hidden
                                         src="/assets/images/logout.png"

@@ -7,9 +7,8 @@ import { utilitiesStore } from "@/zustand/utilitiesStore";
 
 export const useLogout = () => {
     const router = useRouter();
-    const logoutHook = async(e: React.MouseEvent<HTMLButtonElement>) => {
-        e.preventDefault()
-
+    const logoutHook = async(setLoading: (value: boolean) => void) => {
+        setLoading(true)
         try {
             const response = await logout();
             if (response.success) {
@@ -17,6 +16,7 @@ export const useLogout = () => {
                 utilitiesStore.getState().clearUtilities();
                 showSuccessToast(response.message)
                 router.push('/authentication/login');
+                setLoading(false);
             } 
 
             else {
@@ -24,6 +24,7 @@ export const useLogout = () => {
                 if (!redirected) {
                   showErrorToast(response.message);
                   console.log(response);
+                  setLoading(false);
                 }
             }
         }
@@ -31,6 +32,7 @@ export const useLogout = () => {
         catch(err:any) {
             console.log(err);
             showErrorToast('Unexpected error occurred');
+            setLoading(false);
         }
     }
 

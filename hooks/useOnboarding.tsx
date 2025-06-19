@@ -13,6 +13,7 @@ import {
 } from "@/services/onboarding";
 import { utilitiesStore } from "@/zustand/utilitiesStore";
 import { useRouter } from 'next/navigation';
+import { useLogout } from "./useLogout";
 
 export const useOnboarding = () => {
     const router = useRouter();
@@ -23,6 +24,7 @@ export const useOnboarding = () => {
     const [selected, setSelected] = useState<string | null>(null);
     const [buttonLoader, setButtonLoader] = useState<boolean>(false);
     const [newUpdate, setNewUpdate] = useState<string>('reset');
+    const [loading, setLoading] = useState<boolean>(true);
 
     const [selectedCountryCode, setSelectedCountryCode] = useState<string | null>("");
     const [dialCode, setDialCode] = useState<number | null>();
@@ -486,8 +488,13 @@ export const useOnboarding = () => {
 
         console.log(experiences);
     }
-      
 
+    const {logoutHook} = useLogout();
+
+    const handleLogout = () => {
+        logoutHook(setLoading)
+    }
+      
     return {
         handleSelect,
         otp,
@@ -530,5 +537,8 @@ export const useOnboarding = () => {
         addExperience,
         submitExperiences,
         removeExperience,
+        loading, 
+        setLoading,
+        handleLogout,
     }
 }

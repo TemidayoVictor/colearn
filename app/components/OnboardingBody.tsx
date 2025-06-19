@@ -1,22 +1,17 @@
 'use client';
-import React, {useState, useRef, useEffect} from "react";
+import React, {useEffect} from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { useLogout } from "@/hooks/useLogout";
 import { useAuth } from "@/hooks/useAuth";
 import Loader from "./Loader";
 import { authStore } from "@/zustand/authStore";
 import { useOnboarding } from "@/hooks/useOnboarding";
 import ButtonLoader from "./buttonLoader";
+import { useRouter } from "next/navigation";
 
 const OnboardingBody = () => {
-    const checkAuth = useAuth();
+    const router = useRouter();
     const user = authStore((state) => state.user);
-    const [loading, setLoading] = useState<boolean>(true);
-    const {
-        logoutHook
-    } = useLogout();
-
     const {
         handleSelect,
         otp,
@@ -31,6 +26,9 @@ const OnboardingBody = () => {
         setNewUpdate,
         resendOtp,
         submitUser,
+        loading, 
+        setLoading,
+        handleLogout,
     } = useOnboarding()
 
     const renderContent = () => {
@@ -224,9 +222,12 @@ const OnboardingBody = () => {
     }
 
     useEffect(() => {
-        checkAuth();
-        setLoading(false);
-        setNewUpdate('reset');
+        const init = async () => {
+            await useAuth(router); // ✅ valid usage
+            setLoading(false);
+            setNewUpdate("reset");
+        };
+        init();
     }, [newUpdate]);
 
     if (loading) return <Loader />
@@ -259,7 +260,7 @@ const OnboardingBody = () => {
                                     renderButton()
                                 }
                                 
-                                <button className="items-center gap-2 desktop-flex cursor-pointer" onClick={logoutHook}>
+                                <button className="items-center gap-2 desktop-flex cursor-pointer" onClick={handleLogout}>
                                     <Image
                                         aria-hidden
                                         src="/assets/images/logout.png"
@@ -273,7 +274,7 @@ const OnboardingBody = () => {
                             </div>
 
                             <div className="mobile-flex justify-end mt-4">
-                                <button className="flex items-center gap-2" onClick={logoutHook}>
+                                <button className="flex items-center gap-2" onClick={handleLogout}>
                                     <Image
                                         aria-hidden
                                         src="/assets/images/logout.png"

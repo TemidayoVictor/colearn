@@ -1,15 +1,20 @@
 'use client';
-import React from "react";
+import React, {useState} from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useLogout } from "@/hooks/useLogout";
+import Loader from "../Loader";
 
 const StudentSidebarContent = () => {
+    const [loading, setLoading] = useState<boolean>(false);
     const pathname = usePathname();
     const {
         logoutHook
     } = useLogout();
+
+    // if (loading) return <Loader />
+
     return (
         <div className="sidebar-body container-3">
             <div>
@@ -243,7 +248,7 @@ const StudentSidebarContent = () => {
                     <p className="text-[.9rem]">Help Desk</p>
                 </Link>
 
-                <button className="sidebar-link" onClick={logoutHook}>
+                <button className="sidebar-link" onClick={() => logoutHook(setLoading)}>
                     <Image
                         aria-hidden
                         src="/assets/images/logout.png"
