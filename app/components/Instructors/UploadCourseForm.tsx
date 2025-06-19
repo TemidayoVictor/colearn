@@ -8,9 +8,10 @@ import UploadCourseStep4 from "./UploadCourseStep4";
 
 type UploadCourseFormProps = {
     sendData: (step: number) => void;
+    upload: () => void;
 }
 
-const UploadCourseForm = ({sendData}: UploadCourseFormProps) => {
+const UploadCourseForm = ({sendData, upload}: UploadCourseFormProps) => {
     const [step, setStep] = useState<number>(0);
 
     const sections = [
@@ -20,7 +21,8 @@ const UploadCourseForm = ({sendData}: UploadCourseFormProps) => {
         <UploadCourseStep4 key="success" />,
     ];
 
-    const handleNext = () => {
+    const handleNext = async () => {
+        upload();
         if (step < sections.length - 1) setStep(step + 1);
         sendData(step + 1);
         const container = document.querySelector('.upload-course-form');

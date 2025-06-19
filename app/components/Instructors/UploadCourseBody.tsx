@@ -7,13 +7,18 @@ import { authStore } from "@/zustand/authStore";
 import { useAuthInstructors } from "@/hooks/useAuth";
 import Loader from "../Loader";
 import { useRouter } from "next/navigation";
-
+import { UseCourses } from "@/hooks/useCourses";
 
 const UploadCourseBody = () => {
     const router = useRouter(); 
     const [step, setStep] = useState<number>(0);
     const [newUpdate, setNewUpdate] = useState<string>('reset');
     const [loading, setLoading] = useState<boolean>(true);
+
+    const {
+        buttonLoader,
+        uploadCourse,
+    } = UseCourses()
 
     const updateStep = (newstep: number) => {
         setStep(newstep);
@@ -64,7 +69,7 @@ const UploadCourseBody = () => {
                     step < 3 &&
                     <h2 className="title-3 mt-3 mobile">Create Course</h2>
                 }
-                <UploadCourseForm sendData={updateStep} />
+                <UploadCourseForm sendData={updateStep} upload={uploadCourse}/>
             </div>
 
         </div>
