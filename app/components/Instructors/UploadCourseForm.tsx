@@ -15,10 +15,10 @@ const UploadCourseForm = ({sendData, upload}: UploadCourseFormProps) => {
     const [step, setStep] = useState<number>(0);
 
     const sections = [
-        <UploadCourseStep1 key="details" />,
-        <UploadCourseStep2 key="content" />,
-        <UploadCourseStep3 key="additions"/>,
-        <UploadCourseStep4 key="success" />,
+        <UploadCourseStep1 key="details" />, // this redirects to upload module page on success
+        <UploadCourseStep2 key="content" />, // currently not being used. Was added based on U.I.
+        <UploadCourseStep3 key="additions"/>, // currently not being used. Was added based on U.I.
+        <UploadCourseStep4 key="success" />, // currently not being used. Was added based on U.I.
     ];
 
     const handleNext = async () => {

@@ -3,7 +3,6 @@ import React, {useState, useEffect} from "react";
 import Image from "next/image";
 import UploadCourseForm from "./UploadCourseForm";
 import Link from "next/link";
-import { authStore } from "@/zustand/authStore";
 import { useAuthInstructors } from "@/hooks/useAuth";
 import Loader from "../Loader";
 import { useRouter } from "next/navigation";

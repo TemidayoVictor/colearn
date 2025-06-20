@@ -30,3 +30,37 @@ export const upload_course = async (formData: {
         return handleApiError(error)
     }
 }
+
+export const add_module = async (formData: {
+    title: string;
+    description: string;
+}) => {
+    try {
+        const data = new FormData();
+
+        data.append('title', formData.title);
+        data.append('description', formData.description);
+
+        const response = await axiosInstance.post("/upload-course", data);
+        return handleApiResponse(response);
+    }
+
+    catch(error: any) {
+        return handleApiError(error)
+    }
+}
+
+export const get_course_details = async (courseId: string) => {
+    try {
+        const data = new FormData();
+
+        data.append('courseId', courseId);
+
+        const response = await axiosInstance.post("/get-course-details", data);
+        return handleApiResponse(response);
+    }
+
+    catch(error: any) {
+        return handleApiError(error)
+    }
+}

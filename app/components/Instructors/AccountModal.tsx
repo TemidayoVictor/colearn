@@ -6,6 +6,7 @@ import MultiDropdownSelector from "../MultiDropdownSelector";
 import { Experience, Bank } from "@/app/Types/types";
 import BookingDetails from "../BookingDetails";
 import ChangePassword from "./ChangePassword";
+import ManageModule from "./ManageModule";
 
 type AccountModalProps = {
     modalType: string;
@@ -68,14 +69,14 @@ const AccountModal = ({modalType, modalClose, experience, bank, subType}: Accoun
                                     </select>
                                 </div>
 
-                                <div className="input-box">
+                                {/* <div className="input-box">
                                     <label htmlFor="">What Languages do you speak? <span className="text-red-500">*</span></label>
                                     <MultiDropdownSelector
                                         options={["English", "French", "Yoruba", "Igbo", "Hausa", "German", "Spanish", "Chinese", "Japanese", "Korean"]}
                                         selected={selectedItems}
                                         setSelected={setSelectedItems}
                                     />
-                                </div>
+                                </div> */}
 
                                 <div className="input-box">
                                     <label htmlFor="">What gender do you identify as? <span className="text-red-500">*</span></label>
@@ -260,14 +261,14 @@ const AccountModal = ({modalType, modalClose, experience, bank, subType}: Accoun
                                     <input type="text" className="input-field"/>
                                 </div>
 
-                                <div className="input-box">
+                                {/* <div className="input-box">
                                     <label htmlFor="">Which disciplines are relevant in your expertise(s)? <span className="text-red-500">*</span></label>
                                     <MultiDropdownSelector
                                         options={["English", "French", "Yoruba", "Igbo", "Hausa", "German", "Spanish", "Chinese", "Japanese", "Korean"]}
                                         selected={selectedItems}
                                         setSelected={setSelectedItems}
                                     />
-                                </div>
+                                </div> */}
                             </div>
                         </div>
                     </div>
@@ -283,14 +284,14 @@ const AccountModal = ({modalType, modalClose, experience, bank, subType}: Accoun
 
                         <div className="mt-[1rem]">
                             <div className="mt-4">
-                                <div className="input-box">
+                                {/* <div className="input-box">
                                     <label htmlFor="">Which skill(s) do you have experience in? <span className="text-red-500">*</span></label>
                                     <MultiDropdownSelector
                                         options={["English", "French", "Yoruba", "Igbo", "Hausa", "German", "Spanish", "Chinese", "Japanese", "Korean"]}
                                         selected={selectedItems}
                                         setSelected={setSelectedItems}
                                     />
-                                </div>
+                                </div> */}
                             </div>
                         </div>
                     </div>
@@ -476,30 +477,15 @@ const AccountModal = ({modalType, modalClose, experience, bank, subType}: Accoun
                         </div>
                     </div>
                 }
+
+                {
+                    modalType == 'add-module' &&
+                    <ManageModule type="add" />
+                }
                 
                 <div className="modal-close">
                     <FontAwesomeIcon icon={faXmark} className="text-[1.5rem]" onClick={modalClose}/>
                 </div>
-                {
-                    modalType != 'booking' &&
-                    <div className="upload-course-btns two">
-                        <button className="btn normal" onClick={modalClose}>Cancel</button>
-
-                        <button className="flex items-center gap-2 btn btn-primary-fill">
-                            <span>Update</span>
-                            <span>
-                                <Image
-                                    aria-hidden
-                                    src="/assets/images/arrow-right.png"
-                                    alt="Colearn Logo"
-                                    width={12}
-                                    height={12}
-                                    className="object-contain"
-                                />
-                            </span>
-                        </button>
-                    </div>
-                }
             
             </div>
             

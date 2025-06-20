@@ -7,6 +7,7 @@ import { useRouter } from 'next/navigation';
 import { utilitiesStore } from "@/zustand/utilitiesStore";
 
 export const UseCourses = () => {
+    const router = useRouter();
     const user = authStore((state) => state.user);
     const userId = user?.id;
     const categories = utilitiesStore((state) => state.categories);
@@ -14,6 +15,13 @@ export const UseCourses = () => {
     const [selectedItems, setSelectedItems] = useState<string[]>([]);
     const [buttonLoader, setButtonLoader] = useState<boolean>(false);
     const [newUpdate, setNewUpdate] = useState<string>('reset');
+
+    const [showModal, setShowModal] = useState<string | null>(null);
+    const openModal = (key: string) => {
+        setShowModal(key);
+    }
+
+    const closeModal = () => setShowModal(null);
 
     const [formData, setFormData] = useState<{
         title: string;
@@ -37,6 +45,21 @@ export const UseCourses = () => {
         categories: false,
     });
 
+    const [formData2, setFormData2] = useState<{
+        course_id: number | undefined;
+        title: string;
+        description: string | undefined;
+      }>({
+        course_id: 0,
+        title: '',
+        description: '',
+    });
+
+    const [errors2, setErrors2] = useState({
+        title: false,
+        description: false,
+    });
+
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
         setFormData((prev) => ({ ...prev, [name]: value }));
@@ -49,6 +72,12 @@ export const UseCourses = () => {
         setErrors((prev) => ({ ...prev, [name]: false }));
     };
 
+    const handleInputChange2 = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+        const { name, value } = e.target;
+        setFormData2((prev) => ({ ...prev, [name]: value }));
+        setErrors2((prev) => ({ ...prev, [name]: false }));
+    };
+
     const uploadCourse = async () => {
         const newErrors = {
             title: formData.title.trim() === '',
@@ -59,6 +88,45 @@ export const UseCourses = () => {
         };
       
         setErrors(newErrors);
+
+        const hasError = Object.values(newErrors).some(Boolean);
+
+        if (hasError) {
+            showErrorToast('Please fill in all fields');
+            return;
+        }
+
+        try {
+            setButtonLoader(true)
+            const response = await upload_course(formData, selectedItems, userId);
+            if (response.success) {
+                setButtonLoader(false)
+                showSuccessToast(response.message)
+                router.push(`/instructors/upload-module/${response.data.course.id}`);
+            } 
+
+            else {
+                setButtonLoader(false)
+                showErrorToast(response.message)
+                console.log(response)
+            }
+        }
+
+        catch (err: any) {
+            console.log(err)
+            setButtonLoader(false)
+            showErrorToast('Unexpected error occurred');
+        }
+    }
+
+    const uploadModule = async () => {
+
+        const newErrors = {
+            title: formData.title.trim() === '',
+            description: formData.description.trim() === '',
+        };
+      
+        setErrors2(newErrors);
 
         const hasError = Object.values(newErrors).some(Boolean);
 
@@ -90,6 +158,8 @@ export const UseCourses = () => {
         }
     }
 
+
+
     return {
         formData,
         errors,
@@ -100,5 +170,12 @@ export const UseCourses = () => {
         setSelectedItems,
         handleCheckChange,
         categories,
+        uploadModule,
+        formData2,
+        errors2,
+        handleInputChange2,
+        openModal,
+        showModal,
+        closeModal,
     }
 }
