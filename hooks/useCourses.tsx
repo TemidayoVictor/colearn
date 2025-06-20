@@ -5,10 +5,13 @@ import { authStore } from "@/zustand/authStore";
 import { upload_course } from "@/services/courses";
 import { useRouter } from 'next/navigation';
 import { utilitiesStore } from "@/zustand/utilitiesStore";
+import { courseStore } from "@/zustand/courseStore";
+import { add_module } from "@/services/courses";
 
 export const UseCourses = () => {
     const router = useRouter();
     const user = authStore((state) => state.user);
+    const courseId = courseStore((state) => state.courseId);
     const userId = user?.id;
     const categories = utilitiesStore((state) => state.categories);
 
@@ -46,11 +49,9 @@ export const UseCourses = () => {
     });
 
     const [formData2, setFormData2] = useState<{
-        course_id: number | undefined;
         title: string;
-        description: string | undefined;
+        description: string;
       }>({
-        course_id: 0,
         title: '',
         description: '',
     });
@@ -122,8 +123,8 @@ export const UseCourses = () => {
     const uploadModule = async () => {
 
         const newErrors = {
-            title: formData.title.trim() === '',
-            description: formData.description.trim() === '',
+            title: formData2.title.trim() === '',
+            description: formData2.description.trim() === '',
         };
       
         setErrors2(newErrors);
@@ -137,7 +138,7 @@ export const UseCourses = () => {
 
         try {
             setButtonLoader(true)
-            const response = await upload_course(formData, selectedItems, userId);
+            const response = await add_module(formData2, courseId);
             if (response.success) {
                 setButtonLoader(false)
                 showSuccessToast(response.message)

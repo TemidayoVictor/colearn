@@ -34,14 +34,15 @@ export const upload_course = async (formData: {
 export const add_module = async (formData: {
     title: string;
     description: string;
-}) => {
+}, courseId: string | undefined) => {
     try {
         const data = new FormData();
 
         data.append('title', formData.title);
         data.append('description', formData.description);
+        data.append('courseId', String(courseId));
 
-        const response = await axiosInstance.post("/upload-course", data);
+        const response = await axiosInstance.post("/upload-module", data);
         return handleApiResponse(response);
     }
 

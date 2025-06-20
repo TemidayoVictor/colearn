@@ -23,3 +23,15 @@ export type Bank = {
 export type ApiResponseType =
   | { success: true; message: any; data: any }
   | { success: false; message: any; errors: any };
+
+export type Course = {
+    id: number;
+    instructor_id: number;
+    title: string;
+    description: string;
+    who_can_enroll: string;
+    thumbnail: string;
+    is_published: boolean;
+    price: number;
+    is_free: boolean;
+}

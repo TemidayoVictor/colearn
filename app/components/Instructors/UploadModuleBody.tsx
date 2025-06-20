@@ -7,12 +7,16 @@ import { useRouter } from "next/navigation";
 import { UseCourses } from "@/hooks/useCourses";
 import Loader from "../Loader";
 import AccountModal from "./AccountModal";
+import { get_course_details } from "@/services/courses";
+import { Course } from "@/app/Types/types";
+import { showErrorToast } from "@/utils/toastTypes";
+import { useParams } from 'next/navigation';
+import { courseStore } from "@/zustand/courseStore";
 
-type UploadModuleBodyProps = {
-    course_id: string
-}
+const UploadModuleBody = () => {
+    const params = useParams();
+    const course = params?.course as string;
 
-const UploadModuleBody = ({course_id}: UploadModuleBodyProps) => {
     const router = useRouter(); 
     const [loading, setLoading] = useState<boolean>(true);
 
@@ -29,12 +33,36 @@ const UploadModuleBody = ({course_id}: UploadModuleBodyProps) => {
 
     useEffect(() => {
         const init = async () => {
-          await useAuthInstructors(router);
-          
-          setLoading(false);
+            await useAuthInstructors(router);
+            if (course) {
+                courseStore.getState().setCourseId(course);
+            }
+            setLoading(false);
+            // try {
+            //     const courseResponse = await get_course_details(course_id);
+            //     if (courseResponse.success) {
+            //         setCourse(courseResponse.data.course);
+            //     } 
+    
+            //     else {
+            //         showErrorToast(courseResponse.message)
+            //         console.log(courseResponse)
+            //         router.push('/instructors/courses')
+            //     }
+            // }
+
+            // catch(err:any) {
+            //     showErrorToast("Sorry, we could not process your request");
+            //     console.log(err)
+            //     router.push('/instructors/courses')
+            // }
+
+            // finally {
+            //     setLoading(false);
+            // }
         };
         init();
-    }, []);
+    }, [course]);
     
     return (
         <div className="container-3">

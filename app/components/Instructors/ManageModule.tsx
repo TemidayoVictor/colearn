@@ -19,15 +19,6 @@ const ManageModule = ({type}: ManageModuleProps) => {
         <div>
             <div>
                 <h2 className="title-3">Add Module</h2>
-                
-                <div className="mt-4" hidden>
-                    <input 
-                        type="text" 
-                        name="course_id"
-                        value={formData2.course_id}
-                        onChange={handleInputChange2} 
-                    />
-                </div>
 
                 <div className="mt-4">
                     <label htmlFor="" className="text-[.9rem] font-semibold">Module Title<span className="text-red-500">*</span> </label>
