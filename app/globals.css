@@ -2185,6 +2185,10 @@ td {
   margin-top: .5em;
 }
 
+.upload-course-input.error, .upload-course-textarea.error {
+  border: 1px solid var(--error-color);
+}
+
 .upload-course-textarea {
   height: 8rem;
   resize: none;

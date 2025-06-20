@@ -12,9 +12,10 @@ type Props = {
     options: Language[];
     selected: string[];
     setSelected: (values: string[]) => void;
+    selector?: string;
   };
 
-const MultiDropdownSelector: React.FC<Props> = ({options, selected, setSelected}) => {
+const MultiDropdownSelector: React.FC<Props> = ({options, selected, setSelected, selector='name'}) => {
     const [open, setOpen] = useState<boolean>(false);
     const [searchTerm, setSearchTerm] = useState("");
     const dropdownRef = useRef<HTMLDivElement>(null);

@@ -1,10 +1,20 @@
 import React from "react";
 import { UseCourses } from "@/hooks/useCourses";
+import MultiDropdownSelector from "../MultiDropdownSelector";
+import Image from "next/image";
+import ButtonLoader from "../buttonLoader";
 
 const UploadCourseStep1 = () => {
     const {
         formData,
         errors,
+        handleInputChange,
+        selectedItems, 
+        setSelectedItems,
+        categories,
+        uploadCourse,
+        handleCheckChange,
+        buttonLoader,
     } = UseCourses();
     return (
         <div>
@@ -17,8 +27,11 @@ const UploadCourseStep1 = () => {
                         <label htmlFor="" className="text-[.9rem] font-semibold">Course Title<span className="text-red-500">*</span> </label>
                         <input 
                             type="text" 
-                            className="upload-course-input" 
-                            placeholder="Enter Course Title or Topic" 
+                            className={`upload-course-input ${errors.title ? 'error' : ''}`} 
+                            name="title"
+                            value={formData.title}
+                            placeholder="Enter Course Title or Topic"
+                            onChange={handleInputChange} 
                         />
                     </div>
                 </div>
@@ -29,17 +42,52 @@ const UploadCourseStep1 = () => {
 
                     <div className="mt-4">
                         <label htmlFor="" className="text-[.9rem] font-semibold">Detailed Description of Course<span className="text-red-500">*</span> </label>
-                        <textarea className="upload-course-textarea" placeholder="E.g  Course Fully Updated: Dive into animated videos, 50 writing assignments and 60 interactive quizzes in our comprehensive, updated copywriting course." required></textarea>
+                        <textarea
+                            name="description"
+                            className={`upload-course-textarea ${errors.description ? 'error' : ''}`}
+                            placeholder="E.g  Course Fully Updated: Dive into animated videos, 50 writing assignments and 60 interactive quizzes in our comprehensive, updated copywriting course."
+                            value={formData.description}
+                            onChange={handleInputChange}
+                        />
+
                     </div>
 
                     <div className="mt-4">
                         <label htmlFor="" className="text-[.9rem] font-semibold">Who can enroll<span className="text-red-500">*</span> </label>
-                        <textarea className="upload-course-textarea" placeholder="E.g  B2B and B2C Professionals: Ideal for those in business-to-business and business-to-consumer sectors looking to refine their marketing strategies and content creation with AI insights." required></textarea>
+                        <textarea
+                            name="who_can_enroll"
+                            className={`upload-course-textarea ${errors.who_can_enroll ? 'error' : ''}`}
+                            placeholder="E.g  Course Fully Updated: Dive into animated videos, 50 writing assignments and 60 interactive quizzes in our comprehensive, updated copywriting course."
+                            value={formData.who_can_enroll}
+                            onChange={handleInputChange}
+                        />
+                    </div>
+
+                    <div className="mt-4">
+                        <label htmlFor="" className="text-[.9rem] font-semibold">Select categories for course<span className="text-red-500">*</span> </label>
+                        <div className="mt-1">
+                            <MultiDropdownSelector
+                                options={categories}
+                                selected={selectedItems}
+                                setSelected={setSelectedItems}
+                            />
+                        </div>
                     </div>
 
                     <div className="mt-4">
                         <label htmlFor="" className="text-[.9rem] font-semibold">Course Price<span className="text-red-500">*</span> </label>
-                        <input type="number" className="upload-course-input" placeholder="price" required/>
+                        <div className="flex items-center gap-1">
+                            <span className="upload-course-input flex-1 font-bold">$</span>
+                            <input 
+                                type="number" 
+                                className={`upload-course-input ${errors.price ? 'error' : ''}`} 
+                                name="price"
+                                value={formData.price}
+                                placeholder="Enter Course Title or Topic"
+                                onChange={handleInputChange} 
+                                disabled={formData.is_free}
+                            />
+                        </div>
                     </div>
 
                     <div className="mt-4">
@@ -49,15 +97,42 @@ const UploadCourseStep1 = () => {
                             <input
                                 type="checkbox"
                                 name="is_free"
-                                // checked={exp.currently_working}
-                                // onChange={(e) => handleExperienceChange(index, 'currently_working', e.target.checked)}
+                                checked={formData.is_free}
+                                onChange={handleCheckChange}
                                 className="opacity-0 w-0 h-0 peer"
                             />
                             <div className="absolute top-0 left-0 w-12 h-6 bg-gray-300 rounded-full peer-checked:bg-green-500 transition-all duration-300"></div>
                             <div className="absolute top-[2px] left-[2px] w-5 h-5 bg-white rounded-full shadow-md transform peer-checked:translate-x-6 transition-all duration-300"></div>
                             </div>
                         </label>
-                    </div>
+                    </div>  
+                </div>
+                <div className="upload-course-btns">
+                    {/* <button className={`btn normal`} disabled={step === 0} onClick={handleBack}>Back</button> */}
+
+                    <button className="flex items-center justify-center gap-2 btn btn-primary-fill w-full" onClick={uploadCourse}>
+                        {
+                            buttonLoader ? (
+                                <ButtonLoader content="Creating Course . . ." />
+                            ) : 
+                            
+                            (
+                                <div className="bt-btn two">
+                                    <span>Create Course</span>
+                                    <span>
+                                        <Image
+                                            aria-hidden
+                                            src="/assets/images/arrow-right.png"
+                                            alt="Colearn Logo"
+                                            width={12}
+                                            height={12}
+                                            className="object-contain"
+                                        />
+                                    </span>
+                                </div>                                        
+                            )
+                        }
+                    </button>
                 </div>
             </div>
         </div>

@@ -4,11 +4,14 @@ import { showErrorToast, showSuccessToast } from "@/utils/toastTypes";
 import { authStore } from "@/zustand/authStore";
 import { upload_course } from "@/services/courses";
 import { useRouter } from 'next/navigation';
+import { utilitiesStore } from "@/zustand/utilitiesStore";
 
 export const UseCourses = () => {
     const user = authStore((state) => state.user);
     const userId = user?.id;
+    const categories = utilitiesStore((state) => state.categories);
 
+    const [selectedItems, setSelectedItems] = useState<string[]>([]);
     const [buttonLoader, setButtonLoader] = useState<boolean>(false);
     const [newUpdate, setNewUpdate] = useState<string>('reset');
 
@@ -22,7 +25,7 @@ export const UseCourses = () => {
         title: '',
         description: '',
         who_can_enroll: '',
-        price: 0,
+        price: 10,
         is_free: false,
     });
 
@@ -31,15 +34,28 @@ export const UseCourses = () => {
         description: false,
         who_can_enroll: false,
         price: false,
+        categories: false,
     });
 
-    const uploadCourse = async () => {
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+        const { name, value } = e.target;
+        setFormData((prev) => ({ ...prev, [name]: value }));
+        setErrors((prev) => ({ ...prev, [name]: false }));
+    };
 
+    const handleCheckChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, checked } = e.target;
+        setFormData((prev) => ({ ...prev, [name]: checked }));
+        setErrors((prev) => ({ ...prev, [name]: false }));
+    };
+
+    const uploadCourse = async () => {
         const newErrors = {
             title: formData.title.trim() === '',
             description: formData.description.trim() === '',
             who_can_enroll: formData.who_can_enroll.trim() === '',
             price: !formData.is_free && formData.price === 0,
+            categories: selectedItems.length === 0,
         };
       
         setErrors(newErrors);
@@ -50,9 +66,10 @@ export const UseCourses = () => {
             showErrorToast('Please fill in all fields');
             return;
         }
-        
+
         try {
-            const response = await upload_course(formData, userId);
+            setButtonLoader(true)
+            const response = await upload_course(formData, selectedItems, userId);
             if (response.success) {
                 setButtonLoader(false)
                 showSuccessToast(response.message)
@@ -78,5 +95,10 @@ export const UseCourses = () => {
         errors,
         buttonLoader,
         uploadCourse,
+        handleInputChange,
+        selectedItems, 
+        setSelectedItems,
+        handleCheckChange,
+        categories,
     }
 }

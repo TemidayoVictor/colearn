@@ -7,7 +7,7 @@ export const upload_course = async (formData: {
     who_can_enroll: string;
     price: number;
     is_free: boolean;
-}, userId: number | null | undefined) => {
+}, categories: string[], userId: number | null | undefined) => {
     try {
         const data = new FormData();
 
@@ -17,6 +17,10 @@ export const upload_course = async (formData: {
         data.append('price', String(formData.price));
         data.append('is_free', String(formData.is_free));
         data.append('userId', String(userId));
+
+        categories.forEach((category, index) => {
+            data.append(`categories[${index}]`, category);
+        });
 
         const response = await axiosInstance.post("/upload-course", data);
         return handleApiResponse(response);

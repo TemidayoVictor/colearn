@@ -22,7 +22,7 @@ const UploadCourseForm = ({sendData, upload}: UploadCourseFormProps) => {
     ];
 
     const handleNext = async () => {
-        upload();
+        // upload();
         if (step < sections.length - 1) setStep(step + 1);
         sendData(step + 1);
         const container = document.querySelector('.upload-course-form');
@@ -44,12 +44,12 @@ const UploadCourseForm = ({sendData, upload}: UploadCourseFormProps) => {
                     sections[step]
                 }
             </div>
-            {
+            {/* {
                 step < sections.length - 1 &&
                 <div className="upload-course-btns">
                     <button className={`btn normal`} disabled={step === 0} onClick={handleBack}>Back</button>
 
-                    <button className="flex items-center gap-2 btn btn-primary-fill" onClick={handleNext}>
+                    <button className="flex items-center gap-2 btn btn-primary-fill" onClick={upload}>
                         <span>{step < sections.length - 2 ? 'Proceed' : 'Submit'}</span>
                         <span>
                             <Image
@@ -63,7 +63,7 @@ const UploadCourseForm = ({sendData, upload}: UploadCourseFormProps) => {
                         </span>
                     </button>
                 </div>  
-            }
+            } */}
         </div>
     )
 }

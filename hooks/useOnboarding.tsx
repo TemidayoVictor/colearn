@@ -111,7 +111,7 @@ export const useOnboarding = () => {
     const initialSelected: any = [];
     const [selectedSubjects, setSelectedSubjects] = useState<string[]>(initialSelected);
 
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
         setFormData((prev) => ({ ...prev, [name]: value }));
         setErrors((prev) => ({ ...prev, [name]: false }));
