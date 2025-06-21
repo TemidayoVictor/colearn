@@ -178,5 +178,6 @@ export const UseCourses = () => {
         openModal,
         showModal,
         closeModal,
+        newUpdate,
     }
 }

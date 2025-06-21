@@ -51,6 +51,20 @@ export const add_module = async (formData: {
     }
 }
 
+export const get_modules = async (courseId: string | undefined) => {
+    try {
+        const data = new FormData();
+        data.append('courseId', String(courseId));
+
+        const response = await axiosInstance.post("/all-course-modules", data);
+        return handleApiResponse(response);
+    }
+
+    catch(error: any) {
+        return handleApiError(error)
+    }
+}
+
 export const get_course_details = async (courseId: string) => {
     try {
         const data = new FormData();

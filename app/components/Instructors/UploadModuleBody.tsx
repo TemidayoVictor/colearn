@@ -7,62 +7,62 @@ import { useRouter } from "next/navigation";
 import { UseCourses } from "@/hooks/useCourses";
 import Loader from "../Loader";
 import AccountModal from "./AccountModal";
-import { get_course_details } from "@/services/courses";
-import { Course } from "@/app/Types/types";
 import { showErrorToast } from "@/utils/toastTypes";
 import { useParams } from 'next/navigation';
 import { courseStore } from "@/zustand/courseStore";
+import { get_modules } from "@/services/courses";
+import { Module, Course } from "@/app/Types/types";
 
 const UploadModuleBody = () => {
     const params = useParams();
-    const course = params?.course as string;
+    const courseId = params?.course as string;
 
     const router = useRouter(); 
     const [loading, setLoading] = useState<boolean>(true);
+    const [modules, setModules] = useState<Module[]>([]);
+    const [course, setCourse] = useState<Course>();
 
     const {
-        buttonLoader,
-        uploadModule,
-        formData2,
-        errors2,
-        handleInputChange2,
         openModal,
         showModal,
         closeModal,
+        newUpdate,
     } = UseCourses()
 
     useEffect(() => {
         const init = async () => {
             await useAuthInstructors(router);
-            if (course) {
-                courseStore.getState().setCourseId(course);
+            if (courseId) {
+                try {
+                    const response = await get_modules(courseId)
+                    if (response.success) {
+                        //  save state in page
+                        setCourse(response.data.course);
+                        setModules(response.data.modules);
+                        
+                        // save state globally
+                        courseStore.getState().setCourse(response.data.course);
+                        courseStore.getState().setModule(response.data.modules);
+                    } 
+        
+                    else {
+                        showErrorToast(response.message)
+                        console.log(response)
+                    }
+                }
+
+                catch(error: any) {
+                    showErrorToast('Something unexpected happened')
+                    console.log(error)
+                }
+                // store course id in global state
+                courseStore.getState().setCourseId(courseId);
+                setLoading(false);
             }
-            setLoading(false);
-            // try {
-            //     const courseResponse = await get_course_details(course_id);
-            //     if (courseResponse.success) {
-            //         setCourse(courseResponse.data.course);
-            //     } 
-    
-            //     else {
-            //         showErrorToast(courseResponse.message)
-            //         console.log(courseResponse)
-            //         router.push('/instructors/courses')
-            //     }
-            // }
 
-            // catch(err:any) {
-            //     showErrorToast("Sorry, we could not process your request");
-            //     console.log(err)
-            //     router.push('/instructors/courses')
-            // }
-
-            // finally {
-            //     setLoading(false);
-            // }
         };
         init();
-    }, [course]);
+    }, [newUpdate]);
     
     return (
         <div className="container-3">
@@ -93,11 +93,55 @@ const UploadModuleBody = () => {
                 <h2 className="title-3 mt-3 mobile">Modules</h2>
 
                 <div className="upload-course-form">
-                    <h2 className="title-3">Course Title</h2>
+                    <h2 className="title-3">{course?.title}</h2>
                     <div className="upload-course-body">
                         <h2 className="title-3 mt-2">Add and Manage Modules.</h2>
                         <p className="text-[.8rem] color-grey-text mt-1"> Modules are the building blocks of your course. Each module represents a specific section or topic within the course—for example, "Introduction", "Getting Started", or "Advanced Techniques".
                         After uploading your course, you’ll be guided to create modules. Once your modules are set up, you can begin uploading videos under each module to organize your content clearly and effectively.</p>
+                    </div>
+
+                    <div className="best-instructor-cont">
+                        {
+                            modules.map((item, index) => (
+                                <div className="best-instructor-box" key={index}>
+                                    <div className="flex items-center gap-2 left">
+                                        <div>
+                                            <Image
+                                                aria-hidden
+                                                src="/assets/images/avatars-2.png"
+                                                alt="Colearn Image"
+                                                width={56}
+                                                height={56}
+                                                className="object-cover rounded-[50%]"
+                                            />
+                                        </div>
+                                        <div>
+                                            <p className="font-semibold">Benson Thomas</p>
+                                            <p className="color-grey-text text-[.8rem]">10 IT & Engineering Courses</p>
+                                        </div>
+                                    </div>
+                                    <div className="right">
+                                        <Link href='/' className="bt-btn btn btn-primary-fill desktop">
+                                            <span>View Courses</span>
+                                            <span>
+                                                <Image
+                                                    aria-hidden
+                                                    src="/assets/images/arrow-right.png"
+                                                    alt="Colearn Logo"
+                                                    width={12}
+                                                    height={12}
+                                                    className="object-contain"
+                                                />
+                                            </span>
+                                        </Link>
+
+                                        <Link href='/' className="mobile">
+                                            <span className="underline text-[.8rem]">View Courses</span>
+                                        </Link>
+                                    </div>
+                                </div>
+                            ))
+                        }
                     </div>
 
                     <div className="upload-course-btns">

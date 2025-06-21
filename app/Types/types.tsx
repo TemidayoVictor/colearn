@@ -35,3 +35,12 @@ export type Course = {
     price: number;
     is_free: boolean;
 }
+
+export type Module = {
+    id: number;
+    course_id: number;
+    title: string;
+    description: string;
+    order: number;
+    videos: number;
+}
