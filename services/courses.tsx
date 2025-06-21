@@ -1,5 +1,6 @@
 import axiosInstance from "@/utils/api";
 import { handleApiResponse, handleApiError } from '@/utils/handleApiResponse';
+import { courseStore } from "@/zustand/courseStore";
 
 export const upload_course = async (formData: {
     title: string;
@@ -72,6 +73,65 @@ export const get_course_details = async (courseId: string) => {
         data.append('courseId', courseId);
 
         const response = await axiosInstance.post("/get-course-details", data);
+        return handleApiResponse(response);
+    }
+
+    catch(error: any) {
+        return handleApiError(error)
+    }
+}
+
+export const upload_video = async (formData: {
+    title: string;
+    video: File | null;
+    duration: number;
+}, moduleId: string | undefined) => {
+
+    // setUploading(true);
+    courseStore.getState().setUploading(true);
+
+    try {
+        const data = new FormData();
+
+        if (formData.video) {
+            data.append('video', formData.video);
+        }
+
+        data.append('title', formData.title);
+        data.append('duration', String(formData.duration));
+        data.append('moduleId', String(moduleId));
+
+        const response = await axiosInstance.post("/upload-video", data, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+            
+            onUploadProgress: (progressEvent) => {
+                const percent = Math.round((progressEvent.loaded * 100) / (progressEvent.total || 1));
+                // setProgress(percent);
+                courseStore.getState().setProgress(percent);
+            },
+
+        });
+        // setUploading(false);
+        courseStore.getState().setUploading(false);
+        return handleApiResponse(response);
+    }
+
+    catch(error: any) {
+        // setUploading(false);
+        courseStore.getState().setUploading(false);
+        return handleApiError(error)
+    }
+}
+
+export const get_module_videos = async (moduleId: string | undefined) => {
+
+    try {
+        const data = new FormData();
+        data.append('moduleId', String(moduleId));
+
+        const response = await axiosInstance.post("/get-module-videos", data);
         return handleApiResponse(response);
     }
 

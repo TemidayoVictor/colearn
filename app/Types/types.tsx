@@ -44,3 +44,12 @@ export type Module = {
     order: number;
     videos: number;
 }
+
+export type Video = {
+    id: number;
+    module_id: number;
+    title: string;
+    video_url: string;
+    duration: number;
+    order: number;
+}

@@ -1,11 +1,14 @@
 import React from "react";
 import UserLayout from "@/app/components/UserLayout";
+import UploadVideoBody from "@/app/components/Instructors/UploadVideoBody";
 
 const UploadVideo = () => {
     return (
         <div>
             <UserLayout>
-                <div></div>
+                <div>
+                    <UploadVideoBody />
+                </div>
             </UserLayout>
         </div>
     )

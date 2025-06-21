@@ -2249,6 +2249,10 @@ td {
   border: 2px dashed var(--color-primary-fill);
 }
 
+.upload-course-video.error {
+  border: 2px dashed var(--error-color);
+}
+
 .upload-course-tab-image {
   width: 15%;
 }

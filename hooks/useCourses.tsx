@@ -2,16 +2,16 @@
 import React, {useState, useRef} from "react";
 import { showErrorToast, showSuccessToast } from "@/utils/toastTypes";
 import { authStore } from "@/zustand/authStore";
-import { upload_course } from "@/services/courses";
 import { useRouter } from 'next/navigation';
 import { utilitiesStore } from "@/zustand/utilitiesStore";
 import { courseStore } from "@/zustand/courseStore";
-import { add_module } from "@/services/courses";
+import { upload_course, add_module, upload_video } from "@/services/courses";
 
 export const UseCourses = () => {
     const router = useRouter();
     const user = authStore((state) => state.user);
     const courseId = courseStore((state) => state.courseId);
+    const moduleId = courseStore((state) => state.moduleId);
     const userId = user?.id;
     const categories = utilitiesStore((state) => state.categories);
 
@@ -20,11 +20,9 @@ export const UseCourses = () => {
     const [newUpdate, setNewUpdate] = useState<string>('reset');
 
     const [showModal, setShowModal] = useState<string | null>(null);
-    const openModal = (key: string) => {
-        setShowModal(key);
-    }
+    const fileInputRef = useRef<(HTMLInputElement | null)>(null);
+    const [fileName, setFileName] = useState<string>('');
 
-    const closeModal = () => setShowModal(null);
 
     const [formData, setFormData] = useState<{
         title: string;
@@ -61,6 +59,27 @@ export const UseCourses = () => {
         description: false,
     });
 
+    const [formData3, setFormData3] = useState<{
+        title: string;
+        video: File | null;
+        duration: number;
+      }>({
+        title: '',
+        video: null,
+        duration: 0
+    });
+
+    const [errors3, setErrors3] = useState({
+        title: false,
+        video: false,
+        duration:false,
+    });
+
+    const openModal = (key: string) => {
+        setShowModal(key);
+    }
+    const closeModal = () => setShowModal(null);
+
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
         setFormData((prev) => ({ ...prev, [name]: value }));
@@ -77,6 +96,27 @@ export const UseCourses = () => {
         const { name, value } = e.target;
         setFormData2((prev) => ({ ...prev, [name]: value }));
         setErrors2((prev) => ({ ...prev, [name]: false }));
+    };
+
+    const handleInputChange3 = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+        const { name, value } = e.target;
+        setFormData3((prev) => ({ ...prev, [name]: value }));
+        setErrors3((prev) => ({ ...prev, [name]: false }));
+    };
+    
+    const handleImageClick = () => {
+        fileInputRef.current?.click();
+    };
+
+    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0] || null;
+        if (file && file.type.startsWith("video/")) {
+            setFileName(file.name);
+            setFormData3((prev) => ({
+                ...prev,
+                video: file
+            }));
+        }
     };
 
     const uploadCourse = async () => {
@@ -124,7 +164,7 @@ export const UseCourses = () => {
 
         const newErrors = {
             title: formData2.title.trim() === '',
-            description: formData2.description.trim() === '',
+            description: formData2.description === '',
         };
       
         setErrors2(newErrors);
@@ -159,7 +199,45 @@ export const UseCourses = () => {
         }
     }
 
+    const uploadVideo = async () => {
 
+        const newErrors = {
+            title: formData3.title.trim() === '',
+            video: formData3.video === null,
+            duration: formData3.duration === 0,
+        };
+      
+        setErrors3(newErrors);
+
+        const hasError = Object.values(newErrors).some(Boolean);
+
+        if (hasError) {
+            showErrorToast('Please fill in all fields');
+            return;
+        }
+
+        try {
+            setButtonLoader(true)
+            const response = await upload_video(formData3, moduleId);
+            if (response.success) {
+                setButtonLoader(false)
+                showSuccessToast(response.message)
+                setNewUpdate('set');
+            } 
+
+            else {
+                setButtonLoader(false)
+                showErrorToast(response.message)
+                console.log(response)
+            }
+        }
+
+        catch (err: any) {
+            console.log(err)
+            setButtonLoader(false)
+            showErrorToast('Unexpected error occurred');
+        }
+    }
 
     return {
         formData,
@@ -179,5 +257,13 @@ export const UseCourses = () => {
         showModal,
         closeModal,
         newUpdate,
+        formData3,
+        errors3,
+        uploadVideo,
+        handleInputChange3,
+        fileInputRef,
+        handleImageClick,
+        handleFileChange,
+        fileName,
     }
 }

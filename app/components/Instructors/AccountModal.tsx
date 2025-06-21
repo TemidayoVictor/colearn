@@ -7,6 +7,7 @@ import { Experience, Bank } from "@/app/Types/types";
 import BookingDetails from "../BookingDetails";
 import ChangePassword from "./ChangePassword";
 import ManageModule from "./ManageModule";
+import ManageVideo from "./ManageVideo";
 
 type AccountModalProps = {
     modalType: string;
@@ -481,6 +482,11 @@ const AccountModal = ({modalType, modalClose, experience, bank, subType}: Accoun
                 {
                     modalType == 'add-module' &&
                     <ManageModule type="add" />
+                }
+
+                {
+                    modalType == 'add-video' &&
+                    <ManageVideo type="add" />
                 }
                 
                 <div className="modal-close">
