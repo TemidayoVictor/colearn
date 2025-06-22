@@ -1,17 +1,17 @@
 import React from "react";
 import UserLayout from "@/app/components/UserLayout";
-import UploadModuleBody from "@/app/components/Instructors/UploadModuleBody";
+import UploadCourseDataBody from "@/app/components/Instructors/UploadCourseDataBody";
 
-const UploadModule = () => {
+const UploadCourseData = () => {
     return (
         <div>
             <UserLayout>
                 <div>
-                    <UploadModuleBody />
+                    <UploadCourseDataBody />
                 </div>
             </UserLayout>
         </div>
     )
 }
 
-export default UploadModule
+export default UploadCourseData

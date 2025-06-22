@@ -1,6 +1,6 @@
 import {create} from 'zustand';
 import { persist } from 'zustand/middleware';
-import { Course, Module, Video } from '@/app/Types/types';
+import { Course, Module, Video, Resource } from '@/app/Types/types';
 
 type courseState = {
     courseId: string | undefined;
@@ -14,6 +14,10 @@ type courseState = {
     videoId: string | undefined;
     video: Video | null;
     videos: Video[];
+
+    resourceId: string | undefined;
+    resource: Resource | null;
+    resources: Resource[];
 
     uploading: boolean;
     progress: number;
@@ -29,6 +33,10 @@ type courseState = {
     setVideoId: (videoId: string | undefined) => void;
     setVideo: (video: Video) => void;
     setVideos: (videos: Video[]) => void;
+
+    setResourceId: (resourceId: string | undefined) => void;
+    setResource: (resource: Resource) => void;
+    setResources: (resources: Resource[]) => void;
 
     setUploading: (uploading: boolean) => void;
     setProgress: (progress: number) => void;
@@ -51,6 +59,10 @@ export const courseStore = create<courseState>()(
             video: null,
             videos: [],
 
+            resourceId: '',
+            resource: null,
+            resources: [],
+
             uploading: false,
             progress: 0,
 
@@ -66,6 +78,10 @@ export const courseStore = create<courseState>()(
             setVideo: (video) => set({ video }),
             setVideos: (videos) => set({ videos }),
 
+            setResourceId: (resourceId) => set({ resourceId }),
+            setResource: (resource) => set({ resource }),
+            setResources: (resources) => set({ resources }),
+
             setUploading: (uploading) => set({ uploading }),
             setProgress: (progress) => set({ progress }),
             
@@ -74,6 +90,7 @@ export const courseStore = create<courseState>()(
                         courseId: '', course: null, courses: [],
                         moduleId: '', module: null, modules: [],
                         videoId: '', video: null, videos: [],
+                        resourceId: '', resource: null, resources: [],
                         uploading: false, progress: 0,
                     });
                 localStorage.removeItem('course-storage'); // Remove persisted state

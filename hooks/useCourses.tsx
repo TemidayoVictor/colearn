@@ -75,6 +75,29 @@ export const UseCourses = () => {
         duration:false,
     });
 
+    const [formData4, setFormData4] = useState<{
+        title: string;
+        type: string;
+        category: string;
+        document: File | null;
+        url: string | undefined;
+      }>({
+        title: '',
+        type: '',
+        category: '',
+        document: null,
+        url: '',
+
+    });
+
+    const [errors4, setErrors4] = useState({
+        title: false,
+        type: false,
+        category: false,
+        document: false,
+        url: false,
+    });
+
     const openModal = (key: string) => {
         setShowModal(key);
     }
@@ -103,6 +126,12 @@ export const UseCourses = () => {
         setFormData3((prev) => ({ ...prev, [name]: value }));
         setErrors3((prev) => ({ ...prev, [name]: false }));
     };
+
+    const handleInputChange4 = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+        const { name, value } = e.target;
+        setFormData4((prev) => ({ ...prev, [name]: value }));
+        setErrors4((prev) => ({ ...prev, [name]: false }));
+    };
     
     const handleImageClick = () => {
         fileInputRef.current?.click();
@@ -115,6 +144,17 @@ export const UseCourses = () => {
             setFormData3((prev) => ({
                 ...prev,
                 video: file
+            }));
+        }
+    };
+
+    const handleFileChange2 = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0] || null;
+        if (file && file.type.startsWith("video/")) {
+            setFileName(file.name);
+            setFormData4((prev) => ({
+                ...prev,
+                document: file
             }));
         }
     };
@@ -143,7 +183,7 @@ export const UseCourses = () => {
             if (response.success) {
                 setButtonLoader(false)
                 showSuccessToast(response.message)
-                router.push(`/instructors/upload-module/${response.data.course.id}`);
+                router.push(`/instructors/upload-course-data/${response.data.course.id}`);
             } 
 
             else {
@@ -239,6 +279,48 @@ export const UseCourses = () => {
         }
     }
 
+    const uploadResource = async () => {
+
+        const newErrors = {
+            title: formData4.title.trim() === '',
+            category: formData4.category.trim() === '',
+            type: formData4.type.trim() === '',
+            document: formData4.type === 'document' && formData4.document === null,
+            url: formData4.type === 'link' && formData4.url === '',
+        };
+      
+        setErrors4(newErrors);
+
+        const hasError = Object.values(newErrors).some(Boolean);
+
+        if (hasError) {
+            showErrorToast('Please fill in all fields');
+            return;
+        }
+
+        try {
+            setButtonLoader(true)
+            const response = await upload_video(formData3, moduleId);
+            if (response.success) {
+                setButtonLoader(false)
+                showSuccessToast(response.message)
+                setNewUpdate('set');
+            } 
+
+            else {
+                setButtonLoader(false)
+                showErrorToast(response.message)
+                console.log(response)
+            }
+        }
+
+        catch (err: any) {
+            console.log(err)
+            setButtonLoader(false)
+            showErrorToast('Unexpected error occurred');
+        }
+    }
+
     return {
         formData,
         errors,
@@ -265,5 +347,10 @@ export const UseCourses = () => {
         handleImageClick,
         handleFileChange,
         fileName,
+        formData4,
+        errors4,
+        uploadResource,
+        handleInputChange4,
+        handleFileChange2,
     }
 }

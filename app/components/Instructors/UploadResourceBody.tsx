@@ -7,7 +7,7 @@ import Loader from "../Loader";
 import AccountModal from "./AccountModal";
 import { courseStore } from "@/zustand/courseStore";
 
-const UploadModuleBody = () => {    
+const UploadResourceBody = () => {    
     const modules = courseStore((state) => state.modules);
     const {
         openModal,
@@ -17,8 +17,8 @@ const UploadModuleBody = () => {
     return (
         <div>
             <div className="upload-course-body">
-                <h2 className="title-3 mt-2">Add and Manage Modules.</h2>
-                <p className="text-[.9rem] color-grey-text mt-1"> Modules are the core sections of your course—like "Introduction", "Getting Started", or "Advanced Techniques". After uploading your course, you’ll create modules to organize your content, then add videos under each one for a structured learning experience.</p>
+                <h2 className="title-3 mt-2">Add and Manage Resources.</h2>
+                <p className="text-[.9rem] color-grey-text mt-1"> Resources are additional learning materials for your course, such as articles, assignments, or downloadable files. You can upload them to support each module and enhance the overall learning experience.</p>
             </div>
 
             <div className="best-instructor-cont">
@@ -66,9 +66,9 @@ const UploadModuleBody = () => {
             </div>
 
             <div className="upload-course-btns">
-                <button className="flex items-center justify-center gap-2 btn btn-primary-fill w-full" onClick={(e) => openModal('add-module')}>
+                <button className="flex items-center justify-center gap-2 btn btn-primary-fill w-full" onClick={(e) => openModal('add-resource')}>
                     <div className="bt-btn two">
-                        <span>Add New Module</span>
+                        <span>Add New Resource</span>
                         <span>
                             <Image
                                 aria-hidden
@@ -91,4 +91,4 @@ const UploadModuleBody = () => {
     )
 }
 
-export default UploadModuleBody
+export default UploadResourceBody

@@ -399,6 +399,10 @@ input, textarea {
   gap: .5em;
 }
 
+.in-nav.four {
+  justify-content: space-between;
+}
+
 .in-nav-top {
   margin-top: 1em;
 }
@@ -2183,6 +2187,7 @@ td {
   font-size: .8rem;
   border-radius: .5em;
   margin-top: .5em;
+  outline: none;
 }
 
 .upload-course-input.error, .upload-course-textarea.error {

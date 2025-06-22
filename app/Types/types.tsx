@@ -47,9 +47,21 @@ export type Module = {
 
 export type Video = {
     id: number;
-    module_id: number;
+    course_section_id: number;
     title: string;
     video_url: string;
     duration: number;
     order: number;
+}
+
+export type Resource = {
+    id: number;
+    course_id: number;
+    course_section_id: number | '';
+    course_video_id: number | '';
+    title: string;
+    type: string;
+    category: string;
+    file_path: string | null;
+    external_url: string | null;
 }
