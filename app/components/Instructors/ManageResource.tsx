@@ -26,6 +26,9 @@ const ManageResoure = ({type}: ManageResoureProps) => {
         fileName,
     } = UseCourses();  
     
+    const modules = courseStore((state) => state.modules);
+    const videos = courseStore((state) => state.videos);
+
     const progress = courseStore((state) => state.progress);
     const uploading = courseStore((state) => state.uploading);
 
@@ -131,6 +134,24 @@ const ManageResoure = ({type}: ManageResoureProps) => {
                         </div>
                     )
                 }
+
+                <div className="mt-4">
+                    <label htmlFor="" className="text-[.9rem] font-semibold">Attach Resource to a Module (optional) </label>
+                    <select name="category" className={`upload-course-input ${errors4.category ? 'error' : ''}`} value={formData4.category} onChange={handleInputChange4}>
+                        <option value="">Select one</option>
+                        <option value="Article">Article</option>
+                        <option value="Assignment">Assignment</option>
+                    </select>
+                </div>
+
+                <div className="mt-4">
+                    <label htmlFor="" className="text-[.9rem] font-semibold">Attach Resource to a Video (optional) </label>
+                    <select name="category" className={`upload-course-input ${errors4.category ? 'error' : ''}`} value={formData4.category} onChange={handleInputChange4}>
+                        <option value="">Select one</option>
+                        <option value="Article">Article</option>
+                        <option value="Assignment">Assignment</option>
+                    </select>
+                </div>
 
                 {uploading && <p className="mt-2 text-[.8rem] color-grey-text">{progress}% Complete</p>}
 

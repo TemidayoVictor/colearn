@@ -79,12 +79,16 @@ export const UseCourses = () => {
         title: string;
         type: string;
         category: string;
+        module: string | undefined;
+        video: string | undefined;
         document: File | null;
         url: string | undefined;
       }>({
         title: '',
         type: '',
         category: '',
+        module: '',
+        video: '',
         document: null,
         url: '',
 
