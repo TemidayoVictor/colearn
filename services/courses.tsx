@@ -32,6 +32,21 @@ export const upload_course = async (formData: {
     }
 }
 
+export const get_course_details = async (courseId: string) => {
+    try {
+        const data = new FormData();
+
+        data.append('courseId', courseId);
+
+        const response = await axiosInstance.post("/get-course-details", data);
+        return handleApiResponse(response);
+    }
+
+    catch(error: any) {
+        return handleApiError(error)
+    }
+}
+
 export const add_module = async (formData: {
     title: string;
     description: string;
@@ -52,27 +67,13 @@ export const add_module = async (formData: {
     }
 }
 
-export const get_modules = async (courseId: string | undefined) => {
+export const get_module_details = async (moduleId: string | undefined) => {
+
     try {
         const data = new FormData();
-        data.append('courseId', String(courseId));
+        data.append('moduleId', String(moduleId));
 
-        const response = await axiosInstance.post("/all-course-modules", data);
-        return handleApiResponse(response);
-    }
-
-    catch(error: any) {
-        return handleApiError(error)
-    }
-}
-
-export const get_course_details = async (courseId: string) => {
-    try {
-        const data = new FormData();
-
-        data.append('courseId', courseId);
-
-        const response = await axiosInstance.post("/get-course-details", data);
+        const response = await axiosInstance.post("/get-module-details", data);
         return handleApiResponse(response);
     }
 
@@ -125,17 +126,54 @@ export const upload_video = async (formData: {
     }
 }
 
-export const get_module_videos = async (moduleId: string | undefined) => {
-
+export const upload_resource = async (formData: {
+    title: string;
+    type: string;
+    category: string;
+    moduleId: string | undefined;
+    videoId: string | undefined;
+    document: File | null;
+    url: string | undefined;
+}, courseId: string | undefined) => {
+    
+    // setUploading(true);
+    courseStore.getState().setUploading(true);
+    
     try {
         const data = new FormData();
-        data.append('moduleId', String(moduleId));
 
-        const response = await axiosInstance.post("/get-module-videos", data);
+        if (formData.document) {
+            data.append('document', formData.document);
+        }
+
+        data.append('title', formData.title);
+        data.append('type', formData.type);
+        data.append('category', formData.category);
+        data.append('moduleId', String(formData.moduleId));
+        data.append('videoId', String(formData.videoId));
+        data.append('url', String(formData.url));
+        data.append('courseId', String(courseId));
+
+        const response = await axiosInstance.post("/upload-resource", data, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+            
+            // onUploadProgress: (progressEvent) => {
+            //     const percent = Math.round((progressEvent.loaded * 100) / (progressEvent.total || 1));
+            //     // setProgress(percent);
+            //     courseStore.getState().setProgress(percent);
+            // },
+
+        });
+        // setUploading(false);
+        courseStore.getState().setUploading(false);
         return handleApiResponse(response);
     }
 
     catch(error: any) {
+        // setUploading(false);
+        courseStore.getState().setUploading(false);
         return handleApiError(error)
     }
 }

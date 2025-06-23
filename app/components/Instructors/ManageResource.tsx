@@ -124,6 +124,34 @@ const ManageResoure = ({type}: ManageResoureProps) => {
                     </div>
                 }
 
+                <div className="mt-4">
+                    <label htmlFor="" className="text-[.9rem] font-semibold">Attach Resource to a Module (optional) </label>
+                    <select name="moduleId" className={`upload-course-input `} value={formData4.moduleId} onChange={handleInputChange4}>
+                        <option value="">Select one</option>
+                        {
+                            Array.isArray(modules) && modules.map((module, index) => (
+                                <option key={index} value={module.id}>
+                                    {module.title}
+                                </option>
+                            ))
+                        }
+                    </select>
+                </div>
+
+                <div className="mt-4">
+                    <label htmlFor="" className="text-[.9rem] font-semibold">Attach Resource to a Video (optional) </label>
+                    <select name="videoId" className={`upload-course-input `} value={formData4.videoId} onChange={handleInputChange4}>
+                        <option value="">Select one</option>
+                        {
+                            Array.isArray(videos) && videos.map((video, index) => (
+                                <option key={index} value={video.id}>
+                                    {video.title}
+                                </option>
+                            ))
+                        }
+                    </select>
+                </div>
+
                 {
                     uploading && (
                         <div className="w-full bg-gray-200 h-4 mt-4 rounded overflow-hidden">
@@ -135,35 +163,17 @@ const ManageResoure = ({type}: ManageResoureProps) => {
                     )
                 }
 
-                <div className="mt-4">
-                    <label htmlFor="" className="text-[.9rem] font-semibold">Attach Resource to a Module (optional) </label>
-                    <select name="category" className={`upload-course-input ${errors4.category ? 'error' : ''}`} value={formData4.category} onChange={handleInputChange4}>
-                        <option value="">Select one</option>
-                        <option value="Article">Article</option>
-                        <option value="Assignment">Assignment</option>
-                    </select>
-                </div>
-
-                <div className="mt-4">
-                    <label htmlFor="" className="text-[.9rem] font-semibold">Attach Resource to a Video (optional) </label>
-                    <select name="category" className={`upload-course-input ${errors4.category ? 'error' : ''}`} value={formData4.category} onChange={handleInputChange4}>
-                        <option value="">Select one</option>
-                        <option value="Article">Article</option>
-                        <option value="Assignment">Assignment</option>
-                    </select>
-                </div>
-
                 {uploading && <p className="mt-2 text-[.8rem] color-grey-text">{progress}% Complete</p>}
 
                 <button className="mt-4 flex items-center justify-center gap-2 btn btn-primary-fill w-full" onClick={uploadResource} disabled={buttonLoader}>
                     {
                         buttonLoader ? (
-                            <ButtonLoader content="Uploading Video . . ." />
+                            <ButtonLoader content="Uploading Resource . . ." />
                         ) : 
                         
                         (
                             <div className="bt-btn two">
-                                <span>Upload Video</span>
+                                <span>Upload Resource</span>
                             </div>                                        
                         )
                     }                                        

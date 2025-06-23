@@ -5,7 +5,7 @@ import { authStore } from "@/zustand/authStore";
 import { useRouter } from 'next/navigation';
 import { utilitiesStore } from "@/zustand/utilitiesStore";
 import { courseStore } from "@/zustand/courseStore";
-import { upload_course, add_module, upload_video } from "@/services/courses";
+import { upload_course, add_module, upload_video, upload_resource } from "@/services/courses";
 
 export const UseCourses = () => {
     const router = useRouter();
@@ -79,16 +79,16 @@ export const UseCourses = () => {
         title: string;
         type: string;
         category: string;
-        module: string | undefined;
-        video: string | undefined;
+        moduleId: string | undefined;
+        videoId: string | undefined;
         document: File | null;
         url: string | undefined;
       }>({
         title: '',
         type: '',
         category: '',
-        module: '',
-        video: '',
+        moduleId: '',
+        videoId: '',
         document: null,
         url: '',
 
@@ -154,7 +154,7 @@ export const UseCourses = () => {
 
     const handleFileChange2 = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0] || null;
-        if (file && file.type.startsWith("video/")) {
+        if (file) {
             setFileName(file.name);
             setFormData4((prev) => ({
                 ...prev,
@@ -298,13 +298,13 @@ export const UseCourses = () => {
         const hasError = Object.values(newErrors).some(Boolean);
 
         if (hasError) {
-            showErrorToast('Please fill in all fields');
+            showErrorToast('Please fill in all required fields');
             return;
         }
 
         try {
             setButtonLoader(true)
-            const response = await upload_video(formData3, moduleId);
+            const response = await upload_resource(formData4, courseId);
             if (response.success) {
                 setButtonLoader(false)
                 showSuccessToast(response.message)

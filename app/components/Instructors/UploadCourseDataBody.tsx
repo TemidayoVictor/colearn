@@ -6,11 +6,10 @@ import { useAuthInstructors } from "@/hooks/useAuth";
 import { useRouter } from "next/navigation";
 import { UseCourses } from "@/hooks/useCourses";
 import Loader from "../Loader";
-import AccountModal from "./AccountModal";
 import { showErrorToast } from "@/utils/toastTypes";
 import { useParams } from 'next/navigation';
 import { courseStore } from "@/zustand/courseStore";
-import { get_modules } from "@/services/courses";
+import { get_course_details } from "@/services/courses";
 import { Module, Course } from "@/app/Types/types";
 import UploadModuleBody from "./UploadModuleBody";
 import UploadResourceBody from "./UploadResourceBody";
@@ -35,15 +34,20 @@ const UploadCourseDataBody = () => {
             await useAuthInstructors(router);
             if (courseId) {
                 try {
-                    const response = await get_modules(courseId)
+                    const response = await get_course_details(courseId)
                     if (response.success) {
                         //  save state in page
                         setCourse(response.data.course);
-                        setModules(response.data.modules);
                         
                         // save state globally
                         courseStore.getState().setCourse(response.data.course);
-                        courseStore.getState().setModules(response.data.modules);
+                        courseStore.getState().setModules(response.data.course.modules);
+
+                        const modules = response.data.course.modules;
+                        const allModuleVideos = (modules || []).flatMap((module: any) => module.videos ?? []);
+
+                        courseStore.getState().setVideos(allModuleVideos);
+                        courseStore.getState().setResources(response.data.course.resources);
                     } 
         
                     else {
