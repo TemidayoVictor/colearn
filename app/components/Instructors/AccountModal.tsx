@@ -504,6 +504,11 @@ const AccountModal = ({modalType, modalClose, experience, bank, subType}: Accoun
                     modalType == 'add-resource' &&
                     <ManageResoure type="add" />
                 }
+
+                {
+                    modalType == 'edit-resource' &&
+                    <ManageResoure type="edit" />
+                }
                 
                 <div className="modal-close">
                     <FontAwesomeIcon icon={faXmark} className="text-[1.5rem]" onClick={modalClose}/>

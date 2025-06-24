@@ -57,8 +57,8 @@ export type Video = {
 export type Resource = {
     id: number;
     course_id: number;
-    course_section_id: number | '';
-    course_video_id: number | '';
+    course_section_id: string | undefined;
+    course_video_id: string | undefined;
     title: string;
     type: string;
     category: string;

@@ -5,8 +5,8 @@ import { authStore } from "@/zustand/authStore";
 import { useRouter } from 'next/navigation';
 import { utilitiesStore } from "@/zustand/utilitiesStore";
 import { courseStore } from "@/zustand/courseStore";
-import { upload_course, add_module, edit_module, upload_video, edit_video, upload_resource } from "@/services/courses";
-import { Module, Video } from "@/app/Types/types";
+import { upload_course, edit_course, add_module, edit_module, upload_video, edit_video, upload_resource, edit_resource } from "@/services/courses";
+import { Module, Video, Resource } from "@/app/Types/types";
 
 export const UseCourses = () => {
     const router = useRouter();
@@ -109,7 +109,6 @@ export const UseCourses = () => {
 
     const [errors3b, setErrors3b] = useState({
         title: false,
-        video: false,
         duration:false,
         order: false,
         videoId: false,
@@ -142,6 +141,35 @@ export const UseCourses = () => {
         url: false,
     });
 
+    const [formData4b, setFormData4b] = useState<{
+        title: string;
+        type: string;
+        category: string;
+        moduleId: string | undefined;
+        videoId: string | undefined;
+        document: File | null;
+        url: string | undefined;
+        resourceId: number;
+      }>({
+        title: '',
+        type: '',
+        category: '',
+        moduleId: '',
+        videoId: '',
+        document: null,
+        url: '',
+        resourceId: 0,
+
+    });
+
+    const [errors4b, setErrors4b] = useState({
+        title: false,
+        type: false,
+        category: false,
+        url: false,
+        resourceId:false
+    });
+
     const openModal = (key: string) => {
         setShowModal(key);
     }
@@ -153,6 +181,11 @@ export const UseCourses = () => {
 
     const openModalEditVideo = (key: string, item:Video) => {
         courseStore.getState().setVideo(item);
+        setShowModal(key);
+    }
+
+    const openModalEditResource = (key: string, item:Resource) => {
+        courseStore.getState().setResource(item);
         setShowModal(key);
     }
 
@@ -199,6 +232,12 @@ export const UseCourses = () => {
         setFormData4((prev) => ({ ...prev, [name]: value }));
         setErrors4((prev) => ({ ...prev, [name]: false }));
     };
+
+    const handleInputChange4b = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+        const { name, value } = e.target;
+        setFormData4b((prev) => ({ ...prev, [name]: value }));
+        setErrors4b((prev) => ({ ...prev, [name]: false }));
+    };
     
     const handleImageClick = () => {
         fileInputRef.current?.click();
@@ -209,6 +248,17 @@ export const UseCourses = () => {
         if (file && file.type.startsWith("video/")) {
             setFileName(file.name);
             setFormData3((prev) => ({
+                ...prev,
+                video: file
+            }));
+        }
+    };
+
+    const handleFileChangeb = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0] || null;
+        if (file && file.type.startsWith("video/")) {
+            setFileName(file.name);
+            setFormData3b((prev) => ({
                 ...prev,
                 video: file
             }));
@@ -226,7 +276,59 @@ export const UseCourses = () => {
         }
     };
 
+    const handleFileChange2b = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0] || null;
+        if (file) {
+            setFileName(file.name);
+            setFormData4b((prev) => ({
+                ...prev,
+                document: file
+            }));
+        }
+    };
+
     const uploadCourse = async () => {
+        const newErrors = {
+            title: formData.title.trim() === '',
+            description: formData.description.trim() === '',
+            who_can_enroll: formData.who_can_enroll.trim() === '',
+            price: !formData.is_free && formData.price === 0,
+            categories: selectedItems.length === 0,
+        };
+      
+        setErrors(newErrors);
+
+        const hasError = Object.values(newErrors).some(Boolean);
+
+        if (hasError) {
+            showErrorToast('Please fill in all fields');
+            return;
+        }
+
+        try {
+            setButtonLoader(true)
+            const response = await upload_course(formData, selectedItems, userId);
+            if (response.success) {
+                setButtonLoader(false)
+                showSuccessToast(response.message)
+                router.push(`/instructors/upload-course-data/${response.data.course.id}`);
+            } 
+
+            else {
+                setButtonLoader(false)
+                showErrorToast(response.message)
+                console.log(response)
+            }
+        }
+
+        catch (err: any) {
+            console.log(err)
+            setButtonLoader(false)
+            showErrorToast('Unexpected error occurred');
+        }
+    }
+
+    const editCourse = async () => {
         const newErrors = {
             title: formData.title.trim() === '',
             description: formData.description.trim() === '',
@@ -392,7 +494,6 @@ export const UseCourses = () => {
 
         const newErrors = {
             title: formData3b.title.trim() === '',
-            video: formData3b.video === null,
             duration: formData3b.duration === 0,
             order: formData3b.order === 0,
             videoId: formData3b.videoId === 0,
@@ -472,6 +573,49 @@ export const UseCourses = () => {
         }
     }
 
+    const editResource = async () => {
+
+        const newErrors = {
+            title: formData4b.title.trim() === '',
+            category: formData4b.category.trim() === '',
+            type: formData4b.type.trim() === '',
+            url: formData4b.type === 'link' && formData4b.url === '',
+            resourceId: formData4b.resourceId == 0,
+        };
+      
+        setErrors4b(newErrors);
+
+        const hasError = Object.values(newErrors).some(Boolean);
+        console.log(formData4b);
+
+        if (hasError) {
+            showErrorToast('Please fill in all required fields');
+            return;
+        }
+
+        try {
+            setButtonLoader(true)
+            const response = await edit_resource(formData4b);
+            if (response.success) {
+                setButtonLoader(false)
+                showSuccessToast(response.message)
+                courseStore.getState().setNewUpdate('set');
+            } 
+
+            else {
+                setButtonLoader(false)
+                showErrorToast(response.message)
+                console.log(response)
+            }
+        }
+
+        catch (err: any) {
+            console.log(err)
+            setButtonLoader(false)
+            showErrorToast('Unexpected error occurred');
+        }
+    }
+
     return {
         formData,
         errors,
@@ -499,7 +643,9 @@ export const UseCourses = () => {
         handleInputChange3,
         formData3b,
         errors3b,
+        setFormData3b,
         handleInputChange3b,
+        handleFileChangeb,
         fileInputRef,
         handleImageClick,
         handleFileChange,
@@ -508,13 +654,21 @@ export const UseCourses = () => {
         errors4,
         uploadResource,
         handleInputChange4,
+        formData4b,
+        errors4b,
+        setFormData4b,
+        handleInputChange4b,
         handleFileChange2,
+        handleFileChange2b,
         loading, 
         setLoading,
         openModalEditModule,
+        editCourse,
         editModule,
         setShowModal,
         editVideo,
         openModalEditVideo,
+        editResource,
+        openModalEditResource,
     }
 }

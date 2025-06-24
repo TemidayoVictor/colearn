@@ -128,7 +128,7 @@ const ManageModule = ({type}: ManageModuleProps) => {
                             />
                         </div>
 
-                        <input 
+                        <input // this may show zero, but the value is already saved in formData2b, and it works well
                             type="number"  
                             name="moduleId"
                             defaultValue={formData2b.moduleId} 

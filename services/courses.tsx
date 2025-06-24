@@ -32,6 +32,36 @@ export const upload_course = async (formData: {
     }
 }
 
+export const edit_course = async (formData: {
+    title: string;
+    description: string;
+    who_can_enroll: string;
+    price: number;
+    is_free: boolean;
+}, categories: string[], courseId: number | null | undefined) => {
+    try {
+        const data = new FormData();
+
+        data.append('title', formData.title);
+        data.append('description', formData.description);
+        data.append('who_can_enroll', formData.who_can_enroll);
+        data.append('price', String(formData.price));
+        data.append('is_free', String(formData.is_free));
+        data.append('courseId', String(courseId));
+
+        categories.forEach((category, index) => {
+            data.append(`categories[${index}]`, category);
+        });
+
+        const response = await axiosInstance.post("/edit-course", data);
+        return handleApiResponse(response);
+    }
+
+    catch(error: any) {
+        return handleApiError(error)
+    }
+}
+
 export const get_course_details = async (courseId: string) => {
     try {
         const data = new FormData();
@@ -186,7 +216,7 @@ export const edit_video = async (formData: {
             },
 
         });
-        
+
         // setUploading(false);
         courseStore.getState().setUploading(false);
         return handleApiResponse(response);
@@ -228,6 +258,60 @@ export const upload_resource = async (formData: {
         data.append('courseId', String(courseId));
 
         const response = await axiosInstance.post("/upload-resource", data, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+            
+            // onUploadProgress: (progressEvent) => {
+            //     const percent = Math.round((progressEvent.loaded * 100) / (progressEvent.total || 1));
+            //     // setProgress(percent);
+            //     courseStore.getState().setProgress(percent);
+            // },
+
+        });
+        // setUploading(false);
+        courseStore.getState().setUploading(false);
+        return handleApiResponse(response);
+    }
+
+    catch(error: any) {
+        // setUploading(false);
+        courseStore.getState().setUploading(false);
+        return handleApiError(error)
+    }
+}
+
+
+export const edit_resource = async (formData: {
+    title: string;
+    type: string;
+    category: string;
+    moduleId: string | undefined;
+    videoId: string | undefined;
+    document: File | null;
+    url: string | undefined;
+    resourceId: number;
+}) => {
+    
+    // setUploading(true);
+    courseStore.getState().setUploading(true);
+    
+    try {
+        const data = new FormData();
+
+        if (formData.document) {
+            data.append('document', formData.document);
+        }
+
+        data.append('title', formData.title);
+        data.append('type', formData.type);
+        data.append('category', formData.category);
+        data.append('moduleId', String(formData.moduleId));
+        data.append('videoId', String(formData.videoId));
+        data.append('url', String(formData.url));
+        data.append('resourceId', String(formData.resourceId));
+
+        const response = await axiosInstance.post("/edit-resource", data, {
             headers: {
                 'Content-Type': 'multipart/form-data',
             },

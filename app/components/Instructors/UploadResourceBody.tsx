@@ -13,6 +13,7 @@ const UploadResourceBody = () => {
         openModal,
         showModal,
         closeModal,
+        openModalEditResource,
     } = UseCourses();
     return (
         <div>
@@ -37,12 +38,12 @@ const UploadResourceBody = () => {
                                     />
                                 </div>
                                 <div>
-                                    <p className="font-semibold">Benson Thomas</p>
+                                    <p className="font-semibold">{item.title}</p>
                                     <p className="color-grey-text text-[.8rem]">10 IT & Engineering Courses</p>
                                 </div>
                             </div>
                             <div className="right">
-                                <Link href='/' className="bt-btn btn btn-primary-fill desktop">
+                                <button className="bt-btn btn btn-primary-fill desktop" onClick={(e) => openModalEditResource('edit-resource', item)}>
                                     <span>View Courses</span>
                                     <span>
                                         <Image
@@ -54,11 +55,11 @@ const UploadResourceBody = () => {
                                             className="object-contain"
                                         />
                                     </span>
-                                </Link>
+                                </button>
 
-                                <Link href='/' className="mobile">
+                                <button className="mobile" onClick={(e) => openModalEditResource('edit-resource', item)}>
                                     <span className="underline text-[.8rem]">View Courses</span>
-                                </Link>
+                                </button>
                             </div>
                         </div>
                     ))

@@ -28,6 +28,7 @@ const UploadVideoBody = () => {
         closeModal,
         loading, 
         setLoading,
+        openModalEditVideo,
     } = UseCourses()
 
     useEffect(() => {
@@ -126,12 +127,12 @@ const UploadVideoBody = () => {
                                             />
                                         </div>
                                         <div>
-                                            <p className="font-semibold">Benson Thomas</p>
+                                            <p className="font-semibold">{item.title}</p>
                                             <p className="color-grey-text text-[.8rem]">10 IT & Engineering Courses</p>
                                         </div>
                                     </div>
                                     <div className="right">
-                                        <Link href='/' className="bt-btn btn btn-primary-fill desktop">
+                                        <button className="bt-btn btn btn-primary-fill desktop" onClick={(e) => openModalEditVideo('edit-video', item)}>
                                             <span>View Courses</span>
                                             <span>
                                                 <Image
@@ -143,11 +144,11 @@ const UploadVideoBody = () => {
                                                     className="object-contain"
                                                 />
                                             </span>
-                                        </Link>
+                                        </button>
 
-                                        <Link href='/' className="mobile">
+                                        <button className="mobile" onClick={(e) => openModalEditVideo('edit-video', item)}>
                                             <span className="underline text-[.8rem]">View Courses</span>
-                                        </Link>
+                                        </button>
                                     </div>
                                 </div>
                             ))
