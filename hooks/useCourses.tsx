@@ -348,11 +348,11 @@ export const UseCourses = () => {
 
         try {
             setButtonLoader(true)
-            const response = await upload_course(formData, selectedItems, userId);
+            const response = await edit_course(formData, selectedItems, courseId);
             if (response.success) {
                 setButtonLoader(false)
                 showSuccessToast(response.message)
-                router.push(`/instructors/upload-course-data/${response.data.course.id}`);
+                router.push(`/instructors/courses`);
             } 
 
             else {
@@ -619,6 +619,7 @@ export const UseCourses = () => {
     return {
         formData,
         errors,
+        setFormData,
         buttonLoader,
         uploadCourse,
         handleInputChange,

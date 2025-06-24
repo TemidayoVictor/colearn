@@ -5,19 +5,23 @@ import UploadCourseForm from "./UploadCourseForm";
 import Link from "next/link";
 import { useAuthInstructors } from "@/hooks/useAuth";
 import Loader from "../Loader";
+import { useParams } from 'next/navigation';
 import { useRouter } from "next/navigation";
 import { UseCourses } from "@/hooks/useCourses";
+import { Course } from "@/app/Types/types";
+import { get_course_details_edit } from "@/services/courses";
+import { showErrorToast } from "@/utils/toastTypes";
+import { courseStore } from "@/zustand/courseStore";
 
-const UploadCourseBody = () => {
+const EditCourseBody = () => {
+    const params = useParams();
+    const courseId = params?.course as string;
+
     const router = useRouter(); 
-    const [step, setStep] = useState<number>(0);
-    const [newUpdate, setNewUpdate] = useState<string>('reset');
-    const [loading, setLoading] = useState<boolean>(true);
+    const [course, setCourse] = useState<Course>();
 
-    const {
-        buttonLoader,
-        uploadCourse,
-    } = UseCourses()
+    const [step, setStep] = useState<number>(0);
+    const [loading, setLoading] = useState<boolean>(true);
 
     const updateStep = (newstep: number) => {
         setStep(newstep);
@@ -26,11 +30,38 @@ const UploadCourseBody = () => {
     useEffect(() => {
         const init = async () => {
           await useAuthInstructors(router); // ✅ valid usage
+            
+            if (courseId) {
+                try {
+                    const response = await get_course_details_edit(courseId)
+                    if (response.success) {
+                        //  save state in page
+                        setCourse(response.data.course);
+
+                        // save state globally
+                        courseStore.getState().setCourse(response.data.course);
+                        courseStore.getState().setCourseId(response.data.course.id);
+                    } 
+        
+                    else {
+                        showErrorToast(response.message)
+                        console.log(response)
+                    }
+                }
+
+                catch(error: any) {
+                    showErrorToast('Something unexpected happened')
+                    console.log(error)
+                }
+            }
+
           setLoading(false);
-          setNewUpdate("reset");
         };
+
         init();
-    }, [newUpdate]);
+    }, []);
+
+    if(loading) return <Loader />
     
     return (
         <div>
@@ -66,13 +97,13 @@ const UploadCourseBody = () => {
             <div>
                 {
                     step < 3 &&
-                    <h2 className="title-3 mt-3 mobile">Create Course</h2>
+                    <h2 className="title-3 mt-3 mobile">Edit Course</h2>
                 }
-                <UploadCourseForm sendData={updateStep}/>
+                <UploadCourseForm sendData={updateStep} type='edit'/>
             </div>
 
         </div>
     )
 }
 
-export default UploadCourseBody
+export default EditCourseBody

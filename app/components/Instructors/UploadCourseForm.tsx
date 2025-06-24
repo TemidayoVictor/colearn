@@ -5,17 +5,18 @@ import UploadCourseStep1 from "./UploadCourseStep1";
 import UploadCourseStep2 from "./UploadCoursestep2";
 import UploadCourseStep3 from "./UploadCourseStep3";
 import UploadCourseStep4 from "./UploadCourseStep4";
+import { Course } from "@/app/Types/types";
 
 type UploadCourseFormProps = {
     sendData: (step: number) => void;
-    upload: () => void;
+    type?: string; 
 }
 
-const UploadCourseForm = ({sendData, upload}: UploadCourseFormProps) => {
+const UploadCourseForm = ({sendData, type}: UploadCourseFormProps) => {
     const [step, setStep] = useState<number>(0);
 
     const sections = [
-        <UploadCourseStep1 key="details" />, // this redirects to upload module page on success
+        <UploadCourseStep1 key="details" type={type} />, // this redirects to upload module page on success
         <UploadCourseStep2 key="content" />, // currently not being used. Was added based on U.I.
         <UploadCourseStep3 key="additions"/>, // currently not being used. Was added based on U.I.
         <UploadCourseStep4 key="success" />, // currently not being used. Was added based on U.I.

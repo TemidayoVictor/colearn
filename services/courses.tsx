@@ -38,7 +38,7 @@ export const edit_course = async (formData: {
     who_can_enroll: string;
     price: number;
     is_free: boolean;
-}, categories: string[], courseId: number | null | undefined) => {
+}, categories: string[], courseId: string | undefined) => {
     try {
         const data = new FormData();
 
@@ -69,6 +69,21 @@ export const get_course_details = async (courseId: string) => {
         data.append('courseId', courseId);
 
         const response = await axiosInstance.post("/get-course-details", data);
+        return handleApiResponse(response);
+    }
+
+    catch(error: any) {
+        return handleApiError(error)
+    }
+}
+
+export const get_course_details_edit = async (courseId: string) => {
+    try {
+        const data = new FormData();
+
+        data.append('courseId', courseId);
+
+        const response = await axiosInstance.post("/get-course-details-edit", data);
         return handleApiResponse(response);
     }
 

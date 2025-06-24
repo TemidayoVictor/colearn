@@ -1,17 +1,17 @@
 import React from "react";
 import UserLayout from "@/app/components/UserLayout";
-import UploadCourseBody from "@/app/components/Instructors/UploadCourseBody";
+import EditCourseBody from "@/app/components/Instructors/EditCourseBody";
 
-const UploadCourse = () => {
+const EditCourse = () => {
     return (
         <div>
             <UserLayout>
                 <div className="container-3">
-                    <UploadCourseBody/>
+                    <EditCourseBody />
                 </div>
             </UserLayout>
         </div>
     )
 }
 
-export default UploadCourse
+export default EditCourse
