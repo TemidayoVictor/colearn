@@ -486,8 +486,18 @@ const AccountModal = ({modalType, modalClose, experience, bank, subType}: Accoun
                 }
 
                 {
+                    modalType == 'edit-module' &&
+                    <ManageModule type="edit" />
+                }
+
+                {
                     modalType == 'add-video' &&
                     <ManageVideo type="add" />
+                }
+
+                {
+                    modalType == 'edit-video' &&
+                    <ManageVideo type="edit" />
                 }
 
                 {

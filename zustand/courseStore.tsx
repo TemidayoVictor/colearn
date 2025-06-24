@@ -21,6 +21,8 @@ type courseState = {
 
     uploading: boolean;
     progress: number;
+
+    newUpdate: string;
     
     setCourseId: (courseId: string | undefined) => void;
     setCourse: (course: Course) => void;
@@ -40,6 +42,8 @@ type courseState = {
 
     setUploading: (uploading: boolean) => void;
     setProgress: (progress: number) => void;
+
+    setNewUpdate: (newUpdate: string) => void;
     
     clearCourses: () => void;
 };
@@ -66,6 +70,8 @@ export const courseStore = create<courseState>()(
             uploading: false,
             progress: 0,
 
+            newUpdate: 'reset',
+
             setCourseId: (courseId) => set({ courseId }),
             setCourses: (courses) => set({ courses }),
             setCourse: (course) => set({ course }),
@@ -84,6 +90,8 @@ export const courseStore = create<courseState>()(
 
             setUploading: (uploading) => set({ uploading }),
             setProgress: (progress) => set({ progress }),
+
+            setNewUpdate: (newUpdate) => set({newUpdate}),
             
             clearCourses: () => {
                 set({   
@@ -91,7 +99,7 @@ export const courseStore = create<courseState>()(
                         moduleId: '', module: null, modules: [],
                         videoId: '', video: null, videos: [],
                         resourceId: '', resource: null, resources: [],
-                        uploading: false, progress: 0,
+                        uploading: false, progress: 0, newUpdate: 'reset',
                     });
                 localStorage.removeItem('course-storage'); // Remove persisted state
             }

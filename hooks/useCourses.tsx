@@ -5,7 +5,8 @@ import { authStore } from "@/zustand/authStore";
 import { useRouter } from 'next/navigation';
 import { utilitiesStore } from "@/zustand/utilitiesStore";
 import { courseStore } from "@/zustand/courseStore";
-import { upload_course, add_module, upload_video, upload_resource } from "@/services/courses";
+import { upload_course, add_module, edit_module, upload_video, edit_video, upload_resource } from "@/services/courses";
+import { Module, Video } from "@/app/Types/types";
 
 export const UseCourses = () => {
     const router = useRouter();
@@ -17,12 +18,11 @@ export const UseCourses = () => {
 
     const [selectedItems, setSelectedItems] = useState<string[]>([]);
     const [buttonLoader, setButtonLoader] = useState<boolean>(false);
-    const [newUpdate, setNewUpdate] = useState<string>('reset');
 
     const [showModal, setShowModal] = useState<string | null>(null);
     const fileInputRef = useRef<(HTMLInputElement | null)>(null);
     const [fileName, setFileName] = useState<string>('');
-
+    const [loading, setLoading] = useState<boolean>(true);
 
     const [formData, setFormData] = useState<{
         title: string;
@@ -59,6 +59,24 @@ export const UseCourses = () => {
         description: false,
     });
 
+    const [formData2b, setFormData2b] = useState<{
+        title: string;
+        description: string;
+        order: number;
+        moduleId: number;
+      }>({
+        title: '',
+        description: '',
+        order: 0,
+        moduleId: 0,
+    });
+
+    const [errors2b, setErrors2b] = useState({
+        title: false,
+        description: false,
+        order: false
+    });
+
     const [formData3, setFormData3] = useState<{
         title: string;
         video: File | null;
@@ -73,6 +91,28 @@ export const UseCourses = () => {
         title: false,
         video: false,
         duration:false,
+    });
+
+    const [formData3b, setFormData3b] = useState<{
+        title: string;
+        video: File | null;
+        duration: number;
+        order: number;
+        videoId: number;
+      }>({
+        title: '',
+        video: null,
+        duration: 0,
+        order: 0,
+        videoId: 0,
+    });
+
+    const [errors3b, setErrors3b] = useState({
+        title: false,
+        video: false,
+        duration:false,
+        order: false,
+        videoId: false,
     });
 
     const [formData4, setFormData4] = useState<{
@@ -105,6 +145,17 @@ export const UseCourses = () => {
     const openModal = (key: string) => {
         setShowModal(key);
     }
+
+    const openModalEditModule = (key: string, item:Module) => {
+        courseStore.getState().setModule(item);
+        setShowModal(key);
+    }
+
+    const openModalEditVideo = (key: string, item:Video) => {
+        courseStore.getState().setVideo(item);
+        setShowModal(key);
+    }
+
     const closeModal = () => setShowModal(null);
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
@@ -125,10 +176,22 @@ export const UseCourses = () => {
         setErrors2((prev) => ({ ...prev, [name]: false }));
     };
 
+    const handleInputChange2b = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+        const { name, value } = e.target;
+        setFormData2b((prev) => ({ ...prev, [name]: value }));
+        setErrors2b((prev) => ({ ...prev, [name]: false }));
+    };
+
     const handleInputChange3 = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
         setFormData3((prev) => ({ ...prev, [name]: value }));
         setErrors3((prev) => ({ ...prev, [name]: false }));
+    };
+
+    const handleInputChange3b = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+        const { name, value } = e.target;
+        setFormData3b((prev) => ({ ...prev, [name]: value }));
+        setErrors3b((prev) => ({ ...prev, [name]: false }));
     };
 
     const handleInputChange4 = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
@@ -226,7 +289,49 @@ export const UseCourses = () => {
             if (response.success) {
                 setButtonLoader(false)
                 showSuccessToast(response.message)
-                setNewUpdate('set');
+                courseStore.getState().setNewUpdate('set');
+            } 
+
+            else {
+                setButtonLoader(false)
+                showErrorToast(response.message)
+                console.log(response)
+            }
+        }
+
+        catch (err: any) {
+            console.log(err)
+            setButtonLoader(false)
+            showErrorToast('Unexpected error occurred');
+        }
+    }
+
+    const editModule = async () => {
+
+        const newErrors = {
+            title: formData2b.title.trim() === '',
+            description: formData2b.description === '',
+            order: formData2b.order === 0,
+        };
+      
+        setErrors2b(newErrors);
+
+        const hasError = Object.values(newErrors).some(Boolean);
+
+        if (hasError) {
+            showErrorToast('Please fill in all fields');
+            return;
+        }
+
+        console.log(formData2b)
+
+        try {
+            setButtonLoader(true)
+            const response = await edit_module(formData2b, courseId);
+            if (response.success) {
+                setButtonLoader(false)
+                showSuccessToast(response.message)
+                courseStore.getState().setNewUpdate('set');
             } 
 
             else {
@@ -266,7 +371,49 @@ export const UseCourses = () => {
             if (response.success) {
                 setButtonLoader(false)
                 showSuccessToast(response.message)
-                setNewUpdate('set');
+                courseStore.getState().setNewUpdate('set');
+            } 
+
+            else {
+                setButtonLoader(false)
+                showErrorToast(response.message)
+                console.log(response)
+            }
+        }
+
+        catch (err: any) {
+            console.log(err)
+            setButtonLoader(false)
+            showErrorToast('Unexpected error occurred');
+        }
+    }
+
+    const editVideo = async () => {
+
+        const newErrors = {
+            title: formData3b.title.trim() === '',
+            video: formData3b.video === null,
+            duration: formData3b.duration === 0,
+            order: formData3b.order === 0,
+            videoId: formData3b.videoId === 0,
+        };
+      
+        setErrors3b(newErrors);
+
+        const hasError = Object.values(newErrors).some(Boolean);
+
+        if (hasError) {
+            showErrorToast('Please fill in all fields');
+            return;
+        }
+
+        try {
+            setButtonLoader(true)
+            const response = await edit_video(formData3b, moduleId);
+            if (response.success) {
+                setButtonLoader(false)
+                showSuccessToast(response.message)
+                courseStore.getState().setNewUpdate('set');
             } 
 
             else {
@@ -308,7 +455,7 @@ export const UseCourses = () => {
             if (response.success) {
                 setButtonLoader(false)
                 showSuccessToast(response.message)
-                setNewUpdate('set');
+                courseStore.getState().setNewUpdate('set');
             } 
 
             else {
@@ -339,14 +486,20 @@ export const UseCourses = () => {
         formData2,
         errors2,
         handleInputChange2,
+        formData2b,
+        errors2b,
+        setFormData2b,
+        handleInputChange2b,
         openModal,
         showModal,
         closeModal,
-        newUpdate,
         formData3,
         errors3,
         uploadVideo,
         handleInputChange3,
+        formData3b,
+        errors3b,
+        handleInputChange3b,
         fileInputRef,
         handleImageClick,
         handleFileChange,
@@ -356,5 +509,12 @@ export const UseCourses = () => {
         uploadResource,
         handleInputChange4,
         handleFileChange2,
+        loading, 
+        setLoading,
+        openModalEditModule,
+        editModule,
+        setShowModal,
+        editVideo,
+        openModalEditVideo,
     }
 }

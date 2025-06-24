@@ -10,39 +10,45 @@ import AccountModal from "./AccountModal";
 import { showErrorToast } from "@/utils/toastTypes";
 import { useParams } from 'next/navigation';
 import { courseStore } from "@/zustand/courseStore";
-import { get_module_videos } from "@/services/courses";
-import { Module, Course, Video } from "@/app/Types/types";
+import { get_module_details } from "@/services/courses";
+import { Module, Video } from "@/app/Types/types";
 
 const UploadVideoBody = () => {
     const params = useParams();
     const moduleId = params?.module as string;
 
     const router = useRouter(); 
-    const [loading, setLoading] = useState<boolean>(true);
     const [videos, setVideos] = useState<Video[]>([]);
     const [module, setModule] = useState<Module>();
+    const newUpdate = courseStore((state) => state.newUpdate);
 
     const {
         openModal,
         showModal,
         closeModal,
-        newUpdate,
+        loading, 
+        setLoading,
     } = UseCourses()
 
     useEffect(() => {
+        
+        // set loading
+        setLoading(true);
+
         const init = async () => {
             await useAuthInstructors(router);
             if (moduleId) {
                 try {
-                    const response = await get_module_videos(moduleId)
+                    const response = await get_module_details(moduleId)
                     if (response.success) {
                         //  save state in page
                         setModule(response.data.module);
-                        setVideos(response.data.videos);
+                        setVideos(response.data.module.videos);
                         
                         // save state globally
                         courseStore.getState().setModule(response.data.module);
-                        courseStore.getState().setVideos(response.data.videos);
+                        courseStore.getState().setVideos(response.data.module.videos);
+                        courseStore.getState().setResources(response.data.module.resources);
                     } 
         
                     else {
@@ -55,14 +61,19 @@ const UploadVideoBody = () => {
                     showErrorToast('Something unexpected happened')
                     console.log(error)
                 }
-                // store course id in global state
+                // store module id in global state
                 courseStore.getState().setModuleId(moduleId);
-                setLoading(false);
             }
+
+            closeModal(); // always close modal when useEffect is triggered
+            setLoading(false);
+            courseStore.getState().setNewUpdate('reset');
 
         };
         init();
     }, [newUpdate]);
+
+    if(loading) return <Loader />
     
     return (
         <div className="container-3">
@@ -93,11 +104,10 @@ const UploadVideoBody = () => {
                 <h2 className="title-3 mt-3 mobile">Video Lessons</h2>
 
                 <div className="upload-course-form">
-                    <h2 className="title-3">{module?.title}</h2>
+                    <h2 className="title-3">Module: {module?.title}</h2>
                     <div className="upload-course-body">
-                        <h2 className="title-3 mt-2">Add and Manage Modules.</h2>
-                        <p className="text-[.8rem] color-grey-text mt-1"> Modules are the building blocks of your course. Each module represents a specific section or topic within the course—for example, "Introduction", "Getting Started", or "Advanced Techniques".
-                        After uploading your course, you’ll be guided to create modules. Once your modules are set up, you can begin uploading videos under each module to organize your content clearly and effectively.</p>
+                        <h2 className="title-3 mt-2">Add and Manage Videos.</h2>
+                        <p className="text-[.9rem] color-grey-text mt-1">Videos are the main content your students will engage with. After creating modules, upload relevant videos under each to deliver your lessons in a clear and structured way.</p>
                     </div>
 
                     <div className="best-instructor-cont">

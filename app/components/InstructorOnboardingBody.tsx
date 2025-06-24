@@ -15,6 +15,7 @@ const InstructorOnboardingBody = () => {
     const router = useRouter();
     const user = authStore((state) => state.user);
     const profileProgress = user?.profile_progress;
+    
     const {
         formData,
         formData2,

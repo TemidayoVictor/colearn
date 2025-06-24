@@ -152,7 +152,7 @@ const ManageResoure = ({type}: ManageResoureProps) => {
                     </select>
                 </div>
 
-                {
+                {/* {
                     uploading && (
                         <div className="w-full bg-gray-200 h-4 mt-4 rounded overflow-hidden">
                         <div
@@ -163,7 +163,7 @@ const ManageResoure = ({type}: ManageResoureProps) => {
                     )
                 }
 
-                {uploading && <p className="mt-2 text-[.8rem] color-grey-text">{progress}% Complete</p>}
+                {uploading && <p className="mt-2 text-[.8rem] color-grey-text">{progress}% Complete</p>} */}
 
                 <button className="mt-4 flex items-center justify-center gap-2 btn btn-primary-fill w-full" onClick={uploadResource} disabled={buttonLoader}>
                     {
@@ -180,26 +180,6 @@ const ManageResoure = ({type}: ManageResoureProps) => {
                 </button>
             </div>
 
-            {/* {
-                    modalType != 'booking' &&
-                    <div className="upload-course-btns two">
-                        <button className="btn normal" onClick={modalClose}>Cancel</button>
-
-                        <button className="flex items-center gap-2 btn btn-primary-fill">
-                            <span>Update</span>
-                            <span>
-                                <Image
-                                    aria-hidden
-                                    src="/assets/images/arrow-right.png"
-                                    alt="Colearn Logo"
-                                    width={12}
-                                    height={12}
-                                    className="object-contain"
-                                />
-                            </span>
-                        </button>
-                    </div>
-                } */}
         </div>
     )
 }

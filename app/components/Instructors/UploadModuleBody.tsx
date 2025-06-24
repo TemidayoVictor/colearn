@@ -13,12 +13,13 @@ const UploadModuleBody = () => {
         openModal,
         showModal,
         closeModal,
+        openModalEditModule,
     } = UseCourses();
     return (
         <div>
             <div className="upload-course-body">
                 <h2 className="title-3 mt-2">Add and Manage Modules.</h2>
-                <p className="text-[.9rem] color-grey-text mt-1"> Modules are the core sections of your course—like "Introduction", "Getting Started", or "Advanced Techniques". After uploading your course, you’ll create modules to organize your content, then add videos under each one for a structured learning experience.</p>
+                <p className="text-[.9rem] color-grey-text mt-1"> Modules are key sections of your course—like "Introduction" or "Advanced Topics". After creating your course, you’ll create modules and add videos under each to keep your content organized.</p>
             </div>
 
             <div className="best-instructor-cont">
@@ -37,12 +38,12 @@ const UploadModuleBody = () => {
                                     />
                                 </div>
                                 <div>
-                                    <p className="font-semibold">Benson Thomas</p>
+                                    <p className="font-semibold">{item.title}</p>
                                     <p className="color-grey-text text-[.8rem]">10 IT & Engineering Courses</p>
                                 </div>
                             </div>
                             <div className="right">
-                                <Link href='/' className="bt-btn btn btn-primary-fill desktop">
+                                <button className="bt-btn btn btn-primary-fill desktop" onClick={(e) => openModalEditModule('edit-module', item)}>
                                     <span>View Courses</span>
                                     <span>
                                         <Image
@@ -54,11 +55,11 @@ const UploadModuleBody = () => {
                                             className="object-contain"
                                         />
                                     </span>
-                                </Link>
+                                </button>
 
-                                <Link href='/' className="mobile">
+                                <button className="mobile" onClick={(e) => openModalEditModule('edit-module', item)}>
                                     <span className="underline text-[.8rem]">View Courses</span>
-                                </Link>
+                                </button>
                             </div>
                         </div>
                     ))

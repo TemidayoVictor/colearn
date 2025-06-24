@@ -8,7 +8,7 @@ import AccountModal from "./AccountModal";
 import { courseStore } from "@/zustand/courseStore";
 
 const UploadResourceBody = () => {    
-    const modules = courseStore((state) => state.modules);
+    const resources = courseStore((state) => state.resources);
     const {
         openModal,
         showModal,
@@ -23,7 +23,7 @@ const UploadResourceBody = () => {
 
             <div className="best-instructor-cont">
                 {
-                    modules.map((item, index) => (
+                    resources.map((item, index) => (
                         <div className="best-instructor-box" key={index}>
                             <div className="flex items-center gap-2 left">
                                 <div>

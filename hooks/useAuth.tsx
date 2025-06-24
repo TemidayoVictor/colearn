@@ -19,6 +19,12 @@ export const useAuth = async (router: ReturnType<typeof useRouter>) => {
       if (user.type === "instructor" && instructor) {
         setInstructor(instructor);
       }
+
+      // redirect user to dashboard page if they are already registered and have completed their profile
+      if(user.type != "Inactive" && user.profile_progress == "completed") {
+        router.push(`/${user.type}s/dashboard`);
+      }
+
     } else {
       showErrorToast("Session Expired. Please Log in");
       router.push("/authentication/login");

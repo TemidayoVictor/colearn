@@ -10,7 +10,7 @@ import { showErrorToast } from "@/utils/toastTypes";
 import { useParams } from 'next/navigation';
 import { courseStore } from "@/zustand/courseStore";
 import { get_course_details } from "@/services/courses";
-import { Module, Course } from "@/app/Types/types";
+import { Course } from "@/app/Types/types";
 import UploadModuleBody from "./UploadModuleBody";
 import UploadResourceBody from "./UploadResourceBody";
 
@@ -19,17 +19,20 @@ const UploadCourseDataBody = () => {
     const courseId = params?.course as string;
 
     const router = useRouter(); 
-    const [loading, setLoading] = useState<boolean>(true);
-    const [modules, setModules] = useState<Module[]>([]);
     const [course, setCourse] = useState<Course>();
 
     const [selectedTab, setSelectedTab] = useState<string>('Modules');
+    const newUpdate = courseStore((state) => state.newUpdate);
 
     const {
-        newUpdate,
+        loading, 
+        setLoading,
     } = UseCourses()
 
     useEffect(() => {
+        // set loading
+        setLoading(true);
+
         const init = async () => {
             await useAuthInstructors(router);
             if (courseId) {
@@ -62,12 +65,17 @@ const UploadCourseDataBody = () => {
                 }
                 // store course id in global state
                 courseStore.getState().setCourseId(courseId);
-                setLoading(false);
             }
 
+            setLoading(false);
+            courseStore.getState().setNewUpdate('reset');
         };
+
         init();
+
     }, [newUpdate]);
+
+    if(loading) return <Loader />
     
     return (
         <div className="container-3">

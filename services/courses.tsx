@@ -67,6 +67,30 @@ export const add_module = async (formData: {
     }
 }
 
+export const edit_module = async (formData: {
+    title: string;
+    description: string;
+    order: number;
+    moduleId: number;
+}, courseId: string | undefined) => {
+    try {
+        const data = new FormData();
+
+        data.append('title', formData.title);
+        data.append('description', formData.description);
+        data.append('moduleId', String(formData.moduleId));
+        data.append('order', String(formData.order));
+        data.append('courseId', String(courseId)); 
+
+        const response = await axiosInstance.post("/edit-module", data);
+        return handleApiResponse(response);
+    }
+
+    catch(error: any) {
+        return handleApiError(error)
+    }
+}
+
 export const get_module_details = async (moduleId: string | undefined) => {
 
     try {
@@ -114,6 +138,55 @@ export const upload_video = async (formData: {
             },
 
         });
+        // setUploading(false);
+        courseStore.getState().setUploading(false);
+        return handleApiResponse(response);
+    }
+
+    catch(error: any) {
+        // setUploading(false);
+        courseStore.getState().setUploading(false);
+        return handleApiError(error)
+    }
+}
+
+export const edit_video = async (formData: {
+    title: string;
+    video: File | null;
+    duration: number;
+    order: number;
+    videoId: number;
+}, moduleId: string | undefined) => {
+
+    // setUploading(true);
+    courseStore.getState().setUploading(true);
+
+    try {
+        const data = new FormData();
+
+        if (formData.video) {
+            data.append('video', formData.video);
+        }
+
+        data.append('title', formData.title);
+        data.append('duration', String(formData.duration));
+        data.append('order', String(formData.order));
+        data.append('videoId', String(formData.videoId));
+        data.append('moduleId', String(moduleId));
+
+        const response = await axiosInstance.post("/edit-video", data, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+            
+            onUploadProgress: (progressEvent) => {
+                const percent = Math.round((progressEvent.loaded * 100) / (progressEvent.total || 1));
+                // setProgress(percent);
+                courseStore.getState().setProgress(percent);
+            },
+
+        });
+        
         // setUploading(false);
         courseStore.getState().setUploading(false);
         return handleApiResponse(response);
