@@ -44,9 +44,9 @@ const InstructorSidebarContent = () => {
                         <p className="text-[.9rem]">Dashboard</p>
                     </Link>
 
-                    <Link href='/instructors/courses' className={`sidebar-link ${pathname == '/instructors/courses' || pathname == '/instructors/upload-course' || pathname == '/instructors/course-page' ? 'active' : ''}`}>
+                    <Link href='/instructors/courses' className={`sidebar-link ${pathname == '/instructors/courses' || pathname.startsWith('/instructors/upload') || pathname == '/instructors/course-page' ? 'active' : ''}`}>
                         {
-                            pathname == '/instructors/courses' || pathname == '/instructors/upload-course' || pathname == '/instructors/course-page' ? (
+                            pathname == '/instructors/courses' || pathname.startsWith('/instructors/upload') || pathname == '/instructors/course-page' ? (
 
                                 <Image
                                     aria-hidden

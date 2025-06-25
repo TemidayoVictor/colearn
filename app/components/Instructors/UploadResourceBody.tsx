@@ -22,6 +22,24 @@ const UploadResourceBody = () => {
                 <p className="text-[.9rem] color-grey-text mt-1"> Resources are additional learning materials for your course, such as articles, assignments, or downloadable files. You can upload them to support each module and enhance the overall learning experience.</p>
             </div>
 
+            <div className="upload-course-btns mb-4">
+                <button className="flex items-center justify-center gap-2 btn btn-primary-fill w-full" onClick={(e) => openModal('add-resource')}>
+                    <div className="bt-btn two">
+                        <span>Add New Resource</span>
+                        <span>
+                            <Image
+                                aria-hidden
+                                src="/assets/images/arrow-right.png"
+                                alt="Colearn Logo"
+                                width={12}
+                                height={12}
+                                className="object-contain"
+                            />
+                        </span>
+                    </div>                                        
+                </button>
+            </div>
+
             <div className="best-instructor-cont">
                 {
                     resources.map((item, index) => (
@@ -64,24 +82,6 @@ const UploadResourceBody = () => {
                         </div>
                     ))
                 }
-            </div>
-
-            <div className="upload-course-btns">
-                <button className="flex items-center justify-center gap-2 btn btn-primary-fill w-full" onClick={(e) => openModal('add-resource')}>
-                    <div className="bt-btn two">
-                        <span>Add New Resource</span>
-                        <span>
-                            <Image
-                                aria-hidden
-                                src="/assets/images/arrow-right.png"
-                                alt="Colearn Logo"
-                                width={12}
-                                height={12}
-                                className="object-contain"
-                            />
-                        </span>
-                    </div>                                        
-                </button>
             </div>
 
             {

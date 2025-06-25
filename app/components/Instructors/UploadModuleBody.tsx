@@ -22,6 +22,24 @@ const UploadModuleBody = () => {
                 <p className="text-[.9rem] color-grey-text mt-1"> Modules are key sections of your course—like "Introduction" or "Advanced Topics". After creating your course, you’ll create modules and add videos under each to keep your content organized.</p>
             </div>
 
+            <div className="upload-course-btns mb-4">
+                <button className="flex items-center justify-center gap-2 btn btn-primary-fill w-full" onClick={(e) => openModal('add-module')}>
+                    <div className="bt-btn two">
+                        <span>Add New Module</span>
+                        <span>
+                            <Image
+                                aria-hidden
+                                src="/assets/images/arrow-right.png"
+                                alt="Colearn Logo"
+                                width={12}
+                                height={12}
+                                className="object-contain"
+                            />
+                        </span>
+                    </div>                                        
+                </button>
+            </div>
+
             <div className="best-instructor-cont">
                 {
                     modules.map((item, index) => (
@@ -64,24 +82,6 @@ const UploadModuleBody = () => {
                         </div>
                     ))
                 }
-            </div>
-
-            <div className="upload-course-btns">
-                <button className="flex items-center justify-center gap-2 btn btn-primary-fill w-full" onClick={(e) => openModal('add-module')}>
-                    <div className="bt-btn two">
-                        <span>Add New Module</span>
-                        <span>
-                            <Image
-                                aria-hidden
-                                src="/assets/images/arrow-right.png"
-                                alt="Colearn Logo"
-                                width={12}
-                                height={12}
-                                className="object-contain"
-                            />
-                        </span>
-                    </div>                                        
-                </button>
             </div>
 
             {

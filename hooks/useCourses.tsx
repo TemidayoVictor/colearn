@@ -5,7 +5,7 @@ import { authStore } from "@/zustand/authStore";
 import { useRouter } from 'next/navigation';
 import { utilitiesStore } from "@/zustand/utilitiesStore";
 import { courseStore } from "@/zustand/courseStore";
-import { upload_course, edit_course, add_module, edit_module, upload_video, edit_video, upload_resource, edit_resource } from "@/services/courses";
+import { upload_course, edit_course, add_module, edit_module, upload_video, edit_video, upload_resource, edit_resource, publish_course } from "@/services/courses";
 import { Module, Video, Resource } from "@/app/Types/types";
 
 export const UseCourses = () => {
@@ -632,6 +632,30 @@ export const UseCourses = () => {
         }
     }
 
+    const publishCourse = async () => {
+        try {
+            setButtonLoader(true)
+            const response = await publish_course(courseId);
+            if (response.success) {
+                setButtonLoader(false)
+                showSuccessToast(response.message)
+                courseStore.getState().setNewUpdate('set');
+            } 
+
+            else {
+                setButtonLoader(false)
+                showErrorToast(response.message)
+                console.log(response)
+            }
+        }
+
+        catch (err: any) {
+            console.log(err)
+            setButtonLoader(false)
+            showErrorToast('Unexpected error occurred');
+        }
+    }
+
     return {
         formData,
         errors,
@@ -688,5 +712,6 @@ export const UseCourses = () => {
         openModalEditVideo,
         editResource,
         openModalEditResource,
+        publishCourse,
     }
 }

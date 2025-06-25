@@ -27,6 +27,8 @@ const UploadCourseDataBody = () => {
     const {
         loading, 
         setLoading,
+        buttonLoader,
+        publishCourse,
     } = UseCourses()
 
     useEffect(() => {
@@ -111,8 +113,29 @@ const UploadCourseDataBody = () => {
                         <span className={`in-nav-link color-grey-text ${selectedTab == 'Modules' ? 'active' : ''}`} onClick={() => setSelectedTab('Modules')}>Modules</span>
                         <span className={`in-nav-link color-grey-text ${selectedTab == 'Resources' ? 'active' : ''}`} onClick={() => setSelectedTab('Resources')}>Resources</span>
                     </div>
-                    
-                    <h2 className="title-3">{course?.title}</h2>
+
+                    <div>
+                        <div className="mb-4 flex items-start justify-between">
+                            <h2 className="title-3 w-[75%]">{course?.title}</h2>
+                            {
+                                course?.is_published ? (
+                                    <p className="success">Published</p>
+                                ) :
+
+                                (
+                                    <button className="flex items-center justify-center gap-2 btn btn-success btn-small" onClick={publishCourse}>
+                                        <div className="bt-btn two">
+                                            <span> 
+                                                {
+                                                    buttonLoader ? ('Loading') : ('Publish')
+                                                }
+                                            </span>
+                                        </div>                                        
+                                    </button>
+                                )
+                            }
+                        </div>
+                    </div>
                     
                     {
                         selectedTab == 'Modules' &&

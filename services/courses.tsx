@@ -368,3 +368,18 @@ export const edit_resource = async (formData: {
         return handleApiError(error)
     }
 }
+
+export const publish_course = async (courseId: string | undefined) => {
+    try {
+        const data = new FormData();
+
+        data.append('courseId', String(courseId));
+
+        const response = await axiosInstance.post("/publish-resource", data);
+        return handleApiResponse(response);
+    }
+
+    catch(error: any) {
+        return handleApiError(error)
+    }
+}
