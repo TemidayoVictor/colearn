@@ -41,6 +41,9 @@ const EditCourseBody = () => {
                         // save state globally
                         courseStore.getState().setCourse(response.data.course);
                         courseStore.getState().setCourseId(response.data.course.id);
+                        courseStore.getState().setCategories(response.data.course.categories);
+
+                        console.log(response.data.course.categories);
                     } 
         
                     else {

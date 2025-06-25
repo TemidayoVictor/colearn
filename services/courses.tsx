@@ -8,9 +8,14 @@ export const upload_course = async (formData: {
     who_can_enroll: string;
     price: number;
     is_free: boolean;
+    course_picture: File | null;
 }, categories: string[], userId: number | null | undefined) => {
     try {
         const data = new FormData();
+
+        if (formData.course_picture) {
+            data.append('course_picture', formData.course_picture);
+        }
 
         data.append('title', formData.title);
         data.append('description', formData.description);
@@ -23,7 +28,11 @@ export const upload_course = async (formData: {
             data.append(`categories[${index}]`, category);
         });
 
-        const response = await axiosInstance.post("/upload-course", data);
+        const response = await axiosInstance.post("/upload-course", data, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+        });
         return handleApiResponse(response);
     }
 
@@ -38,9 +47,14 @@ export const edit_course = async (formData: {
     who_can_enroll: string;
     price: number;
     is_free: boolean;
+    course_picture: File | null; 
 }, categories: string[], courseId: string | undefined) => {
     try {
         const data = new FormData();
+
+        if (formData.course_picture) {
+            data.append('course_picture', formData.course_picture);
+        }
 
         data.append('title', formData.title);
         data.append('description', formData.description);
@@ -53,7 +67,12 @@ export const edit_course = async (formData: {
             data.append(`categories[${index}]`, category);
         });
 
-        const response = await axiosInstance.post("/edit-course", data);
+        const response = await axiosInstance.post("/edit-course", data, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+        });
+
         return handleApiResponse(response);
     }
 

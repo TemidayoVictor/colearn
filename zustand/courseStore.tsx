@@ -1,6 +1,6 @@
 import {create} from 'zustand';
 import { persist } from 'zustand/middleware';
-import { Course, Module, Video, Resource } from '@/app/Types/types';
+import { Course, Module, Video, Resource, Category } from '@/app/Types/types';
 
 type courseState = {
     courseId: string | undefined;
@@ -18,6 +18,8 @@ type courseState = {
     resourceId: string | undefined;
     resource: Resource | null;
     resources: Resource[];
+
+    categories: Category[];
 
     uploading: boolean;
     progress: number;
@@ -39,6 +41,8 @@ type courseState = {
     setResourceId: (resourceId: string | undefined) => void;
     setResource: (resource: Resource) => void;
     setResources: (resources: Resource[]) => void;
+
+    setCategories: (categories: Category[]) => void;
 
     setUploading: (uploading: boolean) => void;
     setProgress: (progress: number) => void;
@@ -67,6 +71,8 @@ export const courseStore = create<courseState>()(
             resource: null,
             resources: [],
 
+            categories: [],
+
             uploading: false,
             progress: 0,
 
@@ -88,6 +94,8 @@ export const courseStore = create<courseState>()(
             setResource: (resource) => set({ resource }),
             setResources: (resources) => set({ resources }),
 
+            setCategories: (categories) => set({ categories }),
+
             setUploading: (uploading) => set({ uploading }),
             setProgress: (progress) => set({ progress }),
 
@@ -99,6 +107,7 @@ export const courseStore = create<courseState>()(
                         moduleId: '', module: null, modules: [],
                         videoId: '', video: null, videos: [],
                         resourceId: '', resource: null, resources: [],
+                        categories: [],
                         uploading: false, progress: 0, newUpdate: 'reset',
                     });
                 localStorage.removeItem('course-storage'); // Remove persisted state

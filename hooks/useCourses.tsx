@@ -30,12 +30,14 @@ export const UseCourses = () => {
         who_can_enroll: string;
         price: number;
         is_free: boolean;
+        course_picture: File | null;
       }>({
         title: '',
         description: '',
         who_can_enroll: '',
         price: 10,
         is_free: false,
+        course_picture: null,
     });
 
     const [errors, setErrors] = useState({
@@ -44,6 +46,7 @@ export const UseCourses = () => {
         who_can_enroll: false,
         price: false,
         categories: false,
+        // course_picture: false
     });
 
     const [formData2, setFormData2] = useState<{
@@ -243,6 +246,17 @@ export const UseCourses = () => {
         fileInputRef.current?.click();
     };
 
+    const handleFileChange1 = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0] || null;
+        if (file) {
+            setFileName(file.name);
+            setFormData((prev) => ({
+                ...prev,
+                course_picture: file
+            }));
+        }
+    };
+
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0] || null;
         if (file && file.type.startsWith("video/")) {
@@ -294,6 +308,7 @@ export const UseCourses = () => {
             who_can_enroll: formData.who_can_enroll.trim() === '',
             price: !formData.is_free && formData.price === 0,
             categories: selectedItems.length === 0,
+            // course_picture: formData.course_picture == null
         };
       
         setErrors(newErrors);
@@ -335,6 +350,7 @@ export const UseCourses = () => {
             who_can_enroll: formData.who_can_enroll.trim() === '',
             price: !formData.is_free && formData.price === 0,
             categories: selectedItems.length === 0,
+            // course_picture: formData.course_picture == null
         };
       
         setErrors(newErrors);
@@ -622,6 +638,7 @@ export const UseCourses = () => {
         setFormData,
         buttonLoader,
         uploadCourse,
+        handleFileChange1,
         handleInputChange,
         selectedItems, 
         setSelectedItems,

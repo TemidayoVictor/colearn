@@ -21,10 +21,16 @@ const UploadCourseStep1 = ({type}:UploadCourseProps) => {
         uploadCourse,
         editCourse,
         handleCheckChange,
+        handleFileChange1,
         buttonLoader,
+        fileInputRef,
+        handleImageClick,
+        fileName,
     } = UseCourses();
 
     const course = courseStore((state) => state.course);
+    const selectedCategories = courseStore((state) => state.categories);
+    console.log(selectedCategories)
 
     if(type == 'edit') {
         useEffect(() => {
@@ -35,6 +41,7 @@ const UploadCourseStep1 = ({type}:UploadCourseProps) => {
                     who_can_enroll: course?.who_can_enroll || "",
                     price: course?.price || 0,
                     is_free: course?.is_free || false,
+                    course_picture: null,
                 });
             };
     
@@ -100,6 +107,42 @@ const UploadCourseStep1 = ({type}:UploadCourseProps) => {
                                     selected={selectedItems}
                                     setSelected={setSelectedItems}
                                 />
+                            </div>
+                        </div>
+
+                        <div className="mt-4">
+                            <label htmlFor="" className="text-[.9rem] font-semibold">Course Cover Image<span className="text-red-500">*</span> </label>
+                            <div className={`upload-course-video`}>
+                                <div>
+                                    <input
+                                        type="file"
+                                        ref={fileInputRef}
+                                        name="video"
+                                        accept="image/*"
+                                        onChange={(e) => handleFileChange1(e)}
+                                        className="d-none"
+                                        disabled={buttonLoader}
+                                    />
+
+                                    <Image
+                                        aria-hidden
+                                        src="/assets/images/video-upload.png"
+                                        alt="Colearn Logo"
+                                        width={76}
+                                        height={64}
+                                        className="object-contain"
+                                        onClick={handleImageClick}
+                                    />
+                                </div>
+                                <p className="text-[.9rem] font-semibold">Upload a file by clicking the image</p>
+                                <p className="text-[.8rem] color-grey-text text-center">Supported formats: jpg, jpeg, png</p>
+                                {
+                                    fileName && (
+                                    <p className="text-center text-[.8rem] font-semibold">
+                                        Selected File: {fileName}
+                                    </p>
+                                    )
+                                }
                             </div>
                         </div>
 
@@ -214,12 +257,49 @@ const UploadCourseStep1 = ({type}:UploadCourseProps) => {
                         </div>
 
                         <div className="mt-4">
+                            <label htmlFor="" className="text-[.9rem] font-semibold">Course Cover Image<span className="text-red-500">*</span> </label>
+                            <div className={`upload-course-video`}>
+                                <div>
+                                    <input
+                                        type="file"
+                                        ref={fileInputRef}
+                                        name="video"
+                                        accept="image/*"
+                                        onChange={(e) => handleFileChange1(e)}
+                                        className="d-none"
+                                        disabled={buttonLoader}
+                                    />
+
+                                    <Image
+                                        aria-hidden
+                                        src="/assets/images/video-upload.png"
+                                        alt="Colearn Logo"
+                                        width={76}
+                                        height={64}
+                                        className="object-contain"
+                                        onClick={handleImageClick}
+                                    />
+                                </div>
+                                <p className="text-[.9rem] font-semibold">Upload a file by clicking the image</p>
+                                <p className="text-[.8rem] color-grey-text text-center">Supported formats: jpg, jpeg, png</p>
+                                {
+                                    fileName && (
+                                    <p className="text-center text-[.8rem] font-semibold">
+                                        Selected File: {fileName}
+                                    </p>
+                                    )
+                                }
+                            </div>
+                        </div>
+
+                        <div className="mt-4">
                             <label htmlFor="" className="text-[.9rem] font-semibold">Select categories for course<span className="text-red-500">*</span> </label>
                             <div className="mt-1">
                                 <MultiDropdownSelector
                                     options={categories}
                                     selected={selectedItems}
                                     setSelected={setSelectedItems}
+                                    initial={selectedCategories}
                                 />
                             </div>
                         </div>

@@ -3,19 +3,20 @@ import React,  { useState, useRef, useEffect } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 
-type Language = {
+type Options = {
     id: number;
     name: string;
 }
 
 type Props = {
-    options: Language[];
+    options: Options[];
     selected: string[];
     setSelected: (values: string[]) => void;
     selector?: string;
+    initial?: Options[];
   };
 
-const MultiDropdownSelector: React.FC<Props> = ({options, selected, setSelected, selector='name'}) => {
+const MultiDropdownSelector: React.FC<Props> = ({options, selected, setSelected, selector='name', initial=[]}) => {
     const [open, setOpen] = useState<boolean>(false);
     const [searchTerm, setSearchTerm] = useState("");
     const dropdownRef = useRef<HTMLDivElement>(null);
@@ -40,6 +41,12 @@ const MultiDropdownSelector: React.FC<Props> = ({options, selected, setSelected,
           }
         };
         document.addEventListener("mousedown", handleClickOutside);
+        
+        if (initial && initial.length > 0) {
+            const initialNames = initial.map(i => i[selector as keyof Options] as string);
+            setSelected(initialNames);
+        }
+        
         return () => document.removeEventListener("mousedown", handleClickOutside);
     }, []);
 
