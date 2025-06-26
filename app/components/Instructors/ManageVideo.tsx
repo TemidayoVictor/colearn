@@ -37,10 +37,12 @@ const ManageVideo = ({type}: ManageVideoProps) => {
             setFormData3b({
                 title: video?.title || "",
                 order: video?.order || 0,
-                videoId: video?.id || 0,
+                videoId: video?.id || '',
                 duration: video?.duration || 0,
                 video: null                
             });
+
+            courseStore.getState().setVideoId(video?.id);
         };
 
         init();
@@ -266,7 +268,7 @@ const ManageVideo = ({type}: ManageVideoProps) => {
                             
                             (
                                 <div className="bt-btn two">
-                                    <span>Updating Video</span>
+                                    <span>Update Video</span>
                                 </div>                                        
                             )
                         }                                        

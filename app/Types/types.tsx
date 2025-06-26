@@ -37,7 +37,7 @@ export type Course = {
 }
 
 export type Module = {
-    id: number;
+    id: string | undefined;
     course_id: number;
     title: string;
     description: string;
@@ -46,7 +46,7 @@ export type Module = {
 }
 
 export type Video = {
-    id: number;
+    id: string | undefined;
     course_section_id: number;
     title: string;
     video_url: string;
@@ -55,7 +55,7 @@ export type Video = {
 }
 
 export type Resource = {
-    id: number;
+    id: string | undefined;
     course_id: number;
     course_section_id: string | undefined;
     course_video_id: string | undefined;

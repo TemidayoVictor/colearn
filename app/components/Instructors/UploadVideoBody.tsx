@@ -12,6 +12,10 @@ import { useParams } from 'next/navigation';
 import { courseStore } from "@/zustand/courseStore";
 import { get_module_details } from "@/services/courses";
 import { Module, Video } from "@/app/Types/types";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEdit, faTrashAlt, faTimes } from "@fortawesome/free-solid-svg-icons";
+import { motion, AnimatePresence } from 'framer-motion';
+import ButtonLoader from "../buttonLoader";
 
 const UploadVideoBody = () => {
     const params = useParams();
@@ -21,6 +25,8 @@ const UploadVideoBody = () => {
     const [videos, setVideos] = useState<Video[]>([]);
     const [module, setModule] = useState<Module>();
     const newUpdate = courseStore((state) => state.newUpdate);
+    const [openIndex, setOpenIndex] = useState<number | null>(null);
+    const [deleteModal, setDeleteModal] = useState<boolean>(false);
 
     const {
         openModal,
@@ -29,7 +35,28 @@ const UploadVideoBody = () => {
         loading, 
         setLoading,
         openModalEditVideo,
+        buttonLoader,
+        deleteVideo,
     } = UseCourses()
+
+    const toggleMenu = (index: number) => {
+        setOpenIndex(prev => (prev === index ? null : index));
+    };
+
+    const editVideo = (item: Video) => {
+        setOpenIndex(null);
+        openModalEditVideo('edit-video', item)
+    };
+
+    const deleteVideoTrigger = (id: string | undefined): void => {
+        courseStore.getState().setVideoId(id);
+        setOpenIndex(null);
+        setDeleteModal(true);
+    };
+
+    const closeDeleteModal = () => {
+        setDeleteModal(false);
+    }
 
     useEffect(() => {
         
@@ -97,7 +124,7 @@ const UploadVideoBody = () => {
                     <h2 className="title-3 desktop">Video Lessons</h2>
                 </div>
                 <div>
-                    <p className="text-[.9rem] color-grey-text">Step 2 of 3</p>
+                    <p className="text-[.9rem] color-grey-text">Step 3 of 3</p>
                 </div>
             </div>
 
@@ -109,6 +136,24 @@ const UploadVideoBody = () => {
                     <div className="upload-course-body">
                         <h2 className="title-3 mt-2">Add and Manage Videos.</h2>
                         <p className="text-[.9rem] color-grey-text mt-1">Videos are the main content your students will engage with. After creating modules, upload relevant videos under each to deliver your lessons in a clear and structured way.</p>
+                    </div>
+
+                    <div className="upload-course-btns mb-4">
+                        <button className="flex items-center justify-center gap-2 btn btn-primary-fill w-full" onClick={(e) => openModal('add-video')}>
+                            <div className="bt-btn two">
+                                <span>Add New Video</span>
+                                <span>
+                                    <Image
+                                        aria-hidden
+                                        src="/assets/images/arrow-right.png"
+                                        alt="Colearn Logo"
+                                        width={12}
+                                        height={12}
+                                        className="object-contain"
+                                    />
+                                </span>
+                            </div>                                        
+                        </button>
                     </div>
 
                     <div className="best-instructor-cont">
@@ -131,7 +176,39 @@ const UploadVideoBody = () => {
                                             <p className="color-grey-text text-[.8rem]">10 IT & Engineering Courses</p>
                                         </div>
                                     </div>
-                                    <div className="right">
+
+                                    <div className="relative">
+                                        <button className="menu-trigger" onClick={() => toggleMenu(index)}>
+                                            <span className="dot"></span>
+                                            <span className="dot"></span>
+                                            <span className="dot"></span>
+                                        </button>
+                                            
+                                        {
+                                            openIndex === index &&
+                                            <div>
+                                                <div className="menu-overlay active" onClick={() => setOpenIndex(null)}></div>
+                                                <div className="bottom-menu slide-up">
+                                                <div className="menu-actions">
+                                                    {/* <button className="menu-btn">
+                                                        <FontAwesomeIcon icon={faEye} className="icon" /> View Course
+                                                    </button> */}
+                                                    <button className="menu-btn" onClick={(e) => editVideo(item)}>
+                                                        <FontAwesomeIcon icon={faEdit} className="icon"/> Edit Video
+                                                    </button>
+                                                    <button className="menu-btn delete" onClick={(e) => deleteVideoTrigger(item.id)}>
+                                                        <FontAwesomeIcon icon={faTrashAlt} className="icon"/> Delete Video
+                                                    </button>
+                                                    <button className="menu-btn cancel" onClick={() => toggleMenu(index)}>
+                                                        <FontAwesomeIcon icon={faTimes} className="icon"/> Cancel
+                                                    </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+                                    
+                                    {/* <div className="right">
                                         <button className="bt-btn btn btn-primary-fill desktop" onClick={(e) => openModalEditVideo('edit-video', item)}>
                                             <span>View Courses</span>
                                             <span>
@@ -146,34 +223,70 @@ const UploadVideoBody = () => {
                                             </span>
                                         </button>
 
+                                        <button className="bt-btn btn error desktop" onClick={(e) => updateVideoId(item.id)}>
+                                            <span>Delete</span>
+                                        </button>
+
                                         <button className="mobile" onClick={(e) => openModalEditVideo('edit-video', item)}>
                                             <span className="underline text-[.8rem]">View Courses</span>
                                         </button>
-                                    </div>
+
+                                        <button className="mobile" onClick={(e) => updateVideoId(item.id)}>
+                                            <span className="underline text-[.8rem]">Delete</span>
+                                        </button>
+                                    </div> */}
                                 </div>
                             ))
                         }
                     </div>
-
-                    <div className="upload-course-btns">
-                        <button className="flex items-center justify-center gap-2 btn btn-primary-fill w-full" onClick={(e) => openModal('add-video')}>
-                            <div className="bt-btn two">
-                                <span>Add New Video</span>
-                                <span>
-                                    <Image
-                                        aria-hidden
-                                        src="/assets/images/arrow-right.png"
-                                        alt="Colearn Logo"
-                                        width={12}
-                                        height={12}
-                                        className="object-contain"
-                                    />
-                                </span>
-                            </div>                                        
-                        </button>
-                    </div>
-
                 </div>
+                {
+                    deleteModal &&
+                    <div>
+                        <AnimatePresence>
+                            <motion.div
+                                className="modal-container"
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                exit={{ opacity: 0 }}
+                            >
+                                <motion.div
+                                className="bg-white rounded-2xl p-6 w-[80%] max-w-md shadow-xl"
+                                initial={{ y: -50, opacity: 0 }}
+                                animate={{ y: 0, opacity: 1 }}
+                                exit={{ y: 20, opacity: 0 }}
+                                >
+                                <h2 className="title-3">Confirm Delete</h2>
+                                <p className="text-[.9rem] color-grey-text">
+                                    Are you sure you want to delete this video? This action cannot be undone.
+                                </p>
+
+                                <div className="mt-6 flex justify-end gap-3">
+                                    <button
+                                    onClick={closeDeleteModal}
+                                    className="px-4 py-2 bg-gray-200 text-gray-800 text-[.8rem] rounded-md hover:bg-gray-300 transition"
+                                    >
+                                    Cancel
+                                    </button>
+                                    <button
+                                    onClick={deleteVideo}
+                                    className="px-4 py-2 bg-red-600 text-white text-[.8rem] rounded-md hover:bg-red-700 transition"
+                                    >
+                                    {
+                                        buttonLoader ? (
+                                            <ButtonLoader content="Deleting . . . "/>
+                                        ) : (
+                                            'Delete'
+                                        )
+                                    }
+
+                                    </button>
+                                </div>
+                                </motion.div>
+                            </motion.div>
+                        </AnimatePresence>
+                    </div>
+                }
             </div>
             {
                 showModal && 

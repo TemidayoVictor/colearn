@@ -9,6 +9,9 @@ import ChangePassword from "./ChangePassword";
 import ManageModule from "./ManageModule";
 import ManageVideo from "./ManageVideo";
 import ManageResoure from "./ManageResource";
+import { motion, AnimatePresence } from 'framer-motion';
+import { UseCourses } from "@/hooks/useCourses";
+import ButtonLoader from "../buttonLoader";
 
 type AccountModalProps = {
     modalType: string;
@@ -21,6 +24,14 @@ type AccountModalProps = {
 const AccountModal = ({modalType, modalClose, experience, bank, subType}: AccountModalProps) => {
     const [selectedItems, setSelectedItems] = useState<string[]>([]);
     
+    const {
+        buttonLoader,
+        deleteCourse,
+        deleteModule,
+        deleteVideo,
+        deleteResource,
+    } = UseCourses();
+
     const [formData, setFormData] = useState({
         company: experience?.company || "",
         title: experience?.title || "",
@@ -480,6 +491,54 @@ const AccountModal = ({modalType, modalClose, experience, bank, subType}: Accoun
                     </div>
                 }
 
+{
+                    modalType == 'delete-course' &&
+                    <div>
+                        <AnimatePresence>
+                            <motion.div
+                                className="fixed inset-0 bg-black bg-opacity-10 flex items-center justify-center z-50"
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                exit={{ opacity: 0 }}
+                            >
+                                <motion.div
+                                className="bg-white rounded-2xl p-6 w-[80%] max-w-md shadow-xl"
+                                initial={{ y: -50, opacity: 0 }}
+                                animate={{ y: 0, opacity: 1 }}
+                                exit={{ y: 20, opacity: 0 }}
+                                >
+                                <h2 className="title-3">Confirm Delete</h2>
+                                <p className="text-[.9rem] color-grey-text">
+                                    Are you sure you want to delete this course? This action cannot be undone.
+                                </p>
+
+                                <div className="mt-6 flex justify-end gap-3">
+                                    <button
+                                    onClick={modalClose}
+                                    className="px-4 py-2 bg-gray-200 text-gray-800 text-[.8rem] rounded-md hover:bg-gray-300 transition"
+                                    >
+                                    Cancel
+                                    </button>
+                                    <button
+                                    onClick={deleteCourse}
+                                    className="px-4 py-2 bg-red-600 text-white text-[.8rem] rounded-md hover:bg-red-700 transition"
+                                    >
+                                    {
+                                        buttonLoader ? (
+                                            <ButtonLoader content="Deleting . . . "/>
+                                        ) : (
+                                            'Delete'
+                                        )
+                                    }
+
+                                    </button>
+                                </div>
+                                </motion.div>
+                            </motion.div>
+                        </AnimatePresence>
+                    </div>
+                }
+
                 {
                     modalType == 'add-module' &&
                     <ManageModule type="add" />
@@ -508,6 +567,54 @@ const AccountModal = ({modalType, modalClose, experience, bank, subType}: Accoun
                 {
                     modalType == 'edit-resource' &&
                     <ManageResoure type="edit" />
+                }
+
+                {
+                    modalType == 'delete-resource' &&
+                    <div>
+                        <AnimatePresence>
+                            <motion.div
+                                className="fixed inset-0 bg-black bg-opacity-10 flex items-center justify-center z-50"
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                exit={{ opacity: 0 }}
+                            >
+                                <motion.div
+                                className="bg-white rounded-2xl p-6 w-[80%] max-w-md shadow-xl"
+                                initial={{ y: -50, opacity: 0 }}
+                                animate={{ y: 0, opacity: 1 }}
+                                exit={{ y: 20, opacity: 0 }}
+                                >
+                                <h2 className="title-3">Confirm Delete</h2>
+                                <p className="text-[.9rem] color-grey-text">
+                                    Are you sure you want to delete this resource? This action cannot be undone.
+                                </p>
+
+                                <div className="mt-6 flex justify-end gap-3">
+                                    <button
+                                    onClick={modalClose}
+                                    className="px-4 py-2 bg-gray-200 text-gray-800 text-[.8rem] rounded-md hover:bg-gray-300 transition"
+                                    >
+                                    Cancel
+                                    </button>
+                                    <button
+                                    onClick={deleteResource}
+                                    className="px-4 py-2 bg-red-600 text-white text-[.8rem] rounded-md hover:bg-red-700 transition"
+                                    >
+                                    {
+                                        buttonLoader ? (
+                                            <ButtonLoader content="Deleting . . . "/>
+                                        ) : (
+                                            'Delete'
+                                        )
+                                    }
+
+                                    </button>
+                                </div>
+                                </motion.div>
+                            </motion.div>
+                        </AnimatePresence>
+                    </div>
                 }
                 
                 <div className="modal-close">

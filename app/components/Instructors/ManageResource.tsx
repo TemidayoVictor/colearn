@@ -45,8 +45,10 @@ const ManageResoure = ({type}: ManageResoureProps) => {
                 videoId: resource?.course_video_id || "",
                 document: null,
                 url: resource?.external_url || "",
-                resourceId: resource?.id || 0,
+                resourceId: resource?.id || '',
             });
+
+            courseStore.getState().setResourceId(resource?.id);
         };
 
         init();

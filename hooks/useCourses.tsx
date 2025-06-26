@@ -5,7 +5,13 @@ import { authStore } from "@/zustand/authStore";
 import { useRouter } from 'next/navigation';
 import { utilitiesStore } from "@/zustand/utilitiesStore";
 import { courseStore } from "@/zustand/courseStore";
-import { upload_course, edit_course, add_module, edit_module, upload_video, edit_video, upload_resource, edit_resource, publish_course } from "@/services/courses";
+import {    
+            upload_course, edit_course, delete_course,
+            add_module, edit_module, delete_module,
+            upload_video, edit_video, delete_video,
+            upload_resource, edit_resource, delete_resource,
+            publish_course
+        } from "@/services/courses";
 import { Module, Video, Resource } from "@/app/Types/types";
 
 export const UseCourses = () => {
@@ -13,6 +19,8 @@ export const UseCourses = () => {
     const user = authStore((state) => state.user);
     const courseId = courseStore((state) => state.courseId);
     const moduleId = courseStore((state) => state.moduleId);
+    const videoId = courseStore((state) => state.videoId);
+    const resourceId = courseStore((state) => state.resourceId);
     const userId = user?.id;
     const categories = utilitiesStore((state) => state.categories);
 
@@ -66,12 +74,12 @@ export const UseCourses = () => {
         title: string;
         description: string;
         order: number;
-        moduleId: number;
+        moduleId: string | undefined;
       }>({
         title: '',
         description: '',
         order: 0,
-        moduleId: 0,
+        moduleId: '',
     });
 
     const [errors2b, setErrors2b] = useState({
@@ -101,13 +109,13 @@ export const UseCourses = () => {
         video: File | null;
         duration: number;
         order: number;
-        videoId: number;
+        videoId: string | undefined;
       }>({
         title: '',
         video: null,
         duration: 0,
         order: 0,
-        videoId: 0,
+        videoId: '',
     });
 
     const [errors3b, setErrors3b] = useState({
@@ -152,7 +160,7 @@ export const UseCourses = () => {
         videoId: string | undefined;
         document: File | null;
         url: string | undefined;
-        resourceId: number;
+        resourceId: string | undefined;
       }>({
         title: '',
         type: '',
@@ -161,7 +169,7 @@ export const UseCourses = () => {
         videoId: '',
         document: null,
         url: '',
-        resourceId: 0,
+        resourceId: '',
 
     });
 
@@ -385,6 +393,30 @@ export const UseCourses = () => {
         }
     }
 
+    const deleteCourse = async () => {
+        try {
+            setButtonLoader(true)
+            const response = await delete_course(courseId);
+            if (response.success) {
+                setButtonLoader(false)
+                showSuccessToast(response.message)
+                courseStore.getState().setNewUpdate('set');
+            } 
+
+            else {
+                setButtonLoader(false)
+                showErrorToast(response.message)
+                console.log(response)
+            }
+        }
+
+        catch (err: any) {
+            console.log(err)
+            setButtonLoader(false)
+            showErrorToast('Unexpected error occurred');
+        }
+    }
+
     const uploadModule = async () => {
 
         const newErrors = {
@@ -466,6 +498,32 @@ export const UseCourses = () => {
         }
     }
 
+    const deleteModule = async () => {
+        console.log('Module ID:' + moduleId)
+        return
+        try {
+            setButtonLoader(true)
+            const response = await delete_module(moduleId);
+            if (response.success) {
+                setButtonLoader(false)
+                showSuccessToast(response.message)
+                courseStore.getState().setNewUpdate('set');
+            } 
+
+            else {
+                setButtonLoader(false)
+                showErrorToast(response.message)
+                console.log(response)
+            }
+        }
+
+        catch (err: any) {
+            console.log(err)
+            setButtonLoader(false)
+            showErrorToast('Unexpected error occurred');
+        }
+    }
+
     const uploadVideo = async () => {
 
         const newErrors = {
@@ -512,7 +570,7 @@ export const UseCourses = () => {
             title: formData3b.title.trim() === '',
             duration: formData3b.duration === 0,
             order: formData3b.order === 0,
-            videoId: formData3b.videoId === 0,
+            videoId: formData3b.videoId === '',
         };
       
         setErrors3b(newErrors);
@@ -527,6 +585,32 @@ export const UseCourses = () => {
         try {
             setButtonLoader(true)
             const response = await edit_video(formData3b, moduleId);
+            if (response.success) {
+                setButtonLoader(false)
+                showSuccessToast(response.message)
+                courseStore.getState().setNewUpdate('set');
+            } 
+
+            else {
+                setButtonLoader(false)
+                showErrorToast(response.message)
+                console.log(response)
+            }
+        }
+
+        catch (err: any) {
+            console.log(err)
+            setButtonLoader(false)
+            showErrorToast('Unexpected error occurred');
+        }
+    }
+
+    const deleteVideo = async () => {
+        console.log('Video ID:' + videoId)
+        return
+        try {
+            setButtonLoader(true)
+            const response = await delete_video(videoId);
             if (response.success) {
                 setButtonLoader(false)
                 showSuccessToast(response.message)
@@ -596,7 +680,7 @@ export const UseCourses = () => {
             category: formData4b.category.trim() === '',
             type: formData4b.type.trim() === '',
             url: formData4b.type === 'link' && formData4b.url === '',
-            resourceId: formData4b.resourceId == 0,
+            resourceId: formData4b.resourceId == '',
         };
       
         setErrors4b(newErrors);
@@ -612,6 +696,33 @@ export const UseCourses = () => {
         try {
             setButtonLoader(true)
             const response = await edit_resource(formData4b);
+            if (response.success) {
+                setButtonLoader(false)
+                showSuccessToast(response.message)
+                courseStore.getState().setNewUpdate('set');
+            } 
+
+            else {
+                setButtonLoader(false)
+                showErrorToast(response.message)
+                console.log(response)
+            }
+        }
+
+        catch (err: any) {
+            console.log(err)
+            setButtonLoader(false)
+            showErrorToast('Unexpected error occurred');
+        }
+    }
+
+    const deleteResource = async () => {
+        console.log('Resource ID:' + resourceId)
+        return
+
+        try {
+            setButtonLoader(true)
+            const response = await delete_resource(resourceId);
             if (response.success) {
                 setButtonLoader(false)
                 showSuccessToast(response.message)
@@ -713,5 +824,9 @@ export const UseCourses = () => {
         editResource,
         openModalEditResource,
         publishCourse,
+        deleteCourse,
+        deleteModule,
+        deleteVideo,
+        deleteResource,
     }
 }

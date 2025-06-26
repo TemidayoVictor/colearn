@@ -30,8 +30,10 @@ const ManageModule = ({type}: ManageModuleProps) => {
                 title: module?.title || "",
                 description: module?.description || "",
                 order: module?.order || 0,
-                moduleId: module?.id || 0,
+                moduleId: module?.id || '',
             });
+
+            courseStore.getState().setModuleId(module?.id);
         };
 
         init();

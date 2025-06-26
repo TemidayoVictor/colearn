@@ -111,6 +111,21 @@ export const get_course_details_edit = async (courseId: string) => {
     }
 }
 
+export const delete_course = async (courseId: string | undefined) => {
+    try {
+        const data = new FormData();
+
+        data.append('courseId', String(courseId));
+
+        const response = await axiosInstance.post("/delete-course", data);
+        return handleApiResponse(response);
+    }
+
+    catch(error: any) {
+        return handleApiError(error)
+    }
+}
+
 export const add_module = async (formData: {
     title: string;
     description: string;
@@ -135,7 +150,7 @@ export const edit_module = async (formData: {
     title: string;
     description: string;
     order: number;
-    moduleId: number;
+    moduleId: string | undefined;
 }, courseId: string | undefined) => {
     try {
         const data = new FormData();
@@ -162,6 +177,21 @@ export const get_module_details = async (moduleId: string | undefined) => {
         data.append('moduleId', String(moduleId));
 
         const response = await axiosInstance.post("/get-module-details", data);
+        return handleApiResponse(response);
+    }
+
+    catch(error: any) {
+        return handleApiError(error)
+    }
+}
+
+export const delete_module = async (moduleId: string | undefined) => {
+    try {
+        const data = new FormData();
+
+        data.append('moduleId', String(moduleId));
+
+        const response = await axiosInstance.post("/delete-module", data);
         return handleApiResponse(response);
     }
 
@@ -219,7 +249,7 @@ export const edit_video = async (formData: {
     video: File | null;
     duration: number;
     order: number;
-    videoId: number;
+    videoId: string | undefined;
 }, moduleId: string | undefined) => {
 
     // setUploading(true);
@@ -259,6 +289,21 @@ export const edit_video = async (formData: {
     catch(error: any) {
         // setUploading(false);
         courseStore.getState().setUploading(false);
+        return handleApiError(error)
+    }
+}
+
+export const delete_video = async (videoId: string | undefined) => {
+    try {
+        const data = new FormData();
+
+        data.append('videoId', String(videoId));
+
+        const response = await axiosInstance.post("/delete-video", data);
+        return handleApiResponse(response);
+    }
+
+    catch(error: any) {
         return handleApiError(error)
     }
 }
@@ -324,7 +369,7 @@ export const edit_resource = async (formData: {
     videoId: string | undefined;
     document: File | null;
     url: string | undefined;
-    resourceId: number;
+    resourceId: string | undefined;
 }) => {
     
     // setUploading(true);
@@ -365,6 +410,21 @@ export const edit_resource = async (formData: {
     catch(error: any) {
         // setUploading(false);
         courseStore.getState().setUploading(false);
+        return handleApiError(error)
+    }
+}
+
+export const delete_resource = async (resourceId: string | undefined) => {
+    try {
+        const data = new FormData();
+
+        data.append('resourceId', String(resourceId));
+
+        const response = await axiosInstance.post("/delete-resource", data);
+        return handleApiResponse(response);
+    }
+
+    catch(error: any) {
         return handleApiError(error)
     }
 }
