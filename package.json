@@ -33,6 +33,7 @@
     "react-dom": "^19.1.0",
     "react-toastify": "^11.0.5",
     "recharts": "^2.15.3",
+    "relative-time": "^1.0.0",
     "swiper": "^11.2.6",
     "zustand": "^5.0.5"
   },

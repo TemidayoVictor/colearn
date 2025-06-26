@@ -25,7 +25,7 @@ type Student = {
 }
 
 type Instructor = {
-  id: number;
+  id: string | undefined;
   user_id: number;
   title: string;
   professional_headline: string;
@@ -49,9 +49,11 @@ type AuthState = {
   student: Student | null;
   instructor: Instructor | null;
   isInitialized: boolean;
+
   setUser: (user: User) => void;
   setStudent: (student: Student) => void;
   setInstructor: (instructor: Instructor) => void;
+  
   clearUser: () => void;
 };
 
@@ -62,9 +64,11 @@ export const authStore = create<AuthState>()(
       student: null,
       instructor: null,
       isInitialized: false,
+
       setUser: (user) => set({ user, isInitialized: true }),
       setStudent: (student) => set({ student }),
       setInstructor: (instructor) => set({ instructor }),
+      
       clearUser: () => {
         set({ user: null, student: null, instructor: null, isInitialized: false });
         localStorage.removeItem('auth-storage'); // Remove persisted state

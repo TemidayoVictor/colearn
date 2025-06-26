@@ -25,7 +25,7 @@ export type ApiResponseType =
   | { success: false; message: any; errors: any };
 
 export type Course = {
-    id: number;
+    id: string | undefined;
     instructor_id: number;
     title: string;
     description: string;
@@ -34,6 +34,7 @@ export type Course = {
     is_published: boolean;
     price: number;
     is_free: boolean;
+    created_at: Date
 }
 
 export type Module = {

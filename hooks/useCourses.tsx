@@ -334,7 +334,7 @@ export const UseCourses = () => {
             if (response.success) {
                 setButtonLoader(false)
                 showSuccessToast(response.message)
-                router.push(`/instructors/upload-course-data/${response.data.course.id}`);
+                router.push(`/instructors/manage-course-data/${response.data.course.id}`);
             } 
 
             else {

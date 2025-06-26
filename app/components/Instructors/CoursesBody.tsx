@@ -1,20 +1,20 @@
 'use client';
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import Image from "next/image";
 import Link from "next/link";
 import CoursesBox from "./CoursesBox";
 
 const CoursesBody = () => {
+    
     const [selectedTab, setSelectedTab] = useState<string>('live');
     const [selectedView, setSelectedView] = useState<string>('grid');
+
     return (
         <div className="mt-[2em]">
             <div className="in-nav mb-[1.5em] flex items-center justify-between">
-                
-                <div className="in-nav two">
-                    <span className={`in-nav-link flex gap-2 items-center two color-grey-text ${selectedTab == 'live' ? 'active' : ''}`} onClick={() => setSelectedTab('live')}> <span>Live Courses</span> <span className="number">24</span></span>
-                    <span className={`in-nav-link flex gap-2 items-center two color-grey-text ${selectedTab == 'draft' ? 'active' : ''}`} onClick={() => setSelectedTab('draft')}> <span>Draft</span> <span className="number">3</span></span>
-                    <span className={`in-nav-link flex gap-2 items-center two color-grey-text ${selectedTab == 'trash' ? 'active' : ''}`} onClick={() => setSelectedTab('trash')}> <span>Trash</span> <span className="number">2</span></span>
+                <div className="in-nav two scrollable">
+                    <span className={`in-nav-link three flex gap-2 items-center two color-grey-text ${selectedTab == 'live' ? 'active' : ''}`} onClick={() => setSelectedTab('live')}> <span>Published Courses</span> <span className="number">3</span></span>
+                    <span className={`in-nav-link three flex gap-2 items-center two color-grey-text ${selectedTab == 'draft' ? 'active' : ''}`} onClick={() => setSelectedTab('draft')}> <span>Drafts</span> <span className="number">3</span></span>
                 </div>
 
                 <div className="desktop-flex items-center gap-3">
@@ -72,24 +72,27 @@ const CoursesBody = () => {
             </div>
 
             <div className="spacing-inter">
-                <div className="flex items-center justify-between">
-                    <div className="flex items-center justify-between gap-2 bg-white py-[.3em] px-1 rounded-[.3rem] bod-grey courses-search-lenght">
-                        <Image
-                            aria-hidden
-                            src="/assets/images/search-normal-2.png"
-                            alt="Colearn Logo"
-                            width={20}
-                            height={20}
-                            className="object-contain"
-                        />
-                        <div className="w-[100%]">
-                            <input type="text" placeholder="Search" className="w-[100%] color-grey-text text-[.9rem] p-[.3em]" />
+                <div className="upload-course-top">
+                    <div className="flex gap-2 left">
+                        <div className="search-container">
+                            <Image
+                                aria-hidden
+                                src="/assets/images/search-normal-2.png"
+                                alt="Colearn Logo"
+                                width={20}
+                                height={20}
+                                className="object-contain"
+                            />
+                            <div className="w-[100%]">
+                                <input type="text" placeholder="Search" className="w-[100%] color-grey-text text-[.9rem]" />
+                            </div>
                         </div>
-                        <button className="btn btn-small btn-primary-fill">Search</button>
+
+                        <button className="btn btn-primary-fill">Search</button>
                     </div>
 
-                    <div>
-                        <Link href="/instructors/upload-course" className="btn normal ">Upload Course</Link>
+                    <div className="right">
+                        <Link href="/instructors/upload-course" className="btn btn-primary-fill">Upload Course</Link>
                     </div>
                 </div>  
             </div>

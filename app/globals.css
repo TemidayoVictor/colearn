@@ -2237,6 +2237,11 @@ td {
 .course-top {
   background-color: var(--grey-active);
   padding: .5em;
+  height: 13rem;
+}
+
+.course-top img {
+  height: 100%;
 }
 
 .course-bottom {
@@ -2250,6 +2255,41 @@ td {
 
 .courses-search-lenght.two {
   width: 50%;
+}
+
+.courses-search-lenght.full {
+  width: 100%;
+}
+
+.upload-course-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.upload-course-top .left {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.upload-course-top .right {
+  display: flex;
+  align-items: end;
+  justify-content: end;
+  width: 30%;
+}
+
+.search-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: .5em;
+  background-color: white;
+  padding: .4em 1.5em;
+  border-radius: .3em;
+  border: var(--border-grey);
+  width: 90%;
 }
 
 /* Upload Course */
@@ -3190,12 +3230,24 @@ td {
   .bottom-menu {
     position: absolute;
     bottom: auto;
-    top: -150%;
+    top: 150%;
     left: 200%;
     right: 0;
     width: 200px;
     padding: 12px;
     border-radius: 10px;
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.15);
+    transition: opacity 0.3s ease;
+  }
+
+  .bottom-menu.two {
+    position: absolute;
+    bottom: auto;
+    top: -120%;
+    left: 0;
+    width: 100%;
+    padding: 12px;
+    border-radius: 0;
     box-shadow: 0 2px 20px rgba(0, 0, 0, 0.15);
     transition: opacity 0.3s ease;
   }
@@ -3993,6 +4045,22 @@ td {
     min-width: 18rem;
     scroll-snap-align: start;
   }
+
+  .upload-course-top {
+    flex-direction: column-reverse;
+    align-items: start;
+    justify-content: start;
+  }
+
+  .upload-course-top .left {
+    width: 100%;
+  }
+
+  .upload-course-top .right {
+    width: 100%;
+    margin-bottom: .5em;
+  }
+
 
   .in-nav-link.long {
     min-width: 10rem;
