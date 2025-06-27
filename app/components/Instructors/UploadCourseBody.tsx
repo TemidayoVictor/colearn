@@ -4,20 +4,13 @@ import Image from "next/image";
 import UploadCourseForm from "./UploadCourseForm";
 import Link from "next/link";
 import { useAuthInstructors } from "@/hooks/useAuth";
-import Loader from "../Loader";
 import { useRouter } from "next/navigation";
-import { UseCourses } from "@/hooks/useCourses";
 
 const UploadCourseBody = () => {
     const router = useRouter(); 
     const [step, setStep] = useState<number>(0);
     const [newUpdate, setNewUpdate] = useState<string>('reset');
-    const [loading, setLoading] = useState<boolean>(true);
-
-    const {
-        buttonLoader,
-        uploadCourse,
-    } = UseCourses()
+    // const [loading, setLoading] = useState<boolean>(true);
 
     const updateStep = (newstep: number) => {
         setStep(newstep);
@@ -26,7 +19,7 @@ const UploadCourseBody = () => {
     useEffect(() => {
         const init = async () => {
           await useAuthInstructors(router); // ✅ valid usage
-          setLoading(false);
+        //   setLoading(false);
           setNewUpdate("reset");
         };
         init();

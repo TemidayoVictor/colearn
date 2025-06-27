@@ -86,7 +86,7 @@ body {
   display: flex;
 }
 
-input, textarea {
+input, textarea, select {
   outline: none;
 }
 
@@ -288,6 +288,10 @@ input, textarea {
 
 .btn.spec {
   padding: .7rem 2.3rem;
+}
+
+.btn.full {
+  width: 100%;
 }
 
 .login-btn-1 {

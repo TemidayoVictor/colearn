@@ -248,17 +248,35 @@ const InstructorSidebarContent = () => {
                     <p className="text-[.9rem]">Help Desk</p>
                 </Link>
 
-                <Link href='/' className="sidebar-link">
-                    <Image
-                        aria-hidden
-                        src="/assets/images/teacher.png"
-                        alt="Colearn Image"
-                        width={20}
-                        height={20}
-                        className="object-cover"
-                    />
+                <Link href='/instructors/become-consultant' className={`sidebar-link ${pathname == '/instructors/become-consultant' ? 'active' : ''}`}>
+                    {
+                        pathname == '/instructors/become-consultant' ? (
+
+                            <Image
+                                aria-hidden
+                                src="/assets/images/teacher-active.png"
+                                alt="Colearn Image"
+                                width={20}
+                                height={20}
+                                className="object-cover"
+                            />
+
+                        ) : (
+
+                            <Image
+                                aria-hidden
+                                src="/assets/images/teacher.png"
+                                alt="Colearn Image"
+                                width={20}
+                                height={20}
+                                className="object-cover"
+                            />
+
+                        )
+                    }
                     <p className="text-[.9rem]">Become a Consultant</p>
                 </Link>
+
                 <button className="sidebar-link" onClick={() => logoutHook(setLoading)}>
                     <Image
                         aria-hidden
