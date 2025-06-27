@@ -6,23 +6,29 @@ import BecomeConsultantCertifications from "./BecomeConsultantCertifications";
 import BecomeConsultantVideo from "./BecomeConsultantVideo";
 import Loader from "../Loader";
 import { useRouter } from "next/navigation";
+import { authStore } from "@/zustand/authStore";
+import { courseStore } from "@/zustand/courseStore";
 
 const BecomeConsultantBody = () => {
     const router = useRouter(); 
-    const [step, setStep] = useState<number>(0);
-    const [newUpdate, setNewUpdate] = useState<string>('reset');
-
-    const updateStep = (newstep: number) => {
-        setStep(newstep);
-    }
+    const [loading, setLoading] = useState<boolean>(true);
+    const instructor = authStore((state) => state.instructor);
+    const consultantProgress = instructor?.consultant_progress
+    
+    const newUpdate = courseStore((state) => state.newUpdate);
 
     useEffect(() => {
+        setLoading(true);
         const init = async () => {
           await useAuthInstructors(router); 
-          setNewUpdate("reset");
+          courseStore.getState().setNewUpdate('reset');
+          setLoading(false);
         };
         init();
+
     }, [newUpdate]);
+
+    if(loading) return <Loader />
     
     return (
         <div>
@@ -32,15 +38,25 @@ const BecomeConsultantBody = () => {
                     <h2 className="title-3 desktop">Become a Consultant</h2>
                 </div>
                 <div>
-                    {
-                        step < 3 &&
-                        <p className="text-[.9rem] color-grey-text">Step {step + 1} of 3</p>
-                    }
+                    <p className="text-[.9rem] color-grey-text">Step {consultantProgress ? consultantProgress + 1 : 1} of 3</p>
                 </div>
             </div>
 
             <div>
-                <BecomeConsultantSchool />
+                {
+                    consultantProgress == 0 &&
+                    <BecomeConsultantSchool />
+                }
+
+                {
+                    consultantProgress == 1 &&
+                    <BecomeConsultantCertifications />
+                }
+
+                {
+                    consultantProgress == 2 &&
+                    <BecomeConsultantVideo />
+                }
             </div>
 
         </div>

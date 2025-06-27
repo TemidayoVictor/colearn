@@ -42,6 +42,10 @@ type Instructor = {
   is_active: string | null;
   disciplines: string | null;
   languages: string[];
+  category: string;
+  consultant: boolean;
+  intro_video_url: string;
+  consultant_progress: number;
 }
   
 type AuthState = {

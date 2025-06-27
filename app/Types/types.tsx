@@ -72,3 +72,20 @@ export type Category = {
     id: number;
     name: string;
 }
+
+export type School = {
+    name: string;
+    degree: string;
+    field_of_study: string;
+    start_year: string;
+    end_year: string;
+}
+
+export type Certification = {
+    name: string;
+    organization: string;
+    iss_date: string;
+    exp_date: string;
+    credential_url: string;
+    image: File | null;
+}

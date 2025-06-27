@@ -484,9 +484,6 @@ export const useOnboarding = () => {
             setButtonLoader(false)
             showErrorToast('Unexpected error occurred');
         }
-
-
-        console.log(experiences);
     }
 
     const {logoutHook} = useLogout();
