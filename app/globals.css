@@ -3230,7 +3230,7 @@ td {
   .bottom-menu {
     position: absolute;
     bottom: auto;
-    top: 150%;
+    top: -30%;
     left: 200%;
     right: 0;
     width: 200px;
@@ -4044,6 +4044,10 @@ td {
     padding: 0;
     min-width: 18rem;
     scroll-snap-align: start;
+  }
+
+  .course-top {
+    height: 15rem;
   }
 
   .upload-course-top {

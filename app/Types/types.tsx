@@ -35,6 +35,7 @@ export type Course = {
     price: number;
     is_free: boolean;
     created_at: Date
+    videos_count: number;
 }
 
 export type Module = {
@@ -43,7 +44,7 @@ export type Module = {
     title: string;
     description: string;
     order: number;
-    videos: number;
+    videos_count: number;
 }
 
 export type Video = {

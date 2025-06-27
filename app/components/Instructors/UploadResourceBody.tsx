@@ -11,6 +11,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEdit, faTrashAlt, faTimes } from "@fortawesome/free-solid-svg-icons";
 import { motion, AnimatePresence } from 'framer-motion';
 import ButtonLoader from "../buttonLoader";
+import EmptyPage from "../EmptyPage";
 
 const UploadResourceBody = () => {    
     const resources = courseStore((state) => state.resources);
@@ -72,86 +73,65 @@ const UploadResourceBody = () => {
 
             <div className="best-instructor-cont">
                 {
-                    resources.map((item, index) => (
-                        <div className="best-instructor-box" key={index}>
-                            <div className="flex items-center gap-2 left">
-                                <div>
-                                    <Image
-                                        aria-hidden
-                                        src="/assets/images/avatars-2.png"
-                                        alt="Colearn Image"
-                                        width={56}
-                                        height={56}
-                                        className="object-cover rounded-[50%]"
-                                    />
-                                </div>
-                                <div>
-                                    <p className="font-semibold">{item.title}</p>
-                                    <p className="color-grey-text text-[.8rem]">10 IT & Engineering Courses</p>
-                                </div>
-                            </div>
-                            <div className="relative">
-                                <button className="menu-trigger" onClick={() => toggleMenu(index)}>
-                                    <span className="dot"></span>
-                                    <span className="dot"></span>
-                                    <span className="dot"></span>
-                                </button>
-                                    
-                                {
-                                    openIndex === index &&
+                    resources.length > 0 ? (
+                        resources.map((item, index) => (
+                            <div className="best-instructor-box" key={index}>
+                                <div className="flex items-center gap-2 left">
                                     <div>
-                                        <div className="menu-overlay active" onClick={() => setOpenIndex(null)}></div>
-                                        <div className="bottom-menu slide-up">
-                                        <div className="menu-actions">
-                                            {/* <button className="menu-btn">
-                                                <FontAwesomeIcon icon={faEye} className="icon" /> View Course
-                                            </button> */}
-                                            <button className="menu-btn" onClick={(e) => editResource(item)}>
-                                                <FontAwesomeIcon icon={faEdit} className="icon"/> Edit Resource
-                                            </button>
-                                            <button className="menu-btn delete" onClick={(e) => deleteResourceTrigger(item.id)}>
-                                                <FontAwesomeIcon icon={faTrashAlt} className="icon"/> Delete Resource
-                                            </button>
-                                            <button className="menu-btn cancel" onClick={() => toggleMenu(index)}>
-                                                <FontAwesomeIcon icon={faTimes} className="icon"/> Cancel
-                                            </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                }
-                            </div>
-                            {/* <div className="right">
-                                <button className="bt-btn btn btn-primary-fill desktop" onClick={(e) => openModalEditResource('edit-resource', item)}>
-                                    <span>View Courses</span>
-                                    <span>
                                         <Image
                                             aria-hidden
-                                            src="/assets/images/arrow-right.png"
-                                            alt="Colearn Logo"
-                                            width={12}
-                                            height={12}
-                                            className="object-contain"
+                                            src="/assets/images/resource-1.png"
+                                            alt="Colearn Image"
+                                            width={56}
+                                            height={56}
+                                            className="object-cover rounded-[50%]"
                                         />
-                                    </span>
-                                </button>
-
-                                <button className="bt-btn btn btn error desktop" onClick={(e) => updateResoureId(item.id)}>
-                                    <span>Delete</span>
-                                </button>
-
-                                <button className="mobile" onClick={(e) => openModalEditResource('edit-resource', item)}>
-                                    <span className="underline text-[.8rem]">View Courses</span>
-                                </button>
-
-                                <button className="mobile"  onClick={(e) => updateResoureId(item.id)}>
-                                    <span className="underline text-[.8rem]">Delete</span>
-                                </button>
-                            </div> */}
+                                    </div>
+                                    <div className="w-[70%]">
+                                        <p className="font-semibold">{item.title}</p>
+                                        <p className="color-grey-text text-[.8rem] font-semibold">{item.category} | {item.type == 'document' ? 'Document' : item.type == 'link' ? 'External URL' : ''}</p>
+                                    </div>
+                                </div>
+                                <div className="relative">
+                                    <button className="menu-trigger" onClick={() => toggleMenu(index)}>
+                                        <span className="dot"></span>
+                                        <span className="dot"></span>
+                                        <span className="dot"></span>
+                                    </button>
+                                        
+                                    {
+                                        openIndex === index &&
+                                        <div>
+                                            <div className="menu-overlay active" onClick={() => setOpenIndex(null)}></div>
+                                            <div className="bottom-menu slide-up">
+                                            <div className="menu-actions">
+                                                {/* <button className="menu-btn">
+                                                    <FontAwesomeIcon icon={faEye} className="icon" /> View Course
+                                                </button> */}
+                                                <button className="menu-btn" onClick={(e) => editResource(item)}>
+                                                    <FontAwesomeIcon icon={faEdit} className="icon"/> Edit Resource
+                                                </button>
+                                                <button className="menu-btn delete" onClick={(e) => deleteResourceTrigger(item.id)}>
+                                                    <FontAwesomeIcon icon={faTrashAlt} className="icon"/> Delete Resource
+                                                </button>
+                                                <button className="menu-btn cancel" onClick={() => toggleMenu(index)}>
+                                                    <FontAwesomeIcon icon={faTimes} className="icon"/> Cancel
+                                                </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        ))
+                    ) : (
+                        <div>
+                            <EmptyPage image="/assets/images/empty-image.png"  header="No Resources Added" content="Helpful resources like PDFs, articles, and links enhance learning. Upload your first one to support your students." imageWidth={400} imageHeight={240}/>
                         </div>
-                    ))
+                    )
                 }
 
-{
+                {
                     deleteModal &&
                     <div>
                         <AnimatePresence>

@@ -3,9 +3,9 @@ import Image from "next/image";
 import Link from "next/link";
 
 type EmptyCartProps = {
-    link: string,
+    link?: string,
     image: string,
-    linkTitle: string,
+    linkTitle?: string,
     content: string
     header?: string
     imageWidth? : number
@@ -45,19 +45,22 @@ const EmptyPage = ({link, image, linkTitle, content, header, imageWidth, imageHe
                     <h2 className={`font-semibold text-[1.5rem] ${centerHeader ? 'text-center' : ''}`}>{header}</h2>
                 }
                 <p className="text-center text-[.9rem] color-grey-text res-text-width">{content}</p>
-                <Link href={link} className="bt-btn btn btn-primary-fill">
-                    <span>{linkTitle}</span>
-                    <span>
-                        <Image
-                            aria-hidden
-                            src="/assets/images/arrow-right.png"
-                            alt="Colearn Logo"
-                            width={12}
-                            height={12}
-                            className="object-contain"
-                        />
-                    </span>
-                </Link>
+                {
+                    link &&
+                    <Link href={link} className="bt-btn btn btn-primary-fill">
+                        <span>{linkTitle}</span>
+                        <span>
+                            <Image
+                                aria-hidden
+                                src="/assets/images/arrow-right.png"
+                                alt="Colearn Logo"
+                                width={12}
+                                height={12}
+                                className="object-contain"
+                            />
+                        </span>
+                    </Link>
+                }
             </div>
         </div>
     )

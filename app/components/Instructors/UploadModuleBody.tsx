@@ -11,6 +11,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEdit, faTrashAlt, faTimes } from "@fortawesome/free-solid-svg-icons";
 import { motion, AnimatePresence } from 'framer-motion';
 import ButtonLoader from "../buttonLoader";
+import EmptyPage from "../EmptyPage";
 
 const UploadModuleBody = () => {    
     const modules = courseStore((state) => state.modules);
@@ -72,95 +73,66 @@ const UploadModuleBody = () => {
 
             <div className="best-instructor-cont">
                 {
-                    modules.map((item, index) => (
-                        <div className="best-instructor-box" key={index}>
-                            <div className="flex items-center gap-2 left">
-                                <div>
-                                    <Image
-                                        aria-hidden
-                                        src="/assets/images/avatars-2.png"
-                                        alt="Colearn Image"
-                                        width={56}
-                                        height={56}
-                                        className="object-cover rounded-[50%]"
-                                    />
-                                </div>
-                                <div>
-                                    <p className="font-semibold">{item.title}</p>
-                                    <p className="color-grey-text text-[.8rem]">10 IT & Engineering Courses</p>
-                                </div>
-                            </div>
-                            <div className="relative">
-                                <button className="menu-trigger" onClick={() => toggleMenu(index)}>
-                                    <span className="dot"></span>
-                                    <span className="dot"></span>
-                                    <span className="dot"></span>
-                                </button>
-                                    
-                                {
-                                    openIndex === index &&
+                    modules.length > 0 ? (
+                        modules.map((item, index) => (
+                            <div className="best-instructor-box" key={index}>
+                                <div className="flex items-center gap-2 left">
                                     <div>
-                                        <div className="menu-overlay active" onClick={() => setOpenIndex(null)}></div>
-                                        <div className="bottom-menu slide-up">
-                                        <div className="menu-actions">
-                                            {/* <button className="menu-btn">
-                                                <FontAwesomeIcon icon={faEye} className="icon" /> View Course
-                                            </button> */}
-                                            <Link href={`/instructors/upload-video/${item.id}`} className="menu-btn">
-                                                <FontAwesomeIcon icon={faEye} className="icon"/> View Videos
-                                            </Link>
-                                            <button className="menu-btn" onClick={(e) => editModule(item)}>
-                                                <FontAwesomeIcon icon={faEdit} className="icon"/> Edit Module
-                                            </button>
-                                            <button className="menu-btn delete" onClick={(e) => deleteModuleTrigger(item.id)}>
-                                                <FontAwesomeIcon icon={faTrashAlt} className="icon"/> Delete Module
-                                            </button>
-                                            <button className="menu-btn cancel" onClick={() => toggleMenu(index)}>
-                                                <FontAwesomeIcon icon={faTimes} className="icon"/> Cancel
-                                            </button>
+                                        <Image
+                                            aria-hidden
+                                            src="/assets/images/module-1.png"
+                                            alt="Colearn Image"
+                                            width={56}
+                                            height={56}
+                                            className="object-cover rounded-[50%]"
+                                        />
+                                    </div>
+                                    <div className="w-[70%]">
+                                        <p className="font-semibold">{item.title}</p>
+                                        <p className="color-grey-text text-[.8rem] font-semibold">{item.videos_count ? `${item.videos_count} Video Content${item.videos_count > 1 ? 's' : ''}`  : 'No Video Uploaded'}</p>
+                                    </div>
+                                </div>
+                                <div className="relative">
+                                    <button className="menu-trigger" onClick={() => toggleMenu(index)}>
+                                        <span className="dot"></span>
+                                        <span className="dot"></span>
+                                        <span className="dot"></span>
+                                    </button>
+                                        
+                                    {
+                                        openIndex === index &&
+                                        <div>
+                                            <div className="menu-overlay active" onClick={() => setOpenIndex(null)}></div>
+                                            <div className="bottom-menu slide-up">
+                                            <div className="menu-actions">
+                                                {/* <button className="menu-btn">
+                                                    <FontAwesomeIcon icon={faEye} className="icon" /> View Course
+                                                </button> */}
+                                                <Link href={`/instructors/manage-video/${item.id}`} className="menu-btn">
+                                                    <FontAwesomeIcon icon={faEye} className="icon"/> View Videos
+                                                </Link>
+                                                <button className="menu-btn" onClick={(e) => editModule(item)}>
+                                                    <FontAwesomeIcon icon={faEdit} className="icon"/> Edit Module
+                                                </button>
+                                                <button className="menu-btn delete" onClick={(e) => deleteModuleTrigger(item.id)}>
+                                                    <FontAwesomeIcon icon={faTrashAlt} className="icon"/> Delete Module
+                                                </button>
+                                                <button className="menu-btn cancel" onClick={() => toggleMenu(index)}>
+                                                    <FontAwesomeIcon icon={faTimes} className="icon"/> Cancel
+                                                </button>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                }
+                                    }
+                                </div>
+                                
                             </div>
-                            {/* <div className="right">
-                                <button className="bt-btn btn btn-primary-fill desktop" onClick={(e) => openModalEditModule('edit-module', item)}>
-                                    <span>View Courses</span>
-                                    <span>
-                                        <Image
-                                            aria-hidden
-                                            src="/assets/images/arrow-right.png"
-                                            alt="Colearn Logo"
-                                            width={12}
-                                            height={12}
-                                            className="object-contain"
-                                        />
-                                    </span>
-                                </button>
-
-                                <button className="bt-btn btn btn-primary-fill desktop" onClick={(e) => updateModuleId(item.id)}>
-                                    <span>Delete</span>
-                                    <span>
-                                        <Image
-                                            aria-hidden
-                                            src="/assets/images/arrow-right.png"
-                                            alt="Colearn Logo"
-                                            width={12}
-                                            height={12}
-                                            className="object-contain"
-                                        />
-                                    </span>
-                                </button>
-
-                                <button className="mobile" onClick={(e) => openModalEditModule('edit-module', item)}>
-                                    <span className="underline text-[.8rem]">View Courses</span>
-                                </button>
-                                <button className="mobile" onClick={(e) => updateModuleId(item.id)}>
-                                    <span className="underline text-[.8rem]">Delete</span>
-                                </button>
-                            </div> */}
+                        ))
+                    ) : (
+                        <div>
+                            <EmptyPage image="/assets/images/empty-image.png"  header="No Modules Yet" content="Organize your course by creating modules. Start now by adding your first module to structure your content." imageWidth={400} imageHeight={240}/>
                         </div>
-                    ))
+                    )
                 }
                 {
                     deleteModal &&
