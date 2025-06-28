@@ -20,32 +20,6 @@ const BecomeConsultantPreview = () => {
             <div>
                 <BecomeConsultantPreviewBody />
             </div>
-
-            <div className="upload-course-form">
-                <button className="btn btn-primary-fill full">
-                    {
-                        buttonLoader ? (
-                            <ButtonLoader content="Please Wait . . ." />
-                        ) : 
-                        
-                        (
-                            <div className="bt-btn two">
-                                <span>Continue</span>
-                                <span>
-                                    <Image
-                                        aria-hidden
-                                        src="/assets/images/arrow-right.png"
-                                        alt="Colearn Logo"
-                                        width={12}
-                                        height={12}
-                                        className="object-contain"
-                                    />
-                                </span>
-                            </div>                                        
-                        )
-                    }
-                </button>
-            </div>
         </div>
     )
 }

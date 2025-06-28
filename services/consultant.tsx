@@ -1,6 +1,7 @@
 import axiosInstance from "@/utils/api";
 import { handleApiResponse, handleApiError } from '@/utils/handleApiResponse';
 import { School, Certification } from "@/app/Types/types";
+import { courseStore } from "@/zustand/courseStore";
 
 export const submit_schools = async (schools: School[], instructorId: string | undefined) => {
     
@@ -87,7 +88,9 @@ export const edit_certs = async (certification: Certification) => {
 }
 
 export const submit_intro_video = async (video: File, instructorId: string | undefined) => {
-    
+    // setUploading(true);
+    courseStore.getState().setUploading(true);
+
     try {
         const response = await axiosInstance.post("/submit-intro-video", {
             instructorId,
@@ -96,8 +99,16 @@ export const submit_intro_video = async (video: File, instructorId: string | und
             headers: {
                 'Content-Type': 'multipart/form-data',
             },
-          });
 
+            onUploadProgress: (progressEvent) => {
+                const percent = Math.round((progressEvent.loaded * 100) / (progressEvent.total || 1));
+                // setProgress(percent);
+                courseStore.getState().setProgress(percent);
+            },
+        });
+        
+        // setUploading(false);
+        courseStore.getState().setUploading(false);
         return handleApiResponse(response);
     }
 

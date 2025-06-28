@@ -3,8 +3,12 @@ import React, {useState} from "react";
 import Image from "next/image";
 import ButtonLoader from "../buttonLoader";
 import { useConsultant } from "@/hooks/useConsultant";
+import { courseStore } from "@/zustand/courseStore";
 
 const BecomeConsultantVideo = () => {
+    const progress = courseStore((state) => state.progress);
+    const uploading = courseStore((state) => state.uploading);
+
     const {
         buttonLoader,
         submitIntroVideo,
@@ -56,6 +60,19 @@ const BecomeConsultantVideo = () => {
                                 }
                             </div>
                         </div>
+
+                        {
+                            uploading && (
+                                <div className="w-full bg-gray-200 h-4 mt-4 rounded overflow-hidden">
+                                <div
+                                    className="bg-[#00A6E6] h-full transition-all duration-300"
+                                    style={{ width: `${progress}%` }}
+                                />
+                                </div>
+                            )
+                        }
+
+                        {uploading && <p className="mt-2 text-[.8rem] color-grey-text">{progress}% Complete</p>}
                     </div>
                 </div>
 

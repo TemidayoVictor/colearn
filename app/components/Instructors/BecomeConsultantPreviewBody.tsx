@@ -4,8 +4,8 @@ import Image from "next/image";
 import AccountModal from "./AccountModal";
 import { School, Certification } from "@/app/Types/types";
 import { instructorStore } from "@/zustand/instructorStore";
-import { useConsultant } from "@/hooks/useConsultant";
 import ButtonLoader from "../buttonLoader";
+import { useConsultant } from "@/hooks/useConsultant";
 
 const BecomeConsultantPreviewBody = () => {
     const schools = instructorStore((state) => state.schools);
@@ -15,13 +15,7 @@ const BecomeConsultantPreviewBody = () => {
     const [selectedSchool, setSelectedSchool] = useState<School | null>(null);
 
     const {
-        fileInputRef,
-        handleFileChangeb,
-        buttonLoader,
-        handleImageClickb,
-        fileName,
-        submitIntroVideo,
-
+        buttonLoader
     } = useConsultant();
 
     const openModal = (key: string) => {
@@ -170,46 +164,29 @@ const BecomeConsultantPreviewBody = () => {
             </div>
 
             <div className={`view-course-content right-1 consultant mt-4`}>
-                
                 <div>
                     <div className="flex items-center justify-between">
                         <p className="font-bold">Introduction Video</p>
-                    </div>
-
-                    <div className={`upload-course-video`}>
-                        <div>
-                            <input
-                                type="file"
-                                ref={fileInputRef}
-                                name="video"
-                                accept="video/*,.mkv,.avi,.mov,.flv,.webm"
-                                onChange={(e) => handleFileChangeb(e)}
-                                className="d-none"
-                                disabled={buttonLoader}
-                            />
-
+                        <div onClick={() => openModal("change-intro-video")} className="cursor-pointer">
                             <Image
                                 aria-hidden
-                                src="/assets/images/video-upload.png"
+                                src="/assets/images/edit-2.png"
                                 alt="Colearn Logo"
-                                width={76}
-                                height={64}
+                                width={20}
+                                height={20}
                                 className="object-contain"
-                                onClick={handleImageClickb}
                             />
                         </div>
-                        <p className="text-[.9rem] font-semibold">Upload a file by clicking the image</p>
-                        <p className="text-[.8rem] color-grey-text text-center">Supported formats: MP4, AVI, MOV, FLV, WebM</p>
-                        {
-                            fileName && (
-                            <p className="text-center text-[.8rem] font-semibold">
-                                Selected File: {fileName}
-                            </p>
-                            )
-                        }
                     </div>
+                    <div className="border mt-4">
+                        video
+                    </div>
+                </div>
+                
+            </div>
 
-                    <button className="btn btn-primary-fill full" onClick={submitIntroVideo}>
+            <div className="view-course-content right-1 consultant mt-4 btnn">
+                <button className="btn btn-primary-fill full">
                     {
                         buttonLoader ? (
                             <ButtonLoader content="Please Wait . . ." />
@@ -217,7 +194,7 @@ const BecomeConsultantPreviewBody = () => {
                         
                         (
                             <div className="bt-btn two">
-                                <span>Continue</span>
+                                <span>Submit Appliation</span>
                                 <span>
                                     <Image
                                         aria-hidden
@@ -232,8 +209,8 @@ const BecomeConsultantPreviewBody = () => {
                         )
                     }
                 </button>
-                </div>
             </div>
+
         </div>
     )
 }

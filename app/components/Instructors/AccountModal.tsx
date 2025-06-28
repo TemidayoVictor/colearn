@@ -590,6 +590,11 @@ const AccountModal = ({modalType, modalClose, experience, bank, subType}: Accoun
                     modalType == 'edit-certification' &&
                     <ManageCertification type="edit" />
                 }
+
+                {
+                    modalType == 'change-intro-video' &&
+                    <ManageCertification type="intro-video" />
+                }
                 
                 <div className="modal-close">
                     <FontAwesomeIcon icon={faXmark} className="text-[1.5rem]" onClick={modalClose}/>
