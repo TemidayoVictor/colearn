@@ -499,8 +499,6 @@ export const UseCourses = () => {
     }
 
     const deleteModule = async () => {
-        console.log('Module ID:' + moduleId)
-        return
         try {
             setButtonLoader(true)
             const response = await delete_module(moduleId);
@@ -606,8 +604,7 @@ export const UseCourses = () => {
     }
 
     const deleteVideo = async () => {
-        console.log('Video ID:' + videoId)
-        return
+        
         try {
             setButtonLoader(true)
             const response = await delete_video(videoId);

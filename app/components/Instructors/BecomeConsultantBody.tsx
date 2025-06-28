@@ -1,9 +1,10 @@
 'use client';
 import React, {useState, useEffect} from "react";
-import { useAuthInstructors } from "@/hooks/useAuth";
+import { useAuthBecomeConsultant } from "@/hooks/useAuth";
 import BecomeConsultantSchool from "./BecomeConsultantSchool";
 import BecomeConsultantCertifications from "./BecomeConsultantCertifications";
 import BecomeConsultantVideo from "./BecomeConsultantVideo";
+import BecomeConsultantPreview from "./BecomeConsultantPreview";
 import Loader from "../Loader";
 import { useRouter } from "next/navigation";
 import { authStore } from "@/zustand/authStore";
@@ -17,10 +18,34 @@ const BecomeConsultantBody = () => {
     
     const newUpdate = courseStore((state) => state.newUpdate);
 
+    const renderContent = () => {
+        switch(consultantProgress) {
+            case 0 :
+            return (
+                <BecomeConsultantSchool />
+            )
+
+            case 1:
+            return (
+                <BecomeConsultantCertifications />
+            )
+
+            case 2:
+            return (
+                <BecomeConsultantVideo />
+            )
+
+            default:
+            return (
+                <BecomeConsultantPreview />
+            )
+        }
+    }
+
     useEffect(() => {
         setLoading(true);
         const init = async () => {
-          await useAuthInstructors(router); 
+          await useAuthBecomeConsultant(router); 
           courseStore.getState().setNewUpdate('reset');
           setLoading(false);
         };
@@ -29,6 +54,8 @@ const BecomeConsultantBody = () => {
     }, [newUpdate]);
 
     if(loading) return <Loader />
+
+    
     
     return (
         <div>
@@ -38,25 +65,12 @@ const BecomeConsultantBody = () => {
                     <h2 className="title-3 desktop">Become a Consultant</h2>
                 </div>
                 <div>
-                    <p className="text-[.9rem] color-grey-text">Step {consultantProgress ? consultantProgress + 1 : 1} of 3</p>
+                    <p className="text-[.9rem] color-grey-text">Step {consultantProgress ? consultantProgress + 1 : 1} of 4</p>
                 </div>
             </div>
 
             <div>
-                {
-                    consultantProgress == 0 &&
-                    <BecomeConsultantSchool />
-                }
-
-                {
-                    consultantProgress == 1 &&
-                    <BecomeConsultantCertifications />
-                }
-
-                {
-                    consultantProgress == 2 &&
-                    <BecomeConsultantVideo />
-                }
+                {renderContent()}
             </div>
 
         </div>

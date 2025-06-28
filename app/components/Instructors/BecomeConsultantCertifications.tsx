@@ -73,11 +73,11 @@ const BecomeConsultantCertifications = () => {
                             </div>
         
                             <div className="input-box">
-                                <label htmlFor="credential_url" className="font-semibold">Credential URL (optional)</label>
+                                <label htmlFor="credential_url" className="font-semibold">Certification URL (optional)</label>
                                 <input
                                     name="credential_url"
                                     className={`input-field`}
-                                    placeholder="e.g. URL of Credential if any"
+                                    placeholder="e.g. URL of Certification if any"
                                     value={item.credential_url}
                                     onChange={(e) => handleCertChange(index, 'credential_url', e.target.value)}
                                 />

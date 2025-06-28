@@ -11,4 +11,26 @@ export const subjects = [
     'Art',
     'Business Studies',
 ];
+
+export const degreeOptions = [
+  "High School Diploma",
+  "Associate Degree",
+  "Bachelor of Arts (BA)",
+  "Bachelor of Science (BSc)",
+  "Bachelor of Education (BEd)",
+  "Bachelor of Engineering (BEng)",
+  "Bachelor of Laws (LLB)",
+  "Master of Arts (MA)",
+  "Master of Science (MSc)",
+  "Master of Education (MEd)",
+  "Master of Business Administration (MBA)",
+  "Master of Engineering (MEng)",
+  "Master of Laws (LLM)",
+  "Doctor of Philosophy (PhD)",
+  "Doctor of Education (EdD)",
+  "Doctor of Medicine (MD)",
+  "Postgraduate Diploma",
+  "Professional Certificate",
+  "Technical/Vocational Certificate",
+];
   

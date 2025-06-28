@@ -1,53 +1,7 @@
 import {create} from 'zustand';
 import { persist } from 'zustand/middleware';
+import { User, Student, Instructor } from '@/app/Types/types';
 
-type User = {
-  id: number;
-  first_name: string;
-  last_name: string;
-  email: string;
-  type: string | null;
-  email_verified_at: string | null;
-  email_verification_code: number;
-  profile_progress: string | null;
-};
-
-type Student = {
-  id: number;
-  user_id: number;
-  phone: string | null;
-  profile_photo: string | null;
-  bio: string | null;
-  country: string | null;
-  gender: string | null;
-  is_active: string | null;
-  languages: string[];
-}
-
-type Instructor = {
-  id: string | undefined;
-  user_id: number;
-  title: string;
-  professional_headline: string;
-  phone: string | null;
-  profile_photo: string | null;
-  bio: string | null;
-  country: string | null;
-  gender: string | null;
-  website: string | null;
-  linkedin_url: string | null;
-  twitter_url: string | null;
-  youtube_url: string | null;
-  is_approved: string | null;
-  is_active: string | null;
-  disciplines: string | null;
-  languages: string[];
-  category: string;
-  consultant: boolean;
-  intro_video_url: string;
-  consultant_progress: number;
-}
-  
 type AuthState = {
   user: User | null;
   student: Student | null;

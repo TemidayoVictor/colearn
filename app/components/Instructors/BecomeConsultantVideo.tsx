@@ -2,9 +2,17 @@
 import React, {useState} from "react";
 import Image from "next/image";
 import ButtonLoader from "../buttonLoader";
+import { useConsultant } from "@/hooks/useConsultant";
 
 const BecomeConsultantVideo = () => {
-    const [buttonLoader, setButtonLoader] = useState<boolean>(false);
+    const {
+        buttonLoader,
+        submitIntroVideo,
+        fileInputRef,
+        handleImageClickb,
+        handleFileChangeb,
+        fileName,
+    } = useConsultant()
     return (
         <div>
             <div className="upload-course-form">
@@ -19,10 +27,10 @@ const BecomeConsultantVideo = () => {
                                 <div>
                                     <input
                                         type="file"
-                                        // ref={fileInputRef}
+                                        ref={fileInputRef}
                                         name="video"
                                         accept="video/*,.mkv,.avi,.mov,.flv,.webm"
-                                        // onChange={(e) => handleFileChangeb(e)}
+                                        onChange={(e) => handleFileChangeb(e)}
                                         className="d-none"
                                         disabled={buttonLoader}
                                     />
@@ -34,24 +42,24 @@ const BecomeConsultantVideo = () => {
                                         width={76}
                                         height={64}
                                         className="object-contain"
-                                        // onClick={handleImageClick}
+                                        onClick={handleImageClickb}
                                     />
                                 </div>
                                 <p className="text-[.9rem] font-semibold">Upload a file by clicking the image</p>
                                 <p className="text-[.8rem] color-grey-text text-center">Supported formats: MP4, AVI, MOV, FLV, WebM</p>
-                                {/* {
+                                {
                                     fileName && (
                                     <p className="text-center text-[.8rem] font-semibold">
                                         Selected File: {fileName}
                                     </p>
                                     )
-                                } */}
+                                }
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <button className="btn btn-primary-fill full">
+                <button className="btn btn-primary-fill full" onClick={submitIntroVideo}>
                     {
                         buttonLoader ? (
                             <ButtonLoader content="Please Wait . . ." />
