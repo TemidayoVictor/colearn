@@ -15,7 +15,8 @@ const BecomeConsultantPreviewBody = () => {
     const [selectedSchool, setSelectedSchool] = useState<School | null>(null);
 
     const {
-        buttonLoader
+        buttonLoader,
+        submitApplication,
     } = useConsultant();
 
     const openModal = (key: string) => {
@@ -185,7 +186,7 @@ const BecomeConsultantPreviewBody = () => {
                 
             </div>
 
-            <div className="view-course-content right-1 consultant mt-4 btnn">
+            <div className="view-course-content right-1 consultant mt-4 btnn" onClick={submitApplication}>
                 <button className="btn btn-primary-fill full">
                     {
                         buttonLoader ? (

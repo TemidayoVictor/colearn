@@ -9,7 +9,8 @@ import {
     submit_certs, 
     submit_intro_video, 
     edit_schools, 
-    edit_certs 
+    edit_certs,
+    submit_application, 
 } from "@/services/consultant";
 import { courseStore } from "@/zustand/courseStore";
 
@@ -413,6 +414,31 @@ export const useConsultant = () => {
         }
     }
 
+    const submitApplication = async () => {
+        // submit
+        setButtonLoader(true);
+        try {
+            const response = await submit_application(instructorId);
+            if (response.success) {
+                setButtonLoader(false)
+                showSuccessToast(response.message)
+                courseStore.getState().setNewUpdate('set');
+            } 
+
+            else {
+                setButtonLoader(false)
+                showErrorToast(response.message)
+                console.log(response)
+            }
+        }
+
+        catch (err: any) {
+            console.log(err)
+            setButtonLoader(false)
+            showErrorToast('Unexpected error occurred');
+        }
+    }
+
 
     return {
         buttonLoader,
@@ -447,5 +473,6 @@ export const useConsultant = () => {
         handleCertEdit,
         handleFileEdit,
         editCert,
+        submitApplication,
     }
 }

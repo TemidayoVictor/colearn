@@ -9,6 +9,7 @@ import Loader from "../Loader";
 import { useRouter } from "next/navigation";
 import { authStore } from "@/zustand/authStore";
 import { courseStore } from "@/zustand/courseStore";
+import EmptyPage from "../EmptyPage";
 
 const BecomeConsultantBody = () => {
     const router = useRouter(); 
@@ -35,9 +36,51 @@ const BecomeConsultantBody = () => {
                 <BecomeConsultantVideo />
             )
 
-            default:
+            case 4:
+            return (
+                <div>
+                    <EmptyPage image="/assets/images/empty-image.png"  header="Application Under Review" content="Your consultant application has been received and is currently under review. You’ll be notified once a decision has been made." imageWidth={400} imageHeight={240}/>
+                </div>    
+            )
+
+            case 5:
+            return (
+                <div>
+                    <EmptyPage image="/assets/images/empty-image.png"  header="Application Approved" content="Congratulations! Your application as a consultant has been approved. You're now ready to offer consulting sessions to learners." imageWidth={400} imageHeight={240}/>
+                </div>    
+            )
+
+            case 6:
+            return (
+                <div>
+                    <EmptyPage image="/assets/images/empty-image.png"  header="Application Rejected" content="Unfortunately, your application to become a consultant was not approved at this time. You may review your submission and apply again with updated information." imageWidth={400} imageHeight={240}/>
+                </div>    
+            )
+
+            default: // 3
             return (
                 <BecomeConsultantPreview />
+            )
+        }
+    }
+
+    const renderStep = () => {
+        switch(consultantProgress) {
+            case 4:
+            return (
+                "Pending"
+            )
+            case 5: 
+            return (
+                "Approved"
+            )
+            case 6:
+            return (
+                "Rejected"
+            )
+            default:
+            return (
+                `Step ${consultantProgress ? consultantProgress + 1 : 1} of 4`
             )
         }
     }
@@ -65,7 +108,7 @@ const BecomeConsultantBody = () => {
                     <h2 className="title-3 desktop">Become a Consultant</h2>
                 </div>
                 <div>
-                    <p className="text-[.9rem] color-grey-text">Step {consultantProgress ? consultantProgress + 1 : 1} of 4</p>
+                    <p className="text-[.9rem] color-grey-text">{renderStep()}</p>
                 </div>
             </div>
 

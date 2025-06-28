@@ -116,3 +116,15 @@ export const submit_intro_video = async (video: File, instructorId: string | und
         return handleApiError(error)
     }
 }
+
+export const submit_application = async (instructorId: string | undefined) => {
+    
+    try {
+        const response = await axiosInstance.post("/submit-application", {instructorId});
+        return handleApiResponse(response);
+    }
+
+    catch(error: any) {
+        return handleApiError(error)
+    }
+}
