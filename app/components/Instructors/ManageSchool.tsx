@@ -273,7 +273,7 @@ const ManageSchool = ({type}:ManageSchoolProps) => {
                             
                             (
                                 <div className="bt-btn two">
-                                    <span>Continue</span>
+                                    <span>Update</span>
                                     <span>
                                         <Image
                                             aria-hidden

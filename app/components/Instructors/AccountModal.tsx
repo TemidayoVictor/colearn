@@ -580,6 +580,16 @@ const AccountModal = ({modalType, modalClose, experience, bank, subType}: Accoun
                     modalType == 'edit-school' &&
                     <ManageSchool type="edit" />
                 }
+
+                {
+                    modalType == 'add-certification' &&
+                    <ManageCertification type="add" />
+                }
+
+                {
+                    modalType == 'edit-certification' &&
+                    <ManageCertification type="edit" />
+                }
                 
                 <div className="modal-close">
                     <FontAwesomeIcon icon={faXmark} className="text-[1.5rem]" onClick={modalClose}/>

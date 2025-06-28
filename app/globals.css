@@ -2635,6 +2635,10 @@ td {
   width: 57%;
 }
 
+.view-course-content.left-1.consultant, .view-course-content.right-1.consultant {
+  width: 49%;
+}
+
 .skill-tag-cont {
   display: flex;
   flex-wrap: wrap;
@@ -4108,7 +4112,7 @@ td {
     z-index: 100000;
   }
 
-  .view-course-content.left-1, .view-course-content.right-1{
+  .view-course-content.left-1, .view-course-content.right-1, .view-course-content.left-1.consultant, .view-course-content.right-1.consultant{
     width: 100%;
   }
 

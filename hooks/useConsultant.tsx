@@ -4,7 +4,13 @@ import { showErrorToast, showSuccessToast } from "@/utils/toastTypes";
 import { authStore } from "@/zustand/authStore";
 import { useRouter } from "next/navigation";
 import { School, Certification } from "@/app/Types/types";
-import { submit_schools, submit_certs, submit_intro_video, edit_schools } from "@/services/consultant";
+import { 
+    submit_schools, 
+    submit_certs, 
+    submit_intro_video, 
+    edit_schools, 
+    edit_certs 
+} from "@/services/consultant";
 import { courseStore } from "@/zustand/courseStore";
 
 export const useConsultant = () => {
@@ -209,7 +215,19 @@ export const useConsultant = () => {
         setCertData(updatedCerts);
     };
 
-    const handleFileEdit = (e: React.ChangeEvent<HTMLInputElement>, index: number) => {
+    const handleImageClickb = () => {
+        fileInputRef.current?.click();
+    };
+
+    const handleFileChangeb = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0] || null;
+        if (file && file.type.startsWith("video/")) {
+            setFileName(file.name);
+            setIntroVideo(file);
+        }
+    };
+
+    const handleFileEdit = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0] || null;
         if (file) {
             setFileName(file.name);
@@ -219,18 +237,6 @@ export const useConsultant = () => {
             }));
         }
     };
-
-    const handleImageClickb = () => {
-        fileInputRef.current?.click();
-    };
-
-    const handleFileChangeb = (e: React.ChangeEvent<HTMLInputElement>) => {
-            const file = e.target.files?.[0] || null;
-            if (file && file.type.startsWith("video/")) {
-                setFileName(file.name);
-                setIntroVideo(file);
-            }
-        };
 
     const submitSchools = async () => {
         if (!validateSchoolData()) {
@@ -338,6 +344,45 @@ export const useConsultant = () => {
         }
     }
 
+    const editCert = async () => {
+        const newErrors = {
+            name: editCertData.name.trim() === '',
+            organization: editCertData.organization.trim() === '',
+        };
+      
+        setEditCertErrors(newErrors);
+
+        const hasError = Object.values(newErrors).some(Boolean);
+
+        if (hasError) {
+            showErrorToast('Please fill in all required fields');
+            return;
+        }
+
+        // submit
+        setButtonLoader(true);
+        try {
+            const response = await edit_certs(editCertData);
+            if (response.success) {
+                setButtonLoader(false)
+                showSuccessToast(response.message)
+                courseStore.getState().setNewUpdate('set');
+            } 
+
+            else {
+                setButtonLoader(false)
+                showErrorToast(response.message)
+                console.log(response)
+            }
+        }
+
+        catch (err: any) {
+            console.log(err)
+            setButtonLoader(false)
+            showErrorToast('Unexpected error occurred');
+        }
+    }
+
     const submitIntroVideo = async () => {
         if (introVideo == null) {
             showErrorToast('Please add introduction video');
@@ -401,5 +446,6 @@ export const useConsultant = () => {
         editSchErrors,
         handleCertEdit,
         handleFileEdit,
+        editCert,
     }
 }
