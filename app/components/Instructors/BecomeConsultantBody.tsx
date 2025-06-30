@@ -10,6 +10,7 @@ import { useRouter } from "next/navigation";
 import { authStore } from "@/zustand/authStore";
 import { courseStore } from "@/zustand/courseStore";
 import EmptyPage from "../EmptyPage";
+import { useConsultant } from "@/hooks/useConsultant";
 
 const BecomeConsultantBody = () => {
     const router = useRouter(); 
@@ -18,6 +19,8 @@ const BecomeConsultantBody = () => {
     const consultantProgress = instructor?.consultant_progress
     
     const newUpdate = courseStore((state) => state.newUpdate);
+
+    const { createConsultantAccount } = useConsultant();
 
     const renderContent = () => {
         switch(consultantProgress) {
@@ -46,7 +49,7 @@ const BecomeConsultantBody = () => {
             case 5:
             return (
                 <div>
-                    <EmptyPage image="/assets/images/empty-image.png"  header="Application Approved" content="Congratulations! Your application as a consultant has been approved. You're now ready to offer consulting sessions to learners." imageWidth={400} imageHeight={240}/>
+                    <EmptyPage image="/assets/images/empty-image.png"  header="Application Approved" content="Congratulations! Your application as a consultant has been approved. You're now ready to offer consulting sessions to learners." imageWidth={400} imageHeight={240} button={true} linkTitle="Proceed" buttonClick={createConsultantAccount} />
                 </div>    
             )
 

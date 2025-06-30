@@ -128,3 +128,15 @@ export const submit_application = async (instructorId: string | undefined) => {
         return handleApiError(error)
     }
 }
+
+export const create_consultant_account = async (instructorId: string | undefined) => {
+    
+    try {
+        const response = await axiosInstance.post("/create-consultant-account", {instructorId});
+        return handleApiResponse(response);
+    }
+
+    catch(error: any) {
+        return handleApiError(error)
+    }
+}

@@ -1940,6 +1940,17 @@ ol li {
   border: 1px solid var(--color-primary-fill);
 }
 
+.onboarding-select.two {
+  justify-content: start;
+  padding-block: 1em;
+  border-radius: .3rem;
+  gap: 1em;
+}
+
+.onboarding-select.two.active {
+  background-color: var(--color-primary-light);
+}
+
 .custom-checkbox {
   appearance: none; /* Hide default */
   width: 20px;
@@ -3139,6 +3150,65 @@ td {
 
 .exp:last-child {
   border-bottom: none;
+}
+
+/* Consultant */
+
+.availability-container {
+  margin-top: 1.5rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr)); 
+  gap: 1em;
+}
+
+.availability {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background-color: var(--white);
+  padding: 1rem 1.2rem;
+  border-radius: .3em;
+  border: 1px solid var(--color-primary-normal);
+  transition: background-color 0.3s ease;
+}
+
+.availability:hover {
+  background-color: var(--color-primary-light);
+}
+
+.availability label {
+  font-size: 0.95rem;
+  color: #333;
+}
+
+.availability input[type="checkbox"] {
+  transform: scale(1.2);
+  cursor: pointer;
+}
+
+.availability-select {
+  padding: .5em;
+  font-size: .9rem;
+  border: var(--border-grey);
+  border-radius: .3em;
+  background-color: #fff;
+  color: var(--grey-light);
+  width: 100%;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  appearance: none;
+  cursor: pointer;
+}
+
+.availability-select:disabled {
+  background-color: #f3f4f6;
+  color: #aaa;
+}
+
+.unavailable {
+  font-size: .9rem;
+  color: var(--grey-active-dark);
+  padding: .5em;
+  border: 1px solid transparent;
 }
 
 

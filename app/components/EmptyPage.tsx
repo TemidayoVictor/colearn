@@ -11,9 +11,22 @@ type EmptyCartProps = {
     imageWidth? : number
     imageHeight? : number
     centerHeader? : boolean
+    button?: boolean
+    buttonClick?: () => void
 }
 
-const EmptyPage = ({link, image, linkTitle, content, header, imageWidth, imageHeight, centerHeader}: EmptyCartProps) => {
+const EmptyPage = ({
+    link, 
+    image, 
+    linkTitle, 
+    content, 
+    header, 
+    imageWidth, 
+    imageHeight, 
+    centerHeader, 
+    button,
+    buttonClick
+}: EmptyCartProps) => {
     return (
         <div className="mb-[2em]">
             <div className="flex flex-col items-center justify-center gap-4">
@@ -60,6 +73,14 @@ const EmptyPage = ({link, image, linkTitle, content, header, imageWidth, imageHe
                             />
                         </span>
                     </Link>
+                }
+                {
+                    button &&
+                    <div>
+                        <button className="bt-btn btn btn-primary-fill" onClick={buttonClick}>
+                            {linkTitle}
+                        </button>
+                    </div>
                 }
             </div>
         </div>

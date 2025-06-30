@@ -2,6 +2,7 @@ import axiosInstanceWeb from "@/utils/web";
 import { showErrorToast } from "@/utils/toastTypes";
 import { authStore } from "@/zustand/authStore";
 import { instructorStore } from "@/zustand/instructorStore";
+import { consultantStore } from "@/zustand/consultantStore";
 import { useRouter } from "next/navigation";
 
 export const useAuth = async (router: ReturnType<typeof useRouter>) => {
@@ -81,6 +82,37 @@ export const useAuthBecomeConsultant = async (router: ReturnType<typeof useRoute
         setInstructor(instructor);
         setSchools(instructor.schools);
         setCerts(instructor.certifications);
+      }
+
+      else {
+        showErrorToast("Unauthorized User");
+        router.push("/authentication/login");
+      }
+      
+    } else {
+      showErrorToast("Session Expired. Please Log in");
+      router.push("/authentication/login");
+    }
+  } catch (error) {
+    console.log(error);
+    showErrorToast("Session Expired. Please Log in");
+    router.push("/authentication/login");
+  }
+};
+
+export const useAuthConsultant = async (router: ReturnType<typeof useRouter>) => {
+  const { setUser, setConsultant } = authStore.getState();
+  const { setSlots } = consultantStore.getState();
+
+  try {
+    const response = await axiosInstanceWeb.get("/user-instructor");
+    console.log(response)
+    if (response.status === 200) {
+      const { user, instructor } = response.data;
+      if (user.type === "instructor" && instructor.consultant == true) {
+        setUser(user);
+        setConsultant(instructor.consultant);
+        setSlots(instructor.consultant.slots);
       }
 
       else {

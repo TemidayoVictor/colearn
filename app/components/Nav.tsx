@@ -11,7 +11,7 @@ const Nav = () => {
     const pathname = usePathname();
     const useVariation1 = ["/", "/about", "/blog", "/become-tutor", "/contact-us", "/explore", "/search", "/view-courses", "/find-consultant"].includes(pathname);
     const hidesNavOn = ["/authentication/", "/onboarding"].some(prefix => pathname.startsWith(prefix));
-    const hidesNavOnTwo = ["/students", "/instructors", "/admin"].some(prefix => pathname.startsWith(prefix));
+    const hidesNavOnTwo = ["/students", "/instructors", "/consultants", "/admin"].some(prefix => pathname.startsWith(prefix));
     return (
         <>
             <Link href='/' className={`header hiddenNav ${!hidesNavOn ? 'd-none' : ''} ${hidesNavOnTwo ? 'd-none' : ''}`}>

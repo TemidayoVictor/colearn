@@ -3,7 +3,7 @@ import React, {useState, useRef} from "react";
 import { showErrorToast, showSuccessToast } from "@/utils/toastTypes";
 import { authStore } from "@/zustand/authStore";
 import { useRouter } from "next/navigation";
-import { School, Certification } from "@/app/Types/types";
+import { School, Certification, Slot } from "@/app/Types/types";
 import { 
     submit_schools, 
     submit_certs, 
@@ -11,6 +11,7 @@ import {
     edit_schools, 
     edit_certs,
     submit_application, 
+    create_consultant_account,
 } from "@/services/consultant";
 import { courseStore } from "@/zustand/courseStore";
 
@@ -239,6 +240,51 @@ export const useConsultant = () => {
         }
     };
 
+    const timeOptions = Array.from({ length: 24 * 2 }, (_, i) => {
+        const hour = Math.floor(i / 2);
+        const minutes = i % 2 === 0 ? "00" : "30";
+        const ampm = hour >= 12 ? "PM" : "AM";
+        const formattedHour = hour % 12 === 0 ? 12 : hour % 12;
+        return `${formattedHour}:${minutes} ${ampm}`;
+    });
+      
+    const daysOfWeek = [
+        "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"
+    ];
+
+    const [slots, setSlots] = useState<Slot[]>(
+        daysOfWeek.map((day) => ({
+          day,
+          enabled: false,
+          start_time: "",
+          end_time: "",
+          id: "",
+          consultant_id: 0,
+        }))
+    );
+    
+    const toggleDay = (index: number) => {
+        setSlots((prev) =>
+          prev.map((slot, i) =>
+            i === index
+              ? { ...slot, enabled: !slot.enabled, start_time: "", end_time: "" }
+              : slot
+          )
+        );
+    };
+    
+    const handleTimeChange = (
+        index: number,
+        field: "start_time" | "end_time",
+        value: string
+      ) => {
+        setSlots((prev) =>
+          prev.map((slot, i) =>
+            i === index ? { ...slot, [field]: value } : slot
+          )
+        );
+    };
+
     const submitSchools = async () => {
         if (!validateSchoolData()) {
             showErrorToast('Please fill in all fields');
@@ -439,6 +485,59 @@ export const useConsultant = () => {
         }
     }
 
+    const createConsultantAccount = async () => {
+        // submit
+        setButtonLoader(true);
+        try {
+            const response = await create_consultant_account(instructorId);
+            if (response.success) {
+                setButtonLoader(false)
+                showSuccessToast(response.message)
+                router.push('/consultants/set-availability')
+                // courseStore.getState().setNewUpdate('set');
+            } 
+
+            else {
+                setButtonLoader(false)
+                showErrorToast(response.message)
+                console.log(response)
+            }
+        }
+
+        catch (err: any) {
+            console.log(err)
+            setButtonLoader(false)
+            showErrorToast('Unexpected error occurred');
+        }
+    }
+
+    const setAvailability = async () => {
+        console.log(slots);
+        return;
+        // submit
+        setButtonLoader(true);
+        try {
+            const response = await submit_application(instructorId);
+            if (response.success) {
+                setButtonLoader(false)
+                showSuccessToast(response.message)
+                courseStore.getState().setNewUpdate('set');
+            } 
+
+            else {
+                setButtonLoader(false)
+                showErrorToast(response.message)
+                console.log(response)
+            }
+        }
+
+        catch (err: any) {
+            console.log(err)
+            setButtonLoader(false)
+            showErrorToast('Unexpected error occurred');
+        }
+    }
+
 
     return {
         buttonLoader,
@@ -474,5 +573,13 @@ export const useConsultant = () => {
         handleFileEdit,
         editCert,
         submitApplication,
+        timeOptions,
+        daysOfWeek,
+        slots,
+        toggleDay,
+        handleTimeChange,
+        setSlots,
+        setAvailability,
+        createConsultantAccount,
     }
 }
