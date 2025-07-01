@@ -1,6 +1,9 @@
-import React from "react";
+'use client'
+import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { useConsultant } from "@/hooks/useConsultant";
+import ButtonLoader from "./buttonLoader";
 
 type EmptyCartProps = {
     link?: string,
@@ -27,6 +30,7 @@ const EmptyPage = ({
     button,
     buttonClick
 }: EmptyCartProps) => {
+    const [buttonLoader, setButtonLoader] = useState<boolean>(false)
     return (
         <div className="mb-[2em]">
             <div className="flex flex-col items-center justify-center gap-4">
@@ -78,7 +82,27 @@ const EmptyPage = ({
                     button &&
                     <div>
                         <button className="bt-btn btn btn-primary-fill" onClick={buttonClick}>
-                            {linkTitle}
+                        {
+                            buttonLoader ? (
+                                <ButtonLoader content="Please Wait . . ." />
+                            ) : 
+                            
+                            (
+                                <div className="bt-btn two">
+                                    <span>Proceed</span>
+                                    <span>
+                                        <Image
+                                            aria-hidden
+                                            src="/assets/images/arrow-right.png"
+                                            alt="Colearn Logo"
+                                            width={12}
+                                            height={12}
+                                            className="object-contain"
+                                        />
+                                    </span>
+                                </div>                                        
+                            )
+                        }
                         </button>
                     </div>
                 }

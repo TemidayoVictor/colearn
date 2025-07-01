@@ -8,6 +8,7 @@ import { useAuthConsultant } from '@/hooks/useAuth';
 import {useRouter} from 'next/navigation';
 import { courseStore } from '@/zustand/courseStore';
 import { consultantStore } from '@/zustand/consultantStore';
+import { authStore } from '@/zustand/authStore';
 import Loader from '../Loader';
 
 
@@ -17,59 +18,27 @@ const SetAvailabilityBody = () => {
 
   const newUpdate = courseStore((state) => state.newUpdate);
 
-  const defaultSlots = [
-    { day: "Monday", enabled: false, start_time: "", end_time: "", id: "", consultant_id: 0 },
-    { day: "Tuesday", enabled: false, start_time: "", end_time: "", id: "", consultant_id: 0 },
-    { day: "Wednesday", enabled: false, start_time: "", end_time: "", id: "", consultant_id: 0 },
-    { day: "Thursday", enabled: false, start_time: "", end_time: "", id: "", consultant_id: 0 },
-    { day: "Friday", enabled: false, start_time: "", end_time: "", id: "", consultant_id: 0 },
-    { day: "Saturday", enabled: false, start_time: "", end_time: "", id: "", consultant_id: 0 },
-    { day: "Sunday", enabled: false, start_time: "", end_time: "", id: "", consultant_id: 0 },
-  ];
-
-  const savedSlots  = consultantStore((state) => state.slots) || defaultSlots;
-
   const {
     timeOptions,
     slots,
-    setSlots,
     toggleDay,
     handleTimeChange,
     setAvailability,
     buttonLoader,
+    selected,
+    setSelected,
+    handleSelect,
+    rate, 
+    setRate,
   } = useConsultant();
-
-  const { 
-    selected, 
-    handleSelect 
-  } = useOnboarding();
 
   useEffect(() => {
     setLoading(true);
     const init = async () => {
       await useAuthConsultant(router); 
-      const merged = defaultSlots.map((defaultSlot) => {
-        const match = savedSlots.find(
-          (s: any) => s.day === defaultSlot.day
-        );
-
-        if (match) {
-          return {
-            ...defaultSlot,
-            enabled: match.enabled,
-            start_time: match.start_time,
-            end_time: match.end_time,
-            id: match.id,
-            consultant_id: match.consultant_id || 0,
-          };
-        }
-
-        return defaultSlot;
-      });
-
-      setSlots(merged);
-
       courseStore.getState().setNewUpdate('reset');
+      setSelected(authStore.getState().consultant?.type);
+      setRate(authStore.getState().consultant?.hourly_rate || '');
       setLoading(false);
     };
     init();
@@ -126,10 +95,11 @@ const SetAvailabilityBody = () => {
                 <div className="flex items-center gap-1">
                     <span className="upload-course-input flex-1 font-bold">$</span>
                     <input 
-                      type="number" 
+                      type="text" 
                       className={`upload-course-input`} 
-                      name="price"
-                      value=""
+                      name="rate"
+                      value={rate}
+                      onChange={(e) => setRate(e.target.value)}
                       placeholder="Rate per hour" 
                     />
                 </div>
@@ -186,15 +156,15 @@ const SetAvailabilityBody = () => {
           ))
         }
       </div>
-      <button className="flex items-center justify-center gap-2 btn btn-primary-fill w-full mt-4" onClick={setAvailability}>
+      <button className="flex items-center justify-center gap-2 btn btn-primary-fill res-w-full mt-4" onClick={setAvailability}>
         {
             buttonLoader ? (
-                <ButtonLoader content="Creating Course . . ." />
+                <ButtonLoader content="Please wait . . ." />
             ) : 
             
             (
                 <div className="bt-btn two">
-                    <span>Create Course</span>
+                    <span>Set Availability</span>
                     <span>
                         <Image
                             aria-hidden

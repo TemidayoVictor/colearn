@@ -106,10 +106,9 @@ export const useAuthConsultant = async (router: ReturnType<typeof useRouter>) =>
 
   try {
     const response = await axiosInstanceWeb.get("/user-instructor");
-    console.log(response)
     if (response.status === 200) {
       const { user, instructor } = response.data;
-      if (user.type === "instructor" && instructor.consultant == true) {
+      if (user.type === "instructor" && instructor.consultant_active === 1) {
         setUser(user);
         setConsultant(instructor.consultant);
         setSlots(instructor.consultant.slots);

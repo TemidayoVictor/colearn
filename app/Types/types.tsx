@@ -135,7 +135,7 @@ export type Instructor = {
     disciplines: string | null;
     languages: string[];
     category: string;
-    consultant: boolean;
+    consultant_active: boolean;
     intro_video_url: string;
     consultant_progress: number;
 }
@@ -143,7 +143,7 @@ export type Instructor = {
 export type Consultant = {
     id: number;
     instructor_id: number;
-    hourly_rate: number;
+    hourly_rate: string | undefined;
     available_days: string | null;
     available_time_start: string | null;
     available_time_end: string | null;

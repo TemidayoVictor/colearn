@@ -12,13 +12,19 @@ import {
     edit_certs,
     submit_application, 
     create_consultant_account,
+    set_availability,
 } from "@/services/consultant";
 import { courseStore } from "@/zustand/courseStore";
+import { consultantStore } from "@/zustand/consultantStore";
 
 export const useConsultant = () => {
     const router = useRouter();
     const instructor = authStore((state) => state.instructor)
     const instructorId = instructor?.id;
+
+    const consultant = authStore((state) => state.consultant);
+    const consultantId = consultant?.id;
+    const consultantType = consultant?.type;
 
     const [buttonLoader, setButtonLoader] = useState<boolean>(false);
 
@@ -26,6 +32,12 @@ export const useConsultant = () => {
     const fileInputRefs = useRef<(HTMLInputElement | null)[]>([]);
     const [introVideo, setIntroVideo] = useState<File | null>(null);
     const [fileName, setFileName] = useState<string>('');
+    const [selected, setSelected] = useState<string | null | undefined>();
+    const [rate, setRate] = useState<string | undefined>();
+
+    const slots = consultantStore((state) => state.slots);
+    const toggleSlotEnabled = consultantStore((state) => state.toggleSlotEnabled);
+    const updateSlot = consultantStore((state) => state.updateSlot);
 
     const [schoolData, setSchoolData] = useState<School[]>([
         {
@@ -252,37 +264,20 @@ export const useConsultant = () => {
         "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"
     ];
 
-    const [slots, setSlots] = useState<Slot[]>(
-        daysOfWeek.map((day) => ({
-          day,
-          enabled: false,
-          start_time: "",
-          end_time: "",
-          id: "",
-          consultant_id: 0,
-        }))
-    );
-    
     const toggleDay = (index: number) => {
-        setSlots((prev) =>
-          prev.map((slot, i) =>
-            i === index
-              ? { ...slot, enabled: !slot.enabled, start_time: "", end_time: "" }
-              : slot
-          )
-        );
-    };
-    
-    const handleTimeChange = (
+        toggleSlotEnabled(index);
+      };
+      
+      const handleTimeChange = (
         index: number,
         field: "start_time" | "end_time",
         value: string
       ) => {
-        setSlots((prev) =>
-          prev.map((slot, i) =>
-            i === index ? { ...slot, [field]: value } : slot
-          )
-        );
+        updateSlot(index, { [field]: value });
+    };
+
+    const handleSelect = (id: string) => {
+        setSelected(prev => (prev === id ? null : id));
     };
 
     const submitSchools = async () => {
@@ -511,13 +506,36 @@ export const useConsultant = () => {
         }
     }
 
+    const validateSlots = (slots: Slot[]): boolean => {
+        for (const slot of slots) {
+          if (slot.enabled && (!slot.start_time || !slot.end_time)) {
+            showErrorToast(`Please select start and end time for ${slot.day}`);
+            return false;
+          }
+        }
+        return true;
+    };
+
     const setAvailability = async () => {
-        console.log(slots);
-        return;
+        if( selected === null || selected === undefined) {
+            showErrorToast('Please select a consultant type');
+            return;
+        }
+
+        if (selected === 'paid' && !rate) {
+            showErrorToast('Please set your rate');
+            return;
+        }
+        
+        if (!validateSlots(slots)) {
+            return;
+        }
+
         // submit
         setButtonLoader(true);
+        
         try {
-            const response = await submit_application(instructorId);
+            const response = await set_availability(consultantId, rate, selected, slots);
             if (response.success) {
                 setButtonLoader(false)
                 showSuccessToast(response.message)
@@ -578,8 +596,12 @@ export const useConsultant = () => {
         slots,
         toggleDay,
         handleTimeChange,
-        setSlots,
         setAvailability,
         createConsultantAccount,
+        selected,
+        handleSelect,
+        rate, 
+        setRate,
+        setSelected,
     }
 }

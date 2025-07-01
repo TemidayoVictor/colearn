@@ -1,6 +1,6 @@
 import axiosInstance from "@/utils/api";
 import { handleApiResponse, handleApiError } from '@/utils/handleApiResponse';
-import { School, Certification } from "@/app/Types/types";
+import { School, Certification, Slot } from "@/app/Types/types";
 import { courseStore } from "@/zustand/courseStore";
 
 export const submit_schools = async (schools: School[], instructorId: string | undefined) => {
@@ -133,6 +133,27 @@ export const create_consultant_account = async (instructorId: string | undefined
     
     try {
         const response = await axiosInstance.post("/create-consultant-account", {instructorId});
+        return handleApiResponse(response);
+    }
+
+    catch(error: any) {
+        return handleApiError(error)
+    }
+}
+
+export const set_availability = async (
+    consultantId: number | undefined,
+    rate: string | undefined, 
+    type: string | undefined | null,
+    slots: Slot[],
+) => {
+    try {
+        const response = await axiosInstance.post("/set-availability", {
+            consultantId,
+            rate,
+            type,
+            slots,
+        });
         return handleApiResponse(response);
     }
 
