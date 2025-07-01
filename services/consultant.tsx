@@ -161,3 +161,14 @@ export const set_availability = async (
         return handleApiError(error)
     }
 }
+
+export const get_all_consultants = async () => {
+    try {
+        const response = await axiosInstance.get("/get-all-consultants");
+        return handleApiResponse(response);
+    }
+
+    catch(error: any) {
+        return handleApiError(error)
+    }
+}

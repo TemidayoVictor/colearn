@@ -102,6 +102,7 @@ export type User = {
     email_verified_at: string | null;
     email_verification_code: number;
     profile_progress: string | null;
+    country_iso3: string;
 };
   
 export type Student = {
@@ -138,6 +139,34 @@ export type Instructor = {
     consultant_active: boolean;
     intro_video_url: string;
     consultant_progress: number;
+    experience_years: string;
+    user: User | null;
+}
+
+export type Instructors = {
+    id: string | undefined;
+    user_id: number;
+    title: string;
+    professional_headline: string;
+    phone: string | null;
+    profile_photo: string | null;
+    bio: string | null;
+    country: string | null;
+    gender: string | null;
+    website: string | null;
+    linkedin_url: string | null;
+    twitter_url: string | null;
+    youtube_url: string | null;
+    is_approved: string | null;
+    is_active: string | null;
+    disciplines: string | null;
+    languages: string[];
+    category: string;
+    consultant_active: boolean;
+    intro_video_url: string;
+    consultant_progress: number;
+    experience_years: string;
+    user: User;
 }
 
 export type Consultant = {
@@ -148,6 +177,18 @@ export type Consultant = {
     available_time_start: string | null;
     available_time_end: string | null;
     type: string | null;
+    instructor: Instructor | null;
+}
+
+export type Consultants = {
+    id: number;
+    instructor_id: number;
+    hourly_rate: string | undefined;
+    available_days: string | null;
+    available_time_start: string | null;
+    available_time_end: string | null;
+    type: string | null;
+    instructor: Instructors;
 }
 
 export type Slot = {

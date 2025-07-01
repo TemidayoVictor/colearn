@@ -129,3 +129,31 @@ export const useAuthConsultant = async (router: ReturnType<typeof useRouter>) =>
     router.push("/authentication/login");
   }
 };
+
+export const useAuthStudent = async (router: ReturnType<typeof useRouter>) => {
+  const { setUser, setStudent } = authStore.getState();
+
+  try {
+    const response = await axiosInstanceWeb.get("/user-student");
+    if (response.status === 200) {
+      const { user, student } = response.data;
+      if (user.type === "student" && student) {
+        setUser(user);
+        setStudent(student);
+      }
+
+      else {
+        showErrorToast("Unauthorized User");
+        router.push("/authentication/login");
+      }
+      
+    } else {
+      showErrorToast("Session Expired. Please Log in");
+      router.push("/authentication/login");
+    }
+  } catch (error) {
+    console.log(error);
+    showErrorToast("Session Expired. Please Log in");
+    router.push("/authentication/login");
+  }
+};
