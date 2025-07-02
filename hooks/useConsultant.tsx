@@ -13,21 +13,31 @@ import {
     submit_application, 
     create_consultant_account,
     set_availability,
+    book_session,
 } from "@/services/consultant";
 import { courseStore } from "@/zustand/courseStore";
 import { consultantStore } from "@/zustand/consultantStore";
-import dayjs from "dayjs";
+import { genralStore } from "@/zustand/generalStore";
+import dayjs, {Dayjs} from "dayjs";
 
 export const useConsultant = () => {
     const router = useRouter();
+    const user = authStore((state) => state.user)
+    const userId = user?.id;
+
     const instructor = authStore((state) => state.instructor)
     const instructorId = instructor?.id;
 
+    // Currently logged in consultant
     const consultant = authStore((state) => state.consultant);
     const consultantId = consultant?.id;
     const consultantType = consultant?.type;
 
     const [buttonLoader, setButtonLoader] = useState<boolean>(false);
+
+    // for consultants that are selected for booking
+    const selectedConsultant = genralStore((state) => state.consultant);
+    const selectedConsultantId = selectedConsultant?.id;
 
     const fileInputRef = useRef<(HTMLInputElement | null)>(null);
     const fileInputRefs = useRef<(HTMLInputElement | null)[]>([]);
@@ -36,13 +46,17 @@ export const useConsultant = () => {
     const [selected, setSelected] = useState<string | null | undefined>();
     const [rate, setRate] = useState<string | undefined>();
 
-    const [selectedDate, setSelectedDate] = useState('');
+    // const [selectedDate, setSelectedDate] = useState('');
+    const [selectedDate, setSelectedDate] = React.useState<Dayjs | null>(dayjs());
+    const [availableSlots, setAvailableSlots] = useState<string[]>([]);
     const [selectedTime, setSelectedTime] = useState('');
     const [duration, setDuration] = useState(30);
 
     const slots = consultantStore((state) => state.slots);
     const toggleSlotEnabled = consultantStore((state) => state.toggleSlotEnabled);
     const updateSlot = consultantStore((state) => state.updateSlot);
+
+    const [note, setNote] = useState<string | null>(null);
 
     const [schoolData, setSchoolData] = useState<School[]>([
         {
@@ -300,6 +314,17 @@ export const useConsultant = () => {
       
     const durationOptions = [30, 60, 90];
 
+    // const [formData, setFormData] = useState<{
+    //     date: string;
+    //     start_time: string;
+    //     duration: string;
+    //     note: string;
+    //   }>({
+    //     date: '',
+    //     start_time: '',
+    //     duration: '',
+    //     note: '',
+    // });
 
 
     const submitSchools = async () => {
@@ -578,6 +603,51 @@ export const useConsultant = () => {
         }
     }
 
+    const bookSession = async () => {
+        // validate input
+
+        if (!selectedDate) {
+            showErrorToast('Please select a date');
+            return;
+        }
+
+        if (!selectedTime) {
+            showErrorToast('Please select a time');
+            return;
+        }
+
+        if (!duration) {
+            showErrorToast('Please select a duration');
+            return;
+        }
+
+        const formattedDate = dayjs(selectedDate).format("YYYY-MM-DD");
+        
+        // submit
+        setButtonLoader(true);
+        
+        try {
+            const response = await book_session(selectedConsultantId, userId, formattedDate, selectedTime, duration, note);
+            if (response.success) {
+                setButtonLoader(false)
+                showSuccessToast(response.message)
+                courseStore.getState().setNewUpdate('set');
+            } 
+
+            else {
+                setButtonLoader(false)
+                showErrorToast(response.message)
+                console.log(response)
+            }
+        }
+
+        catch (err: any) {
+            console.log(err)
+            setButtonLoader(false)
+            showErrorToast('Unexpected error occurred');
+        }
+    }
+
 
     return {
         buttonLoader,
@@ -633,6 +703,9 @@ export const useConsultant = () => {
         setDuration,
         durationOptions,
         timeOptions2,
-
+        availableSlots, 
+        setAvailableSlots,
+        bookSession,
+        setNote,
     }
 }

@@ -1,18 +1,32 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useState, useRef } from "react";
 import { useConsultant } from "@/hooks/useConsultant";
 import { consultantStore } from "@/zustand/consultantStore";
-import dayjs from "dayjs";
+import dayjs, { Dayjs } from "dayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faClock, faTimes } from "@fortawesome/free-solid-svg-icons";
+import ButtonLoader from "./buttonLoader";
+import Image from "next/image";
+import Unavailable from "./Unavailable";
 
 const BookingForm = () => {
 
     const slots = consultantStore((state) => state.slots);
-    
+    const [slotCheck, setSlotCheck] = useState<boolean>(false);
 
+    const [showTimeMenu, setShowTimeMenu] = useState(false);
+    const modalRef = useRef<HTMLDivElement>(null);
+
+    const handleTimeSelect = (time: string) => {
+        setSelectedTime(time);
+        setShowTimeMenu(false);
+    };
+    
     const parseTimeToDate = (time: string): Date => {
         return dayjs(time, ['h:mm A']).toDate();
     };
-
-    const [availableSlots, setAvailableSlots] = useState<string[]>([]);
 
     const {
         selectedDate,
@@ -23,39 +37,74 @@ const BookingForm = () => {
         timeOptions2,
         setDuration,
         durationOptions,
+        availableSlots, 
+        setAvailableSlots,
+        bookSession,
+        buttonLoader,
+        setNote,
     } = useConsultant();
 
+    // use effect to handle selected date and update available slots
     useEffect(() => {
         if (selectedDate) {
             const weekday = dayjs(selectedDate).format('dddd');
             const slot = slots.find((s) => s.day === weekday && s.enabled);
-            console.log(slot);
             if (slot) {
-            
-            const start = parseTimeToDate(slot.start_time);
-            const end = parseTimeToDate(slot.end_time);
+                setSlotCheck(true);
+                const start = parseTimeToDate(slot.start_time);
+                const end = parseTimeToDate(slot.end_time);
 
-            console.log("Start:", start);
-            console.log("End:", end);
-            console.log("All options:", timeOptions2.map(parseTimeToDate));
+                const filtered = timeOptions2.filter((t) => {
+                    const current = parseTimeToDate(t);
+                    return current >= start && current < end;
+                });
 
-            const filtered = timeOptions2.filter((t) => {
-                const current = parseTimeToDate(t);
-                return current >= start && current < end;
-            });
-
-            setAvailableSlots(filtered);
+                setAvailableSlots(filtered);
 
             } else {
-            setAvailableSlots([]);
+                setSlotCheck(false);
+                setAvailableSlots([]);
             }
         }
     }, [selectedDate, slots]);
 
+    // use effect to close the time menu when clicking outside of it
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+          if (
+            modalRef.current &&
+            !modalRef.current.contains(event.target as Node)
+          ) {
+            setShowTimeMenu(false);
+          }
+        };
+    
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => {
+          document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, []);
+
     return (
         <div>
             <div className="calendar">
+                <h2 className="title-3 mb-4">Book Session</h2>
+                
                 <div className="mb-4">
+                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                        <DatePicker
+                            label="Pick a date"
+                            value={selectedDate}
+                            onChange={(newValue) => setSelectedDate(newValue)}
+                            minDate={dayjs()}
+                            slotProps={{
+                            textField: { fullWidth: true },
+                            }}
+                        />
+                    </LocalizationProvider>
+                </div>
+
+                {/* <div className="mb-4">
                     <label className="block font-medium mb-1">Date</label>
                     <input
                         type="date"
@@ -64,9 +113,9 @@ const BookingForm = () => {
                         className="w-full border px-3 py-2 rounded"
                         required
                     />
-                </div>
+                </div> */}
 
-                <div className="mb-4">
+                {/* <div className="mb-4">
                     <label className="block font-medium mb-1">Start Time</label>
                     <select
                         value={selectedTime}
@@ -79,20 +128,96 @@ const BookingForm = () => {
                             <option key={time} value={time}>{time}</option>
                         ))}
                     </select>
-                </div>
+                </div> */}
 
-                <div className="mb-4">
-                    <label className="block font-medium mb-1">Duration (mins)</label>
-                    <select
-                        value={duration}
-                        onChange={(e) => setDuration(Number(e.target.value))}
-                        className="w-full border px-3 py-2 rounded"
-                    >
-                        {durationOptions.map((d) => (
-                            <option key={d} value={d}>{d} minutes</option>
-                        ))}
-                    </select>
-                </div>
+                {
+                    slotCheck ? (
+                        <>
+                            <div className="relative mb-4">
+                                <label className="block mb-1 text-[.9rem] font-bold">Start Time</label>
+
+                                <button
+                                    className="input-field w-full text-start"
+                                    onClick={() => setShowTimeMenu(true)}
+                                >
+                                    {selectedTime || "Select time"}
+                                </button>
+
+                                {
+                                    showTimeMenu && (
+                                        <>
+                                            <div className="menu-overlay active" onClick={() => setShowTimeMenu(false)}></div>
+                                            <div className="bottom-menu slide-up time" ref={modalRef}>
+                                                <div className="menu-actions">
+                                                {availableSlots.map((time) => (
+                                                    <button
+                                                    key={time}
+                                                    className="menu-btn"
+                                                    onClick={() => handleTimeSelect(time)}
+                                                    >
+                                                    <FontAwesomeIcon icon={faClock} className="icon" />
+                                                    {time}
+                                                    </button>
+                                                ))}
+
+                                                <button className="menu-btn cancel" onClick={() => setShowTimeMenu(false)}>
+                                                    <FontAwesomeIcon icon={faTimes} className="icon" />
+                                                    Cancel
+                                                </button>
+                                                </div>
+                                            </div>
+                                        </>
+                                    )
+                                }
+                            </div>
+
+                            <div className="mb-4">
+                                <label className="block mb-1 text-[.9rem] font-bold">Duration (mins)</label>
+                                <select
+                                    value={duration}
+                                    onChange={(e) => setDuration(Number(e.target.value))}
+                                    className="w-full input-field"
+                                >
+                                    {durationOptions.map((d) => (
+                                        <option key={d} value={d}>{d} minutes</option>
+                                    ))}
+                                </select>
+                            </div>
+
+                            <div className="mb-4">
+                                <h3 className="block mb-1 text-[.9rem] font-bold">Add Consultation Note</h3>
+                                <textarea name="note" id="" placeholder="Enter a description" className="textarea" onChange={(e) => setNote(e.target.value)}></textarea>
+                            </div>
+
+                            <button className="bt-btn btn btn-primary-fill full" onClick={bookSession}>
+                                {
+                                    buttonLoader ? (
+                                        <ButtonLoader content="Please Wait . . ." />
+                                    ) : 
+                                    
+                                    (
+                                        <div className="bt-btn two">
+                                            <span>Continue</span>
+                                            <span>
+                                                <Image
+                                                    aria-hidden
+                                                    src="/assets/images/arrow-right.png"
+                                                    alt="Colearn Logo"
+                                                    width={12}
+                                                    height={12}
+                                                    className="object-contain"
+                                                />
+                                            </span>
+                                        </div>                                        
+                                    )
+                                }
+                            </button>
+                        </>
+                    ) : (
+                        <Unavailable />
+                    )
+                }
+
             </div>
         </div>
     )

@@ -183,3 +183,28 @@ export const get_consultant = async (consultantId: string | undefined,) => {
         return handleApiError(error)
     }
 }
+
+export const book_session = async (
+    consultantId: number | undefined,
+    userId: number | undefined,
+    date: string | undefined, 
+    start_time: string | undefined,
+    duration: number | undefined,
+    note: string | undefined | null,
+) => {
+    try {
+        const response = await axiosInstance.post("/book-session", {
+            consultantId,
+            userId,
+            date,
+            start_time,
+            duration,
+            note,
+        });
+        return handleApiResponse(response);
+    }
+
+    catch(error: any) {
+        return handleApiError(error)
+    }
+}

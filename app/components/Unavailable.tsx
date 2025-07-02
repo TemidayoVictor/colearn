@@ -14,7 +14,7 @@ const Unavailable = () => {
                 className="object-contain"
             />
             <h2 className="error-msg font-semibold">Consultant Unavailable</h2>
-            <p className="text-center color-grey-text text-[.9rem]">Sorry, this Consultant isn’t available today, try another day.</p>
+            <p className="text-center color-grey-text text-[.9rem]">Sorry, this Consultant isn’t available on this day, kindly try another day.</p>
         </div>
     )
 }

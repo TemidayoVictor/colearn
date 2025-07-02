@@ -43,16 +43,6 @@ const StudentBookingSessionBody = () => {
         return dayjs(time, ['h:mm A']).toDate();
     };
 
-    const {
-        selectedDate,
-        setSelectedDate,
-        selectedTime,
-        setSelectedTime,
-        duration,
-        timeOptions2,
-        setDuration,
-        durationOptions,
-    } = useConsultant();
 
     useEffect(() => {
         setLoading(true);
@@ -85,33 +75,6 @@ const StudentBookingSessionBody = () => {
         init();
 
     }, [newUpdate]);
-
-    useEffect(() => {
-        if (selectedDate) {
-          const weekday = dayjs(selectedDate).format('dddd');
-          const slot = slots.find((s) => s.day === weekday && s.enabled);
-          console.log(slot);
-          if (slot) {
-            
-            const start = parseTimeToDate(slot.start_time);
-            const end = parseTimeToDate(slot.end_time);
-
-            console.log("Start:", start);
-            console.log("End:", end);
-            console.log("All options:", timeOptions2.map(parseTimeToDate));
-
-            const filtered = timeOptions2.filter((t) => {
-                const current = parseTimeToDate(t);
-                return current >= start && current < end;
-            });
-
-            setAvailableSlots(filtered);
-
-          } else {
-            setAvailableSlots([]);
-          }
-        }
-    }, [selectedDate, slots]);
     
     if(loading) return <Loader />
 
@@ -119,14 +82,13 @@ const StudentBookingSessionBody = () => {
         <div>
             <div className='container'>
                 <div className="booking-session two">
-                    <h2 className='title-2'>Book  a session with {`${consultant?.instructor?.user?.first_name} ${consultant?.instructor?.user?.last_name}`}</h2>
-                    <div className="booking-session-cont mt-[1.5em]">
-                        <div className="component">
-                            <Calendar />
-                            <BookingForm />
-                        </div>
+                    {/* <h2 className='title-2'>Book  a session with {`${consultant?.instructor?.user?.first_name} ${consultant?.instructor?.user?.last_name}`}</h2> */}
+                    <div className="booking-session-cont three">
                         <div className="component">
                             <BookingInfo/>
+                        </div>
+                        <div className="component">
+                            <BookingForm />
                         </div>
                     </div>
                 </div>

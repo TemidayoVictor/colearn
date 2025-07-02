@@ -4,6 +4,12 @@ import Image from "next/image";
 import Link from "next/link";
 import StudentPopularConsultant from "./StudentsPopularConsultants";
 import AccountModal from "../Instructors/AccountModal";
+import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
+import timezone from "dayjs/plugin/timezone";
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
 
 type StudentBookingBodyProps = {
     userType?: string
@@ -19,12 +25,15 @@ const StudentBookingBody = ({userType}: StudentBookingBodyProps) => {
     } 
 
     const closeModal = () => setShowModal(null);
+
+    const consultantTimeZone = "Europe/London";
+    const studentTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
     
     return (
         <div>
             <div>
                 <h2 className="title-2">Bookings</h2>
-                <p className="color-grey-text text-[.8rem]">The session timings are following your local timezone Africa/Lagos</p>
+                <p className="color-grey-text text-[.8rem]">The session timings are following your local timezone {studentTimeZone} </p>
             </div>
 
             <div className="mt-[1.5em]">

@@ -5,13 +5,12 @@ import { genralStore } from "@/zustand/generalStore";
 
 const StudentPopularConsultant = () => {
     const consultants = genralStore((state) => state.consultants)
-    console.log(consultants);
 
     return (
         <div className="mt-[2em]">
             <div className="flex items-center justify-between mb-4">
                 <h2 className="title-3">Most Popular Consultants</h2>
-                <Link href="/" className="text-[.9rem] underline color-normal">All Courses</Link>
+                <Link href="/" className="text-[.9rem] underline color-normal">All Consultants</Link>
             </div>
 
             <div className="bookings-container two">

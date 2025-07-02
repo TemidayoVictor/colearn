@@ -6,7 +6,7 @@ const BookingInfo = () => {
     return (
         <div className="booking-info">
             
-            <h2 className="title-2">Booking Information</h2>
+            <h2 className="title-2">Consultant Information</h2>
             <p className="text-[.8rem] color-grey-text mt-2">Book your one-on-one consultation today and gain valuable insights from our top expert.</p>
 
             <div className="booking-info-cont my-[1em]">
@@ -145,27 +145,6 @@ const BookingInfo = () => {
                         <p className="font-bold text-[.8rem]">09:00 - 09:30 AM</p>
                     </div>
                 </div>
-            </div>
-
-            <div className="mb-4">
-                <h3 className="font-semibold mb-3">Add Consultation Note</h3>
-                <textarea name="" id="" placeholder="Enter a description" className="textarea"></textarea>
-            </div>
-
-            <div className="flex justify-end">
-                <button className="bt-btn btn btn-primary-fill">
-                    <span>Pay Now</span>
-                    <span>
-                        <Image
-                            aria-hidden
-                            src="/assets/images/arrow-right.png"
-                            alt="Colearn Logo"
-                            width={12}
-                            height={12}
-                            className="object-contain"
-                        />
-                    </span>
-                </button>
             </div>
 
             {/* <Unavailable />  */}

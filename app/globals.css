@@ -718,6 +718,12 @@ ol li {
   transition: bottom 0.3s ease;
 }
 
+.bottom-menu.time {
+  height: 15rem;
+  overflow-y: scroll;
+
+}
+
 .bottom-menu.slide-up {
   bottom: 0;
 }
@@ -1607,6 +1613,10 @@ ol li {
   justify-content: space-between;
 }
 
+.booking-session-cont.three {
+  flex-direction: column;
+}
+
 .booking-session-cont .component {
   width: 50%;
 }
@@ -1617,6 +1627,10 @@ ol li {
 
 .booking-session-cont .component.two {
   width: 60%;
+}
+
+.booking-session-cont.three .component {
+  width: 100%;
 }
 
 .booking-info {
@@ -3333,6 +3347,15 @@ td {
     border-radius: 0;
     box-shadow: 0 2px 20px rgba(0, 0, 0, 0.15);
     transition: opacity 0.3s ease;
+  }
+
+  .bottom-menu.time {
+    top: 100%;
+    left: 0%;
+    right: 0;
+    height: 15rem;
+    overflow-y: scroll;
+    width: 100%;
   }
 
   .bottom-menu.slide-up {
