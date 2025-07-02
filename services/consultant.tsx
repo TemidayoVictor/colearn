@@ -172,3 +172,14 @@ export const get_all_consultants = async () => {
         return handleApiError(error)
     }
 }
+
+export const get_consultant = async (consultantId: string | undefined,) => {
+    try {
+        const response = await axiosInstance.post("/get-consultant", {consultantId});
+        return handleApiResponse(response);
+    }
+
+    catch(error: any) {
+        return handleApiError(error)
+    }
+}

@@ -16,6 +16,7 @@ import {
 } from "@/services/consultant";
 import { courseStore } from "@/zustand/courseStore";
 import { consultantStore } from "@/zustand/consultantStore";
+import dayjs from "dayjs";
 
 export const useConsultant = () => {
     const router = useRouter();
@@ -34,6 +35,10 @@ export const useConsultant = () => {
     const [fileName, setFileName] = useState<string>('');
     const [selected, setSelected] = useState<string | null | undefined>();
     const [rate, setRate] = useState<string | undefined>();
+
+    const [selectedDate, setSelectedDate] = useState('');
+    const [selectedTime, setSelectedTime] = useState('');
+    const [duration, setDuration] = useState(30);
 
     const slots = consultantStore((state) => state.slots);
     const toggleSlotEnabled = consultantStore((state) => state.toggleSlotEnabled);
@@ -279,6 +284,23 @@ export const useConsultant = () => {
     const handleSelect = (id: string) => {
         setSelected(prev => (prev === id ? null : id));
     };
+
+    const generateTimeSlots = (): string[] => {
+        const slots: string[] = [];
+        const start = dayjs().hour(0).minute(0);
+      
+        for (let i = 0; i < 48; i++) {
+          slots.push(start.add(i * 30, 'minute').format('h:mm A')); // 'h:mm A' = 12-hour format
+        }
+      
+        return slots;
+    };
+
+    const timeOptions2 = generateTimeSlots();
+      
+    const durationOptions = [30, 60, 90];
+
+
 
     const submitSchools = async () => {
         if (!validateSchoolData()) {
@@ -603,5 +625,14 @@ export const useConsultant = () => {
         rate, 
         setRate,
         setSelected,
+        selectedDate,
+        setSelectedDate,
+        selectedTime,
+        setSelectedTime,
+        duration,
+        setDuration,
+        durationOptions,
+        timeOptions2,
+
     }
 }

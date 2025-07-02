@@ -3,92 +3,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { genralStore } from "@/zustand/generalStore";
 
-const tutors  = [
-    {
-        id: 1,
-        name: "Favi Design",
-        country: "USA",
-        title: "Senior Staff IT Director at Apple",
-        courses: "120",
-        reviews: "34",
-        image: "/assets/images/Frame 67.png",
-        experience: "14"
-    },
-    {
-        id: 2,
-        name: "Favi Design",
-        country: "USA",
-        title: "Senior Staff IT Director at Apple",
-        courses: "120",
-        reviews: "34",
-        image: "/assets/images/lady.png",
-        experience: "14"
-    },
-    {
-        id: 3,
-        name: "Favi Design",
-        country: "USA",
-        title: "Senior Staff IT Director at Apple",
-        courses: "120",
-        reviews: "34",
-        image: "/assets/images/Frame 67.png",
-        experience: "14"
-    },
-    {
-        id: 4,
-        name: "Favi Design",
-        country: "USA",
-        title: "Senior Staff IT Director at Apple",
-        courses: "120",
-        reviews: "34",
-        image: "/assets/images/lady.png",
-        experience: "14"
-    },
-    {
-        id: 5,
-        name: "Favi Design",
-        country: "USA",
-        title: "Senior Staff IT Director at Apple",
-        courses: "120",
-        reviews: "34",
-        image: "/assets/images/Frame 67.png",
-        experience: "14"
-    },
-    {
-        id: 6,
-        name: "Favi Design",
-        country: "USA",
-        title: "Senior Staff IT Director at Apple",
-        courses: "120",
-        reviews: "34",
-        image: "/assets/images/lady.png",
-        experience: "14"
-    },
-
-    {
-        id: 7,
-        name: "Favi Design",
-        country: "USA",
-        title: "Senior Staff IT Director at Apple",
-        courses: "120",
-        reviews: "34",
-        image: "/assets/images/lady.png",
-        experience: "14"
-    },
-
-    {
-        id: 8,
-        name: "Favi Design",
-        country: "USA",
-        title: "Senior Staff IT Director at Apple",
-        courses: "120",
-        reviews: "34",
-        image: "/assets/images/Frame 67.png",
-        experience: "14"
-    },
-    
-]
-
 const StudentPopularConsultant = () => {
     const consultants = genralStore((state) => state.consultants)
     console.log(consultants);
@@ -157,7 +71,7 @@ const StudentPopularConsultant = () => {
                                             <p className="font-bold" >${item.hourly_rate} / hr </p>
                                         )
                                     }
-                                    <Link href='/students/bookings/session' className="btn normal btn-small">Book Now</Link>
+                                    <Link href={`/students/bookings/session/${item.id}`} className="btn normal btn-small">Book Now</Link>
                                 </div>
                             </div>
                         ))
