@@ -637,7 +637,6 @@ export const useConsultant = () => {
         const consultantDateTime = userDateTime.tz(selectedConsultantTimeZone);
         const consultantDateDisplay = consultantDateTime.format("dddd, MMM D YYYY");
 
-        
         // submit
         setButtonLoader(true);
         
