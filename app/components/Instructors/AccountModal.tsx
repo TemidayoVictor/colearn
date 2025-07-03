@@ -10,6 +10,7 @@ import ManageModule from "./ManageModule";
 import ManageVideo from "./ManageVideo";
 import ManageResoure from "./ManageResource";
 import ManageSchool from "./ManageSchool";
+import BookingUpdate from "../BookingUpdate";
 import ManageCertification from "./ManageCertification";
 import { motion, AnimatePresence } from 'framer-motion';
 import { UseCourses } from "@/hooks/useCourses";
@@ -399,6 +400,24 @@ const AccountModal = ({modalType, modalClose, experience, bank, subType}: Accoun
                 {
                     modalType == 'booking' &&
                     <BookingDetails displayType={subType} />
+                }
+
+                {
+                    modalType == 'booking-update' &&
+                    <BookingUpdate />
+                }
+
+                {
+                    modalType == 'block-instructor' &&
+                    <div>
+                        <div>
+                            <h2 className="title-3">Please provide a reason for blocking this Instructor </h2>
+                        </div>
+                        <div className="input-box">
+                            <label htmlFor="">Provide Reason</label>
+                            <textarea name="" id="" className="textarea"></textarea>
+                        </div>
+                    </div>
                 }
 
                 {

@@ -497,6 +497,10 @@ input, textarea, select {
   padding-bottom: .5em;
 }
 
+.res-text {
+  font-size: 1rem;
+}
+
 .res-text-width {
   width: 60%;
 }
@@ -3465,6 +3469,10 @@ td {
 
   .in-nav-top {
     margin-top: 0;
+  }
+
+  .res-text {
+    font-size: .9rem;
   }
 
   .res-text-width {

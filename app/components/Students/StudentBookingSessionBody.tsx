@@ -32,7 +32,6 @@ const StudentBookingSessionBody = () => {
             // fetch consultant details
             try {
                 const response = await get_consultant(consultantId);
-                console.log(response);
                 if (response.success) {
                     // save state globally
                     genralStore.getState().setConsultant(response.data.consultant);

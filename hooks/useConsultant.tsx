@@ -320,17 +320,21 @@ export const useConsultant = () => {
       
     const durationOptions = [30, 60, 90];
 
-    // const [formData, setFormData] = useState<{
-    //     date: string;
-    //     start_time: string;
-    //     duration: string;
-    //     note: string;
-    //   }>({
-    //     date: '',
-    //     start_time: '',
-    //     duration: '',
-    //     note: '',
-    // });
+    const [updateBooking, setUpdateBooking] = useState<{
+        id: string | undefined;
+        date: string | undefined;
+        start_time: string | undefined;
+        user_start_time: string | undefined;
+        duration: string | undefined;
+        note: string | undefined;
+      }>({
+        id: '',
+        date: '',
+        start_time: '',
+        user_start_time: '',
+        duration: '',
+        note: '',
+    });
 
 
     const submitSchools = async () => {
@@ -722,5 +726,7 @@ export const useConsultant = () => {
         bookSession,
         setNote,
         setSelectedUserTime,
+        updateBooking,
+        setUpdateBooking,
     }
 }

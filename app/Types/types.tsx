@@ -200,3 +200,27 @@ export type Slot = {
     enabled: boolean;
     consultant_id: number;
 };
+
+export type Booking = {
+    id: string | undefined;
+    user_id: number;
+    consultant_id: number;
+    date: string | undefined;
+    start_time: string | undefined;
+    end_time: string | undefined;
+    duration: string | undefined;
+    amount: string | undefined;
+    status: string | undefined;
+    note: string | undefined;
+    date_string: string | undefined;
+    consultant_note: string | undefined;
+    payment_status: string | undefined;
+    channel: string | undefined;
+    booking_type: string | undefined;
+    booking_link: string | undefined;
+    user_time: string | undefined;
+    consultant_date: string | undefined;
+    user_end_time: string | undefined;
+    consultant: Consultant | null;
+    user: User | null;
+}
