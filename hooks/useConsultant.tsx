@@ -14,6 +14,7 @@ import {
     create_consultant_account,
     set_availability,
     book_session,
+    update_session,
 } from "@/services/consultant";
 import { courseStore } from "@/zustand/courseStore";
 import { consultantStore } from "@/zustand/consultantStore";
@@ -327,6 +328,7 @@ export const useConsultant = () => {
         user_start_time: string | undefined;
         duration: string | undefined;
         note: string | undefined;
+        consultant_date: string | undefined,
       }>({
         id: '',
         date: '',
@@ -334,7 +336,28 @@ export const useConsultant = () => {
         user_start_time: '',
         duration: '',
         note: '',
+        consultant_date: '',
     });
+
+    const [errors, setErrors] = useState({
+        id: false,
+        date: false,
+        start_time: false,
+        user_start_time: false,
+        duration: false,
+    });
+
+    const handleUpdateChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+        const { name, value } = e.target;
+    
+        // Conditionally convert value to number for specific fields
+        const parsedValue = name === 'duration' ? Number(value) : value;
+    
+        setUpdateBooking((prev) => ({
+            ...prev,
+            [name]: parsedValue,
+        }));
+    };
 
 
     const submitSchools = async () => {
@@ -666,6 +689,64 @@ export const useConsultant = () => {
         }
     }
 
+    const updateSession = async () => {
+
+        const newErrors = {
+            id: updateBooking.id?.trim() === '',
+            date: updateBooking.date?.trim() === '',
+            start_time: updateBooking.start_time?.trim() === '',
+            user_start_time: updateBooking.user_start_time?.trim() === '',
+            duration: updateBooking.duration?.trim() === '',
+        };
+      
+        setErrors(newErrors);
+
+        const hasError = Object.values(newErrors).some(Boolean);
+
+        if (hasError) {
+            showErrorToast('Please fill in required fields');
+            return;
+        }
+
+        const formattedDate = dayjs(updateBooking.date).format("YYYY-MM-DD");
+
+        const userTimezone = user?.timezone || Intl.DateTimeFormat().resolvedOptions().timeZone;
+        const userDateTime = dayjs.tz(`${formattedDate } ${updateBooking.start_time}`, 'YYYY-MM-DD hh:mm A', userTimezone);
+
+        // get the equivalent date in the consultant's timezone
+        const booking = genralStore((state) => state.booking);
+        const consultant = booking?.consultant
+        const consultantId = consultant?.id;
+
+        const selectedConsultantTimeZone = consultant?.instructor?.user?.timezone || 'America/New_York';
+        const consultantDateTime = userDateTime.tz(selectedConsultantTimeZone);
+        const consultantDateDisplay = consultantDateTime.format("dddd, MMM D YYYY");
+
+        // submit
+        setButtonLoader(true);
+        
+        try {
+            const response = await update_session(updateBooking);
+            if (response.success) {
+                setButtonLoader(false)
+                showSuccessToast(response.message)
+                courseStore.getState().setNewUpdate('set');
+            } 
+
+            else {
+                setButtonLoader(false)
+                showErrorToast(response.message)
+                console.log(response)
+            }
+        }
+
+        catch (err: any) {
+            console.log(err)
+            setButtonLoader(false)
+            showErrorToast('Unexpected error occurred');
+        }
+    }
+
 
     return {
         buttonLoader,
@@ -728,5 +809,7 @@ export const useConsultant = () => {
         setSelectedUserTime,
         updateBooking,
         setUpdateBooking,
+        handleUpdateChange,
+        updateSession,
     }
 }

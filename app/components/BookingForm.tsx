@@ -135,6 +135,32 @@ const BookingForm = () => {
                     </LocalizationProvider>
                 </div>
 
+                {/* <div className="mb-4">
+                    <label className="block font-medium mb-1">Date</label>
+                    <input
+                        type="date"
+                        value={selectedDate}
+                        onChange={(e) => setSelectedDate(e.target.value)}
+                        className="w-full border px-3 py-2 rounded"
+                        required
+                    />
+                </div> */}
+
+                {/* <div className="mb-4">
+                    <label className="block font-medium mb-1">Start Time</label>
+                    <select
+                        value={selectedTime}
+                        onChange={(e) => setSelectedTime(e.target.value)}
+                        className="w-full border px-3 py-2 rounded"
+                        required
+                    >
+                        <option value="">Select time</option>
+                        {availableSlots.map((time) => (
+                            <option key={time} value={time}>{time}</option>
+                        ))}
+                    </select>
+                </div> */}
+
                 {
                     slotCheck ? (
                         <>

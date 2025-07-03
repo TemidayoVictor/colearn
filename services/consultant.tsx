@@ -223,3 +223,22 @@ export const book_session = async (
         return handleApiError(error)
     }
 }
+
+export const update_session = async (formData: {
+    id: string | undefined,
+    date: string | undefined, 
+    start_time: string | undefined,
+    duration: string | undefined,
+    note: string | undefined | null,
+    user_start_time: string | undefined,
+    consultant_date: string | undefined,
+}) => {
+    try {
+        const response = await axiosInstance.post("/update-session-user", {formData});
+        return handleApiResponse(response);
+    }
+
+    catch(error: any) {
+        return handleApiError(error)
+    }
+}
