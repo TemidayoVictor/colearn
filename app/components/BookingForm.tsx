@@ -1,6 +1,8 @@
 import React, {useEffect, useState, useRef } from "react";
 import { useConsultant } from "@/hooks/useConsultant";
 import { consultantStore } from "@/zustand/consultantStore";
+import { authStore } from "@/zustand/authStore";
+import { genralStore } from "@/zustand/generalStore";
 import dayjs, { Dayjs } from "dayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
@@ -10,23 +12,13 @@ import { faClock, faTimes } from "@fortawesome/free-solid-svg-icons";
 import ButtonLoader from "./buttonLoader";
 import Image from "next/image";
 import Unavailable from "./Unavailable";
+import utc from "dayjs/plugin/utc";
+import timezone from "dayjs/plugin/timezone";
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
 
 const BookingForm = () => {
-
-    const slots = consultantStore((state) => state.slots);
-    const [slotCheck, setSlotCheck] = useState<boolean>(false);
-
-    const [showTimeMenu, setShowTimeMenu] = useState(false);
-    const modalRef = useRef<HTMLDivElement>(null);
-
-    const handleTimeSelect = (time: string) => {
-        setSelectedTime(time);
-        setShowTimeMenu(false);
-    };
-    
-    const parseTimeToDate = (time: string): Date => {
-        return dayjs(time, ['h:mm A']).toDate();
-    };
 
     const {
         selectedDate,
@@ -42,7 +34,38 @@ const BookingForm = () => {
         bookSession,
         buttonLoader,
         setNote,
+        setSelectedUserTime,
     } = useConsultant();
+
+    const slots = consultantStore((state) => state.slots);
+    const [slotCheck, setSlotCheck] = useState<boolean>(false);
+
+    const consultant = genralStore((state) => state.consultant);
+
+    const [showTimeMenu, setShowTimeMenu] = useState(false);
+    const modalRef = useRef<HTMLDivElement>(null);
+
+    const user = authStore((state) => state.user);
+
+    const handleTimeSelect = (time: string, userTime: string) => {
+        setSelectedTime(time);
+        setSelectedUserTime(userTime);
+        setShowTimeMenu(false);
+    };
+    
+    const parseTimeToDate = (time: string): Date => {
+        return dayjs(time, ['h:mm A']).toDate();
+    };
+
+    const convertTimeBetweenZones = (
+        time: string,
+        fromZone: string,
+        toZone: string,
+        date: string
+        ): string => {
+        const fullTime = dayjs.tz(`${date} ${time}`, 'YYYY-MM-DD hh:mm A', fromZone);
+        return fullTime.tz(toZone).format('hh:mm A');
+    };
 
     // use effect to handle selected date and update available slots
     useEffect(() => {
@@ -51,6 +74,9 @@ const BookingForm = () => {
             const slot = slots.find((s) => s.day === weekday && s.enabled);
             if (slot) {
                 setSlotCheck(true);
+                const consultantTimeZone = consultant?.instructor?.user?.timezone || 'America/New_York'; // Default to 'America/New_York' if not set
+                const userTimezone = user?.timezone || Intl.DateTimeFormat().resolvedOptions().timeZone;
+
                 const start = parseTimeToDate(slot.start_time);
                 const end = parseTimeToDate(slot.end_time);
 
@@ -59,7 +85,12 @@ const BookingForm = () => {
                     return current >= start && current < end;
                 });
 
-                setAvailableSlots(filtered);
+                const userFormattedSlots = filtered.map((time) => ({
+                    consultantTime: time,
+                    userTime: convertTimeBetweenZones(time, consultantTimeZone, userTimezone, dayjs(selectedDate).format('YYYY-MM-DD'))
+                }))
+
+                setAvailableSlots(userFormattedSlots);
 
             } else {
                 setSlotCheck(false);
@@ -149,14 +180,14 @@ const BookingForm = () => {
                                             <div className="menu-overlay active" onClick={() => setShowTimeMenu(false)}></div>
                                             <div className="bottom-menu slide-up time" ref={modalRef}>
                                                 <div className="menu-actions">
-                                                {availableSlots.map((time) => (
+                                                {availableSlots.map((time, index) => (
                                                     <button
-                                                    key={time}
+                                                    key={index}
                                                     className="menu-btn"
-                                                    onClick={() => handleTimeSelect(time)}
+                                                    onClick={() => handleTimeSelect(time.consultantTime, time.userTime)}
                                                     >
                                                     <FontAwesomeIcon icon={faClock} className="icon" />
-                                                    {time}
+                                                        <span>{time.consultantTime}</span> <span className="color-grey-text">[ {time.userTime} In Your Time]</span>
                                                     </button>
                                                 ))}
 

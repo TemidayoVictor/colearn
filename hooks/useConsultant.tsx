@@ -19,6 +19,11 @@ import { courseStore } from "@/zustand/courseStore";
 import { consultantStore } from "@/zustand/consultantStore";
 import { genralStore } from "@/zustand/generalStore";
 import dayjs, {Dayjs} from "dayjs";
+import utc from 'dayjs/plugin/utc';
+import timezone from 'dayjs/plugin/timezone';
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
 
 export const useConsultant = () => {
     const router = useRouter();
@@ -48,8 +53,9 @@ export const useConsultant = () => {
 
     // const [selectedDate, setSelectedDate] = useState('');
     const [selectedDate, setSelectedDate] = React.useState<Dayjs | null>(dayjs());
-    const [availableSlots, setAvailableSlots] = useState<string[]>([]);
+    const [availableSlots, setAvailableSlots] = useState<{ consultantTime: string; userTime: string }[]>([]);
     const [selectedTime, setSelectedTime] = useState('');
+    const [selectedUserTime, setSelectedUserTime] = useState('');
     const [duration, setDuration] = useState(30);
 
     const slots = consultantStore((state) => state.slots);
@@ -622,12 +628,21 @@ export const useConsultant = () => {
         }
 
         const formattedDate = dayjs(selectedDate).format("YYYY-MM-DD");
+
+        const userTimezone = user?.timezone || Intl.DateTimeFormat().resolvedOptions().timeZone;
+        const userDateTime = dayjs.tz(`${formattedDate } ${selectedTime}`, 'YYYY-MM-DD hh:mm A', userTimezone);
+
+        // get the equivalent date in the consultant's timezone
+        const selectedConsultantTimeZone = selectedConsultant?.instructor?.user?.timezone || 'America/New_York';
+        const consultantDateTime = userDateTime.tz(selectedConsultantTimeZone);
+        const consultantDateDisplay = consultantDateTime.format("dddd, MMM D YYYY");
+
         
         // submit
         setButtonLoader(true);
         
         try {
-            const response = await book_session(selectedConsultantId, userId, formattedDate, selectedTime, duration, note);
+            const response = await book_session(selectedConsultantId, userId, formattedDate, selectedTime, duration, note, selectedUserTime, consultantDateDisplay,);
             if (response.success) {
                 setButtonLoader(false)
                 showSuccessToast(response.message)
@@ -707,5 +722,6 @@ export const useConsultant = () => {
         setAvailableSlots,
         bookSession,
         setNote,
+        setSelectedUserTime,
     }
 }

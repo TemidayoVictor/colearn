@@ -18,30 +18,11 @@ import BookingForm from "../BookingForm";
 const StudentBookingSessionBody = () => {
     const params = useParams();
     const consultantId = params?.consultant as string;
-    
-    const getConsultantById = genralStore((state) => state.getConsultantById);
-    const consultant = getConsultantById(Number(consultantId));
 
     const router = useRouter(); 
     const [loading, setLoading] = useState<boolean>(true);
-    const [availableSlots, setAvailableSlots] = useState<string[]>([]);
 
     const newUpdate = courseStore((state) => state.newUpdate);
-    const slots = consultantStore((state) => state.slots);
-
-    const convertTo24Hour = (timeStr: string): string => {
-        const [time, modifier] = timeStr.split(' ');
-        let [hours, minutes] = time.split(':').map(Number);
-      
-        if (modifier === 'PM' && hours < 12) hours += 12;
-        if (modifier === 'AM' && hours === 12) hours = 0;
-      
-        return `${String(hours).padStart(2, '0')}:${minutes}`;
-    };
-
-    const parseTimeToDate = (time: string): Date => {
-        return dayjs(time, ['h:mm A']).toDate();
-    };
 
 
     useEffect(() => {

@@ -191,6 +191,8 @@ export const book_session = async (
     start_time: string | undefined,
     duration: number | undefined,
     note: string | undefined | null,
+    user_time: string | undefined,
+    consultant_date: string | undefined,
 ) => {
     try {
         const response = await axiosInstance.post("/book-session", {
@@ -200,6 +202,8 @@ export const book_session = async (
             start_time,
             duration,
             note,
+            user_time,
+            consultant_date,
         });
         return handleApiResponse(response);
     }
