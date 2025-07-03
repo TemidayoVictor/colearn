@@ -103,6 +103,7 @@ export type User = {
     email_verification_code: number;
     profile_progress: string | null;
     country_iso3: string;
+    timezone: string | null;
 };
   
 export type Student = {
