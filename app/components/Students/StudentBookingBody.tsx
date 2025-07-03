@@ -81,7 +81,7 @@ const StudentBookingBody = ({userType}: StudentBookingBodyProps) => {
                 showErrorToast('Something unexpected happened')
                 console.log(error)
             }
-
+            
             courseStore.getState().setNewUpdate('reset');
             setLoading(false);
         };

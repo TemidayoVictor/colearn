@@ -716,11 +716,12 @@ export const useConsultant = () => {
         // get the equivalent date in the consultant's timezone
         const booking = genralStore((state) => state.booking);
         const consultant = booking?.consultant
-        const consultantId = consultant?.id;
 
         const selectedConsultantTimeZone = consultant?.instructor?.user?.timezone || 'America/New_York';
         const consultantDateTime = userDateTime.tz(selectedConsultantTimeZone);
         const consultantDateDisplay = consultantDateTime.format("dddd, MMM D YYYY");
+
+        setUpdateBooking((prev) => ({ ...prev, consultant_date: consultantDateDisplay }));
 
         // submit
         setButtonLoader(true);
