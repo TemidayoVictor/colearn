@@ -275,6 +275,11 @@ input, textarea, select {
   color: var(--error-color);
 }
 
+.btn.error.two:hover {
+  background-color: var(--error-color);
+  color: var(--white);
+}
+
 .btn.btn-success {
   border: 1px solid var(--succcess-color);
   color: var(--white);

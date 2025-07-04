@@ -167,20 +167,23 @@ const StudentBookingBody = ({userType}: StudentBookingBodyProps) => {
                                     <button className="bt-btn btn btn-primary-fill" onClick={(e) => updateBookingTrigger(item)}>Update Booking</button>
                                     <div className="items-center gap-2 desktop-flex">
                                         {/* <button className=" btn normal" onClick={() => openModal("booking", "reschedule")}>Reschedule meeting</button> */}
-                                        <button className="color-error font-semibold cursor-pointer" onClick={(e) => cancelBookingTrigger(item)}>Cancel</button>
+                                        <button className="color-error font-semibold cursor-pointer" onClick={(e) => cancelBookingTrigger(item)}>Cancel Booking</button>
                                     </div>
                                     <div className="mobile-flex items-center justify-between w-full gap-2">
                                         {/* <button className=" btn normal w-[65%]" onClick={() => openModal("booking", "reschedule")}>Reschedule meeting</button> */}
-                                        <button className="color-error font-semibold w-[34%] cursor-pointer" onClick={(e) => cancelBookingTrigger(item)}>Cancel</button>
+                                        <button className="color-error font-semibold cursor-pointer" onClick={(e) => cancelBookingTrigger(item)}>Cancel Booking</button>
                                     </div>
                                 </div>
                             }
 
                             {
-                                item.status === 'cancelled' &&
-                                <div className="res-flex items-center gap-2 ">
-                                    <button className="bt-btn btn btn-primary-fill">Update Booking</button>
-                                </div>
+                                item.status === 'cancelled-by-user' &&
+                                <p className="color-error text-[.9rem]">This session has been cancelled by you</p>
+                            }
+
+                            {
+                                item.status === 'cancelled-by-consultant' &&
+                                <p className="color-error text-[.9rem]">This session has been cancelled by the consultant</p>
                             }
 
                             {

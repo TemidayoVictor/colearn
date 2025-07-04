@@ -2,9 +2,9 @@
 import React, {useState, useEffect} from "react";
 import { genralStore } from "@/zustand/generalStore";
 import { Booking } from "../Types/types";
-import { showErrorToast } from "@/utils/toastTypes";
 import { useConsultant } from "@/hooks/useConsultant";
 import Image from "next/image";
+import ButtonLoader from "./buttonLoader";
 
 type BookingDetailsProps = {
     displayType?: string | null
@@ -13,7 +13,10 @@ type BookingDetailsProps = {
 const BookingDetails = ({displayType}: BookingDetailsProps) => {
 
     const {
-
+        buttonLoader,
+        cancelSessionUser,
+        cancelNote,
+        setCancelNote,
     } = useConsultant();
     
     const booking = genralStore((state) => state.booking);
@@ -116,11 +119,11 @@ const BookingDetails = ({displayType}: BookingDetailsProps) => {
                     </div>
 
                     <div className="booking-sect">
-                        <p>Mentorship session with <span className="color-darker font-bold">{`${bookingInfo?.consultant?.instructor?.user?.first_name} ${bookingInfo?.consultant?.instructor?.user?.last_name}`}</span></p>
+                        <p>Cancel mentorship session with <span className="color-darker font-bold">{`${bookingInfo?.consultant?.instructor?.user?.first_name} ${bookingInfo?.consultant?.instructor?.user?.last_name}`}</span>, slated for:</p>
                     </div>
                     
                     <div className="flex items-center gap-3 border-b border-[#C8CCD0] pb-3">
-                        <div className="flex items-center gap-2">
+                        <div className="flex items-start gap-2">
                             <Image
                                 aria-hidden
                                 src="/assets/images/calendar-add.png"
@@ -132,7 +135,7 @@ const BookingDetails = ({displayType}: BookingDetailsProps) => {
                             <p>{bookingInfo?.date_string}</p>
                         </div>
 
-                        <div className="flex items-center gap-2">
+                        <div className="flex items-start gap-2">
                             <Image
                                 aria-hidden
                                 src="/assets/images/clock-2.png"
@@ -146,13 +149,20 @@ const BookingDetails = ({displayType}: BookingDetailsProps) => {
                     </div>
 
                     <div className="booking-sect">
-                        <p>Send a personal message to <span className="font-semibold">{`${bookingInfo?.consultant?.instructor?.user?.first_name} ${bookingInfo?.consultant?.instructor?.user?.last_name}`}</span></p>
-                        <textarea name="" id="" className="textarea mt-2"></textarea>
+                        <p>Kindly add a reason for cancelling this Session</p>
+                        <textarea name="cancel_note" id="" className="textarea mt-2" value={cancelNote} onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setCancelNote(e.target.value)}></textarea>
                     </div>
 
                     <div className="flex items-end justify-end">
-                        <button className="bt-btn btn error">
-                            Cancel Booking
+                        <button className="bt-btn btn error two" onClick={cancelSessionUser}>
+                            {
+                                buttonLoader ? (
+                                    <ButtonLoader content="Cancelling" />
+
+                                ) : (
+                                    'Cancel Booking'
+                                )
+                            }
                         </button>
                     </div>
                 </div>

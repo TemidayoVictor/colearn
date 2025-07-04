@@ -67,7 +67,7 @@ export const useConsultant = () => {
     const updateSlot = consultantStore((state) => state.updateSlot);
 
     const [note, setNote] = useState<string | null>(null);
-    const [cancelNote, setCancelNote] = useState<string | null>(null);
+    const [cancelNote, setCancelNote] = useState<string>();
 
     const [schoolData, setSchoolData] = useState<School[]>([
         {
@@ -753,9 +753,10 @@ export const useConsultant = () => {
         }
     }
 
-    const cancelSession = async () => {
+    const cancelSessionUser = async () => {
         if(!cancelNote) {
             showErrorToast('Please add a reason for cancelling');
+            return
         }
 
         // submit
@@ -847,5 +848,8 @@ export const useConsultant = () => {
         setUpdateBooking,
         handleUpdateChange,
         updateSession,
+        cancelSessionUser,
+        cancelNote,
+        setCancelNote,
     }
 }
