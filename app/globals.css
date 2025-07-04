@@ -291,6 +291,11 @@ input, textarea, select {
   color: var(--succcess-color);
 }
 
+.btn.btn-success.tw:hover {
+  color: var(--white);
+  background-color: var(--succcess-color);
+}
+
 .btn.spec {
   padding: .7rem 2.3rem;
 }

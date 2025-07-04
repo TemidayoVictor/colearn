@@ -195,6 +195,17 @@ export const get_sessions = async (userId: number | undefined) => {
     }
 }
 
+export const get_sessions_consultant = async (consultantId: number | undefined) => {
+    try {
+        const response = await axiosInstance.post("/get-sessions-consultant", {consultantId});
+        return handleApiResponse(response);
+    }
+
+    catch(error: any) {
+        return handleApiError(error)
+    }
+}
+
 export const book_session = async (
     consultantId: number | undefined,
     userId: number | undefined,

@@ -6,9 +6,9 @@ import { authStore } from "@/zustand/authStore";
 import { genralStore } from "@/zustand/generalStore";
 import { courseStore } from "@/zustand/courseStore";
 import { useRouter } from "next/navigation";
-import { useAuthStudent } from "@/hooks/useAuth";
-import { get_sessions } from "@/services/consultant";
-import StudentPopularConsultant from "./StudentsPopularConsultants";
+import { useAuthConsultant } from "@/hooks/useAuth";
+import { get_sessions_consultant } from "@/services/consultant";
+import StudentPopularConsultant from "../Students/StudentsPopularConsultants";
 import AccountModal from "../Instructors/AccountModal";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
@@ -24,7 +24,7 @@ type StudentBookingBodyProps = {
     userType?: string
 }
 
-const StudentBookingBody = ({userType}: StudentBookingBodyProps) => {
+const InstructorsBookingBody = ({userType}: StudentBookingBodyProps) => {
     const [selectedTab, setSelectedTab] = useState<string>('upcoming');
     const [showModal, setShowModal] = useState<string | null>(null);
     const [subSelected, setSubSelected] = useState<string | null>(null);
@@ -44,10 +44,18 @@ const StudentBookingBody = ({userType}: StudentBookingBodyProps) => {
     const userTimezone = user?.timezone
     const userId = user?.id;
 
+    const consultant = authStore((state) => state.consultant);
+    const consultantId = consultant?.id;
+
     const router = useRouter(); 
     const [loading, setLoading] = useState<boolean>(true);
 
     const newUpdate = courseStore((state) => state.newUpdate);
+
+    const approveBookingTrigger = (item: Booking): void => {
+        genralStore.getState().setBooking(item);
+        openModalTwo("booking-update");
+    }
 
     const updateBookingTrigger = (item: Booking): void => {
         genralStore.getState().setBooking(item);
@@ -67,12 +75,13 @@ const StudentBookingBody = ({userType}: StudentBookingBodyProps) => {
 
     useEffect(() => {
         setLoading(true);
-        if (!userId) return;
+        if (!consultantId) return;
         const init = async () => {
-            await useAuthStudent(router); 
-            // fetch all user bookings
+            await useAuthConsultant(router); 
+            console.log(consultantId)
+            // fetch consultant bookings
             try {
-                const response = await get_sessions(userId);
+                const response = await get_sessions_consultant(consultantId);
                 
                 if (response.success) {
                     // save state globally
@@ -100,7 +109,7 @@ const StudentBookingBody = ({userType}: StudentBookingBodyProps) => {
 
         init();
 
-    }, [userId, newUpdate]);
+    }, [consultantId, newUpdate]);
 
     if(loading) return <Loader />
     
@@ -123,8 +132,8 @@ const StudentBookingBody = ({userType}: StudentBookingBodyProps) => {
                     bookings.map((item, index) => (
                         <div className="booking-cont" key={index}>
                             <div className="flex items-start justify-between">
-                                <p className="w-[70%]">Mentorship session with <span className="color-darker font-bold">{`${item.consultant?.instructor?.user?.first_name} ${item.consultant?.instructor?.user?.last_name}`}</span></p>
-                                <div className="flex items-center gap-1 cursor-pointer" onClick={() => openModalTwo("booking")}>
+                                <p className="w-[70%]">Mentorship session with <span className="color-darker font-bold">{`${item.user?.first_name} ${item.user?.last_name}`}</span></p>
+                                <div className="flex items-center gap-1 cursor-pointer" onClick={() => openModal("booking", "details")}>
                                     <p>Details</p>
                                     <Image
                                         aria-hidden
@@ -146,7 +155,7 @@ const StudentBookingBody = ({userType}: StudentBookingBodyProps) => {
                                         height={20}
                                         className="object-contain"
                                     />
-                                    <p className="res-text"> {item.date_string} </p>
+                                    <p className="res-text"> {item.consultant_date} </p>
                                 </div>
 
                                 <div className="flex items-start gap-2">
@@ -158,32 +167,32 @@ const StudentBookingBody = ({userType}: StudentBookingBodyProps) => {
                                         height={20}
                                         className="object-contain"
                                     />
-                                    <p className="res-text">{item.user_time} - {item.user_end_time}</p>
+                                    <p className="res-text">{item.start_time} - {item.end_time}</p>
                                 </div>
                             </div>
                             {
                                 item.status === 'pending' &&
                                 <div className="res-flex items-center gap-2 ">
-                                    <button className="bt-btn btn btn-primary-fill" onClick={(e) => updateBookingTrigger(item)}>Update Booking</button>
+                                    <button className="bt-btn btn btn-success tw" onClick={() => approveBookingTrigger(item)}>Approve Session</button>
                                     <div className="items-center gap-2 desktop-flex">
                                         {/* <button className=" btn normal" onClick={() => openModal("booking", "reschedule")}>Reschedule meeting</button> */}
-                                        <button className="color-error font-semibold cursor-pointer" onClick={(e) => cancelBookingTrigger(item)}>Cancel Booking</button>
+                                        <button className="color-error font-semibold" onClick={() => openModal("booking", "cancel")}>Cancel Session</button>
                                     </div>
                                     <div className="mobile-flex items-center justify-between w-full gap-2">
                                         {/* <button className=" btn normal w-[65%]" onClick={() => openModal("booking", "reschedule")}>Reschedule meeting</button> */}
-                                        <button className="color-error font-semibold cursor-pointer" onClick={(e) => cancelBookingTrigger(item)}>Cancel Booking</button>
+                                        <button className="color-error font-semibold w-[34%]" onClick={() => openModal("booking", "cancel")}>Cancel Session</button>
                                     </div>
                                 </div>
                             }
 
                             {
                                 item.status === 'cancelled-by-user' &&
-                                <p className="color-error text-[.9rem]">This session has been cancelled by you</p>
+                                <p className="color-error text-[.9rem]">This session has been cancelled by the client</p>
                             }
 
                             {
                                 item.status === 'cancelled-by-consultant' &&
-                                <p className="color-error text-[.9rem]">This session has been cancelled by the consultant</p>
+                                <p className="color-error text-[.9rem]">This session has been cancelled by you</p>
                             }
 
                             {
@@ -219,4 +228,4 @@ const StudentBookingBody = ({userType}: StudentBookingBodyProps) => {
     )
 }
 
-export default StudentBookingBody
+export default InstructorsBookingBody

@@ -7,7 +7,7 @@ const StudentBooking = () => {
         <div>
             <UserLayout userType="student">
                 <div className="container-3">
-                    <StudentBookingBody />
+                    <StudentBookingBody userType = "student" />
                 </div>
             </UserLayout>
         </div>

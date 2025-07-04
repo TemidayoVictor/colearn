@@ -12,6 +12,7 @@ import ManageResoure from "./ManageResource";
 import ManageSchool from "./ManageSchool";
 import BookingUpdate from "../BookingUpdate";
 import ManageCertification from "./ManageCertification";
+import BookingApprove from "../BookingApprove";
 import { motion, AnimatePresence } from 'framer-motion';
 import { UseCourses } from "@/hooks/useCourses";
 import ButtonLoader from "../buttonLoader";
@@ -405,6 +406,11 @@ const AccountModal = ({modalType, modalClose, experience, bank, subType}: Accoun
                 {
                     modalType == 'booking-update' &&
                     <BookingUpdate />
+                }
+
+                {
+                    modalType == 'booking-approve' &&
+                    <BookingApprove />
                 }
 
                 {

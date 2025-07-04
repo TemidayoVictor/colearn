@@ -104,6 +104,7 @@ export type User = {
     profile_progress: string | null;
     country_iso3: string;
     timezone: string | null;
+    profile_photo: string | null;
 };
   
 export type Student = {
