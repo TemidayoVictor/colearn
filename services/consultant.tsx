@@ -254,6 +254,23 @@ export const update_session = async (formData: {
     }
 }
 
+export const update_session_consultant = async (formData: {
+    channel: string;
+    link: string;
+    note: string;
+    id: string | undefined;
+    type: string;
+}) => {
+    try {
+        const response = await axiosInstance.post("/update-session-consultant", formData);
+        return handleApiResponse(response);
+    }
+
+    catch(error: any) {
+        return handleApiError(error)
+    }
+}
+
 export const cancel_session_user = async (id: string | undefined, note: string | undefined | null) => {
     try {
         const response = await axiosInstance.post("/cancel-session-user", {
@@ -274,6 +291,23 @@ export const cancel_session_consultant = async (formData: {
 }) => {
     try {
         const response = await axiosInstance.post("/cancel-session-consultant", formData);
+        return handleApiResponse(response);
+    }
+
+    catch(error: any) {
+        return handleApiError(error)
+    }
+}
+
+export const reschedule_session_consultant = async (formData: {
+    id: string | undefined;
+    type: string;
+    date: string;
+    start_time: string;
+    note: string;
+}) => {
+    try {
+        const response = await axiosInstance.post("/reschedule-session-consultant", formData);
         return handleApiResponse(response);
     }
 

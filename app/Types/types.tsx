@@ -225,4 +225,7 @@ export type Booking = {
     consultant: Consultant | null;
     user: User | null;
     cancel_note: string;
+    reschedule_time: string | undefined;
+    reschedule_note: string | undefined;
+    reschedule_date: string | undefined;
 }

@@ -178,12 +178,12 @@ const StudentBookingBody = ({userType}: StudentBookingBodyProps) => {
 
                             {
                                 item.status === 'cancelled-by-user' &&
-                                <p className="color-error text-[.9rem]">This session has been cancelled by you</p>
+                                <p className="color-error text-[.9rem] font-semibold">This session has been cancelled by you</p>
                             }
 
                             {
                                 item.status === 'cancelled-by-consultant' &&
-                                <p className="color-error text-[.9rem]">This session has been cancelled by the consultant</p>
+                                <p className="color-error text-[.9rem] font-semibold">This session has been cancelled by the consultant</p>
                             }
 
                             {

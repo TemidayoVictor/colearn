@@ -16,6 +16,8 @@ import {
     book_session,
     update_session,
     cancel_session_user,
+    update_session_consultant,
+    reschedule_session_consultant,
 } from "@/services/consultant";
 import { courseStore } from "@/zustand/courseStore";
 import { consultantStore } from "@/zustand/consultantStore";
@@ -350,16 +352,76 @@ export const useConsultant = () => {
         duration: false,
     });
 
+    const [approveBooking, setApproveBooking] = useState<{
+        channel: string;
+        link: string;
+        note: string;
+        id: string | undefined;
+        type: string;
+      }>({
+        channel: '',
+        link: '',
+        note: '',
+        id: bookingId,
+        type: 'approved',
+    });
+
+    const [approveErrors, setApproveErrors] = useState({
+        channel: false,
+        link: false,
+        note: false,
+    });
+
+    const [rescheduleBooking, setRescheduleBooking] = useState<{
+        id: string;
+        type: string;
+        date: string;
+        start_time: string;
+        note: string;
+      }>({
+        id: '',
+        type: '',
+        date: '',
+        start_time: '',
+        note: '',
+    });
+
+    const [rescheduleErrors, setRescheduleErrors] = useState({
+        type: false,
+        date: false,
+        start_time: false,
+        note: false,
+    });
+
     const handleUpdateChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
-    
-        // Conditionally convert value to number for specific fields
-        // const parsedValue = name === 'duration' ? Number(value) : value;
     
         setUpdateBooking((prev) => ({
             ...prev,
             [name]: value,
         }));
+    };
+
+    const handleApproveChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+        const { name, value } = e.target;
+    
+        setApproveBooking((prev) => ({
+            ...prev,
+            [name]: value,
+        }));
+
+        setApproveErrors((prev) => ({ ...prev, [name]: false }));
+    };
+
+    const handleRescheduleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+        const { name, value } = e.target;
+    
+        setRescheduleBooking((prev) => ({
+            ...prev,
+            [name]: value,
+        }));
+
+        setRescheduleErrors((prev) => ({ ...prev, [name]: false }));
     };
 
 
@@ -693,8 +755,6 @@ export const useConsultant = () => {
     }
 
     const updateSession = async () => {
-        console.log(updateBooking)
-
         const newErrors = {
             date: updateBooking.date.trim() === '',
             start_time: updateBooking.start_time.trim() === '',
@@ -784,6 +844,93 @@ export const useConsultant = () => {
         }
     }
 
+    const approveSession = async () => {
+        const newErrors = {
+            channel: approveBooking.channel.trim() === '',
+            link: approveBooking.link.trim() === '',
+            note: approveBooking.note.trim() === '',
+        };
+      
+        setApproveErrors(newErrors);
+
+        const hasError = Object.values(newErrors).some(Boolean);
+
+        if (hasError) {
+            showErrorToast('Please fill in all required fields');
+            return;
+        }
+
+        // submit
+        setButtonLoader(true);
+        
+        try {
+            const response = await update_session_consultant(approveBooking);
+            if (response.success) {
+                setButtonLoader(false)
+                showSuccessToast(response.message)
+                courseStore.getState().setNewUpdate('set');
+            } 
+
+            else {
+                setButtonLoader(false)
+                showErrorToast(response.message)
+                console.log(response)
+            }
+        }
+
+        catch (err: any) {
+            console.log(err)
+            setButtonLoader(false)
+            showErrorToast('Unexpected error occurred');
+        }
+    }
+
+    const rescheduleSessionConsultant = async () => {
+
+        const newErrors = {
+            type: rescheduleBooking.type.trim() === '',
+            date: rescheduleBooking.date.trim() === '',
+            start_time: rescheduleBooking.start_time.trim() === '',
+            note: rescheduleBooking.note.trim() === '',
+        };
+      
+        setRescheduleErrors(newErrors);
+
+        const hasError = Object.values(newErrors).some(Boolean);
+
+        if (hasError) {
+            showErrorToast('Please fill in all fields');
+            return;
+        }
+
+        console.log(rescheduleBooking);
+        return
+
+        // submit
+        setButtonLoader(true);
+        
+        try {
+            const response = await reschedule_session_consultant(rescheduleBooking);
+            if (response.success) {
+                setButtonLoader(false)
+                showSuccessToast(response.message)
+                courseStore.getState().setNewUpdate('set');
+            } 
+
+            else {
+                setButtonLoader(false)
+                showErrorToast(response.message)
+                console.log(response)
+            }
+        }
+
+        catch (err: any) {
+            console.log(err)
+            setButtonLoader(false)
+            showErrorToast('Unexpected error occurred');
+        }
+    }
+
 
     return {
         buttonLoader,
@@ -851,5 +998,14 @@ export const useConsultant = () => {
         cancelSessionUser,
         cancelNote,
         setCancelNote,
+        approveBooking, 
+        handleApproveChange,
+        approveSession,
+        approveErrors,
+        setApproveBooking,
+        rescheduleBooking, 
+        setRescheduleBooking,
+        rescheduleSessionConsultant,
+        handleRescheduleChange,
     }
 }

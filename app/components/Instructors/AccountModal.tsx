@@ -11,6 +11,7 @@ import ManageVideo from "./ManageVideo";
 import ManageResoure from "./ManageResource";
 import ManageSchool from "./ManageSchool";
 import BookingUpdate from "../BookingUpdate";
+import BookingRescheduleConsultant from "../BookingRescheduleConsultant";
 import ManageCertification from "./ManageCertification";
 import BookingApprove from "../BookingApprove";
 import { motion, AnimatePresence } from 'framer-motion';
@@ -411,6 +412,11 @@ const AccountModal = ({modalType, modalClose, experience, bank, subType}: Accoun
                 {
                     modalType == 'booking-approve' &&
                     <BookingApprove />
+                }
+
+                {
+                    modalType == 'booking-reschedule-consultant' &&
+                    <BookingRescheduleConsultant />
                 }
 
                 {

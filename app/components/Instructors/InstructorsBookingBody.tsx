@@ -54,7 +54,12 @@ const InstructorsBookingBody = ({userType}: StudentBookingBodyProps) => {
 
     const approveBookingTrigger = (item: Booking): void => {
         genralStore.getState().setBooking(item);
-        openModalTwo("booking-update");
+        openModalTwo("booking-approve");
+    }
+
+    const rescheduleBookingTrigger = (item: Booking): void => {
+        genralStore.getState().setBooking(item);
+        openModalTwo("booking-reschedule-consultant");
     }
 
     const updateBookingTrigger = (item: Booking): void => {
@@ -145,6 +150,7 @@ const InstructorsBookingBody = ({userType}: StudentBookingBodyProps) => {
                                     />
                                 </div>
                             </div>
+                            
                             <div className="flex items-center gap-3">
                                 <div className="flex items-start gap-2">
                                     <Image
@@ -170,6 +176,7 @@ const InstructorsBookingBody = ({userType}: StudentBookingBodyProps) => {
                                     <p className="res-text">{item.start_time} - {item.end_time}</p>
                                 </div>
                             </div>
+
                             {
                                 item.status === 'pending' &&
                                 <div className="res-flex items-center gap-2 ">
@@ -187,12 +194,12 @@ const InstructorsBookingBody = ({userType}: StudentBookingBodyProps) => {
 
                             {
                                 item.status === 'cancelled-by-user' &&
-                                <p className="color-error text-[.9rem]">This session has been cancelled by the client</p>
+                                <p className="color-error text-[.9rem] font-semibold">This session has been cancelled by the client</p>
                             }
 
                             {
                                 item.status === 'cancelled-by-consultant' &&
-                                <p className="color-error text-[.9rem]">This session has been cancelled by you</p>
+                                <p className="color-error text-[.9rem] font-semibold">This session has been cancelled by you</p>
                             }
 
                             {
@@ -200,11 +207,11 @@ const InstructorsBookingBody = ({userType}: StudentBookingBodyProps) => {
                                 <div className="res-flex items-center gap-2 ">
                                     <Link href="/" className="bt-btn btn btn-primary-fill">Join Meeting</Link>
                                     <div className="items-center gap-2 desktop-flex">
-                                        <button className=" btn normal" onClick={() => openModal("booking", "reschedule")}>Reschedule meeting</button>
+                                        <button className=" btn normal" onClick={() => rescheduleBookingTrigger(item)}>Reschedule meeting</button>
                                         <button className="color-error font-semibold" onClick={() => openModal("booking", "cancel")}>Cancel</button>
                                     </div>
                                     <div className="mobile-flex items-center justify-between w-full gap-2">
-                                        <button className=" btn normal w-[65%]" onClick={() => openModal("booking", "reschedule")}>Reschedule meeting</button>
+                                        <button className=" btn normal w-[65%]" onClick={() => rescheduleBookingTrigger(item)}>Reschedule meeting</button>
                                         <button className="color-error font-semibold w-[34%]" onClick={() => openModal("booking", "cancel")}>Cancel</button>
                                     </div>
                                 </div>
