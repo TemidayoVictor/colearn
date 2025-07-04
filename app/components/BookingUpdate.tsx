@@ -69,7 +69,7 @@ const BookingUpdate = () => {
                 date: booking?.date  || "",
                 start_time: booking?.start_time || "",
                 user_start_time: booking?.user_time || "",
-                duration: booking?.duration || "",
+                duration: booking?.duration || 0,
                 note: booking?.note || "",
                 consultant_date: booking?.consultant_date || "",
             });
@@ -153,8 +153,6 @@ const BookingUpdate = () => {
             document.removeEventListener("mousedown", handleClickOutside);
         };
     }, []);
-
-    console.log(updateBooking);
 
     return (
         <div>
@@ -268,15 +266,15 @@ const BookingUpdate = () => {
                                 <textarea name="note" id="" placeholder="Enter a description" className="textarea" value={updateBooking.note} onChange={handleUpdateChange}></textarea>
                             </div>
 
-                            <button className="bt-btn btn btn-primary-fill full" onClick={updateSession}>
+                            <button className="flex items-center justify-center gap-2 btn btn-primary-fill w-full" onClick={updateSession}>
                                 {
                                     buttonLoader ? (
-                                        <ButtonLoader content="Please Wait . . ." />
+                                        <ButtonLoader content="Updating . . ." />
                                     ) : 
                                     
                                     (
                                         <div className="bt-btn two">
-                                            <span>Continue</span>
+                                            <span>Update</span>
                                             <span>
                                                 <Image
                                                     aria-hidden

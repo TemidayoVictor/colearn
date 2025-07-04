@@ -43,7 +43,6 @@ const StudentBookingBody = ({userType}: StudentBookingBodyProps) => {
     const user = authStore((state) => state.user);
     const userTimezone = user?.timezone
     const userId = user?.id;
-    console.log(user);
 
     const router = useRouter(); 
     const [loading, setLoading] = useState<boolean>(true);
@@ -54,6 +53,16 @@ const StudentBookingBody = ({userType}: StudentBookingBodyProps) => {
         genralStore.getState().setBooking(item);
         openModalTwo("booking-update");
 
+    }
+
+    const cancelBookingTrigger = (item: Booking): void => {
+        genralStore.getState().setBooking(item);
+        openModal("booking", "cancel");
+    }
+
+    const viewBookingTrigger = (item: Booking): void => {
+        genralStore.getState().setBooking(item);
+        openModal("booking", "cancel");
     }
 
     useEffect(() => {
@@ -69,6 +78,9 @@ const StudentBookingBody = ({userType}: StudentBookingBodyProps) => {
                     // save state globally
                     setBookings(response.data.bookings);
                     genralStore.getState().setBookings(response.data.bookings);
+
+                    // close modal
+                    closeModal();
                 } 
     
                 else {
@@ -81,10 +93,11 @@ const StudentBookingBody = ({userType}: StudentBookingBodyProps) => {
                 showErrorToast('Something unexpected happened')
                 console.log(error)
             }
-            
+
             courseStore.getState().setNewUpdate('reset');
             setLoading(false);
         };
+
         init();
 
     }, [userId, newUpdate]);
@@ -152,6 +165,14 @@ const StudentBookingBody = ({userType}: StudentBookingBodyProps) => {
                                 item.status === 'pending' &&
                                 <div className="res-flex items-center gap-2 ">
                                     <button className="bt-btn btn btn-primary-fill" onClick={(e) => updateBookingTrigger(item)}>Update Booking</button>
+                                    <div className="items-center gap-2 desktop-flex">
+                                        {/* <button className=" btn normal" onClick={() => openModal("booking", "reschedule")}>Reschedule meeting</button> */}
+                                        <button className="color-error font-semibold cursor-pointer" onClick={(e) => cancelBookingTrigger(item)}>Cancel</button>
+                                    </div>
+                                    <div className="mobile-flex items-center justify-between w-full gap-2">
+                                        {/* <button className=" btn normal w-[65%]" onClick={() => openModal("booking", "reschedule")}>Reschedule meeting</button> */}
+                                        <button className="color-error font-semibold w-[34%] cursor-pointer" onClick={(e) => cancelBookingTrigger(item)}>Cancel</button>
+                                    </div>
                                 </div>
                             }
 

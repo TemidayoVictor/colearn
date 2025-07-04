@@ -1,4 +1,9 @@
-import React from "react";
+'use client';
+import React, {useState, useEffect} from "react";
+import { genralStore } from "@/zustand/generalStore";
+import { Booking } from "../Types/types";
+import { showErrorToast } from "@/utils/toastTypes";
+import { useConsultant } from "@/hooks/useConsultant";
 import Image from "next/image";
 
 type BookingDetailsProps = {
@@ -6,6 +11,24 @@ type BookingDetailsProps = {
 }
 
 const BookingDetails = ({displayType}: BookingDetailsProps) => {
+
+    const {
+
+    } = useConsultant();
+    
+    const booking = genralStore((state) => state.booking);
+
+    const [bookingInfo, setBookingInfo] = useState<Booking>();
+
+    useEffect(() => {
+        if (!booking) return;
+        const init = async () => {
+            setBookingInfo(booking)
+        };
+        init();
+
+    }, [booking]);
+
     return (
         <div className="booking-details">
             {
@@ -93,7 +116,7 @@ const BookingDetails = ({displayType}: BookingDetailsProps) => {
                     </div>
 
                     <div className="booking-sect">
-                        <p>Mentorship session with <span className="color-darker font-bold">Favi Ayomide</span></p>
+                        <p>Mentorship session with <span className="color-darker font-bold">{`${bookingInfo?.consultant?.instructor?.user?.first_name} ${bookingInfo?.consultant?.instructor?.user?.last_name}`}</span></p>
                     </div>
                     
                     <div className="flex items-center gap-3 border-b border-[#C8CCD0] pb-3">
@@ -106,7 +129,7 @@ const BookingDetails = ({displayType}: BookingDetailsProps) => {
                                 height={20}
                                 className="object-contain"
                             />
-                            <p>Mon, Feb 3rd</p>
+                            <p>{bookingInfo?.date_string}</p>
                         </div>
 
                         <div className="flex items-center gap-2">
@@ -118,12 +141,12 @@ const BookingDetails = ({displayType}: BookingDetailsProps) => {
                                 height={20}
                                 className="object-contain"
                             />
-                            <p>8:00am - 9:00am</p>
+                            <p>{bookingInfo?.user_time} - {bookingInfo?.user_end_time}</p>
                         </div>
                     </div>
 
                     <div className="booking-sect">
-                        <p>Send a personal message to <span className="font-semibold">Favi Ayomide</span></p>
+                        <p>Send a personal message to <span className="font-semibold">{`${bookingInfo?.consultant?.instructor?.user?.first_name} ${bookingInfo?.consultant?.instructor?.user?.last_name}`}</span></p>
                         <textarea name="" id="" className="textarea mt-2"></textarea>
                     </div>
 

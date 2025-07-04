@@ -208,7 +208,7 @@ export type Booking = {
     date: string | undefined;
     start_time: string | undefined;
     end_time: string | undefined;
-    duration: string | undefined;
+    duration: number | undefined;
     amount: string | undefined;
     status: string | undefined;
     note: string | undefined;
@@ -223,4 +223,5 @@ export type Booking = {
     user_end_time: string | undefined;
     consultant: Consultant | null;
     user: User | null;
+    cancel_note: string;
 }

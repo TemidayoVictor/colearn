@@ -15,6 +15,7 @@ import {
     set_availability,
     book_session,
     update_session,
+    cancel_session_user,
 } from "@/services/consultant";
 import { courseStore } from "@/zustand/courseStore";
 import { consultantStore } from "@/zustand/consultantStore";
@@ -37,7 +38,9 @@ export const useConsultant = () => {
     // Currently logged in consultant
     const consultant = authStore((state) => state.consultant);
     const consultantId = consultant?.id;
-    const consultantType = consultant?.type;
+
+    const booking = genralStore((state) => state.booking);
+    const bookingId = booking?.id;
 
     const [buttonLoader, setButtonLoader] = useState<boolean>(false);
 
@@ -64,6 +67,7 @@ export const useConsultant = () => {
     const updateSlot = consultantStore((state) => state.updateSlot);
 
     const [note, setNote] = useState<string | null>(null);
+    const [cancelNote, setCancelNote] = useState<string | null>(null);
 
     const [schoolData, setSchoolData] = useState<School[]>([
         {
@@ -322,25 +326,24 @@ export const useConsultant = () => {
     const durationOptions = [30, 60, 90];
 
     const [updateBooking, setUpdateBooking] = useState<{
-        id: string | undefined;
-        date: string | undefined;
-        start_time: string | undefined;
-        user_start_time: string | undefined;
-        duration: string | undefined;
-        note: string | undefined;
-        consultant_date: string | undefined,
+        id: string;
+        date: string;
+        start_time: string;
+        user_start_time: string;
+        duration: number;
+        note: string;
+        consultant_date: string,
       }>({
         id: '',
         date: '',
         start_time: '',
         user_start_time: '',
-        duration: '',
+        duration: 0,
         note: '',
         consultant_date: '',
     });
 
     const [errors, setErrors] = useState({
-        id: false,
         date: false,
         start_time: false,
         user_start_time: false,
@@ -351,11 +354,11 @@ export const useConsultant = () => {
         const { name, value } = e.target;
     
         // Conditionally convert value to number for specific fields
-        const parsedValue = name === 'duration' ? Number(value) : value;
+        // const parsedValue = name === 'duration' ? Number(value) : value;
     
         setUpdateBooking((prev) => ({
             ...prev,
-            [name]: parsedValue,
+            [name]: value,
         }));
     };
 
@@ -690,13 +693,13 @@ export const useConsultant = () => {
     }
 
     const updateSession = async () => {
+        console.log(updateBooking)
 
         const newErrors = {
-            id: updateBooking.id?.trim() === '',
-            date: updateBooking.date?.trim() === '',
-            start_time: updateBooking.start_time?.trim() === '',
-            user_start_time: updateBooking.user_start_time?.trim() === '',
-            duration: updateBooking.duration?.trim() === '',
+            date: updateBooking.date.trim() === '',
+            start_time: updateBooking.start_time.trim() === '',
+            user_start_time: updateBooking.user_start_time.trim() === '',
+            duration: updateBooking.duration === 0,
         };
       
         setErrors(newErrors);
@@ -714,20 +717,52 @@ export const useConsultant = () => {
         const userDateTime = dayjs.tz(`${formattedDate } ${updateBooking.start_time}`, 'YYYY-MM-DD hh:mm A', userTimezone);
 
         // get the equivalent date in the consultant's timezone
-        const booking = genralStore((state) => state.booking);
         const consultant = booking?.consultant
 
         const selectedConsultantTimeZone = consultant?.instructor?.user?.timezone || 'America/New_York';
         const consultantDateTime = userDateTime.tz(selectedConsultantTimeZone);
         const consultantDateDisplay = consultantDateTime.format("dddd, MMM D YYYY");
 
-        setUpdateBooking((prev) => ({ ...prev, consultant_date: consultantDateDisplay }));
+        const payload = {
+            ...updateBooking,
+            consultant_date: consultantDateDisplay,
+        };
 
         // submit
         setButtonLoader(true);
         
         try {
-            const response = await update_session(updateBooking);
+            const response = await update_session(payload);
+            if (response.success) {
+                setButtonLoader(false)
+                showSuccessToast(response.message)
+                courseStore.getState().setNewUpdate('set');
+            } 
+
+            else {
+                setButtonLoader(false)
+                showErrorToast(response.message)
+                console.log(response)
+            }
+        }
+
+        catch (err: any) {
+            console.log(err)
+            setButtonLoader(false)
+            showErrorToast('Unexpected error occurred');
+        }
+    }
+
+    const cancelSession = async () => {
+        if(!cancelNote) {
+            showErrorToast('Please add a reason for cancelling');
+        }
+
+        // submit
+        setButtonLoader(true);
+        
+        try {
+            const response = await cancel_session_user(bookingId, cancelNote);
             if (response.success) {
                 setButtonLoader(false)
                 showSuccessToast(response.message)
