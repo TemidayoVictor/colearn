@@ -70,7 +70,7 @@ const InstructorsBookingBody = ({userType}: StudentBookingBodyProps) => {
 
     const cancelBookingTrigger = (item: Booking): void => {
         genralStore.getState().setBooking(item);
-        openModal("booking", "cancel");
+        openModal("booking", "cancel-consultant");
     }
 
     const viewBookingTrigger = (item: Booking): void => {
@@ -182,14 +182,16 @@ const InstructorsBookingBody = ({userType}: StudentBookingBodyProps) => {
                                     <button className="bt-btn btn btn-success tw" onClick={() => approveBookingTrigger(item)}>Approve Session</button>
                                     <div className="items-center gap-2 desktop-flex">
                                         {/* <button className=" btn normal" onClick={() => openModal("booking", "reschedule")}>Reschedule meeting</button> */}
-                                        <button className="color-error font-semibold" onClick={() => openModal("booking", "cancel")}>Cancel Session</button>
+                                        <button className="color-error font-semibold"  onClick={(e) => cancelBookingTrigger(item)}>Cancel Session</button>
                                     </div>
                                     <div className="mobile-flex items-center justify-between w-full gap-2">
                                         {/* <button className=" btn normal w-[65%]" onClick={() => openModal("booking", "reschedule")}>Reschedule meeting</button> */}
-                                        <button className="color-error font-semibold w-[34%]" onClick={() => openModal("booking", "cancel")}>Cancel Session</button>
+                                        <button className="color-error font-semibold w-[34%]"  onClick={(e) => cancelBookingTrigger(item)}>Cancel Session</button>
                                     </div>
                                 </div>
                             }
+
+
 
                             {
                                 item.status === 'cancelled-by-user' &&
@@ -207,11 +209,26 @@ const InstructorsBookingBody = ({userType}: StudentBookingBodyProps) => {
                                     <Link href="/" className="bt-btn btn btn-primary-fill">Join Meeting</Link>
                                     <div className="items-center gap-2 desktop-flex">
                                         <button className=" btn normal" onClick={() => rescheduleBookingTrigger(item)}>Reschedule meeting</button>
-                                        <button className="color-error font-semibold" onClick={() => openModal("booking", "cancel")}>Cancel</button>
+                                        <button className="color-error font-semibold" onClick={(e) => cancelBookingTrigger(item)}>Cancel Session</button>
                                     </div>
                                     <div className="mobile-flex items-center justify-between w-full gap-2">
                                         <button className=" btn normal w-[65%]" onClick={() => rescheduleBookingTrigger(item)}>Reschedule meeting</button>
-                                        <button className="color-error font-semibold w-[34%]" onClick={() => openModal("booking", "cancel")}>Cancel</button>
+                                        <button className="color-error font-semibold w-[34%]" onClick={(e) => cancelBookingTrigger(item)}>Cancel Session</button>
+                                    </div>
+                                </div>
+                            }
+
+                            {
+                                item.status === 'approved' &&
+                                <div className="res-flex items-center gap-2 ">
+                                    <Link href="/" className="bt-btn btn btn-primary-fill">Join Meeting</Link>
+                                    <div className="items-center gap-2 desktop-flex">
+                                        <button className=" btn normal" onClick={() => rescheduleBookingTrigger(item)}>Reschedule meeting</button>
+                                        <button className="color-error font-semibold"  onClick={(e) => cancelBookingTrigger(item)}>Cancel</button>
+                                    </div>
+                                    <div className="mobile-flex items-center justify-between w-full gap-2">
+                                        <button className=" btn normal w-[65%]" onClick={() => rescheduleBookingTrigger(item)}>Reschedule meeting</button>
+                                        <button className="color-error font-semibold w-[34%]"  onClick={(e) => cancelBookingTrigger(item)}>Cancel</button>
                                     </div>
                                 </div>
                             }

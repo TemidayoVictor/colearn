@@ -285,12 +285,12 @@ export const cancel_session_user = async (id: string | undefined, note: string |
     }
 }
 
-export const cancel_session_consultant = async (formData: {
-    id: string | undefined,
-    note: string | undefined | null,
-}) => {
+export const cancel_session_consultant = async (id: string | undefined, note: string | undefined | null) => {
     try {
-        const response = await axiosInstance.post("/cancel-session-consultant", formData);
+        const response = await axiosInstance.post("/cancel-session-consultant", {
+            id,
+            note
+        });
         return handleApiResponse(response);
     }
 
@@ -310,6 +310,17 @@ export const reschedule_session_consultant = async (formData: {
 }) => {
     try {
         const response = await axiosInstance.post("/reschedule-session-consultant", formData);
+        return handleApiResponse(response);
+    }
+
+    catch(error: any) {
+        return handleApiError(error)
+    }
+}
+
+export const approve_reschedule = async (id: string | undefined) => {
+    try {
+        const response = await axiosInstance.post("/approve-reschedule", {id});
         return handleApiResponse(response);
     }
 

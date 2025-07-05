@@ -4,6 +4,10 @@ import { showErrorToast, showSuccessToast } from "@/utils/toastTypes";
 import { handleCsrfError } from "@/utils/handleCsrfTokenError";
 import { authStore } from "@/zustand/authStore";
 import { utilitiesStore } from "@/zustand/utilitiesStore";
+import { consultantStore } from "@/zustand/consultantStore";
+import { courseStore } from "@/zustand/courseStore";
+import { genralStore } from "@/zustand/generalStore";
+import { instructorStore } from "@/zustand/instructorStore";
 
 export const useLogout = () => {
     const router = useRouter();
@@ -12,8 +16,15 @@ export const useLogout = () => {
         try {
             const response = await logout();
             if (response.success) {
+                
+                // clear all global states
                 authStore.getState().clearUser();
+                consultantStore.getState().clearAll();
+                courseStore.getState().clearCourses();
+                instructorStore.getState().clearAll();
+                genralStore.getState().clearAll();
                 utilitiesStore.getState().clearUtilities();
+
                 showSuccessToast(response.message)
                 router.push('/authentication/login');
                 setLoading(false);

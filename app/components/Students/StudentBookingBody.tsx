@@ -13,18 +13,23 @@ import AccountModal from "../Instructors/AccountModal";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import timezone from "dayjs/plugin/timezone";
+import advancedFormat from "dayjs/plugin/advancedFormat";
 import Loader from "../Loader";
 import { showErrorToast } from "@/utils/toastTypes";
 import { Booking } from "@/app/Types/types";
+import { useConsultant } from "@/hooks/useConsultant";
+import ButtonLoader from "../buttonLoader";
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
+dayjs.extend(advancedFormat);
 
 type StudentBookingBodyProps = {
     userType?: string
 }
 
 const StudentBookingBody = ({userType}: StudentBookingBodyProps) => {
+    const {approveReschedule, buttonLoader} = useConsultant();
     const [selectedTab, setSelectedTab] = useState<string>('upcoming');
     const [showModal, setShowModal] = useState<string | null>(null);
     const [subSelected, setSubSelected] = useState<string | null>(null);
@@ -52,17 +57,22 @@ const StudentBookingBody = ({userType}: StudentBookingBodyProps) => {
     const updateBookingTrigger = (item: Booking): void => {
         genralStore.getState().setBooking(item);
         openModalTwo("booking-update");
-
     }
 
     const cancelBookingTrigger = (item: Booking): void => {
         genralStore.getState().setBooking(item);
+        console.log(item);
         openModal("booking", "cancel");
     }
 
     const viewBookingTrigger = (item: Booking): void => {
         genralStore.getState().setBooking(item);
         openModal("booking", "cancel");
+    }
+
+    const approveRescheduleTrigger = (item: Booking): void => {
+        genralStore.getState().setBooking(item);
+        approveReschedule();
     }
 
     useEffect(() => {
@@ -78,6 +88,7 @@ const StudentBookingBody = ({userType}: StudentBookingBodyProps) => {
                     // save state globally
                     setBookings(response.data.bookings);
                     genralStore.getState().setBookings(response.data.bookings);
+                    genralStore.getState().setConsultants(response.data.consultants);
 
                     // close modal
                     closeModal();
@@ -188,24 +199,36 @@ const StudentBookingBody = ({userType}: StudentBookingBodyProps) => {
 
                             {
                                 item.status === 'rescheduled-by-consultant' &&
-                                <div className="alert notification">
-                                    <p className="color-grey-text text-[.9rem]">Consultant has requested to reschedule</p>
-                                    <div className="flex flex-col gap-3 mt-3 text-[.9rem]">
-                                        <div className="flex gap-3">
-                                            <p className="font-semibold">Rescheduled Date:</p>
-                                            <p>{item.reschedule_date}</p>
-                                        </div>
-                                        <div className="flex gap-3">
-                                            <p className="font-semibold">Rescheduled Time:</p>
-                                            <p>{item.reschedule_time_user} (Your time) </p>
-                                        </div>
-                                        <div className="flex flex-col gap-1">
-                                            <p className="font-semibold">Consultant Note:</p>
-                                            <p>{item.reschedule_note}</p>
+                                <div >
+                                    <div className="bg-white rounded-[.3em] p-2 border border-gray-200 ">
+                                        <p className="text-sm text-gray-600 mb-4 italic">
+                                            Consultant has requested to reschedule
+                                        </p>
+
+                                        <div className="space-y-3 text-sm">
+                                            <div className="flex items-center gap-2">
+                                            <p className="font-medium text-gray-800">📅 Rescheduled Date:</p>
+                                            <p className="text-gray-700">{dayjs(item.reschedule_date).format("dddd, MMM D, YYYY")}</p>
+                                            </div>
+
+                                            <div className="flex items-center gap-2">
+                                            <p className="font-medium text-gray-800">⏰ Rescheduled Time:</p>
+                                            <p className="text-gray-700">{item.reschedule_time_user} <span className="text-xs text-gray-500">(Your time)</span></p>
+                                            </div>
+
+                                            <div>
+                                            <p className="font-medium text-gray-800 mb-1">📝 Consultant's Note:</p>
+                                            <p className="text-gray-700 bg-gray-100 rounded p-2 border border-gray-200 whitespace-pre-line">{item.reschedule_note}</p>
+                                            </div>
                                         </div>
                                     </div>
                                     <div className="res-flex items-center gap-2 mt-3">
-                                        <button className="bt-btn btn btn-success tw" onClick={(e) => updateBookingTrigger(item)}>Approve Reschedule</button>
+                                        <button className="bt-btn btn btn-success tw" onClick={(e) => approveRescheduleTrigger(item)}>
+                                            {
+                                                buttonLoader && genralStore.getState().booking?.id === item.id ?
+                                                <ButtonLoader content="Please wait . . ." /> : 'Approve Reschedule'
+                                            }
+                                        </button>
                                         <div className="items-center gap-2 desktop-flex">
                                             <button className="color-error font-semibold cursor-pointer" onClick={(e) => cancelBookingTrigger(item)}>Cancel Booking</button>
                                         </div>
@@ -222,11 +245,11 @@ const StudentBookingBody = ({userType}: StudentBookingBodyProps) => {
                                     <Link href="/" className="bt-btn btn btn-primary-fill">Join Meeting</Link>
                                     <div className="items-center gap-2 desktop-flex">
                                         <button className=" btn normal" onClick={() => openModal("booking", "reschedule")}>Reschedule meeting</button>
-                                        <button className="color-error font-semibold" onClick={() => openModal("booking", "cancel")}>Cancel</button>
+                                        <button className="color-error font-semibold" onClick={(e) => cancelBookingTrigger(item)}>Cancel</button>
                                     </div>
                                     <div className="mobile-flex items-center justify-between w-full gap-2">
                                         <button className=" btn normal w-[65%]" onClick={() => openModal("booking", "reschedule")}>Reschedule meeting</button>
-                                        <button className="color-error font-semibold w-[34%]" onClick={() => openModal("booking", "cancel")}>Cancel</button>
+                                        <button className="color-error font-semibold w-[34%]" onClick={(e) => cancelBookingTrigger(item)}>Cancel</button>
                                     </div>
                                 </div>
                             }

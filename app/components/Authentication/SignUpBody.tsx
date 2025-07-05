@@ -159,7 +159,7 @@ const SignUpBody = () => {
 
                             ) : (
 
-                                <button className="bt-btn two btn btn-primary-fill" onClick={handleSubmit}>
+                                <button className="bt-btn two btn btn-primary-fill" onClick={handleSubmit} disabled={buttonLoader}>
                                     {
                                         buttonLoader ? (
                                             <ButtonLoader content="Please Wait . . ." />

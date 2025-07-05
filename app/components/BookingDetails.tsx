@@ -15,6 +15,7 @@ const BookingDetails = ({displayType}: BookingDetailsProps) => {
     const {
         buttonLoader,
         cancelSessionUser,
+        cancelSessionConsultant,
         cancelNote,
         setCancelNote,
     } = useConsultant();
@@ -157,7 +158,65 @@ const BookingDetails = ({displayType}: BookingDetailsProps) => {
                         <button className="bt-btn btn error two" onClick={cancelSessionUser}>
                             {
                                 buttonLoader ? (
-                                    <ButtonLoader content="Cancelling" />
+                                    <ButtonLoader content="Cancelling . . ." />
+
+                                ) : (
+                                    'Cancel Booking'
+                                )
+                            }
+                        </button>
+                    </div>
+                </div>
+            }
+
+            {
+                displayType == 'cancel-consultant' &&
+                <div>
+                    <div>
+                        <h2 className="title-3">Cancel Booking</h2>
+                        <p className="color-grey-text text-[.8rem]">Refund on canceled booking takes 3-5 working days.</p>
+                    </div>
+
+                    <div className="booking-sect">
+                        <p>Cancel mentorship session with <span className="color-darker font-bold">{`${bookingInfo?.user?.first_name} ${bookingInfo?.user?.last_name}`}</span>, slated for:</p>
+                    </div>
+                    
+                    <div className="flex items-center gap-3 border-b border-[#C8CCD0] pb-3">
+                        <div className="flex items-start gap-2">
+                            <Image
+                                aria-hidden
+                                src="/assets/images/calendar-add.png"
+                                alt="Colearn Logo"
+                                width={20}
+                                height={20}
+                                className="object-contain"
+                            />
+                            <p>{bookingInfo?.date_string}</p>
+                        </div>
+
+                        <div className="flex items-start gap-2">
+                            <Image
+                                aria-hidden
+                                src="/assets/images/clock-2.png"
+                                alt="Colearn Logo"
+                                width={20}
+                                height={20}
+                                className="object-contain"
+                            />
+                            <p>{bookingInfo?.user_time} - {bookingInfo?.user_end_time}</p>
+                        </div>
+                    </div>
+
+                    <div className="booking-sect">
+                        <p>Kindly add a reason for cancelling this Session</p>
+                        <textarea name="cancel_note" id="" className="textarea mt-2" value={cancelNote} onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setCancelNote(e.target.value)}></textarea>
+                    </div>
+
+                    <div className="flex items-end justify-end">
+                        <button className="bt-btn btn error two" onClick={cancelSessionConsultant}>
+                            {
+                                buttonLoader ? (
+                                    <ButtonLoader content="Cancelling . . ." />
 
                                 ) : (
                                     'Cancel Booking'

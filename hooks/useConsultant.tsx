@@ -16,8 +16,10 @@ import {
     book_session,
     update_session,
     cancel_session_user,
+    cancel_session_consultant,
     update_session_consultant,
     reschedule_session_consultant,
+    approve_reschedule,
 } from "@/services/consultant";
 import { courseStore } from "@/zustand/courseStore";
 import { consultantStore } from "@/zustand/consultantStore";
@@ -848,6 +850,37 @@ export const useConsultant = () => {
         }
     }
 
+    const cancelSessionConsultant = async () => {
+        if(!cancelNote) {
+            showErrorToast('Please add a reason for cancelling');
+            return
+        }
+
+        // submit
+        setButtonLoader(true);
+        
+        try {
+            const response = await cancel_session_consultant(bookingId, cancelNote);
+            if (response.success) {
+                setButtonLoader(false)
+                showSuccessToast(response.message)
+                courseStore.getState().setNewUpdate('set');
+            } 
+
+            else {
+                setButtonLoader(false)
+                showErrorToast(response.message)
+                console.log(response)
+            }
+        }
+
+        catch (err: any) {
+            console.log(err)
+            setButtonLoader(false)
+            showErrorToast('Unexpected error occurred');
+        }
+    }
+
     const approveSession = async () => {
         const newErrors = {
             channel: approveBooking.channel.trim() === '',
@@ -949,6 +982,32 @@ export const useConsultant = () => {
         }
     }
 
+    const approveReschedule = async () => {
+        // submit
+        setButtonLoader(true);
+        
+        try {
+            const response = await approve_reschedule(bookingId);
+            if (response.success) {
+                setButtonLoader(false)
+                showSuccessToast(response.message)
+                courseStore.getState().setNewUpdate('set');
+            } 
+
+            else {
+                setButtonLoader(false)
+                showErrorToast(response.message)
+                console.log(response)
+            }
+        }
+
+        catch (err: any) {
+            console.log(err)
+            setButtonLoader(false)
+            showErrorToast('Unexpected error occurred');
+        }
+    }
+
 
     return {
         buttonLoader,
@@ -1025,5 +1084,7 @@ export const useConsultant = () => {
         setRescheduleBooking,
         rescheduleSessionConsultant,
         handleRescheduleChange,
+        approveReschedule,
+        cancelSessionConsultant,
     }
 }

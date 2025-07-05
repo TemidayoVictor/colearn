@@ -65,7 +65,7 @@ const LoginBody = () => {
                     <div>
                     
                         <div>
-                            <button className="bt-btn two btn btn-primary-fill" onClick={handleLogin}>
+                            <button className="bt-btn two btn btn-primary-fill" onClick={handleLogin} disabled={buttonLoader}>  
                                 {
                                     buttonLoader ? (
                                         <div className="flex items-center justify-center gap-2">
