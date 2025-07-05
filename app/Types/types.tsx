@@ -228,4 +228,6 @@ export type Booking = {
     reschedule_time: string | undefined;
     reschedule_note: string | undefined;
     reschedule_date: string | undefined;
+    reschedule_date_user: string | undefined;
+    reschedule_time_user: string | undefined;
 }

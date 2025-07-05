@@ -80,10 +80,9 @@ const InstructorsBookingBody = ({userType}: StudentBookingBodyProps) => {
 
     useEffect(() => {
         setLoading(true);
-        if (!consultantId) return;
         const init = async () => {
             await useAuthConsultant(router); 
-            console.log(consultantId)
+            if (!consultantId) return;
             // fetch consultant bookings
             try {
                 const response = await get_sessions_consultant(consultantId);
@@ -203,7 +202,7 @@ const InstructorsBookingBody = ({userType}: StudentBookingBodyProps) => {
                             }
 
                             {
-                                item.status === 'approved' &&
+                                item.status === 'rescheduled-by-consultant' &&
                                 <div className="res-flex items-center gap-2 ">
                                     <Link href="/" className="bt-btn btn btn-primary-fill">Join Meeting</Link>
                                     <div className="items-center gap-2 desktop-flex">

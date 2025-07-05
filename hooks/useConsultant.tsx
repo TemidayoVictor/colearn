@@ -378,12 +378,16 @@ export const useConsultant = () => {
         date: string;
         start_time: string;
         note: string;
+        user_time: string;
+        user_date: string;
       }>({
         id: '',
         type: '',
         date: '',
         start_time: '',
         note: '',
+        user_time: '',
+        user_date: '',
     });
 
     const [rescheduleErrors, setRescheduleErrors] = useState({
@@ -733,7 +737,7 @@ export const useConsultant = () => {
         setButtonLoader(true);
         
         try {
-            const response = await book_session(selectedConsultantId, userId, formattedDate, selectedTime, duration, note, selectedUserTime, consultantDateDisplay,);
+            const response = await book_session(selectedConsultantId, userId, formattedDate, selectedTime, duration, note, selectedUserTime, consultantDateDisplay);
             if (response.success) {
                 setButtonLoader(false)
                 showSuccessToast(response.message)
@@ -903,8 +907,22 @@ export const useConsultant = () => {
             return;
         }
 
-        console.log(rescheduleBooking);
-        return
+        const formattedDate = dayjs(rescheduleBooking.date).format("YYYY-MM-DD");
+
+        const consultantTimezone = user?.timezone || Intl.DateTimeFormat().resolvedOptions().timeZone;
+        const consultantDate = dayjs.tz(`${formattedDate } ${rescheduleBooking.start_time}`, 'YYYY-MM-DD hh:mm A', consultantTimezone);
+
+        // get the equivalent date in the consultant's timezone
+        const userData = booking?.user
+
+        const userTimeZone = userData?.timezone || 'America/New_York';
+        const userDateTime = consultantDate.tz(userTimeZone);
+        const userDateDisplay = userDateTime.format("YYYY-MM-DD");
+
+        const payload = {
+            ...rescheduleBooking,
+            user_date: userDateDisplay,
+        };
 
         // submit
         setButtonLoader(true);

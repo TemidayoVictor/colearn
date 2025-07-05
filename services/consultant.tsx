@@ -305,6 +305,8 @@ export const reschedule_session_consultant = async (formData: {
     date: string;
     start_time: string;
     note: string;
+    user_time: string;
+    user_date: string;
 }) => {
     try {
         const response = await axiosInstance.post("/reschedule-session-consultant", formData);

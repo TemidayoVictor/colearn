@@ -187,6 +187,36 @@ const StudentBookingBody = ({userType}: StudentBookingBodyProps) => {
                             }
 
                             {
+                                item.status === 'rescheduled-by-consultant' &&
+                                <div className="alert notification">
+                                    <p className="color-grey-text text-[.9rem]">Consultant has requested to reschedule</p>
+                                    <div className="flex flex-col gap-3 mt-3 text-[.9rem]">
+                                        <div className="flex gap-3">
+                                            <p className="font-semibold">Rescheduled Date:</p>
+                                            <p>{item.reschedule_date}</p>
+                                        </div>
+                                        <div className="flex gap-3">
+                                            <p className="font-semibold">Rescheduled Time:</p>
+                                            <p>{item.reschedule_time_user} (Your time) </p>
+                                        </div>
+                                        <div className="flex flex-col gap-1">
+                                            <p className="font-semibold">Consultant Note:</p>
+                                            <p>{item.reschedule_note}</p>
+                                        </div>
+                                    </div>
+                                    <div className="res-flex items-center gap-2 mt-3">
+                                        <button className="bt-btn btn btn-success tw" onClick={(e) => updateBookingTrigger(item)}>Approve Reschedule</button>
+                                        <div className="items-center gap-2 desktop-flex">
+                                            <button className="color-error font-semibold cursor-pointer" onClick={(e) => cancelBookingTrigger(item)}>Cancel Booking</button>
+                                        </div>
+                                        <div className="mobile-flex items-center justify-between w-full gap-2">
+                                            <button className="color-error font-semibold cursor-pointer" onClick={(e) => cancelBookingTrigger(item)}>Cancel Booking</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+
+                            {
                                 item.status === 'approved' &&
                                 <div className="res-flex items-center gap-2 ">
                                     <Link href="/" className="bt-btn btn btn-primary-fill">Join Meeting</Link>

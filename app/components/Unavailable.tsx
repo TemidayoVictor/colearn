@@ -1,7 +1,11 @@
 import React from "react";
 import Image from "next/image";
 
-const Unavailable = () => {
+type UnavailableProps = {
+    content? : string;
+}
+
+const Unavailable = ({content}: UnavailableProps) => {
     return (
 
         <div className="flex flex-col items-center justify-center gap-2">
@@ -14,7 +18,13 @@ const Unavailable = () => {
                 className="object-contain"
             />
             <h2 className="error-msg font-semibold">Consultant Unavailable</h2>
-            <p className="text-center color-grey-text text-[.9rem]">Sorry, this Consultant isn’t available on this day, kindly try another day.</p>
+            {
+                content ? (
+                    <p className="text-center color-grey-text text-[.9rem]">{content}</p>
+                ) : (
+                    <p className="text-center color-grey-text text-[.9rem]">Sorry, this Consultant isn’t available on this day, kindly try another day.</p>
+                )
+            }
         </div>
     )
 }

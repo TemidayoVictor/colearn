@@ -41,7 +41,7 @@ const BookingRescheduleConsultant = () => {
     const modalRef = useRef<HTMLDivElement>(null);
 
     const handleTimeSelect = (time: string, userTime: string) => {
-        setRescheduleBooking((prev) => ({ ...prev, start_time: time }));
+        setRescheduleBooking((prev) => ({ ...prev, start_time: time, user_time: userTime }));
         setShowTimeMenu(false);
     };
     
@@ -66,6 +66,8 @@ const BookingRescheduleConsultant = () => {
                 date: booking?.date  || "",
                 start_time: booking?.start_time || "",
                 note: booking?.note || "",
+                user_time: booking?.user_time || "",
+                user_date: booking?.date || "",
                 type: 'consultant',
             });
         };
@@ -220,7 +222,7 @@ const BookingRescheduleConsultant = () => {
                             </button>
                         </>
                     ) : (
-                        <Unavailable />
+                        <Unavailable content="You're currently not available on this day. To allow bookings, please update your availability settings" />
                     )
                 }
             </div>
