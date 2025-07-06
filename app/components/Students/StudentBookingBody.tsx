@@ -164,8 +164,8 @@ const StudentBookingBody = ({userType}: StudentBookingBodyProps) => {
                         const isUpcoming = now.isBefore(bookingDateTime);
                         const isPaid = item.payment_status === 'paid';
                         const isApproved = item.status === 'approved';
-                        const isCompleted = item.status === 'completed';
-                        const isMissed = item.status === 'missed';
+                        const isCompleted = item.status === 'complete';
+                        const isMissed = item.status === 'missed_user';
                         const isConsultantCancelled = item.status === 'cancelled-by-consultant';
                         const isUserCancelled = item.status === 'cancelled-by-user';
                         const isPending = item.status === 'pending';
@@ -323,7 +323,7 @@ const StudentBookingBody = ({userType}: StudentBookingBodyProps) => {
                                                         <div>
                                                             {
                                                                 isCompleted &&
-                                                                <div className="alert no notification success mb-2 text-[.9rem]">Thank you. Your session has been recorded as completed.</div>
+                                                                <div className="alert no notification success mb-2 text-[.9rem]">Thank you. Your session has been successfully completed.</div>
                                                             }
 
                                                             {
