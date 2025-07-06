@@ -72,6 +72,7 @@ const BookingUpdate = () => {
                 duration: booking?.duration || 0,
                 note: booking?.note || "",
                 consultant_date: booking?.consultant_date || "",
+                userId: booking?.user_id || 0,
             });
         };
 
@@ -156,7 +157,7 @@ const BookingUpdate = () => {
 
     return (
         <div>
-            <h2 className="title-3 mb-4">Update Booking</h2>
+            <h2 className="title-3 mb-4">Update / Reschedule Booking</h2>
             <div className="mb-4 mt-8">
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                     <DatePicker

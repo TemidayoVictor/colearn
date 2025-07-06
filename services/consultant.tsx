@@ -243,6 +243,7 @@ export const update_session = async (formData: {
     note: string | undefined | null,
     user_start_time: string | undefined,
     consultant_date: string | undefined,
+    userId: number | undefined;
 }) => {
     try {
         const response = await axiosInstance.post("/update-session-user", formData);
@@ -321,6 +322,28 @@ export const reschedule_session_consultant = async (formData: {
 export const approve_reschedule = async (id: string | undefined) => {
     try {
         const response = await axiosInstance.post("/approve-reschedule", {id});
+        return handleApiResponse(response);
+    }
+
+    catch(error: any) {
+        return handleApiError(error)
+    }
+}
+
+export const update_payment = async (id: string | undefined) => {
+    try {
+        const response = await axiosInstance.post("/update-payment", {id});
+        return handleApiResponse(response);
+    }
+
+    catch(error: any) {
+        return handleApiError(error)
+    }
+}
+
+export const update_session_status = async (id: string | undefined, status: string | undefined, note?: string) => {
+    try {
+        const response = await axiosInstance.post("/update-session-status", {id, status, note});
         return handleApiResponse(response);
     }
 

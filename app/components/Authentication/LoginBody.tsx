@@ -5,6 +5,7 @@ import Link from "next/link";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import useLogin from "@/hooks/useLogin";
+import ButtonLoader from "../buttonLoader";
 
 const LoginBody = () => {
     const {
@@ -68,10 +69,7 @@ const LoginBody = () => {
                             <button className="bt-btn two btn btn-primary-fill" onClick={handleLogin} disabled={buttonLoader}>  
                                 {
                                     buttonLoader ? (
-                                        <div className="flex items-center justify-center gap-2">
-                                            <span className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
-                                            <span>Authenticating...</span>
-                                        </div>
+                                        <ButtonLoader content="Authenticating. . ."/>
                                     ) : 
                                     
                                     (

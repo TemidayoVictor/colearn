@@ -275,7 +275,7 @@ input, textarea, select {
   color: var(--error-color);
 }
 
-.btn.error.two:hover {
+.btn.error.two:hover, .btn.error.tw:hover {
   background-color: var(--error-color);
   color: var(--white);
 }
@@ -606,6 +606,10 @@ input, textarea, select {
   border-radius: .3em;
   margin-top: 1em;
   padding: .5em;
+}
+
+.alert.no {
+  margin-top: 0;
 }
 
 .alert .head {

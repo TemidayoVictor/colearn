@@ -14,6 +14,7 @@ import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import timezone from "dayjs/plugin/timezone";
 import advancedFormat from "dayjs/plugin/advancedFormat";
+import customParseFormat from 'dayjs/plugin/customParseFormat';
 import Loader from "../Loader";
 import { showErrorToast } from "@/utils/toastTypes";
 import { Booking } from "@/app/Types/types";
@@ -23,13 +24,19 @@ import ButtonLoader from "../buttonLoader";
 dayjs.extend(utc);
 dayjs.extend(timezone);
 dayjs.extend(advancedFormat);
+dayjs.extend(customParseFormat);
 
 type StudentBookingBodyProps = {
     userType?: string
 }
 
 const StudentBookingBody = ({userType}: StudentBookingBodyProps) => {
-    const {approveReschedule, buttonLoader} = useConsultant();
+    const {
+        approveReschedule, 
+        buttonLoader,
+        makePayment,
+        markAsComplete,
+    } = useConsultant();
     const [selectedTab, setSelectedTab] = useState<string>('upcoming');
     const [showModal, setShowModal] = useState<string | null>(null);
     const [subSelected, setSubSelected] = useState<string | null>(null);
@@ -73,6 +80,23 @@ const StudentBookingBody = ({userType}: StudentBookingBodyProps) => {
     const approveRescheduleTrigger = (item: Booking): void => {
         genralStore.getState().setBooking(item);
         approveReschedule();
+    }
+
+    const makePaymentTrigger = (item: Booking): void => {
+        genralStore.getState().setBooking(item);
+        makePayment
+    }
+
+    const completeTrigger = (item: Booking): void => {
+        genralStore.getState().setBooking(item);
+        // markAsComplete
+        openModalTwo("mark-as-complete");
+    }
+
+    const missedTrigger = (item: Booking): void => {
+        genralStore.getState().setBooking(item);
+        // markAsComplete
+        openModalTwo("mark-as-missed");
     }
 
     useEffect(() => {
@@ -131,132 +155,224 @@ const StudentBookingBody = ({userType}: StudentBookingBodyProps) => {
 
             <div className="spacing-inter">
                 {
-                    bookings.map((item, index) => (
-                        <div className="booking-cont" key={index}>
-                            <div className="flex items-start justify-between">
-                                <p className="w-[70%]">Mentorship session with <span className="color-darker font-bold">{`${item.consultant?.instructor?.user?.first_name} ${item.consultant?.instructor?.user?.last_name}`}</span></p>
-                                <div className="flex items-center gap-1 cursor-pointer" onClick={() => openModalTwo("booking")}>
-                                    <p>Details</p>
-                                    <Image
-                                        aria-hidden
-                                        src="/assets/images/arrow-right-5.png"
-                                        alt="Colearn Image"
-                                        width={16}
-                                        height={16}
-                                        className="object-cover"
-                                    />
+                    bookings.map((item, index) => {
+                        const now = dayjs(); // current date-time
+                        const bookingDateTime = dayjs(`${item.date} ${item.start_time}`, 'YYYY-MM-DD hh:mm A');
+
+                        const isPast = now.isAfter(bookingDateTime);
+                        const isToday = dayjs().isSame(item.date, 'day');
+                        const isUpcoming = now.isBefore(bookingDateTime);
+                        const isPaid = item.payment_status === 'paid';
+                        const isApproved = item.status === 'approved';
+                        const isCompleted = item.status === 'completed';
+                        const isMissed = item.status === 'missed';
+                        const isConsultantCancelled = item.status === 'cancelled-by-consultant';
+                        const isUserCancelled = item.status === 'cancelled-by-user';
+                        const isPending = item.status === 'pending';
+                        const isRescheduledByUser = item.status === 'rescheduled-by-user';
+                        const isRescheduledByConsultant = item.status === 'rescheduled-by-consultant';
+                    
+                        return (
+                            <div className="booking-cont" key={index}>
+                                <div className="flex items-start justify-between">
+                                    <p className="w-[70%]">Mentorship session with <span className="color-darker font-bold">{`${item.consultant?.instructor?.user?.first_name} ${item.consultant?.instructor?.user?.last_name}`}</span></p>
+                                    <div className="flex items-center gap-1 cursor-pointer" onClick={() => openModalTwo("booking")}>
+                                        <p>Details</p>
+                                        <Image
+                                            aria-hidden
+                                            src="/assets/images/arrow-right-5.png"
+                                            alt="Colearn Image"
+                                            width={16}
+                                            height={16}
+                                            className="object-cover"
+                                        />
+                                    </div>
                                 </div>
+                                <div className="flex items-center gap-3">
+                                    <div className="flex items-start gap-2">
+                                        <Image
+                                            aria-hidden
+                                            src="/assets/images/calendar-add.png"
+                                            alt="Colearn Logo"
+                                            width={20}
+                                            height={20}
+                                            className="object-contain"
+                                        />
+                                        <p className="res-text"> {item.date_string} </p>
+                                    </div>
+
+                                    <div className="flex items-start gap-2">
+                                        <Image
+                                            aria-hidden
+                                            src="/assets/images/clock-2.png"
+                                            alt="Colearn Logo"
+                                            width={20}
+                                            height={20}
+                                            className="object-contain"
+                                        />
+                                        <p className="res-text">{item.user_time} - {item.user_end_time}</p>
+                                    </div>
+                                </div>
+                                {
+                                    isUserCancelled &&
+                                    <p className="color-error text-[.9rem] font-semibold">This session has been cancelled by you</p>
+                                }
+
+                                {
+                                    isConsultantCancelled &&
+                                    <p className="color-error text-[.9rem] font-semibold">This session has been cancelled by the consultant</p>
+                                }
+                                
+                                {
+                                    !isUserCancelled && !isConsultantCancelled &&
+                                    <div>
+                                        {
+                                            !isPast ? (
+                                                <div>
+                                                    {
+                                                        (isPending || isRescheduledByUser) &&
+                                                        <div>
+                                                            <div className="alert no notification mb-2 text-[.9rem]">Your request has been successfully sent and is awaiting the consultant's approval.</div>
+                                                            <div className="res-flex items-center gap-2 ">
+                                                                <button className="bt-btn btn btn-primary-fill" onClick={(e) => updateBookingTrigger(item)}>Make Changes</button>
+                                                                <div className="items-center gap-2 desktop-flex">
+                                                                    {/* <button className=" btn normal" onClick={() => openModal("booking", "reschedule")}>Reschedule meeting</button> */}
+                                                                    <button className="color-error font-semibold cursor-pointer" onClick={(e) => cancelBookingTrigger(item)}>Cancel Booking</button>
+                                                                </div>
+                                                                <div className="mobile-flex items-center justify-between w-full gap-2">
+                                                                    {/* <button className=" btn normal w-[65%]" onClick={() => openModal("booking", "reschedule")}>Reschedule meeting</button> */}
+                                                                    <button className="color-error font-semibold cursor-pointer" onClick={(e) => cancelBookingTrigger(item)}>Cancel Booking</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    }
+
+                                                    {
+                                                        isRescheduledByConsultant &&
+                                                        <div >
+                                                            <div className="bg-white rounded-[.3em] p-2 border border-gray-200 ">
+                                                                <p className="text-sm text-gray-600 mb-4 italic">
+                                                                    Consultant has requested to reschedule
+                                                                </p>
+
+                                                                <div className="space-y-3 text-sm">
+                                                                    <div className="flex items-center gap-2">
+                                                                    <p className="font-medium text-gray-800">📅 Rescheduled Date:</p>
+                                                                    <p className="text-gray-700">{dayjs(item.reschedule_date).format("dddd, MMM D, YYYY")}</p>
+                                                                    </div>
+
+                                                                    <div className="flex items-center gap-2">
+                                                                    <p className="font-medium text-gray-800">⏰ Rescheduled Time:</p>
+                                                                    <p className="text-gray-700">{item.reschedule_time_user} <span className="text-xs text-gray-500">(Your time)</span></p>
+                                                                    </div>
+
+                                                                    <div>
+                                                                    <p className="font-medium text-gray-800 mb-1">📝 Consultant's Note:</p>
+                                                                    <p className="text-gray-700 bg-gray-100 rounded p-2 border border-gray-200 whitespace-pre-line">{item.reschedule_note}</p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div className="res-flex items-center gap-2 mt-3">
+                                                                <button className="bt-btn btn btn-success tw" onClick={(e) => approveRescheduleTrigger(item)}>
+                                                                    {
+                                                                        buttonLoader && genralStore.getState().booking?.id === item.id ?
+                                                                        <ButtonLoader content="Please wait . . ." /> : 'Approve Reschedule'
+                                                                    }
+                                                                </button>
+                                                                <div className="items-center gap-2 desktop-flex">
+                                                                    <button className="color-error font-semibold cursor-pointer" onClick={(e) => cancelBookingTrigger(item)}>Cancel Booking</button>
+                                                                </div>
+                                                                <div className="mobile-flex items-center justify-between w-full gap-2">
+                                                                    <button className="color-error font-semibold cursor-pointer" onClick={(e) => cancelBookingTrigger(item)}>Cancel Booking</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    }
+
+                                                    {
+                                                        isApproved &&
+                                                        <div>
+                                                            {
+                                                                !isPaid &&
+                                                                <div className="alert no notification success mb-2 text-[.9rem]">Your session has been approved. To confirm your spot, please proceed with the payment promptly.</div>
+                                                            }
+                                                            <div className="res-flex items-center gap-2 ">
+                                                                {
+                                                                    !isPaid ? (
+                                                                        <button className="bt-btn btn btn-success tw" onClick={(e) => makePaymentTrigger}>Make Payment [${item.amount}]</button>
+                                                                    ) : (
+                                                                        <Link href="#" className="bt-btn btn btn-primary-fill">Join Meeting</Link>
+                                                                    )
+                                                                }
+                                                                <div className="items-center gap-2 desktop-flex">
+                                                                    <button className=" btn btn-primary-fill" onClick={(e) => updateBookingTrigger(item)}>Make Changes</button>
+                                                                    <button className="color-error font-semibold" onClick={(e) => cancelBookingTrigger(item)}>Cancel Booking</button>
+                                                                </div>
+                                                                <div className="mobile-flex items-center justify-between w-full gap-2">
+                                                                    <button className=" btn btn-primary-fill w-[65%]" onClick={(e) => updateBookingTrigger(item)}>Make Changes</button>
+                                                                    <button className="color-error font-semibold w-[34%]" onClick={(e) => cancelBookingTrigger(item)}>Cancel Booking</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    }
+                                                </div>
+                                            ) : (
+                                                <div>
+                                                    {
+                                                        isPaid &&
+                                                        <div>
+                                                            {
+                                                                isCompleted &&
+                                                                <div className="alert no notification success mb-2 text-[.9rem]">Thank you. Your session has been recorded as completed.</div>
+                                                            }
+
+                                                            {
+                                                                isMissed &&
+                                                                <div>
+                                                                    <div className="alert no notification mb-2 text-[.9rem]">Your request has been successfully sent and is awaiting the consultant's approval.</div>
+                                                                    <div className="res-flex items-center gap-2 ">
+                                                                        <button className="bt-btn btn btn-primary-fill" onClick={(e) => updateBookingTrigger(item)}>Make Changes</button>
+                                                                        <div className="items-center gap-2 desktop-flex">
+                                                                            {/* <button className=" btn normal" onClick={() => openModal("booking", "reschedule")}>Reschedule meeting</button> */}
+                                                                            <button className="color-error font-semibold cursor-pointer" onClick={(e) => cancelBookingTrigger(item)}>Cancel Booking</button>
+                                                                        </div>
+                                                                        <div className="mobile-flex items-center justify-between w-full gap-2">
+                                                                            {/* <button className=" btn normal w-[65%]" onClick={() => openModal("booking", "reschedule")}>Reschedule meeting</button> */}
+                                                                            <button className="color-error font-semibold cursor-pointer" onClick={(e) => cancelBookingTrigger(item)}>Cancel Booking</button>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            }
+
+                                                            {
+                                                                !isCompleted && !isMissed &&
+                                                                <div>
+                                                                    <div className="alert no notification mb-2 text-[.9rem]">The scheduled time for your session has passed. <span>Please update the session status by selecting <strong>"Completed"</strong> if it held, or <strong>"Missed"</strong> if it did not take place.</span></div>
+                                                                    <div className="res-flex items-center gap-2 ">
+                                                                        <button className="bt-btn btn btn-success tw" onClick={(e) => completeTrigger}>Mark as completed</button>
+                                                                        <button className="bt-btn btn error tw" onClick={(e) => missedTrigger}>Mark as missed</button>
+                                                                    </div>
+                                                                </div>
+                                                            }
+
+                                                        </div>
+                                                    }
+
+                                                    {
+                                                        !isPaid &&
+                                                        <p className="color-error text-[.9rem] font-semibold">The scheduled session has ended, and no payment was received.</p>
+                                                    }
+                                                </div>
+                                            )
+                                        }
+                                    </div>
+                                }
                             </div>
-                            <div className="flex items-center gap-3">
-                                <div className="flex items-start gap-2">
-                                    <Image
-                                        aria-hidden
-                                        src="/assets/images/calendar-add.png"
-                                        alt="Colearn Logo"
-                                        width={20}
-                                        height={20}
-                                        className="object-contain"
-                                    />
-                                    <p className="res-text"> {item.date_string} </p>
-                                </div>
-
-                                <div className="flex items-start gap-2">
-                                    <Image
-                                        aria-hidden
-                                        src="/assets/images/clock-2.png"
-                                        alt="Colearn Logo"
-                                        width={20}
-                                        height={20}
-                                        className="object-contain"
-                                    />
-                                    <p className="res-text">{item.user_time} - {item.user_end_time}</p>
-                                </div>
-                            </div>
-                            {
-                                item.status === 'pending' &&
-                                <div className="res-flex items-center gap-2 ">
-                                    <button className="bt-btn btn btn-primary-fill" onClick={(e) => updateBookingTrigger(item)}>Update Booking</button>
-                                    <div className="items-center gap-2 desktop-flex">
-                                        {/* <button className=" btn normal" onClick={() => openModal("booking", "reschedule")}>Reschedule meeting</button> */}
-                                        <button className="color-error font-semibold cursor-pointer" onClick={(e) => cancelBookingTrigger(item)}>Cancel Booking</button>
-                                    </div>
-                                    <div className="mobile-flex items-center justify-between w-full gap-2">
-                                        {/* <button className=" btn normal w-[65%]" onClick={() => openModal("booking", "reschedule")}>Reschedule meeting</button> */}
-                                        <button className="color-error font-semibold cursor-pointer" onClick={(e) => cancelBookingTrigger(item)}>Cancel Booking</button>
-                                    </div>
-                                </div>
-                            }
-
-                            {
-                                item.status === 'cancelled-by-user' &&
-                                <p className="color-error text-[.9rem] font-semibold">This session has been cancelled by you</p>
-                            }
-
-                            {
-                                item.status === 'cancelled-by-consultant' &&
-                                <p className="color-error text-[.9rem] font-semibold">This session has been cancelled by the consultant</p>
-                            }
-
-                            {
-                                item.status === 'rescheduled-by-consultant' &&
-                                <div >
-                                    <div className="bg-white rounded-[.3em] p-2 border border-gray-200 ">
-                                        <p className="text-sm text-gray-600 mb-4 italic">
-                                            Consultant has requested to reschedule
-                                        </p>
-
-                                        <div className="space-y-3 text-sm">
-                                            <div className="flex items-center gap-2">
-                                            <p className="font-medium text-gray-800">📅 Rescheduled Date:</p>
-                                            <p className="text-gray-700">{dayjs(item.reschedule_date).format("dddd, MMM D, YYYY")}</p>
-                                            </div>
-
-                                            <div className="flex items-center gap-2">
-                                            <p className="font-medium text-gray-800">⏰ Rescheduled Time:</p>
-                                            <p className="text-gray-700">{item.reschedule_time_user} <span className="text-xs text-gray-500">(Your time)</span></p>
-                                            </div>
-
-                                            <div>
-                                            <p className="font-medium text-gray-800 mb-1">📝 Consultant's Note:</p>
-                                            <p className="text-gray-700 bg-gray-100 rounded p-2 border border-gray-200 whitespace-pre-line">{item.reschedule_note}</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="res-flex items-center gap-2 mt-3">
-                                        <button className="bt-btn btn btn-success tw" onClick={(e) => approveRescheduleTrigger(item)}>
-                                            {
-                                                buttonLoader && genralStore.getState().booking?.id === item.id ?
-                                                <ButtonLoader content="Please wait . . ." /> : 'Approve Reschedule'
-                                            }
-                                        </button>
-                                        <div className="items-center gap-2 desktop-flex">
-                                            <button className="color-error font-semibold cursor-pointer" onClick={(e) => cancelBookingTrigger(item)}>Cancel Booking</button>
-                                        </div>
-                                        <div className="mobile-flex items-center justify-between w-full gap-2">
-                                            <button className="color-error font-semibold cursor-pointer" onClick={(e) => cancelBookingTrigger(item)}>Cancel Booking</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            }
-
-                            {
-                                item.status === 'approved' &&
-                                <div className="res-flex items-center gap-2 ">
-                                    <Link href="/" className="bt-btn btn btn-primary-fill">Join Meeting</Link>
-                                    <div className="items-center gap-2 desktop-flex">
-                                        <button className=" btn normal" onClick={() => openModal("booking", "reschedule")}>Reschedule meeting</button>
-                                        <button className="color-error font-semibold" onClick={(e) => cancelBookingTrigger(item)}>Cancel</button>
-                                    </div>
-                                    <div className="mobile-flex items-center justify-between w-full gap-2">
-                                        <button className=" btn normal w-[65%]" onClick={() => openModal("booking", "reschedule")}>Reschedule meeting</button>
-                                        <button className="color-error font-semibold w-[34%]" onClick={(e) => cancelBookingTrigger(item)}>Cancel</button>
-                                    </div>
-                                </div>
-                            }
-                        </div>
-                    ))
+                        );
+                    })   
                 }
             </div>
+            
             {
                 userType !== 'instructor' &&
                 <div className="spacing-inter">
@@ -268,6 +384,7 @@ const StudentBookingBody = ({userType}: StudentBookingBodyProps) => {
                 showModal && 
                 <AccountModal modalType={showModal} modalClose={closeModal} subType={subSelected}/>
             }
+
         </div>
     )
 }

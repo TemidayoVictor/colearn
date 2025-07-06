@@ -17,6 +17,7 @@ import BookingApprove from "../BookingApprove";
 import { motion, AnimatePresence } from 'framer-motion';
 import { UseCourses } from "@/hooks/useCourses";
 import ButtonLoader from "../buttonLoader";
+import BookingFeedback from "../BookingFeedback";
 
 type AccountModalProps = {
     modalType: string;
@@ -417,6 +418,16 @@ const AccountModal = ({modalType, modalClose, experience, bank, subType}: Accoun
                 {
                     modalType == 'booking-reschedule-consultant' &&
                     <BookingRescheduleConsultant />
+                }
+
+                {   
+                    modalType == 'mark-as-complete' &&
+                    <BookingFeedback type='complete' />
+                }
+
+                {
+                    modalType == 'mark-as-missed' &&
+                    <BookingFeedback type='missed'/>
                 }
 
                 {

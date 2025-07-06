@@ -20,6 +20,8 @@ import {
     update_session_consultant,
     reschedule_session_consultant,
     approve_reschedule,
+    update_payment,
+    update_session_status
 } from "@/services/consultant";
 import { courseStore } from "@/zustand/courseStore";
 import { consultantStore } from "@/zustand/consultantStore";
@@ -337,6 +339,7 @@ export const useConsultant = () => {
         duration: number;
         note: string;
         consultant_date: string,
+        userId: number | undefined;
       }>({
         id: '',
         date: '',
@@ -345,6 +348,7 @@ export const useConsultant = () => {
         duration: 0,
         note: '',
         consultant_date: '',
+        userId: 0,
     });
 
     const [errors, setErrors] = useState({
@@ -743,7 +747,7 @@ export const useConsultant = () => {
             if (response.success) {
                 setButtonLoader(false)
                 showSuccessToast(response.message)
-                courseStore.getState().setNewUpdate('set');
+                router.push('/students/bookings');
             } 
 
             else {
@@ -776,6 +780,8 @@ export const useConsultant = () => {
             showErrorToast('Please fill in required fields');
             return;
         }
+
+        console.log(updateBooking);
 
         const formattedDate = dayjs(updateBooking.date).format("YYYY-MM-DD");
 
@@ -1008,6 +1014,84 @@ export const useConsultant = () => {
         }
     }
 
+    const makePayment = async () => {
+        // submit
+        setButtonLoader(true);
+        
+        try {
+            const response = await update_payment(bookingId);
+            if (response.success) {
+                setButtonLoader(false)
+                showSuccessToast(response.message)
+                courseStore.getState().setNewUpdate('set');
+            } 
+
+            else {
+                setButtonLoader(false)
+                showErrorToast(response.message)
+                console.log(response)
+            }
+        }
+
+        catch (err: any) {
+            console.log(err)
+            setButtonLoader(false)
+            showErrorToast('Unexpected error occurred');
+        }
+    }
+
+    const markAsComplete = async () => {
+        // submit
+        setButtonLoader(true);
+        
+        try {
+            const response = await update_session_status(bookingId, 'complete');
+            if (response.success) {
+                setButtonLoader(false)
+                showSuccessToast(response.message)
+                courseStore.getState().setNewUpdate('set');
+            } 
+
+            else {
+                setButtonLoader(false)
+                showErrorToast(response.message)
+                console.log(response)
+            }
+        }
+
+        catch (err: any) {
+            console.log(err)
+            setButtonLoader(false)
+            showErrorToast('Unexpected error occurred');
+        }
+    }
+
+    const markAsMissed = async () => {
+        // submit
+        setButtonLoader(true);
+        
+        try {
+            const response = await update_session_status(bookingId, 'missed');
+            if (response.success) {
+                setButtonLoader(false)
+                showSuccessToast(response.message)
+                courseStore.getState().setNewUpdate('set');
+            } 
+
+            else {
+                setButtonLoader(false)
+                showErrorToast(response.message)
+                console.log(response)
+            }
+        }
+
+        catch (err: any) {
+            console.log(err)
+            setButtonLoader(false)
+            showErrorToast('Unexpected error occurred');
+        }
+    }
+
 
     return {
         buttonLoader,
@@ -1086,5 +1170,8 @@ export const useConsultant = () => {
         handleRescheduleChange,
         approveReschedule,
         cancelSessionConsultant,
+        makePayment,
+        markAsComplete,
+        markAsMissed,
     }
 }

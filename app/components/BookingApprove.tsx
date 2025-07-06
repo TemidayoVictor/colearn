@@ -2,9 +2,7 @@
 import React, {useState, useEffect, useRef} from "react";
 import { useConsultant } from "@/hooks/useConsultant";
 import { genralStore } from "@/zustand/generalStore";
-import { consultantStore } from "@/zustand/consultantStore";
 import ButtonLoader from "./buttonLoader";
-import Image from "next/image";
 
 
 const BookingApprove = () => {

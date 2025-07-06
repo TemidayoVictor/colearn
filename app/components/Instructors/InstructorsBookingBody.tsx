@@ -177,8 +177,34 @@ const InstructorsBookingBody = ({userType}: StudentBookingBodyProps) => {
                             </div>
 
                             {
-                                item.status === 'pending' &&
-                                <div className="res-flex items-center gap-2 ">
+                                (item.status === 'pending' || item.status === 'rescheduled-by-user') &&
+                                <div>
+                                    {
+                                        item.status === 'rescheduled-by-user' &&
+                                        <div className="bg-white rounded-[.3em] p-2 border border-gray-200 ">
+                                            <p className="text-sm text-gray-600 mb-4 italic">
+                                                Client has updated the session details. Please review and take action.
+                                            </p>
+
+                                            <div className="space-y-3 text-sm">
+                                                <div className="flex items-center gap-2">
+                                                <p className="font-medium text-gray-800">📅 Date:</p>
+                                                <p className="text-gray-700">{dayjs(item.consultant_date).format("dddd, MMM D, YYYY")}</p>
+                                                </div>
+
+                                                <div className="flex items-center gap-2">
+                                                <p className="font-medium text-gray-800">⏰ Time:</p>
+                                                <p className="text-gray-700">{item.start_time} - {item.end_time} <span className="text-xs text-gray-500">(Your time)</span></p>
+                                                </div>
+
+                                                <div>
+                                                <p className="font-medium text-gray-800 mb-1">📝 Client Note:</p>
+                                                <p className="text-gray-700 bg-gray-100 rounded p-2 border border-gray-200 whitespace-pre-line">{item.note}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                    <div className="res-flex items-center gap-2 mt-2">
                                     <button className="bt-btn btn btn-success tw" onClick={() => approveBookingTrigger(item)}>Approve Session</button>
                                     <div className="items-center gap-2 desktop-flex">
                                         {/* <button className=" btn normal" onClick={() => openModal("booking", "reschedule")}>Reschedule meeting</button> */}
@@ -188,6 +214,7 @@ const InstructorsBookingBody = ({userType}: StudentBookingBodyProps) => {
                                         {/* <button className=" btn normal w-[65%]" onClick={() => openModal("booking", "reschedule")}>Reschedule meeting</button> */}
                                         <button className="color-error font-semibold w-[34%]"  onClick={(e) => cancelBookingTrigger(item)}>Cancel Session</button>
                                     </div>
+                                </div>
                                 </div>
                             }
 

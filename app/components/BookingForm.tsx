@@ -220,7 +220,7 @@ const BookingForm = () => {
                                 <textarea name="note" id="" placeholder="Enter a description" className="textarea" onChange={(e) => setNote(e.target.value)}></textarea>
                             </div>
 
-                            <button className="bt-btn btn btn-primary-fill full" onClick={bookSession}>
+                            <button className="bt-btn two btn btn-primary-fill" onClick={bookSession}>
                                 {
                                     buttonLoader ? (
                                         <ButtonLoader content="Please Wait . . ." />
