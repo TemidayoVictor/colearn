@@ -96,7 +96,7 @@ const StudentBookingBody = ({userType}: StudentBookingBodyProps) => {
     const missedTrigger = (item: Booking): void => {
         genralStore.getState().setBooking(item);
         // markAsComplete
-        openModalTwo("mark-as-missed");
+        openModalTwo("mark-as-missed_user");
     }
 
     useEffect(() => {
@@ -347,10 +347,10 @@ const StudentBookingBody = ({userType}: StudentBookingBodyProps) => {
                                                             {
                                                                 !isCompleted && !isMissed &&
                                                                 <div>
-                                                                    <div className="alert no notification mb-2 text-[.9rem]">The scheduled time for your session has passed. <span>Please update the session status by selecting <strong>"Completed"</strong> if it held, or <strong>"Missed"</strong> if it did not take place.</span></div>
+                                                                    <div className="alert no notification mb-2 text-[.9rem]">The scheduled time for your session has elapsed. <span>Please update the session status by selecting <strong>"Completed"</strong> if it held, or <strong>"Missed"</strong> if it did not take place.</span></div>
                                                                     <div className="res-flex items-center gap-2 ">
-                                                                        <button className="bt-btn btn btn-success tw" onClick={(e) => completeTrigger}>Mark as completed</button>
-                                                                        <button className="bt-btn btn error tw" onClick={(e) => missedTrigger}>Mark as missed</button>
+                                                                        <button className="bt-btn btn btn-success tw" onClick={(e) => completeTrigger(item)}>Mark as completed</button>
+                                                                        <button className="bt-btn btn error tw" onClick={(e) => missedTrigger(item)}>Mark as missed</button>
                                                                     </div>
                                                                 </div>
                                                             }

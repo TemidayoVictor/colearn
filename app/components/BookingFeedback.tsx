@@ -12,7 +12,10 @@ const BookingFeedback = ({type}: BookingFeedbackProps) => {
     const {
         buttonLoader,
         markAsComplete, 
-        markAsMissed
+        markAsMissedUser,
+        markAsMissedConsultant,
+        missedNote, 
+        setMissedNote,
     } = useConsultant();
     const booking = genralStore((state) => state.booking);
     
@@ -31,7 +34,7 @@ const BookingFeedback = ({type}: BookingFeedbackProps) => {
                             
                             (
                                 <div className="bt-btn two">
-                                    <span>Approve Session</span>
+                                    <span>Complete Session</span>
                                 </div>                                        
                             )
                         }
@@ -40,14 +43,38 @@ const BookingFeedback = ({type}: BookingFeedbackProps) => {
             }
 
             {
-                type === 'missed' &&
+                type === 'missed_user' &&
                 <div>
                     <h2 className="title-3 mb-4">Mark Session as missed</h2>
                     <div className="mb-4">
                         <h3 className="block mb-1 text-[.9rem] font-bold">Kindly add a reason why you want to mark this session as missed</h3>
-                        <textarea name="note" id="" placeholder="Enter a description" className="textarea" value={approveBooking.note} onChange={handleApproveChange}></textarea>
+                        <textarea name="note" id="" placeholder="Enter a description" className="textarea" value={missedNote} onChange={(e) => setMissedNote(e.target.value)}></textarea>
                     </div>
-                    <button className="flex items-center justify-center gap-2 btn error tw w-full" onClick={markAsMissed}>
+                    <button className="flex items-center justify-center gap-2 btn error tw w-full" onClick={markAsMissedUser}>
+                        {
+                            buttonLoader ? (
+                                <ButtonLoader content="Please wait . . ." />
+                            ) : 
+                            
+                            (
+                                <div className="bt-btn two">
+                                    <span>Mark as missed</span>
+                                </div>                                        
+                            )
+                        }
+                    </button>
+                </div>
+            }
+
+            {
+                type === 'missed_consultant' &&
+                <div>
+                    <h2 className="title-3 mb-4">Mark Session as missed</h2>
+                    <div className="mb-4">
+                        <h3 className="block mb-1 text-[.9rem] font-bold">Kindly add a reason why you want to mark this session as missed</h3>
+                        <textarea name="note" id="" placeholder="Enter a description" className="textarea" value={missedNote} onChange={(e) => setMissedNote(e.target.value)}></textarea>
+                    </div>
+                    <button className="flex items-center justify-center gap-2 btn error tw w-full" onClick={markAsMissedConsultant}>
                         {
                             buttonLoader ? (
                                 <ButtonLoader content="Please wait . . ." />

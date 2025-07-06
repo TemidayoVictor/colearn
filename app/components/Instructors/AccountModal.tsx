@@ -426,8 +426,13 @@ const AccountModal = ({modalType, modalClose, experience, bank, subType}: Accoun
                 }
 
                 {
-                    modalType == 'mark-as-missed' &&
-                    <BookingFeedback type='missed'/>
+                    modalType == 'mark-as-missed_user' &&
+                    <BookingFeedback type='missed_user'/>
+                }
+
+                {
+                    modalType == 'mark-as-missed_consultant' &&
+                    <BookingFeedback type='missed_consultant'/>
                 }
 
                 {

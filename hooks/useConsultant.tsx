@@ -74,6 +74,7 @@ export const useConsultant = () => {
 
     const [note, setNote] = useState<string | null>(null);
     const [cancelNote, setCancelNote] = useState<string>();
+    const [missedNote, setMissedNote] = useState<string>();
 
     const [schoolData, setSchoolData] = useState<School[]>([
         {
@@ -1066,12 +1067,48 @@ export const useConsultant = () => {
         }
     }
 
-    const markAsMissed = async () => {
+    const markAsMissedUser = async () => {
+        if(!missedNote) {
+            showErrorToast('Please fill in required fields');
+            return
+        }
+
         // submit
         setButtonLoader(true);
         
         try {
-            const response = await update_session_status(bookingId, 'missed');
+            const response = await update_session_status(bookingId, 'missed_user', missedNote);
+            if (response.success) {
+                setButtonLoader(false)
+                showSuccessToast(response.message)
+                courseStore.getState().setNewUpdate('set');
+            } 
+
+            else {
+                setButtonLoader(false)
+                showErrorToast(response.message)
+                console.log(response)
+            }
+        }
+
+        catch (err: any) {
+            console.log(err)
+            setButtonLoader(false)
+            showErrorToast('Unexpected error occurred');
+        }
+    }
+
+    const markAsMissedConsultant = async () => {
+        if(!missedNote) {
+            showErrorToast('Please fill in required fields');
+            return
+        }
+
+        // submit
+        setButtonLoader(true);
+        
+        try {
+            const response = await update_session_status(bookingId, 'missed_consultant', missedNote);
             if (response.success) {
                 setButtonLoader(false)
                 showSuccessToast(response.message)
@@ -1172,6 +1209,9 @@ export const useConsultant = () => {
         cancelSessionConsultant,
         makePayment,
         markAsComplete,
-        markAsMissed,
+        markAsMissedUser,
+        markAsMissedConsultant,
+        missedNote, 
+        setMissedNote,
     }
 }
