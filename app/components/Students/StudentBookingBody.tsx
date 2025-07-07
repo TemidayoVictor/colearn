@@ -83,8 +83,9 @@ const StudentBookingBody = ({userType}: StudentBookingBodyProps) => {
     }
 
     const makePaymentTrigger = (item: Booking): void => {
+        alert("Please wait, we are working on the payment system. You can make the payment via PayPal or Stripe for now. Thank you for your patience.");
         genralStore.getState().setBooking(item);
-        makePayment
+        makePayment()
     }
 
     const completeTrigger = (item: Booking): void => {
@@ -96,7 +97,7 @@ const StudentBookingBody = ({userType}: StudentBookingBodyProps) => {
     const missedTrigger = (item: Booking): void => {
         genralStore.getState().setBooking(item);
         // markAsComplete
-        openModalTwo("mark-as-missed_user");
+        openModalTwo("mark-as-missed-consultant");
     }
 
     useEffect(() => {
@@ -166,11 +167,14 @@ const StudentBookingBody = ({userType}: StudentBookingBodyProps) => {
                         const isApproved = item.status === 'approved';
                         const isCompleted = item.status === 'complete';
                         const isMissed = item.status === 'missed_user';
+                        const isMissedConsultant = item.status === 'missed_consultant';
                         const isConsultantCancelled = item.status === 'cancelled-by-consultant';
                         const isUserCancelled = item.status === 'cancelled-by-user';
                         const isPending = item.status === 'pending';
                         const isRescheduledByUser = item.status === 'rescheduled-by-user';
                         const isRescheduledByConsultant = item.status === 'rescheduled-by-consultant';
+                        const userMissed = item.missed_client === true;
+                        const consultantMissed = item.missed_client === true;
                     
                         return (
                             <div className="booking-cont" key={index}>
@@ -215,12 +219,16 @@ const StudentBookingBody = ({userType}: StudentBookingBodyProps) => {
                                 </div>
                                 {
                                     isUserCancelled &&
-                                    <p className="color-error text-[.9rem] font-semibold">This session has been cancelled by you</p>
+                                    <div className="alert no notification error mb-2 text-[.9rem]">
+                                        <p>This session has been cancelled by you</p>
+                                    </div>
                                 }
 
                                 {
                                     isConsultantCancelled &&
-                                    <p className="color-error text-[.9rem] font-semibold">This session has been cancelled by the consultant</p>
+                                    <div className="alert no notification error mb-2 text-[.9rem]">
+                                        <p>This session has been cancelled by the consultant</p>
+                                    </div>
                                 }
                                 
                                 {
@@ -299,9 +307,20 @@ const StudentBookingBody = ({userType}: StudentBookingBodyProps) => {
                                                             <div className="res-flex items-center gap-2 ">
                                                                 {
                                                                     !isPaid ? (
-                                                                        <button className="bt-btn btn btn-success tw" onClick={(e) => makePaymentTrigger}>Make Payment [${item.amount}]</button>
+                                                                        <button className="bt-btn btn btn-success tw" onClick={(e) => makePaymentTrigger(item)}>Make Payment (${item.amount})</button>
                                                                     ) : (
-                                                                        <Link href="#" className="bt-btn btn btn-primary-fill">Join Meeting</Link>
+                                                                        <a 
+                                                                            href={
+                                                                                item.booking_link && !item.booking_link.startsWith("http")
+                                                                                ? `https://${item.booking_link}`
+                                                                                : item.booking_link || "#"
+                                                                            }
+                                                                            className="bt-btn btn btn-primary-fill"
+                                                                            target="_blank"
+                                                                            rel="noopener noreferrer"
+                                                                        >
+                                                                        Join Meeting
+                                                                        </a>
                                                                     )
                                                                 }
                                                                 <div className="items-center gap-2 desktop-flex">
@@ -329,11 +348,35 @@ const StudentBookingBody = ({userType}: StudentBookingBodyProps) => {
                                                             {
                                                                 isMissed &&
                                                                 <div>
-                                                                    <div className="alert no notification mb-2 text-[.9rem]">Your request has been successfully sent and is awaiting the consultant's approval.</div>
+                                                                    <div className="alert no notification mb-2 text-[.9rem]">
+                                                                        {
+                                                                            consultantMissed ? 
+                                                                            "You and the consultant have marked this session as missed. You may choose to reschedule a new meeting or cancel the booking. Please note that if you opt to cancel, the amount to be refunded will be determined by the CoLearn Admin after reviewing the session status." :
+                                                                            "You have marked this session as missed. We are awaiting feedback from the consultant."
+                                                                        }
+                                                                    </div>
                                                                     <div className="res-flex items-center gap-2 ">
-                                                                        <button className="bt-btn btn btn-primary-fill" onClick={(e) => updateBookingTrigger(item)}>Make Changes</button>
+                                                                        <a 
+                                                                            href={
+                                                                                item.booking_link && !item.booking_link.startsWith("http")
+                                                                                ? `https://${item.booking_link}`
+                                                                                : item.booking_link || "#"
+                                                                            }
+                                                                            className="bt-btn btn btn-primary-fill"
+                                                                            target="_blank"
+                                                                            rel="noopener noreferrer"
+                                                                        >
+                                                                        Join Meeting
+                                                                        </a>
+                                                                        
+                                                                        {
+                                                                            consultantMissed &&
+                                                                            <button className="bt-btn btn btn-primary-fill" onClick={(e) => updateBookingTrigger(item)}>Make Changes</button>
+                                                                        }
+
                                                                         <div className="items-center gap-2 desktop-flex">
                                                                             {/* <button className=" btn normal" onClick={() => openModal("booking", "reschedule")}>Reschedule meeting</button> */}
+
                                                                             <button className="color-error font-semibold cursor-pointer" onClick={(e) => cancelBookingTrigger(item)}>Cancel Booking</button>
                                                                         </div>
                                                                         <div className="mobile-flex items-center justify-between w-full gap-2">
@@ -345,7 +388,40 @@ const StudentBookingBody = ({userType}: StudentBookingBodyProps) => {
                                                             }
 
                                                             {
-                                                                !isCompleted && !isMissed &&
+                                                                isMissedConsultant &&
+                                                                <div>
+                                                                    <div className="alert no notification mb-2 text-[.9rem]">
+                                                                        {
+                                                                            userMissed ? 
+                                                                            "The consultant has marked this session as missed. Please supply your feedback." :
+                                                                            "You and the consultant have marked this session as missed. You may choose to reschedule a new meeting or cancel the booking. Please note that if you opt to cancel, the amount to be refunded will be determined by the CoLearn Admin after reviewing the session status."
+                                                                        }
+                                                                    </div>
+                                                                    {
+                                                                        userMissed ? (
+                                                                            <div className="res-flex items-center gap-2 ">
+                                                                                <button className="bt-btn btn btn-primary-fill" onClick={(e) => updateBookingTrigger(item)}>Make Changes</button>
+                                                                                <div className="items-center gap-2 desktop-flex">
+                                                                                    {/* <button className=" btn normal" onClick={() => openModal("booking", "reschedule")}>Reschedule meeting</button> */}
+                                                                                    <button className="color-error font-semibold cursor-pointer" onClick={(e) => cancelBookingTrigger(item)}>Cancel Booking</button>
+                                                                                </div>
+                                                                                <div className="mobile-flex items-center justify-between w-full gap-2">
+                                                                                    {/* <button className=" btn normal w-[65%]" onClick={() => openModal("booking", "reschedule")}>Reschedule meeting</button> */}
+                                                                                    <button className="color-error font-semibold cursor-pointer" onClick={(e) => cancelBookingTrigger(item)}>Cancel Booking</button>
+                                                                                </div>
+                                                                            </div>
+                                                                        ) : (
+                                                                            <div className="res-flex items-center gap-2 ">
+                                                                                <button className="bt-btn btn btn-success tw" onClick={(e) => completeTrigger(item)}>Mark as completed</button>
+                                                                                <button className="bt-btn btn error tw" onClick={(e) => missedTrigger(item)}>Mark as missed</button>
+                                                                            </div>
+                                                                        )
+                                                                    }
+                                                                </div>
+                                                            }
+
+                                                            {
+                                                                !isCompleted && !isMissed && !isMissedConsultant &&
                                                                 <div>
                                                                     <div className="alert no notification mb-2 text-[.9rem]">The scheduled time for your session has elapsed. <span>Please update the session status by selecting <strong>"Completed"</strong> if it held, or <strong>"Missed"</strong> if it did not take place.</span></div>
                                                                     <div className="res-flex items-center gap-2 ">

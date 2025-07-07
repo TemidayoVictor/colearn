@@ -629,6 +629,11 @@ input, textarea, select {
   color: var(--color-primary-normal);
 }
 
+.alert.notification.error {
+  color: var(--error-color);
+  background-color: var(--error-color-light-active);
+}
+
 .toggle-container {
   display: flex;
   align-items: center;

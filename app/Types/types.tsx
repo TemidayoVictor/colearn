@@ -230,4 +230,8 @@ export type Booking = {
     reschedule_date: string | undefined;
     reschedule_date_user: string | undefined;
     reschedule_time_user: string | undefined;
+    missed_client: boolean | null;
+    missed_consultant: boolean | null;
+    missed_client_note: string | undefined;
+    missed_consultant_note: string | undefined;
 }
