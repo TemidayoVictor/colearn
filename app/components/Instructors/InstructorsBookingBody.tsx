@@ -90,7 +90,7 @@ const InstructorsBookingBody = ({userType}: StudentBookingBodyProps) => {
     const missedTrigger = (item: Booking): void => {
         genralStore.getState().setBooking(item);
         // markAsComplete
-        openModalTwo("mark-as-missed_user");
+        openModalTwo("mark-as-missed-consultant");
     }
 
     useEffect(() => {
@@ -157,7 +157,7 @@ const InstructorsBookingBody = ({userType}: StudentBookingBodyProps) => {
                         const isUpcoming = now.isBefore(bookingDateTime);
                         const isPaid = item.payment_status === 'paid';
                         const isApproved = item.status === 'approved';
-                        const isCompleted = item.status === 'complete';
+                        const isCompleted = item.status === 'completed_user';
                         const isMissed = item.status === 'missed_user';
                         const isMissedConsultant = item.status === 'missed_consultant';
                         const isConsultantCancelled = item.status === 'cancelled-by-consultant';
@@ -165,13 +165,13 @@ const InstructorsBookingBody = ({userType}: StudentBookingBodyProps) => {
                         const isPending = item.status === 'pending';
                         const isRescheduledByUser = item.status === 'rescheduled-by-user';
                         const isRescheduledByConsultant = item.status === 'rescheduled-by-consultant';
-                        const userMissed = item.missed_client === true;
-                        const consultantMissed = item.missed_client === true;
+                        const userMissed = Boolean(item.missed_client);
+                        const consultantMissed = Boolean(item.missed_consultant);
                     
                         return (
                             <div className="booking-cont" key={index}>
                                 <div className="flex items-start justify-between">
-                                    <p className="w-[70%]">Mentorship session with <span className="color-darker font-bold">{`${item.user?.first_name} ${item.user?.last_name}`}</span></p>
+                                    <p className="w-[70%]">Mentorship session with  <span className="color-darker font-bold">{`${item.user?.first_name} ${item.user?.last_name}`}</span></p>
                                     <div className="flex items-center gap-1 cursor-pointer" onClick={() => openModal("booking", "details")}>
                                         <p>Details</p>
                                         <Image
@@ -214,14 +214,14 @@ const InstructorsBookingBody = ({userType}: StudentBookingBodyProps) => {
                                 {
                                     isUserCancelled &&
                                     <div className="alert no notification error mb-2 text-[.9rem]">
-                                        <p>This session has been cancelled by the client</p>
+                                        <p className="color-error text-[.9rem] font-semibold">This session has been cancelled by the client</p>
                                     </div>
                                 }
 
                                 {
                                     isConsultantCancelled &&
                                     <div className="alert no notification error mb-2 text-[.9rem]">
-                                        <p>This session has been cancelled by you</p>
+                                        <p className="color-error text-[.9rem] font-semibold">This session has been cancelled by you</p>
                                     </div>
                                 }
 
@@ -337,7 +337,7 @@ const InstructorsBookingBody = ({userType}: StudentBookingBodyProps) => {
                                                         <div>
                                                             {
                                                                 isCompleted &&
-                                                                <div className="alert no notification success mb-2 text-[.9rem]">Thank you. Your session has been successfully completed, and your balance has been reimbursed to your wallet.</div>
+                                                                <div className="alert no notification success text-[.9rem]">Thank you. Your session has been successfully completed, and your balance has been reimbursed to your wallet.</div>
                                                             }
                                                             
                                                             {
@@ -438,7 +438,7 @@ const InstructorsBookingBody = ({userType}: StudentBookingBodyProps) => {
                                                             }
 
                                                             {
-                                                                !isCompleted && !isMissed && !isMissedConsultant &&
+                                                                !isCompleted && !isMissed && !isMissedConsultant && !isRescheduledByConsultant &&
                                                                 <div>
                                                                     <div className="alert no notification mb-2 text-[.9rem]">The scheduled time for your session has elapsed. <span>Please update the session status by selecting <strong>"Completed"</strong> if it held, or <strong>"Missed"</strong> if it did not take place.</span></div>
                                                                     <div className="res-flex items-center gap-2 ">
@@ -446,6 +446,11 @@ const InstructorsBookingBody = ({userType}: StudentBookingBodyProps) => {
                                                                         <button className="bt-btn btn error tw" onClick={(e) => missedTrigger(item)}>Mark as missed</button>
                                                                     </div>
                                                                 </div>
+                                                            }
+
+                                                            {
+                                                                isRescheduledByConsultant &&
+                                                                <div className="alert no notification text-[.9rem]">Your request has been successfully sent and is awaiting the client's approval.</div>
                                                             }
 
                                                         </div>

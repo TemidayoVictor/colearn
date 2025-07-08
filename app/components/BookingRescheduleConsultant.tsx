@@ -2,8 +2,6 @@
 import React, {useState, useEffect, useRef} from "react";
 import { useConsultant } from "@/hooks/useConsultant";
 import { genralStore } from "@/zustand/generalStore";
-import { showErrorToast } from "@/utils/toastTypes";
-import { get_consultant } from "@/services/consultant";
 import { consultantStore } from "@/zustand/consultantStore";
 import Unavailable from "./Unavailable";
 import ButtonLoader from "./buttonLoader";
@@ -65,7 +63,7 @@ const BookingRescheduleConsultant = () => {
                 id: booking?.id || "",  
                 date: booking?.date  || "",
                 start_time: booking?.start_time || "",
-                note: booking?.note || "",
+                note: booking?.consultant_note || "",
                 user_time: booking?.user_time || "",
                 user_date: booking?.date || "",
                 type: 'consultant',

@@ -74,7 +74,7 @@ export const useConsultant = () => {
 
     const [note, setNote] = useState<string | null>(null);
     const [cancelNote, setCancelNote] = useState<string>();
-    const [missedNote, setMissedNote] = useState<string>();
+    const [feedbackNote, setFeedbackNote] = useState<string>();
 
     const [schoolData, setSchoolData] = useState<School[]>([
         {
@@ -964,11 +964,14 @@ export const useConsultant = () => {
             user_date: userDateDisplay,
         };
 
+        console.log(payload);
+        return
+
         // submit
         setButtonLoader(true);
         
         try {
-            const response = await reschedule_session_consultant(rescheduleBooking);
+            const response = await reschedule_session_consultant(payload);
             if (response.success) {
                 setButtonLoader(false)
                 showSuccessToast(response.message)
@@ -1042,11 +1045,49 @@ export const useConsultant = () => {
     }
 
     const markAsComplete = async () => {
+        
+        if(!feedbackNote) {
+            showErrorToast('Please fill in required fields');
+            return
+        }
+
         // submit
         setButtonLoader(true);
         
         try {
-            const response = await update_session_status(bookingId, 'complete');
+            const response = await update_session_status(bookingId, 'completed_user' , feedbackNote);
+            if (response.success) {
+                setButtonLoader(false)
+                showSuccessToast(response.message)
+                courseStore.getState().setNewUpdate('set');
+            } 
+
+            else {
+                setButtonLoader(false)
+                showErrorToast(response.message)
+                console.log(response)
+            }
+        }
+
+        catch (err: any) {
+            console.log(err)
+            setButtonLoader(false)
+            showErrorToast('Unexpected error occurred');
+        }
+    }
+
+    const markAsCompleteConsultant = async () => {
+        
+        if(!feedbackNote) {
+            showErrorToast('Please fill in required fields');
+            return
+        }
+
+        // submit
+        setButtonLoader(true);
+        
+        try {
+            const response = await update_session_status(bookingId, 'completed_consultant', feedbackNote);
             if (response.success) {
                 setButtonLoader(false)
                 showSuccessToast(response.message)
@@ -1068,7 +1109,7 @@ export const useConsultant = () => {
     }
 
     const markAsMissedUser = async () => {
-        if(!missedNote) {
+        if(!feedbackNote) {
             showErrorToast('Please fill in required fields');
             return
         }
@@ -1077,7 +1118,7 @@ export const useConsultant = () => {
         setButtonLoader(true);
         
         try {
-            const response = await update_session_status(bookingId, 'missed_user', missedNote);
+            const response = await update_session_status(bookingId, 'missed_user', feedbackNote);
             if (response.success) {
                 setButtonLoader(false)
                 showSuccessToast(response.message)
@@ -1099,7 +1140,7 @@ export const useConsultant = () => {
     }
 
     const markAsMissedConsultant = async () => {
-        if(!missedNote) {
+        if(!feedbackNote) {
             showErrorToast('Please fill in required fields');
             return
         }
@@ -1108,7 +1149,7 @@ export const useConsultant = () => {
         setButtonLoader(true);
         
         try {
-            const response = await update_session_status(bookingId, 'missed_consultant', missedNote);
+            const response = await update_session_status(bookingId, 'missed_consultant', feedbackNote);
             if (response.success) {
                 setButtonLoader(false)
                 showSuccessToast(response.message)
@@ -1209,9 +1250,10 @@ export const useConsultant = () => {
         cancelSessionConsultant,
         makePayment,
         markAsComplete,
+        markAsCompleteConsultant,
         markAsMissedUser,
         markAsMissedConsultant,
-        missedNote, 
-        setMissedNote,
+        feedbackNote, 
+        setFeedbackNote,
     }
 }

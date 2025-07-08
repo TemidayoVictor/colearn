@@ -421,8 +421,13 @@ const AccountModal = ({modalType, modalClose, experience, bank, subType}: Accoun
                 }
 
                 {   
-                    modalType == 'mark-as-complete' &&
-                    <BookingFeedback type='complete' />
+                    modalType == 'mark-as-complete-user' &&
+                    <BookingFeedback type='complete-user' />
+                }
+
+                {   
+                    modalType == 'mark-as-complete-consultant' &&
+                    <BookingFeedback type='complete-consultant' />
                 }
 
                 {

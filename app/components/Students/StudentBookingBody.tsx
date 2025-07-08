@@ -91,14 +91,16 @@ const StudentBookingBody = ({userType}: StudentBookingBodyProps) => {
     const completeTrigger = (item: Booking): void => {
         genralStore.getState().setBooking(item);
         // markAsComplete
-        openModalTwo("mark-as-complete");
+        openModalTwo("mark-as-complete-user");
     }
 
     const missedTrigger = (item: Booking): void => {
         genralStore.getState().setBooking(item);
         // markAsComplete
-        openModalTwo("mark-as-missed-consultant");
+        openModalTwo("mark-as-missed-user");
     }
+
+    console.log(bookings);
 
     useEffect(() => {
         setLoading(true);
@@ -165,7 +167,7 @@ const StudentBookingBody = ({userType}: StudentBookingBodyProps) => {
                         const isUpcoming = now.isBefore(bookingDateTime);
                         const isPaid = item.payment_status === 'paid';
                         const isApproved = item.status === 'approved';
-                        const isCompleted = item.status === 'complete';
+                        const isCompleted = item.status === 'completed_user';
                         const isMissed = item.status === 'missed_user';
                         const isMissedConsultant = item.status === 'missed_consultant';
                         const isConsultantCancelled = item.status === 'cancelled-by-consultant';
@@ -173,8 +175,8 @@ const StudentBookingBody = ({userType}: StudentBookingBodyProps) => {
                         const isPending = item.status === 'pending';
                         const isRescheduledByUser = item.status === 'rescheduled-by-user';
                         const isRescheduledByConsultant = item.status === 'rescheduled-by-consultant';
-                        const userMissed = item.missed_client === true;
-                        const consultantMissed = item.missed_client === true;
+                        const userMissed = Boolean(item.missed_client);
+                        const consultantMissed = Boolean(item.missed_consultant);
                     
                         return (
                             <div className="booking-cont" key={index}>
@@ -219,15 +221,15 @@ const StudentBookingBody = ({userType}: StudentBookingBodyProps) => {
                                 </div>
                                 {
                                     isUserCancelled &&
-                                    <div className="alert no notification error mb-2 text-[.9rem]">
-                                        <p>This session has been cancelled by you</p>
+                                    <div className="alert no notification error text-[.9rem]">
+                                        <p className="color-error text-[.9rem] font-semibold">This session has been cancelled by you</p>
                                     </div>
                                 }
 
                                 {
                                     isConsultantCancelled &&
-                                    <div className="alert no notification error mb-2 text-[.9rem]">
-                                        <p>This session has been cancelled by the consultant</p>
+                                    <div className="alert no notification error text-[.9rem]">
+                                        <p className="color-error text-[.9rem] font-semibold">This session has been cancelled by the consultant</p>
                                     </div>
                                 }
                                 
@@ -242,7 +244,7 @@ const StudentBookingBody = ({userType}: StudentBookingBodyProps) => {
                                                         <div>
                                                             <div className="alert no notification mb-2 text-[.9rem]">Your request has been successfully sent and is awaiting the consultant's approval.</div>
                                                             <div className="res-flex items-center gap-2 ">
-                                                                <button className="bt-btn btn btn-primary-fill" onClick={(e) => updateBookingTrigger(item)}>Make Changes</button>
+                                                                <button className="bt-btn btn normal" onClick={(e) => updateBookingTrigger(item)}>Make Changes</button>
                                                                 <div className="items-center gap-2 desktop-flex">
                                                                     {/* <button className=" btn normal" onClick={() => openModal("booking", "reschedule")}>Reschedule meeting</button> */}
                                                                     <button className="color-error font-semibold cursor-pointer" onClick={(e) => cancelBookingTrigger(item)}>Cancel Booking</button>
@@ -324,7 +326,7 @@ const StudentBookingBody = ({userType}: StudentBookingBodyProps) => {
                                                                     )
                                                                 }
                                                                 <div className="items-center gap-2 desktop-flex">
-                                                                    <button className=" btn btn-primary-fill" onClick={(e) => updateBookingTrigger(item)}>Make Changes</button>
+                                                                    <button className=" btn normal" onClick={(e) => updateBookingTrigger(item)}>Make Changes</button>
                                                                     <button className="color-error font-semibold" onClick={(e) => cancelBookingTrigger(item)}>Cancel Booking</button>
                                                                 </div>
                                                                 <div className="mobile-flex items-center justify-between w-full gap-2">
@@ -352,7 +354,7 @@ const StudentBookingBody = ({userType}: StudentBookingBodyProps) => {
                                                                         {
                                                                             consultantMissed ? 
                                                                             "You and the consultant have marked this session as missed. You may choose to reschedule a new meeting or cancel the booking. Please note that if you opt to cancel, the amount to be refunded will be determined by the CoLearn Admin after reviewing the session status." :
-                                                                            "You have marked this session as missed. We are awaiting feedback from the consultant."
+                                                                            item.missed_consultant == null ? "You have marked this session as missed. We are awaiting feedback from the consultant." : "You marked this session as missed, while the client marked it as completed. This discrepancy will be reviewed and resolved by the admin. Please contact support for further assistance."
                                                                         }
                                                                     </div>
                                                                     <div className="res-flex items-center gap-2 ">
@@ -368,10 +370,10 @@ const StudentBookingBody = ({userType}: StudentBookingBodyProps) => {
                                                                         >
                                                                         Join Meeting
                                                                         </a>
-                                                                        
+
                                                                         {
                                                                             consultantMissed &&
-                                                                            <button className="bt-btn btn btn-primary-fill" onClick={(e) => updateBookingTrigger(item)}>Make Changes</button>
+                                                                            <button className="bt-btn btn normal" onClick={(e) => updateBookingTrigger(item)}>Make Changes</button>
                                                                         }
 
                                                                         <div className="items-center gap-2 desktop-flex">
@@ -393,14 +395,13 @@ const StudentBookingBody = ({userType}: StudentBookingBodyProps) => {
                                                                     <div className="alert no notification mb-2 text-[.9rem]">
                                                                         {
                                                                             userMissed ? 
-                                                                            "The consultant has marked this session as missed. Please supply your feedback." :
-                                                                            "You and the consultant have marked this session as missed. You may choose to reschedule a new meeting or cancel the booking. Please note that if you opt to cancel, the amount to be refunded will be determined by the CoLearn Admin after reviewing the session status."
+                                                                            "You and the consultant have marked this session as missed. You may choose to reschedule a new meeting or cancel the booking. Please note that if you opt to cancel, the amount to be refunded will be determined by the CoLearn Admin after reviewing the session status." : "The consultant has marked this session as missed. Please supply your feedback."
                                                                         }
                                                                     </div>
                                                                     {
                                                                         userMissed ? (
                                                                             <div className="res-flex items-center gap-2 ">
-                                                                                <button className="bt-btn btn btn-primary-fill" onClick={(e) => updateBookingTrigger(item)}>Make Changes</button>
+                                                                                <button className="bt-btn btn normal" onClick={(e) => updateBookingTrigger(item)}>Make Changes</button>
                                                                                 <div className="items-center gap-2 desktop-flex">
                                                                                     {/* <button className=" btn normal" onClick={() => openModal("booking", "reschedule")}>Reschedule meeting</button> */}
                                                                                     <button className="color-error font-semibold cursor-pointer" onClick={(e) => cancelBookingTrigger(item)}>Cancel Booking</button>
@@ -411,9 +412,12 @@ const StudentBookingBody = ({userType}: StudentBookingBodyProps) => {
                                                                                 </div>
                                                                             </div>
                                                                         ) : (
-                                                                            <div className="res-flex items-center gap-2 ">
-                                                                                <button className="bt-btn btn btn-success tw" onClick={(e) => completeTrigger(item)}>Mark as completed</button>
-                                                                                <button className="bt-btn btn error tw" onClick={(e) => missedTrigger(item)}>Mark as missed</button>
+                                                                            <div>
+                                                                                <div className="alert no notification mb-2 text-[.9rem]">The scheduled time for your session has elapsed. <span>Please update the session status by selecting <strong>"Completed"</strong> if it held, or <strong>"Missed"</strong> if it did not take place.</span></div>
+                                                                                <div className="res-flex items-center gap-2 ">
+                                                                                    <button className="bt-btn btn btn-success tw" onClick={(e) => completeTrigger(item)}>Mark as completed</button>
+                                                                                    <button className="bt-btn btn error tw" onClick={(e) => missedTrigger(item)}>Mark as missed</button>
+                                                                                </div>
                                                                             </div>
                                                                         )
                                                                     }
@@ -421,7 +425,7 @@ const StudentBookingBody = ({userType}: StudentBookingBodyProps) => {
                                                             }
 
                                                             {
-                                                                !isCompleted && !isMissed && !isMissedConsultant &&
+                                                                !isCompleted && !isMissed && !isMissedConsultant && !isRescheduledByConsultant &&
                                                                 <div>
                                                                     <div className="alert no notification mb-2 text-[.9rem]">The scheduled time for your session has elapsed. <span>Please update the session status by selecting <strong>"Completed"</strong> if it held, or <strong>"Missed"</strong> if it did not take place.</span></div>
                                                                     <div className="res-flex items-center gap-2 ">
@@ -431,12 +435,56 @@ const StudentBookingBody = ({userType}: StudentBookingBodyProps) => {
                                                                 </div>
                                                             }
 
+                                                            {
+                                                                isRescheduledByConsultant &&    
+                                                                <div >
+                                                                    <div className="bg-white rounded-[.3em] p-2 border border-gray-200 ">
+                                                                        <p className="text-sm text-gray-600 mb-4 italic">
+                                                                            Consultant has requested to reschedule
+                                                                        </p>
+
+                                                                        <div className="space-y-3 text-sm">
+                                                                            <div className="flex items-center gap-2">
+                                                                            <p className="font-medium text-gray-800">📅 Rescheduled Date:</p>
+                                                                            <p className="text-gray-700">{dayjs(item.reschedule_date).format("dddd, MMM D, YYYY")}</p>
+                                                                            </div>
+
+                                                                            <div className="flex items-center gap-2">
+                                                                            <p className="font-medium text-gray-800">⏰ Rescheduled Time:</p>
+                                                                            <p className="text-gray-700">{item.reschedule_time_user} <span className="text-xs text-gray-500">(Your time)</span></p>
+                                                                            </div>
+
+                                                                            <div>
+                                                                            <p className="font-medium text-gray-800 mb-1">📝 Consultant's Note:</p>
+                                                                            <p className="text-gray-700 bg-gray-100 rounded p-2 border border-gray-200 whitespace-pre-line">{item.reschedule_note}</p>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div className="res-flex items-center gap-2 mt-3">
+                                                                        <button className="bt-btn btn btn-success tw" onClick={(e) => approveRescheduleTrigger(item)}>
+                                                                            {
+                                                                                buttonLoader && genralStore.getState().booking?.id === item.id ?
+                                                                                <ButtonLoader content="Please wait . . ." /> : 'Approve Reschedule'
+                                                                            }
+                                                                        </button>
+                                                                        <div className="items-center gap-2 desktop-flex">
+                                                                            <button className="color-error font-semibold cursor-pointer" onClick={(e) => cancelBookingTrigger(item)}>Cancel Booking</button>
+                                                                        </div>
+                                                                        <div className="mobile-flex items-center justify-between w-full gap-2">
+                                                                            <button className="color-error font-semibold cursor-pointer" onClick={(e) => cancelBookingTrigger(item)}>Cancel Booking</button>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            }
+
                                                         </div>
                                                     }
 
                                                     {
                                                         !isPaid &&
-                                                        <p className="color-error text-[.9rem] font-semibold">The scheduled session has ended, and no payment was received.</p>
+                                                        <div className="alert no notification error text-[.9rem]">
+                                                            <p className="color-error text-[.9rem] font-semibold">The scheduled session has ended, and no payment was received.</p>
+                                                        </div>
                                                     }
                                                 </div>
                                             )
