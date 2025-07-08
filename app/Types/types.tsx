@@ -234,4 +234,5 @@ export type Booking = {
     missed_consultant: boolean | null;
     missed_client_note: string | undefined;
     missed_consultant_note: string | undefined;
+    created_at: string;
 }

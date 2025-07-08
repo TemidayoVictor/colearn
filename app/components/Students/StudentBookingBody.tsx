@@ -74,7 +74,7 @@ const StudentBookingBody = ({userType}: StudentBookingBodyProps) => {
 
     const viewBookingTrigger = (item: Booking): void => {
         genralStore.getState().setBooking(item);
-        openModal("booking", "cancel");
+        openModal("booking", "details-student")
     }
 
     const approveRescheduleTrigger = (item: Booking): void => {
@@ -83,7 +83,6 @@ const StudentBookingBody = ({userType}: StudentBookingBodyProps) => {
     }
 
     const makePaymentTrigger = (item: Booking): void => {
-        alert("Please wait, we are working on the payment system. You can make the payment via PayPal or Stripe for now. Thank you for your patience.");
         genralStore.getState().setBooking(item);
         makePayment()
     }
@@ -99,8 +98,6 @@ const StudentBookingBody = ({userType}: StudentBookingBodyProps) => {
         // markAsComplete
         openModalTwo("mark-as-missed-user");
     }
-
-    console.log(bookings);
 
     useEffect(() => {
         setLoading(true);
@@ -182,7 +179,7 @@ const StudentBookingBody = ({userType}: StudentBookingBodyProps) => {
                             <div className="booking-cont" key={index}>
                                 <div className="flex items-start justify-between">
                                     <p className="w-[70%]">Mentorship session with <span className="color-darker font-bold">{`${item.consultant?.instructor?.user?.first_name} ${item.consultant?.instructor?.user?.last_name}`}</span></p>
-                                    <div className="flex items-center gap-1 cursor-pointer" onClick={() => openModalTwo("booking")}>
+                                    <div className="flex items-center gap-1 cursor-pointer" onClick={(e) => viewBookingTrigger(item)}>
                                         <p>Details</p>
                                         <Image
                                             aria-hidden

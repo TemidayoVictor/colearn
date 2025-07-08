@@ -5,6 +5,12 @@ import { Booking } from "../Types/types";
 import { useConsultant } from "@/hooks/useConsultant";
 import Image from "next/image";
 import ButtonLoader from "./buttonLoader";
+import dayjs from "dayjs";
+import customParseFormat from "dayjs/plugin/customParseFormat";
+import advancedFormat from "dayjs/plugin/advancedFormat";
+
+dayjs.extend(customParseFormat);
+dayjs.extend(advancedFormat);
 
 type BookingDetailsProps = {
     displayType?: string | null
@@ -33,10 +39,12 @@ const BookingDetails = ({displayType}: BookingDetailsProps) => {
 
     }, [booking]);
 
+    console.log(booking)
+
     return (
         <div className="booking-details">
             {
-                displayType == 'details' &&
+                displayType == 'details-student' &&
                 <div>
                     <div>
                         <h2 className="title-3">Booking Details</h2>
@@ -49,7 +57,7 @@ const BookingDetails = ({displayType}: BookingDetailsProps) => {
                             <div>
                                  <Image
                                     aria-hidden
-                                    src="/assets/images/avatars-4.png"
+                                    src={booking?.consultant?.instructor?.user?.profile_photo ? `${process.env.NEXT_PUBLIC_API_URL}/storage/${booking?.consultant?.instructor?.user?.profile_photo}` : "/assets/images/course-img-2.png"}
                                     alt="Colearn Logo"
                                     width={56}
                                     height={56}
@@ -57,28 +65,148 @@ const BookingDetails = ({displayType}: BookingDetailsProps) => {
                                 />
                             </div>
                             <div>
-                                <p>Favi Ayomide</p>
-                                <p className="booking-header two">Structural Engineer, Certified Structural Engineer Oxford.</p>
+                                <p>{`${booking?.consultant?.instructor?.user?.first_name} ${booking?.consultant?.instructor?.user?.last_name}`}</p>
+                                <p className="booking-header two">{booking?.consultant?.instructor?.professional_headline}</p>
                             </div>
                         </div>
 
                         <div className="booking-sect">
-                            <p className="booking-header">Location of Meeting</p>
-                            <p className="booking-body">https://Colearn.org/meetlink.googlemeet</p>
+                            <p className="booking-header">Meeting Type</p>
+                            <p className="booking-body capitalize">{booking?.booking_type}</p>
                         </div>
 
                         <div className="booking-sect">
-                            <p className="booking-header">Session Name</p>
-                            <p className="booking-body">Consultant Session</p>
+                            <p className="booking-header">Meeting Platform</p>
+                            <p className="booking-body capitalize">{booking?.channel}</p>
                         </div>
 
                         <div className="booking-sect">
-                            <p className="booking-header">Your Note</p>
-                            <p className="booking-body">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quis est, non iusto voluptatibus accusantium quibusdam assumenda nemo dolorum commodi perferendis?</p>
+                            <p className="booking-header">Meeting Link</p>
+                            <a className="booking-body underline" href={booking?.booking_link && !booking?.booking_link.startsWith("http") ? `https://${booking?.booking_link}`: booking?.booking_link || "#"}>{booking?.booking_link}</a>
                         </div>
 
                         <div className="booking-sect">
-                            <p className="font-semibold text-[.8rem]">Created:  Jan 31st, 2025 WAT</p>
+                            <p className="booking-header">Date</p>
+                            <p className="booking-body"> {`${booking?.date_string}`} </p>
+                        </div>
+
+                        <div className="booking-sect">
+                            <p className="booking-header">Time</p>
+                            <p className="booking-body"> {`${booking?.user_time} - ${booking?.user_end_time}`} </p>
+                        </div>
+                        {
+                            booking?.note &&
+                            <div className="booking-sect">
+                                <p className="booking-header">Your Note</p>
+                                <p className="booking-body"> {booking?.note} </p>
+                            </div>
+                        }
+
+                        {
+                            booking?.consultant_note &&
+                            <div className="booking-sect">
+                                <p className="booking-header">Consultant's Note</p>
+                                <p className="booking-body"> {booking?.consultant_note} </p>
+                            </div>
+                        }
+
+                        <div className="booking-sect">
+                            <p className="booking-header">Booking Status</p>
+                            <p className="booking-body capitalize"> {booking?.status == 'missed_user' || 'missed_consultant' ? 'Missed': booking?.status} </p>
+                        </div>
+
+                        <div className="booking-sect">
+                            <p className="booking-header">Payment Status</p>
+                            <p className={`booking-body capitalize font-semibold ${booking?.payment_status == 'paid' ? 'success' : 'color-error'}`}> {booking?.payment_status} </p>
+                        </div>
+
+                        <div className="booking-sect">
+                            <p className="font-semibold text-[.8rem]">Created: { dayjs(booking?.created_at, "YYYY-MM-DD HH:mm:ss").format("MMM Do, YYYY")} WAT</p>
+                        </div>
+
+                    </div>
+                </div>
+            }
+
+            {
+                displayType == 'details-consultant' &&
+                <div>
+                    <div>
+                        <h2 className="title-3">Booking Details</h2>
+                    </div>
+
+                    <div className="mt-4">
+                        <p className="booking-header">Client</p>
+
+                        <div className="booking-sect flex items-center gap-2">
+                            <div>
+                                <Image
+                                    aria-hidden
+                                    src={booking?.user?.profile_photo ? `${process.env.NEXT_PUBLIC_API_URL}/storage/${booking?.user?.profile_photo}` : "/assets/images/course-img-2.png"}
+                                    alt="Colearn Logo"
+                                    width={56}
+                                    height={56}
+                                    className="object-contain rounded-[50%]"
+                                />
+                            </div>
+                            <div>
+                                <p className="booking-header">{`${booking?.user?.first_name} ${booking?.user?.last_name}`}</p>
+                                {/* <p className="booking-header two">{booking?.consultant?.instructor?.professional_headline}</p> */}
+                            </div>
+                        </div>
+
+                        <div className="booking-sect">
+                            <p className="booking-header">Meeting Type</p>
+                            <p className="booking-body capitalize">{booking?.booking_type}</p>
+                        </div>
+
+                        <div className="booking-sect">
+                            <p className="booking-header">Meeting Platform</p>
+                            <p className="booking-body capitalize">{booking?.channel}</p>
+                        </div>
+
+                        <div className="booking-sect">
+                            <p className="booking-header">Meeting Link</p>
+                            <a className="booking-body underline" href={booking?.booking_link && !booking?.booking_link.startsWith("http") ? `https://${booking?.booking_link}`: booking?.booking_link || "#"}>{booking?.booking_link}</a>
+                        </div>
+
+                        <div className="booking-sect">
+                            <p className="booking-header">Date</p>
+                            <p className="booking-body"> {`${booking?.consultant_date}`} </p>
+                        </div>
+
+                        <div className="booking-sect">
+                            <p className="booking-header">Time</p>
+                            <p className="booking-body"> {`${booking?.start_time} - ${booking?.end_time}`} </p>
+                        </div>
+                        {
+                            booking?.note &&
+                            <div className="booking-sect">
+                                <p className="booking-header">Client's Note</p>
+                                <p className="booking-body"> {booking?.note} </p>
+                            </div>
+                        }
+
+                        {
+                            booking?.consultant_note &&
+                            <div className="booking-sect">
+                                <p className="booking-header">Your Note</p>
+                                <p className="booking-body"> {booking?.consultant_note} </p>
+                            </div>
+                        }
+
+                        <div className="booking-sect">
+                            <p className="booking-header">Booking Status</p>
+                            <p className="booking-body capitalize"> {booking?.status == 'missed_user' || 'missed_consultant' ? 'Missed': booking?.status} </p>
+                        </div>
+
+                        <div className="booking-sect">
+                            <p className="booking-header">Payment Status</p>
+                            <p className={`booking-body capitalize font-semibold ${booking?.payment_status == 'paid' ? 'success' : 'color-error'}`}> {booking?.payment_status} </p>
+                        </div>
+
+                        <div className="booking-sect">
+                            <p className="font-semibold text-[.8rem]">Created: { dayjs(booking?.created_at, "YYYY-MM-DD HH:mm:ss").format("MMM Do, YYYY")} WAT</p>
                         </div>
 
                     </div>

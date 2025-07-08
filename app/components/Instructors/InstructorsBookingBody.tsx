@@ -172,7 +172,7 @@ const InstructorsBookingBody = ({userType}: StudentBookingBodyProps) => {
                             <div className="booking-cont" key={index}>
                                 <div className="flex items-start justify-between">
                                     <p className="w-[70%]">Mentorship session with  <span className="color-darker font-bold">{`${item.user?.first_name} ${item.user?.last_name}`}</span></p>
-                                    <div className="flex items-center gap-1 cursor-pointer" onClick={() => openModal("booking", "details")}>
+                                    <div className="flex items-center gap-1 cursor-pointer" onClick={() => openModal("booking", "details-consultant")}>
                                         <p>Details</p>
                                         <Image
                                             aria-hidden
