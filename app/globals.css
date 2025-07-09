@@ -256,7 +256,6 @@ input, textarea, select {
 
 .btn.remove {
   border: 1px solid var(--error-color);
-  padding-block: .3em;
 }
 
 .btn.remove:hover {
@@ -336,6 +335,13 @@ input, textarea, select {
     #5E17EB
   ); */
   /* border-image-slice: 1; */
+}
+
+.btn-con {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+  margin-top: .5em;
 }
 
 .title {
@@ -3855,14 +3861,6 @@ td {
   .cart-list-detail-right-r.two {
     align-items: start;
   }
-
-  .btn-con {
-    display: flex;
-    justify-content: flex-end;
-    width: 100%;
-    margin-top: .5em;
-  }
-
   .terms {
     flex-direction: column;
   }

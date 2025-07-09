@@ -1,20 +1,32 @@
-import React from "react";
+'use client';
+import React, {useEffect} from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { genralStore } from "@/zustand/generalStore";
+import { UseCourses } from "@/hooks/useCourses";
 
 const CartList = () => {
+    const {removeFromCart} = UseCourses();
+    const cart = genralStore((state) => state.cart);
+    const total = cart.reduce((sum, item) => sum + Number(item.course.price || 0), 0);
+    const totalFormatted = total.toFixed(2);
+
+    const removeFromCartTrigger = (id: string | undefined) => {
+        removeFromCart(id);
+    }
+
     return (
         <div className="cart-list">
             <div className="class-list-main">
                 {
-                    [1,2,3].map((items, index) => (
+                    cart.map((item, index) => (
                         <div className="cart-list-detail" key={index}>
 
                             <div className="cart-list-detail-left">
                                 <div className="relative">
                                     <Image
                                         aria-hidden
-                                        src="/assets/images/course.png"
+                                        src={item?.course?.thumbnail ? `${process.env.NEXT_PUBLIC_API_URL}/storage/${item?.course?.thumbnail}` : "/assets/images/course-img-2.png"}
                                         alt="Colearn Logo"
                                         width={400}
                                         height={264}
@@ -38,30 +50,31 @@ const CartList = () => {
                             <div className="cart-list-detail-right">
                                 <div className="cart-list-detail-right-l">
                                     <div className="cart-list-detail-right-l-l">
-                                        <h3 className="title-3">The Complete  Guide to cybersecurity:  From Beginner to expert</h3>
-                                        <p className="mt-4">By Favi Design</p>
+                                        <h3 className="title-3">{item?.course?.title}</h3>
+                                        <p className="mt-4">By {`${item?.course?.instructor?.user?.first_name} ${item?.course?.instructor?.user?.last_name}`}</p>
                                     </div>
-                                    <p className="title-3 cart-list-detail-right-l-r">$30.00</p>
+                                    <p className="title-3 cart-list-detail-right-l-r">${item?.course?.price}</p>
                                 </div>
                                 
                                 <div className="cart-list-detail-right-r mb-2">
                                     <div className="flex gap-2 items-center">
-                                        <p >20 hours</p>
+                                        <p >{item?.course?.total_duration} hours</p>
                                         <div className="divider"></div>
-                                        <p >4 videos</p>
+                                        <p >{item?.course?.videos_count} videos</p>
                                         <div className="divider"></div>
-                                        <p className="color-normal">Beginner</p>
+                                        <p className="color-normal capitalize">{item?.course?.level}</p>
                                     </div>
-                                    <div className="btn-con">
-                                        <Link href="/" className="btn remove">Remove</Link>
-                                    </div>
+                                </div>
+                                <div className="btn-con gap-2">
+                                    <button className="btn btn-small remove" onClick={(e) => removeFromCartTrigger}>Remove</button>
+                                    <button className="btn btn-small btn-primary-fill">Use Coupon</button>
                                 </div>
                             </div>   
                         </div>
                     ))
                 }
 
-                <div className="cart-list-detail">
+                {/* <div className="cart-list-detail">
 
                     <div className="cart-list-detail-left">
                         <div className="relative">
@@ -134,7 +147,7 @@ const CartList = () => {
                             </div>
                         </div>
                     </div>   
-                </div>
+                </div> */}
                                 
             </div>
 
@@ -143,8 +156,8 @@ const CartList = () => {
                     <p>Subtotals</p>
                     
                     <div>
-                        <h2 className="cart-total">$65.00</h2>
-                        <h2 className="cart-total old">$90.00</h2>
+                        <h2 className="cart-total">${totalFormatted}</h2>
+                        {/* <h2 className="cart-total old">$90.00</h2> */}
                     </div>
                     
                     <Link href='/' className="bt-btn two btn btn-primary-fill">

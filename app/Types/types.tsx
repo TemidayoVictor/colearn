@@ -240,3 +240,12 @@ export type Booking = {
     missed_consultant_note: string | undefined;
     created_at: string;
 }
+
+export type Cart = {
+    id: string | undefined;
+    user_id: string | undefined;
+    course_id: string | undefined;
+    status: string;
+    user: User;
+    course: Course;
+}

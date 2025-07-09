@@ -493,3 +493,33 @@ export const add_to_cart = async (userId: number | undefined ,courseId: string |
         return handleApiError(error)
     }
 }
+
+export const get_cart = async (userId: number | undefined) => {
+    try {
+        const data = new FormData();
+
+        data.append('userId', String(userId));
+
+        const response = await axiosInstance.post("/get-cart", data);
+        return handleApiResponse(response);
+    }
+
+    catch(error: any) {
+        return handleApiError(error)
+    }
+}
+
+export const remove_from_cart = async (id: string | undefined) => {
+    try {
+        const data = new FormData();
+
+        data.append('id', String(id));
+
+        const response = await axiosInstance.post("/remove-from-cart", data);
+        return handleApiResponse(response);
+    }
+
+    catch(error: any) {
+        return handleApiError(error)
+    }
+}

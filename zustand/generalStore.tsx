@@ -1,6 +1,6 @@
 import {create} from 'zustand';
 import { persist } from 'zustand/middleware';
-import { Consultant, Booking, Course } from '@/app/Types/types';
+import { Consultant, Booking, Course, Cart } from '@/app/Types/types';
 
 type GeneralState = {
   consultant: Consultant | null;
@@ -12,6 +12,8 @@ type GeneralState = {
   course: Course | null;
   courses: Course[];
 
+  cart: Cart[];
+
   setConsultant: (consultant: Consultant) => void
   setConsultants: (consultants: Consultant[]) => void
 
@@ -20,6 +22,8 @@ type GeneralState = {
 
   setCourse: (course: Course) => void
   setCourses: (courses: Course[]) => void
+
+  setCart: (cart: Cart[]) => void
 
   getConsultantById: (id: number) => Consultant | undefined;
 
@@ -38,6 +42,8 @@ export const genralStore = create<GeneralState>() (
       course: null,
       courses: [],
 
+      cart: [],
+
       setBooking: (booking) => set({booking}),
       setBookings: (bookings) => set({bookings}),
 
@@ -46,6 +52,8 @@ export const genralStore = create<GeneralState>() (
 
       setCourse: (course) => set({course}),
       setCourses: (courses) => set({courses}),
+
+      setCart: (cart) => set({cart}),
 
       getConsultantById: (id) => get().consultants.find((c) => c.id === id),
       

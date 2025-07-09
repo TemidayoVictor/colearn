@@ -10,7 +10,7 @@ import {
             add_module, edit_module, delete_module,
             upload_video, edit_video, delete_video,
             upload_resource, edit_resource, delete_resource,
-            publish_course, add_to_cart
+            publish_course, add_to_cart, remove_from_cart,
         } from "@/services/courses";
 import { Module, Video, Resource } from "@/app/Types/types";
 
@@ -793,6 +793,29 @@ export const UseCourses = () => {
         }
     }
 
+    const removeFromCart = async (id: string | undefined) => {
+        try {
+            setButtonLoader(true)
+            const response = await remove_from_cart(id);
+            if (response.success) {
+                setButtonLoader(false)
+                showSuccessToast(response.message)
+            } 
+
+            else {
+                setButtonLoader(false)
+                showErrorToast(response.message)
+                console.log(response)
+            }
+        }
+
+        catch (err: any) {
+            console.log(err)
+            setButtonLoader(false)
+            showErrorToast('Unexpected error occurred');
+        }
+    }
+
     return {
         formData,
         errors,
@@ -855,5 +878,6 @@ export const UseCourses = () => {
         deleteVideo,
         deleteResource,
         addToCart,
+        removeFromCart,
     }
 }
