@@ -66,7 +66,7 @@ const CartList = () => {
                                     </div>
                                 </div>
                                 <div className="btn-con gap-2">
-                                    <button className="btn btn-small remove" onClick={(e) => removeFromCartTrigger}>Remove</button>
+                                    <button className="btn btn-small remove" onClick={(e) => removeFromCartTrigger(item?.id)}>Remove</button>
                                     <button className="btn btn-small btn-primary-fill">Use Coupon</button>
                                 </div>
                             </div>   

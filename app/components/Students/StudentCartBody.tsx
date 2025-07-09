@@ -66,7 +66,7 @@ const StudentCartBody = () => {
                     </div>
                 ) : (
                     <div>
-                        <EmptyPage image="/assets/images/mine cart.png" linkTitle="Explore more courses" content="Your cart is empty. Keep shopping to find a course!" link="/"/>
+                        <EmptyPage image="/assets/images/mine cart.png" linkTitle="Explore more courses" content="Your cart is empty. Keep shopping to find a course!" link="/students/explore"/>
                     </div>
                 )
             }

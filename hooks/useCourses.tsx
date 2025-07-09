@@ -800,6 +800,7 @@ export const UseCourses = () => {
             if (response.success) {
                 setButtonLoader(false)
                 showSuccessToast(response.message)
+                courseStore.getState().setNewUpdate('set');
             } 
 
             else {
