@@ -1,10 +1,10 @@
 'use client'
-import React from "react";
+import React, { use } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 import { genralStore } from "@/zustand/generalStore";
 import EmptyPage from "./EmptyPage";
+import { UseCourses } from "@/hooks/useCourses";
 
 type ExplorePopularProps = {
     title: string;
@@ -54,8 +54,13 @@ const posts = [
 ]
 
 const ExplorePopular = ({title, type, tabs, addContainerClass, nav, loggedIn}: ExplorePopularProps) => {
-    const pathname = usePathname();
     const courses = genralStore((state) => state.courses);
+    const {addToCart} = UseCourses();
+
+    const addToCartTrigger = (item: string | undefined) => {
+        addToCart(item);
+    }
+
     return (
         <div className="">
             <div className={`${addContainerClass ? 'container' : ''}`}>
@@ -126,7 +131,7 @@ const ExplorePopular = ({title, type, tabs, addContainerClass, nav, loggedIn}: E
                                                     {/* <span className="line-through mr-2 text-[#5A5C5E] font-semibold">$30.00</span> */}
                                                     <span className="font-semibold">${item.price}</span>
                                                 </div>
-                                                <button className={`btn normal`}>Add to cart</button>
+                                                <button className={`btn normal`} onClick={(e) => addToCartTrigger(item.id)}>Add to cart</button>
                                             </div>
                                             <div>
         

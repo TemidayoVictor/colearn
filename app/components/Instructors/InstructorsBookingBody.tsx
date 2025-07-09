@@ -65,20 +65,9 @@ const InstructorsBookingBody = ({userType}: StudentBookingBodyProps) => {
         openModalTwo("booking-reschedule-consultant");
     }
 
-    const updateBookingTrigger = (item: Booking): void => {
-        genralStore.getState().setBooking(item);
-        openModalTwo("booking-update");
-
-    }
-
     const cancelBookingTrigger = (item: Booking): void => {
         genralStore.getState().setBooking(item);
         openModal("booking", "cancel-consultant");
-    }
-
-    const viewBookingTrigger = (item: Booking): void => {
-        genralStore.getState().setBooking(item);
-        openModal("booking", "cancel");
     }
 
     const completeTrigger = (item: Booking): void => {

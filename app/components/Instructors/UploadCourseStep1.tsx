@@ -163,6 +163,35 @@ const UploadCourseStep1 = ({type}:UploadCourseProps) => {
                         </div>
 
                         <div className="mt-4">
+                            <label htmlFor="" className="text-[.9rem] font-semibold">Total Course Duration (in hours)<span className="text-red-500">*</span> </label>
+                            <small>You can change this at any time</small>
+                            <div className="flex items-center gap-1">
+                                <input 
+                                    type="number" 
+                                    className={`upload-course-input ${errors.price ? 'error' : ''}`} 
+                                    name="price"
+                                    value={formData.price}
+                                    placeholder="Enter Course Title or Topic"
+                                    onChange={handleInputChange} 
+                                    disabled={formData.is_free}
+                                />
+                                <span className="upload-course-input flex-1 font-bold">Hours</span>
+                            </div>
+                        </div>
+
+                        <div className="mt-4">
+                            <label htmlFor="" className="text-[.9rem] font-semibold"> Learner Level <span className="text-red-500">*</span> </label>
+                            <div className="flex items-center gap-1">
+                               <select name="" id="" className={`upload-course-input ${errors.price ? 'error' : ''}`}>
+                                    <option value="beginner">Beginner</option>
+                                    <option value="intermediate">Intermediate</option>
+                                    <option value="advanced">Advanced</option>
+                                    <option value="all">All Levels</option>
+                               </select>
+                            </div>
+                        </div>
+
+                        <div className="mt-4">
                             <label className="flex items-center gap-3 text-sm cursor-pointer">
                                 <span className="text-[.95rem] font-medium text-gray-700">Make this course free</span>
                                 <div className="relative inline-block w-12 h-6">

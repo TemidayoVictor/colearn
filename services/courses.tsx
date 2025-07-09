@@ -469,3 +469,19 @@ export const publish_course = async (courseId: string | undefined) => {
         return handleApiError(error)
     }
 }
+
+export const add_to_cart = async (userId: number | undefined ,courseId: string | undefined) => {
+    try {
+        const data = new FormData();
+
+        data.append('userId', String(userId));
+        data.append('courseId', String(courseId));
+
+        const response = await axiosInstance.post("/add-to-cart", data);
+        return handleApiResponse(response);
+    }
+
+    catch(error: any) {
+        return handleApiError(error)
+    }
+}
