@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation";
 import { authStore } from "@/zustand/authStore";
 import { courseStore } from "@/zustand/courseStore";
 import { useAuthInstructors } from "@/hooks/useAuth";
-import { get_all_courses } from "@/services/courses";
+import { get_all_instructor_courses } from "@/services/courses";
 import { showErrorToast } from "@/utils/toastTypes";
 
 const InstructorsCoursesBody = () => {
@@ -32,7 +32,7 @@ const InstructorsCoursesBody = () => {
             
             if (instructorId) {
                 try {
-                    const response = await get_all_courses(instructorId)
+                    const response = await get_all_instructor_courses(instructorId)
                     if (response.success) {
                         // save state globally
                         courseStore.getState().setCourses(response.data.courses);

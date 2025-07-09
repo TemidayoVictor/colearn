@@ -2349,6 +2349,10 @@ td {
   width: 90%;
 }
 
+.course-image {
+  height: 15rem;
+}
+
 /* Upload Course */
 
 .upload-course-form {

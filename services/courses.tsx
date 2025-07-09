@@ -2,13 +2,24 @@ import axiosInstance from "@/utils/api";
 import { handleApiResponse, handleApiError } from '@/utils/handleApiResponse';
 import { courseStore } from "@/zustand/courseStore";
 
-export const get_all_courses = async (instructorId: string | undefined) => {
+export const get_all_courses = async () => {
+    try {
+        const response = await axiosInstance.get("/all-courses");
+        return handleApiResponse(response);
+    }
+
+    catch(error: any) {
+        return handleApiError(error)
+    }
+}
+
+export const get_all_instructor_courses = async (instructorId: string | undefined) => {
     try {
         const data = new FormData();
 
         data.append('instructorId', String(instructorId));
 
-        const response = await axiosInstance.post("/all-courses", data);
+        const response = await axiosInstance.post("/all-instructors-courses", data);
         return handleApiResponse(response);
     }
 

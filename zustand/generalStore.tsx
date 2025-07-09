@@ -1,23 +1,29 @@
 import {create} from 'zustand';
 import { persist } from 'zustand/middleware';
-import { Consultant, Booking } from '@/app/Types/types';
+import { Consultant, Booking, Course } from '@/app/Types/types';
 
 type GeneralState = {
-    consultant: Consultant | null;
-    consultants: Consultant[];
+  consultant: Consultant | null;
+  consultants: Consultant[];
 
-    booking: Booking | null;
-    bookings: Booking[]; 
+  booking: Booking | null;
+  bookings: Booking[]; 
 
-    setConsultant: (consultant: Consultant) => void
-    setConsultants: (consultants: Consultant[]) => void
+  course: Course | null;
+  courses: Course[];
 
-    setBooking: (booking: Booking) => void
-    setBookings: (bookings: Booking[]) => void
+  setConsultant: (consultant: Consultant) => void
+  setConsultants: (consultants: Consultant[]) => void
 
-    getConsultantById: (id: number) => Consultant | undefined;
+  setBooking: (booking: Booking) => void
+  setBookings: (bookings: Booking[]) => void
 
-    clearAll: () => void,
+  setCourse: (course: Course) => void
+  setCourses: (courses: Course[]) => void
+
+  getConsultantById: (id: number) => Consultant | undefined;
+
+  clearAll: () => void,
 }
 
 export const genralStore = create<GeneralState>() (
@@ -29,16 +35,22 @@ export const genralStore = create<GeneralState>() (
       booking: null,
       bookings: [],
 
+      course: null,
+      courses: [],
+
       setBooking: (booking) => set({booking}),
       setBookings: (bookings) => set({bookings}),
 
       setConsultant: (consultant) => set({consultant}),
       setConsultants: (consultants) => set({consultants}),
 
+      setCourse: (course) => set({course}),
+      setCourses: (courses) => set({courses}),
+
       getConsultantById: (id) => get().consultants.find((c) => c.id === id),
       
       clearAll: () => {
-      set({consultant: null, consultants: [], booking: null, bookings: []});
+      set({consultant: null, consultants: [], booking: null, bookings: [], course: null, courses: []}); 
       localStorage.removeItem('general-storage'); // Remove persisted state
       }
     }),

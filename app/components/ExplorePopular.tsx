@@ -3,6 +3,8 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { genralStore } from "@/zustand/generalStore";
+import EmptyPage from "./EmptyPage";
 
 type ExplorePopularProps = {
     title: string;
@@ -53,6 +55,7 @@ const posts = [
 
 const ExplorePopular = ({title, type, tabs, addContainerClass, nav, loggedIn}: ExplorePopularProps) => {
     const pathname = usePathname();
+    const courses = genralStore((state) => state.courses);
     return (
         <div className="">
             <div className={`${addContainerClass ? 'container' : ''}`}>
@@ -76,60 +79,68 @@ const ExplorePopular = ({title, type, tabs, addContainerClass, nav, loggedIn}: E
                 </div>
 
                 <div>
-                    <div className={`${loggedIn ? 'blog-cont three' : 'blog-cont'} mt-[2em]`}>
-                        {
-                            [1,2,3,4,5,6].map((item, index) => (
-                                <div className="course three" key={index}>
-                                    <div className="relative w-fit">
-                                        <div className="relative">
+                    {
+                        courses.length > 0 ? (
+                            <div className={`${loggedIn ? 'blog-cont three' : 'blog-cont'} mt-[2em]`}>
+                                {
+                                    courses.map((item, index) => (
+                                        <div className="course three" key={index}>
+                                            <div className="relative w-fit">
+                                                <div className="relative">
+                                                    <Image
+                                                        aria-hidden
+                                                        src={item?.thumbnail ? `${process.env.NEXT_PUBLIC_API_URL}/storage/${item?.thumbnail}` : "/assets/images/course-img-2.png"}
+                                                        alt="Colearn Logo"
+                                                        width={400}
+                                                        height={264}
+                                                        className="object-cover rounded-[.5em] course-image"
+                                                    />
+                                                    <div className="absolute right-0 bottom-0 flex gap-2 items-center bg-white p-2 rounded-tl-[.3rem]">
+                                                        <Image
+                                                            aria-hidden
+                                                            src="/assets/images/star.png"
+                                                            alt="Colearn Logo"
+                                                            width={30}
+                                                            height={30}
+                                                            className="object-contain"
+                                                        />
+                                                        <p className="text-[1.1rem] font-bold">4.3</p>
+                                                        <p className="text-[.9rem]">(382)</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <h3 className="mt-2 text-[1rem] font-bold"> {item.title.length > 30 ? item.title.slice(0, 30) + '...' : item.title}</h3>
+                                            <div className="flex gap-2 items-center mt-2">
                                             <Image
-                                                aria-hidden
-                                                src="/assets/images/course.png"
-                                                alt="Colearn Logo"
-                                                width={400}
-                                                height={264}
-                                                className="object-cover rounded-[.5em]"
-                                            />
-                                            <div className="absolute right-0 bottom-0 flex gap-2 items-center bg-white p-2 rounded-tl-[.3rem]">
-                                                <Image
                                                     aria-hidden
-                                                    src="/assets/images/star.png"
+                                                    src={item?.instructor.profile_photo ? `${process.env.NEXT_PUBLIC_API_URL}/storage/${item?.instructor.profile_photo}` : "/assets/images/course-img-2.png"}
                                                     alt="Colearn Logo"
-                                                    width={30}
-                                                    height={30}
-                                                    className="object-contain"
+                                                    width={40}
+                                                    height={40}
+                                                    className="object-contain rounded-[50%]"
                                                 />
-                                                <p className="text-[1.1rem] font-bold">4.3</p>
-                                                <p className="text-[.9rem]">(382)</p>
+                                                <p>{`${item.instructor.user?.first_name} ${item.instructor.user?.last_name}`}</p>
+                                            </div>
+                                            <div className="flex justify-between items-center mt-2">
+                                                <div>
+                                                    {/* <span className="line-through mr-2 text-[#5A5C5E] font-semibold">$30.00</span> */}
+                                                    <span className="font-semibold">${item.price}</span>
+                                                </div>
+                                                <button className={`btn normal`}>Add to cart</button>
+                                            </div>
+                                            <div>
+        
                                             </div>
                                         </div>
-                                    </div>
-                                    <h3 className="mt-2 text-[1rem] font-bold">The Complete  Guide to cybersecurity:  From Beginner to expert</h3>
-                                    <div className="flex gap-2 items-center mt-2">
-                                    <Image
-                                            aria-hidden
-                                            src="/assets/images/avatars.png"
-                                            alt="Colearn Logo"
-                                            width={40}
-                                            height={40}
-                                            className="object-contain rounded-[50%]"
-                                        />
-                                        <p>Favi Design</p>
-                                    </div>
-                                    <div className="flex justify-between items-center mt-2">
-                                        <div>
-                                            <span className="line-through mr-2 text-[#5A5C5E] font-semibold">$30.00</span>
-                                            <span className="font-semibold">$30.00</span>
-                                        </div>
-                                        <Link href='/' className={`btn normal`}>Buy Now</Link>
-                                    </div>
-                                    <div>
-
-                                    </div>
-                                </div>
-                            ))
-                        }
-                    </div>
+                                    ))
+                                }
+                            </div>
+                        ) : (
+                            <div>
+                                <EmptyPage image="/assets/images/empty-image.png"  header="No Popular Courses Yet" content="Looks like there are no popular courses at the moment. Check back soon or explore other categories to keep learning!" imageWidth={400} imageHeight={240}/>
+                            </div>
+                        )
+                    }
                 </div>
 
                 {
