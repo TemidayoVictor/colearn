@@ -35,6 +35,8 @@ export const upload_course = async (formData: {
     price: number;
     is_free: boolean;
     course_picture: File | null;
+    total_duration: number;
+    level: string;
 }, categories: string[], userId: number | null | undefined) => {
     try {
         const data = new FormData();
@@ -49,6 +51,8 @@ export const upload_course = async (formData: {
         data.append('price', String(formData.price));
         data.append('is_free', String(formData.is_free));
         data.append('userId', String(userId));
+        data.append('total_duration', String(formData.total_duration));
+        data.append('level', formData.level);
 
         categories.forEach((category, index) => {
             data.append(`categories[${index}]`, category);
@@ -74,6 +78,8 @@ export const edit_course = async (formData: {
     price: number;
     is_free: boolean;
     course_picture: File | null; 
+    total_duration: number;
+    level: string;
 }, categories: string[], courseId: string | undefined) => {
     try {
         const data = new FormData();
@@ -88,6 +94,8 @@ export const edit_course = async (formData: {
         data.append('price', String(formData.price));
         data.append('is_free', String(formData.is_free));
         data.append('courseId', String(courseId));
+        data.append('total_duration', String(formData.total_duration));
+        data.append('level', formData.level);
 
         categories.forEach((category, index) => {
             data.append(`categories[${index}]`, category);

@@ -39,6 +39,8 @@ export const UseCourses = () => {
         price: number;
         is_free: boolean;
         course_picture: File | null;
+        total_duration: number;
+        level: string;
       }>({
         title: '',
         description: '',
@@ -46,6 +48,8 @@ export const UseCourses = () => {
         price: 10,
         is_free: false,
         course_picture: null,
+        total_duration: 1,
+        level: '',
     });
 
     const [errors, setErrors] = useState({
@@ -54,6 +58,8 @@ export const UseCourses = () => {
         who_can_enroll: false,
         price: false,
         categories: false,
+        total_duration: false,
+        level: false
         // course_picture: false
     });
 
@@ -316,7 +322,8 @@ export const UseCourses = () => {
             who_can_enroll: formData.who_can_enroll.trim() === '',
             price: !formData.is_free && formData.price === 0,
             categories: selectedItems.length === 0,
-            // course_picture: formData.course_picture == null
+            total_duration: formData.total_duration === 0,
+            level: formData.level === '',
         };
       
         setErrors(newErrors);
@@ -358,6 +365,8 @@ export const UseCourses = () => {
             who_can_enroll: formData.who_can_enroll.trim() === '',
             price: !formData.is_free && formData.price === 0,
             categories: selectedItems.length === 0,
+            total_duration: formData.total_duration === 0,
+            level: formData.level === '',
             // course_picture: formData.course_picture == null
         };
       
@@ -714,9 +723,6 @@ export const UseCourses = () => {
     }
 
     const deleteResource = async () => {
-        console.log('Resource ID:' + resourceId)
-        return
-
         try {
             setButtonLoader(true)
             const response = await delete_resource(resourceId);

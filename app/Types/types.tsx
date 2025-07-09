@@ -137,6 +137,8 @@ export type Course = {
     is_free: boolean;
     created_at: Date
     videos_count: number;
+    total_duration: number | null;
+    level: string | null;
     instructor: Instructor;
 }
 

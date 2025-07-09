@@ -30,7 +30,6 @@ const UploadCourseStep1 = ({type}:UploadCourseProps) => {
 
     const course = courseStore((state) => state.course);
     const selectedCategories = courseStore((state) => state.categories);
-    console.log(selectedCategories)
 
     if(type == 'edit') {
         useEffect(() => {
@@ -42,6 +41,8 @@ const UploadCourseStep1 = ({type}:UploadCourseProps) => {
                     price: course?.price || 0,
                     is_free: course?.is_free || false,
                     course_picture: null,
+                    total_duration: course?.total_duration || 0,
+                    level: course?.level || "",
                 });
             };
     
@@ -168,12 +169,11 @@ const UploadCourseStep1 = ({type}:UploadCourseProps) => {
                             <div className="flex items-center gap-1">
                                 <input 
                                     type="number" 
-                                    className={`upload-course-input ${errors.price ? 'error' : ''}`} 
-                                    name="price"
-                                    value={formData.price}
-                                    placeholder="Enter Course Title or Topic"
+                                    className={`upload-course-input ${errors.total_duration ? 'error' : ''}`} 
+                                    name="total_duration"
+                                    value={formData.total_duration}
+                                    placeholder="Enter the course duration"
                                     onChange={handleInputChange} 
-                                    disabled={formData.is_free}
                                 />
                                 <span className="upload-course-input flex-1 font-bold">Hours</span>
                             </div>
@@ -182,7 +182,8 @@ const UploadCourseStep1 = ({type}:UploadCourseProps) => {
                         <div className="mt-4">
                             <label htmlFor="" className="text-[.9rem] font-semibold"> Learner Level <span className="text-red-500">*</span> </label>
                             <div className="flex items-center gap-1">
-                               <select name="" id="" className={`upload-course-input ${errors.price ? 'error' : ''}`}>
+                               <select name="level" className={`upload-course-input ${errors.level ? 'error' : ''}`} onChange={handleInputChange}>
+                                    <option value="">Select Level</option>
                                     <option value="beginner">Beginner</option>
                                     <option value="intermediate">Intermediate</option>
                                     <option value="advanced">Advanced</option>
@@ -346,6 +347,35 @@ const UploadCourseStep1 = ({type}:UploadCourseProps) => {
                                     onChange={handleInputChange} 
                                     disabled={formData.is_free}
                                 />
+                            </div>
+                        </div>
+
+                        <div className="mt-4">
+                            <label htmlFor="" className="text-[.9rem] font-semibold">Total Course Duration (in hours)<span className="text-red-500">*</span> </label>
+                            <small>You can change this at any time</small>
+                            <div className="flex items-center gap-1">
+                                <input 
+                                    type="number" 
+                                    className={`upload-course-input ${errors.total_duration ? 'error' : ''}`} 
+                                    name="total_duration"
+                                    value={formData.total_duration}
+                                    placeholder="Enter the course duration"
+                                    onChange={handleInputChange} 
+                                />
+                                <span className="upload-course-input flex-1 font-bold">Hours</span>
+                            </div>
+                        </div>
+
+                        <div className="mt-4">
+                            <label htmlFor="" className="text-[.9rem] font-semibold"> Learner Level <span className="text-red-500">*</span> </label>
+                            <div className="flex items-center gap-1">
+                               <select name="level" className={`upload-course-input ${errors.level ? 'error' : ''}`} onChange={handleInputChange} value={formData.level}>
+                                    <option value="">Select Level</option>
+                                    <option value="beginner">Beginner</option>
+                                    <option value="intermediate">Intermediate</option>
+                                    <option value="advanced">Advanced</option>
+                                    <option value="all">All Levels</option>
+                               </select>
                             </div>
                         </div>
 
