@@ -12,6 +12,7 @@ type GeneralState = {
   course: Course | null;
   courses: Course[];
 
+  cartId: string | null;
   cart: Cart[];
 
   setConsultant: (consultant: Consultant) => void
@@ -23,6 +24,7 @@ type GeneralState = {
   setCourse: (course: Course) => void
   setCourses: (courses: Course[]) => void
 
+  setCartId: (cartId: string | undefined) => void
   setCart: (cart: Cart[]) => void
 
   getConsultantById: (id: number) => Consultant | undefined;
@@ -42,6 +44,7 @@ export const genralStore = create<GeneralState>() (
       course: null,
       courses: [],
 
+      cartId: null,
       cart: [],
 
       setBooking: (booking) => set({booking}),
@@ -53,12 +56,13 @@ export const genralStore = create<GeneralState>() (
       setCourse: (course) => set({course}),
       setCourses: (courses) => set({courses}),
 
+      setCartId: (cartId) => set({cartId}),
       setCart: (cart) => set({cart}),
 
       getConsultantById: (id) => get().consultants.find((c) => c.id === id),
       
       clearAll: () => {
-      set({consultant: null, consultants: [], booking: null, bookings: [], course: null, courses: []}); 
+      set({consultant: null, consultants: [], booking: null, bookings: [], course: null, courses: [], cartId: null, cart: []}); 
       localStorage.removeItem('general-storage'); // Remove persisted state
       }
     }),

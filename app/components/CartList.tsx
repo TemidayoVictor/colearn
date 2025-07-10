@@ -1,19 +1,33 @@
 'use client';
-import React, {useEffect} from "react";
+import React, {useState, useEffect} from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { genralStore } from "@/zustand/generalStore";
 import { UseCourses } from "@/hooks/useCourses";
+import AccountModal from "./Instructors/AccountModal";
 
 const CartList = () => {
     const {removeFromCart} = UseCourses();
+    const [showModal, setShowModal] = useState<string | null>(null);
+
     const cart = genralStore((state) => state.cart);
     const total = cart.reduce((sum, item) => sum + Number(item.course.price || 0), 0);
     const totalFormatted = total.toFixed(2);
 
+    const openModal = (key: string) => {
+        setShowModal(key);
+    }
+
     const removeFromCartTrigger = (id: string | undefined) => {
         removeFromCart(id);
     }
+
+    const addCouponTrigger = (id: string | undefined) => {
+        genralStore.getState().setCartId(id);
+        openModal('add-coupon');
+    }
+
+    const closeModal = () => setShowModal(null);
 
     return (
         <div className="cart-list">
@@ -67,7 +81,7 @@ const CartList = () => {
                                 </div>
                                 <div className="btn-con gap-2">
                                     <button className="btn btn-small remove" onClick={(e) => removeFromCartTrigger(item?.id)}>Remove</button>
-                                    <button className="btn btn-small btn-primary-fill">Use Coupon</button>
+                                    <button className="btn btn-small btn-primary-fill" onClick={(e) => addCouponTrigger(item?.id)}>Use Coupon</button>
                                 </div>
                             </div>   
                         </div>
@@ -201,6 +215,10 @@ const CartList = () => {
 
                 </div>
             </div>
+            {
+                showModal && 
+                <AccountModal modalType={showModal} modalClose={closeModal}/>
+            }
         </div>
     )
 }

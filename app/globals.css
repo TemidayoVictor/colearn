@@ -1425,7 +1425,11 @@ ol li {
   text-decoration: line-through;
 }
 
-.coupon, .course-features {
+.coupon {
+  border-top: var(--border-grey);
+}
+
+.course-features {
   border-top: var(--border-grey);
   margin-top: 2rem;
   padding-top: 2rem;

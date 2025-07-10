@@ -18,6 +18,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { UseCourses } from "@/hooks/useCourses";
 import ButtonLoader from "../buttonLoader";
 import BookingFeedback from "../BookingFeedback";
+import AddCoupon from "../Students/AddCoupon";
 
 type AccountModalProps = {
     modalType: string;
@@ -441,6 +442,11 @@ const AccountModal = ({modalType, modalClose, experience, bank, subType}: Accoun
                 }
 
                 {
+                    modalType == 'add-coupon' &&
+                    <AddCoupon />
+                }
+
+                {
                     modalType == 'block-instructor' &&
                     <div>
                         <div>
@@ -545,7 +551,7 @@ const AccountModal = ({modalType, modalClose, experience, bank, subType}: Accoun
                     </div>
                 }
 
-{
+                {
                     modalType == 'delete-course' &&
                     <div>
                         <AnimatePresence>
