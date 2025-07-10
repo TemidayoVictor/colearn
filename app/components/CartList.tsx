@@ -1,18 +1,30 @@
 'use client';
 import React, {useState, useEffect} from "react";
 import Image from "next/image";
-import Link from "next/link";
 import { genralStore } from "@/zustand/generalStore";
 import { UseCourses } from "@/hooks/useCourses";
 import AccountModal from "./Instructors/AccountModal";
+import { Cart } from "../Types/types";
+import { checkout_calcuate } from "@/services/courses";
+import { authStore } from "@/zustand/authStore";
+import ButtonLoader from "./buttonLoader";
 
 const CartList = () => {
-    const {removeFromCart} = UseCourses();
+    const {
+        removeFromCart,
+        buttonLoader,
+        checkoutCalculate,
+        checkoutVerified,
+        checkoutTotal,
+    } = UseCourses();
+
+    const user = authStore((state) => state.user);
+    const userId = user?.id;
+    
     const [showModal, setShowModal] = useState<string | null>(null);
 
     const cart = genralStore((state) => state.cart);
-    const total = cart.reduce((sum, item) => sum + Number(item.course.price || 0), 0);
-    const totalFormatted = total.toFixed(2);
+    // const total = cart.reduce((sum, item) => sum + Number(item.course.price || 0), 0);
 
     const openModal = (key: string) => {
         setShowModal(key);
@@ -28,6 +40,49 @@ const CartList = () => {
     }
 
     const closeModal = () => setShowModal(null);
+
+    function calculateCartTotal(cartItems: Cart[]) {
+        let total = 0;
+      
+        const updatedCart = cartItems.map((item) => {
+          const price = item.course?.price || 0;
+          const coupon = item.coupon;
+      
+          let discountedPrice = price
+          
+            // Check if there's a valid coupon
+            if (coupon && coupon.status === "Valid") {
+                const value = Number(coupon.value || 0);
+
+                if (coupon.type === "percent") {
+                  discountedPrice = price - (price * value) / 100;
+                } else if (coupon.type === "fixed") {
+                  discountedPrice = price - value;
+                }
+        
+                // Avoid negative prices
+                if (discountedPrice < 0) discountedPrice = 0;
+            }
+
+          discountedPrice = Number(discountedPrice);
+          total += discountedPrice;
+      
+          // Optionally, return item with calculated price
+          return {
+            ...item,
+            calculatedPrice: discountedPrice,
+          };
+        });
+      
+        return { total, updatedCart };
+    }
+      
+    const { total, updatedCart } = calculateCartTotal(cart);
+    const totalFormatted = total.toFixed(2);
+
+    const checkoutTrigger = () => {
+        checkout_calcuate(userId, cart);
+    }
 
     return (
         <div className="cart-list">
@@ -67,7 +122,26 @@ const CartList = () => {
                                         <h3 className="title-3">{item?.course?.title}</h3>
                                         <p className="mt-4">By {`${item?.course?.instructor?.user?.first_name} ${item?.course?.instructor?.user?.last_name}`}</p>
                                     </div>
-                                    <p className="title-3 cart-list-detail-right-l-r">${item?.course?.price}</p>
+                                    <div>
+                                        {
+                                            item.coupon && item.coupon.status == 'Valid' ? (    
+                                                <div>
+                                                    <p className="title-3 cart-list-detail-right-l-r">
+                                                        ${(
+                                                            item.coupon?.type === 'fixed'
+                                                            ? item.course.price - Number(item.coupon.value)
+                                                            : item.coupon?.type === 'percent'
+                                                            ? item.course.price - (item.course.price * Number(item.coupon.value)) / 100
+                                                            : item.course.price
+                                                        ).toFixed(2)}
+                                                    </p>
+                                                    <p className="title-3 cart-list-detail-right-l-r color-grey-text line-through">${item?.course?.price}</p>
+                                                </div>
+                                            ) : (
+                                                <p className="title-3 cart-list-detail-right-l-r">${item?.course?.price}</p>
+                                            )
+                                        }
+                                    </div>
                                 </div>
                                 
                                 <div className="cart-list-detail-right-r mb-2">
@@ -79,6 +153,24 @@ const CartList = () => {
                                         <p className="color-normal capitalize">{item?.course?.level}</p>
                                     </div>
                                 </div>
+                                
+                                {
+                                    item.coupon && item.coupon.status == 'Valid' &&
+                                    <div>
+                                        <div className="flex items-center gap-1 mt-2">
+                                            <Image
+                                                aria-hidden
+                                                src="/assets/images/tick-circle.png"
+                                                alt="Colearn Logo"
+                                                width={12}
+                                                height={12}
+                                                className="object-contain"
+                                            />
+                                            <p className="success text-[.8rem] font-bold">Coupon  code applied “{item.coupon.code}”</p>
+                                        </div>
+                                    </div>
+                                }
+
                                 <div className="btn-con gap-2">
                                     <button className="btn btn-small remove" onClick={(e) => removeFromCartTrigger(item?.id)}>Remove</button>
                                     <button className="btn btn-small btn-primary-fill" onClick={(e) => addCouponTrigger(item?.id)}>Use Coupon</button>
@@ -168,51 +260,71 @@ const CartList = () => {
             <div className="class-list-sub">
                 <div className="class-list-sub-top">
                     <p>Subtotals</p>
-                    
-                    <div>
-                        <h2 className="cart-total">${totalFormatted}</h2>
-                        {/* <h2 className="cart-total old">$90.00</h2> */}
-                    </div>
-                    
-                    <Link href='/' className="bt-btn two btn btn-primary-fill">
-                        <span>Checkout Now</span>
-                        <span>
-                            <Image
-                                aria-hidden
-                                src="/assets/images/arrow-right.png"
-                                alt="Colearn Logo"
-                                width={12}
-                                height={12}
-                                className="object-contain"
-                            />
-                        </span>
-                    </Link>
-                </div>
+                    {
+                        checkoutVerified == true ? (
+                            <div>
+                                <h2 className="cart-total">${Number(checkoutTotal).toFixed(2)}</h2>
+                            </div>
+                        ) : (
+                            <div>
+                                <h2 className="cart-total">${totalFormatted}</h2>
+                                {/* <h2 className="cart-total old">$90.00</h2> */}
+                            </div>
+                        )
+                    }
 
-                <div className="coupon">
-                    <p className="text-[.8rem]">Promo / Coupon Code</p>
-                    <div className="flex items-center gap-1 mt-2">
-                        <Image
-                            aria-hidden
-                            src="/assets/images/tick-circle.png"
-                            alt="Colearn Logo"
-                            width={12}
-                            height={12}
-                            className="object-contain"
-                        />
-                        <p className="success text-[.8rem] font-bold">Coupon  code applied “A8sh83yf8y8h”</p>
-                    </div>
-                    <div className="flex items-center justify-between my-[1em] py-[.5em] px-[1.5em] footer-input-cover coupon-cover">
-                        <div className="flex items-center gap-2">
-                            <input type="text" placeholder="Coupon code" className="footer-input coupon-input w-[100%] text-[.8rem]" />
-                        </div>
-                        <div>
-                            <Link href='/' className="flex gap-2 footer-btn coupon-btn">
-                                Apply
-                            </Link>
-                        </div>
-                    </div>
-
+                    {
+                        checkoutVerified == true ? (
+                            <button className="bt-btn two btn btn-primary-fill" onClick={checkoutTrigger}>
+                                {
+                                    buttonLoader ? (
+                                        <ButtonLoader content="" />
+                                    ) : 
+                                    
+                                    (
+                                        <div className="bt-btn two">
+                                            <span>Checkout Now</span>
+                                            <span>
+                                                <Image
+                                                    aria-hidden
+                                                    src="/assets/images/arrow-right.png"
+                                                    alt="Colearn Logo"
+                                                    width={12}
+                                                    height={12}
+                                                    className="object-contain"
+                                                />
+                                            </span>
+                                        </div>                                        
+                                    )
+                                }
+                            </button>
+                        ) : (
+                            <button className="bt-btn two btn btn-primary-fill" onClick={checkoutCalculate}>
+                                {
+                                    buttonLoader ? (
+                                        <ButtonLoader content="" />
+                                    ) : 
+                                    
+                                    (
+                                        <div className="bt-btn two">
+                                            <span>Proceed</span>
+                                            <span>
+                                                <Image
+                                                    aria-hidden
+                                                    src="/assets/images/arrow-right.png"
+                                                    alt="Colearn Logo"
+                                                    width={12}
+                                                    height={12}
+                                                    className="object-contain"
+                                                />
+                                            </span>
+                                        </div>                                        
+                                    )
+                                }
+                            </button>
+                        )
+                    }
+                    
                 </div>
             </div>
             {

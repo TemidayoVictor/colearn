@@ -1,6 +1,7 @@
 import axiosInstance from "@/utils/api";
 import { handleApiResponse, handleApiError } from '@/utils/handleApiResponse';
 import { courseStore } from "@/zustand/courseStore";
+import { Cart } from "@/app/Types/types";
 
 export const get_all_courses = async () => {
     try {
@@ -580,3 +581,34 @@ export const delete_coupon = async (id: string | undefined) => {
         return handleApiError(error)
     }
 }
+
+export const add_coupon = async (id: string | null, code: string | undefined) => {
+    try {
+        const data = new FormData();
+
+        data.append('id', String(id));
+        data.append('code', String(code));
+
+        const response = await axiosInstance.post("/add-coupon", data);
+        return handleApiResponse(response);
+    }
+
+    catch(error: any) {
+        return handleApiError(error)
+    }
+}
+
+export const checkout_calcuate = async (id: number | undefined, cart: Cart[]) => {
+    try {
+        const response = await axiosInstance.post("/checkout-calculate", {
+            id,
+            cart,
+        });
+        return handleApiResponse(response);
+    }
+
+    catch(error: any) {
+        return handleApiError(error)
+    }
+}
+

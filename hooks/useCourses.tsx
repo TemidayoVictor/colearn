@@ -5,15 +5,16 @@ import { authStore } from "@/zustand/authStore";
 import { useRouter } from 'next/navigation';
 import { utilitiesStore } from "@/zustand/utilitiesStore";
 import { courseStore } from "@/zustand/courseStore";
+import { genralStore } from "@/zustand/generalStore";
 import {    
             upload_course, edit_course, delete_course,
             add_module, edit_module, delete_module,
             upload_video, edit_video, delete_video,
             upload_resource, edit_resource, delete_resource,
             publish_course, add_to_cart, remove_from_cart,
-            create_coupon,delete_coupon,
+            create_coupon,delete_coupon, add_coupon, checkout_calcuate,
         } from "@/services/courses";
-import { Module, Video, Resource } from "@/app/Types/types";
+import { Module, Video, Resource, Cart } from "@/app/Types/types";
 
 export const UseCourses = () => {
     const router = useRouter();
@@ -24,6 +25,8 @@ export const UseCourses = () => {
     const moduleId = courseStore((state) => state.moduleId);
     const videoId = courseStore((state) => state.videoId);
     const resourceId = courseStore((state) => state.resourceId);
+
+    const cart = genralStore((state) => state.cart);
 
     const userId = user?.id;
     const instructorId = instructor?.id;
@@ -36,6 +39,11 @@ export const UseCourses = () => {
     const fileInputRef = useRef<(HTMLInputElement | null)>(null);
     const [fileName, setFileName] = useState<string>('');
     const [loading, setLoading] = useState<boolean>(true);
+
+    const [couponCode, setCouponCode] = useState<string | undefined>('')
+
+    const [checkoutVerified, setCheckoutVerified] = useState<boolean>(false);
+    const [checkoutTotal, setCheckoutTotal] = useState<string>('');
 
     const [formData, setFormData] = useState<{
         title: string;
@@ -914,6 +922,59 @@ export const UseCourses = () => {
         }
     }
 
+    const addCoupon = async (id: string | null) => {
+        try {
+            setButtonLoader(true)
+            const response = await add_coupon(id, couponCode);
+            if (response.success) {
+                setButtonLoader(false)
+                showSuccessToast(response.message)
+                courseStore.getState().setNewUpdate('set');
+            } 
+
+            else {
+                setButtonLoader(false)
+                showErrorToast(response.message)
+                console.log(response)
+                courseStore.getState().setNewUpdate('set');
+            }
+        }
+
+        catch (err: any) {
+            console.log(err)
+            setButtonLoader(false)
+            showErrorToast('Unexpected error occurred');
+            courseStore.getState().setNewUpdate('set');
+        }
+    }
+
+    const checkoutCalculate = async () => {
+        try {
+            setButtonLoader(true)
+            const response = await checkout_calcuate(userId, cart);
+            if (response.success) {
+                setButtonLoader(false)
+                showSuccessToast(response.message)
+                setCheckoutVerified(true);
+                setCheckoutTotal(response.data.total);
+            } 
+
+            else {
+                setButtonLoader(false)
+                showErrorToast(response.message)
+                console.log(response)
+                courseStore.getState().setNewUpdate('set');
+            }
+        }
+
+        catch (err: any) {
+            console.log(err)
+            setButtonLoader(false)
+            showErrorToast('Unexpected error occurred');
+            courseStore.getState().setNewUpdate('set');
+        }
+    }
+
     return {
         formData,
         errors,
@@ -982,5 +1043,11 @@ export const UseCourses = () => {
         handleCouponChange,
         createCoupon,
         deleteCoupon,
+        addCoupon,
+        couponCode, 
+        setCouponCode,
+        checkoutCalculate,
+        checkoutVerified,
+        checkoutTotal,
     }
 }

@@ -241,15 +241,6 @@ export type Booking = {
     created_at: string;
 }
 
-export type Cart = {
-    id: string | undefined;
-    user_id: string | undefined;
-    course_id: string | undefined;
-    status: string;
-    user: User;
-    course: Course;
-}
-
 export type Coupon = {
     id: string | undefined;
     code: string | undefined;
@@ -259,4 +250,14 @@ export type Coupon = {
     used_count: string | undefined;
     expires_at: string | undefined;
     status: string | undefined;
+}
+
+export type Cart = {
+    id: string | undefined;
+    user_id: string | undefined;
+    course_id: string | undefined;
+    status: string;
+    user: User;
+    course: Course;
+    coupon: Coupon;
 }
