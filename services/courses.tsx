@@ -523,3 +523,60 @@ export const remove_from_cart = async (id: string | undefined) => {
         return handleApiError(error)
     }
 }
+
+export const get_coupons = async (id: string | undefined) => {
+    try {
+        const data = new FormData();
+
+        data.append('id', String(id));
+
+        const response = await axiosInstance.post("/get-coupons", data);
+        return handleApiResponse(response);
+    }
+
+    catch(error: any) {
+        return handleApiError(error)
+    }
+}
+
+export const create_coupon = async ( CouponData:{
+    code: string,
+    type: string,
+    value: string,
+    max: string,
+    expiry: string,
+    amount: string}, instructorId:string | undefined) => {
+    try {
+        const data = new FormData();
+
+        data.append('code', CouponData.code);
+        data.append('type', CouponData.type);
+        data.append('value', CouponData.value);
+        data.append('usage_limit', CouponData.max);
+        data.append('expires_at', CouponData.expiry);
+        data.append('amount', CouponData.amount);
+        data.append('instructorId', String(instructorId));
+
+        const response = await axiosInstance.post("/create-coupon", data);
+        return handleApiResponse(response);
+    }
+
+    catch(error: any) {
+        return handleApiError(error)
+    }
+}
+
+export const delete_coupon = async (id: string | undefined) => {
+    try {
+        const data = new FormData();
+
+        data.append('id', String(id));
+
+        const response = await axiosInstance.post("/delete-coupon", data);
+        return handleApiResponse(response);
+    }
+
+    catch(error: any) {
+        return handleApiError(error)
+    }
+}

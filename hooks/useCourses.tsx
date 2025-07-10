@@ -11,17 +11,22 @@ import {
             upload_video, edit_video, delete_video,
             upload_resource, edit_resource, delete_resource,
             publish_course, add_to_cart, remove_from_cart,
+            create_coupon,delete_coupon,
         } from "@/services/courses";
 import { Module, Video, Resource } from "@/app/Types/types";
 
 export const UseCourses = () => {
     const router = useRouter();
     const user = authStore((state) => state.user);
+    const instructor = authStore((state) => state.instructor);
+
     const courseId = courseStore((state) => state.courseId);
     const moduleId = courseStore((state) => state.moduleId);
     const videoId = courseStore((state) => state.videoId);
     const resourceId = courseStore((state) => state.resourceId);
+
     const userId = user?.id;
+    const instructorId = instructor?.id;
     const categories = utilitiesStore((state) => state.categories);
 
     const [selectedItems, setSelectedItems] = useState<string[]>([]);
@@ -187,6 +192,28 @@ export const UseCourses = () => {
         resourceId:false
     });
 
+    const [couponData, setCouponData] = useState<{
+        code: string;
+        type: string;
+        value: string;
+        max: string;
+        expiry: string;
+        amount: string;
+      }>({
+        code: '',
+        type: '',
+        value: '',
+        max: '',
+        expiry: '',
+        amount: '',
+    });
+
+    const [couponError, setCouponError] = useState({
+        type: false,
+        value: false,
+        expiry: false,
+    });
+
     const openModal = (key: string) => {
         setShowModal(key);
     }
@@ -254,6 +281,12 @@ export const UseCourses = () => {
         const { name, value } = e.target;
         setFormData4b((prev) => ({ ...prev, [name]: value }));
         setErrors4b((prev) => ({ ...prev, [name]: false }));
+    };
+
+    const handleCouponChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+        const { name, value } = e.target;
+        setCouponData((prev) => ({ ...prev, [name]: value }));
+        setCouponError((prev) => ({ ...prev, [name]: false }));
     };
     
     const handleImageClick = () => {
@@ -817,6 +850,70 @@ export const UseCourses = () => {
         }
     }
 
+    const createCoupon = async () => {
+
+        const newErrors = {
+            type: couponData.type.trim() === '',
+            value: couponData.value.trim() === '',
+            expiry: couponData.expiry.trim() === '',
+        };
+      
+        setCouponError(newErrors);
+
+        const hasError = Object.values(newErrors).some(Boolean);
+
+        if (hasError) {
+            showErrorToast('Please fill in all required fields');
+            return;
+        }
+
+        try {
+            setButtonLoader(true)
+            const response = await create_coupon(couponData, instructorId);
+            if (response.success) {
+                setButtonLoader(false)
+                showSuccessToast(response.message)
+                courseStore.getState().setNewUpdate('set');
+            } 
+
+            else {
+                setButtonLoader(false)
+                showErrorToast(response.message)
+                console.log(response)
+            }
+        }
+
+        catch (err: any) {
+            console.log(err)
+            setButtonLoader(false)
+            showErrorToast('Unexpected error occurred');
+        }
+    }
+
+    const deleteCoupon = async (id: string | undefined) => {
+        try {
+            setButtonLoader(true)
+            const response = await delete_coupon(id);
+            if (response.success) {
+                setButtonLoader(false)
+                showSuccessToast(response.message)
+                courseStore.getState().setNewUpdate('set');
+            } 
+
+            else {
+                setButtonLoader(false)
+                showErrorToast(response.message)
+                console.log(response)
+            }
+        }
+
+        catch (err: any) {
+            console.log(err)
+            setButtonLoader(false)
+            showErrorToast('Unexpected error occurred');
+        }
+    }
+
     return {
         formData,
         errors,
@@ -880,5 +977,10 @@ export const UseCourses = () => {
         deleteResource,
         addToCart,
         removeFromCart,
+        couponData,
+        couponError,
+        handleCouponChange,
+        createCoupon,
+        deleteCoupon,
     }
 }

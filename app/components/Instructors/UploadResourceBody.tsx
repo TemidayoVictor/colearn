@@ -1,14 +1,12 @@
 'use client';
 import React, {useState} from "react";
 import Image from "next/image";
-import Link from "next/link";
 import { UseCourses } from "@/hooks/useCourses";
-import Loader from "../Loader";
 import AccountModal from "./AccountModal";
 import { courseStore } from "@/zustand/courseStore";
 import { Resource } from "@/app/Types/types";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEye, faEdit, faTrashAlt, faTimes } from "@fortawesome/free-solid-svg-icons";
+import { faEdit, faTrashAlt, faTimes } from "@fortawesome/free-solid-svg-icons";
 import { motion, AnimatePresence } from 'framer-motion';
 import ButtonLoader from "../buttonLoader";
 import EmptyPage from "../EmptyPage";

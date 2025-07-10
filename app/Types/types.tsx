@@ -249,3 +249,14 @@ export type Cart = {
     user: User;
     course: Course;
 }
+
+export type Coupon = {
+    id: string | undefined;
+    code: string | undefined;
+    type: string | undefined;
+    value: string | undefined;
+    usage_limit: string | undefined;
+    used_count: string | undefined;
+    expires_at: string | undefined;
+    status: string | undefined;
+}

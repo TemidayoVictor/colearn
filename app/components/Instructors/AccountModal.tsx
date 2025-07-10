@@ -19,6 +19,7 @@ import { UseCourses } from "@/hooks/useCourses";
 import ButtonLoader from "../buttonLoader";
 import BookingFeedback from "../BookingFeedback";
 import AddCoupon from "../Students/AddCoupon";
+import ManageCoupon from "./ManageCoupon";
 
 type AccountModalProps = {
     modalType: string;
@@ -358,6 +359,11 @@ const AccountModal = ({modalType, modalClose, experience, bank, subType}: Accoun
                             </div>
                         </div>
                     </div>
+                }
+
+                {
+                    modalType == 'addCoupon' &&
+                    <ManageCoupon />
                 }
 
                 {
