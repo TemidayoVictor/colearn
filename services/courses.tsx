@@ -612,3 +612,17 @@ export const checkout_calcuate = async (id: number | undefined, cart: Cart[]) =>
     }
 }
 
+export const enroll = async (id: number | undefined, cart: Cart[]) => {
+    try {
+        const response = await axiosInstance.post("/enroll", {
+            id,
+            cart,
+        });
+        return handleApiResponse(response);
+    }
+
+    catch(error: any) {
+        return handleApiError(error)
+    }
+}
+

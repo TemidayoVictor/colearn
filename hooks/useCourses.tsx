@@ -13,6 +13,7 @@ import {
             upload_resource, edit_resource, delete_resource,
             publish_course, add_to_cart, remove_from_cart,
             create_coupon,delete_coupon, add_coupon, checkout_calcuate,
+            enroll,
         } from "@/services/courses";
 import { Module, Video, Resource, Cart } from "@/app/Types/types";
 
@@ -975,6 +976,32 @@ export const UseCourses = () => {
         }
     }
 
+    const enrollStudent = async () => {
+        try {
+            setButtonLoader(true)
+            const response = await enroll(userId, cart);
+            if (response.success) {
+                setButtonLoader(false)
+                showSuccessToast(response.message)
+                router.push('/students/courses');
+            } 
+
+            else {
+                setButtonLoader(false)
+                showErrorToast(response.message)
+                console.log(response)
+                courseStore.getState().setNewUpdate('set');
+            }
+        }
+
+        catch (err: any) {
+            console.log(err)
+            setButtonLoader(false)
+            showErrorToast('Unexpected error occurred');
+            courseStore.getState().setNewUpdate('set');
+        }
+    }
+
     return {
         formData,
         errors,
@@ -1049,5 +1076,6 @@ export const UseCourses = () => {
         checkoutCalculate,
         checkoutVerified,
         checkoutTotal,
+        enrollStudent,
     }
 }

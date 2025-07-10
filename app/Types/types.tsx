@@ -260,4 +260,5 @@ export type Cart = {
     user: User;
     course: Course;
     coupon: Coupon;
+    purchase_price: number | null;
 }
