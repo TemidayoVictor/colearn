@@ -151,6 +151,9 @@ export type Video = {
     video_url: string;
     duration: number;
     order: number;
+    overall_order: number;
+    status: string;
+    progress: string;
 }
 
 export type Module = {
@@ -161,6 +164,7 @@ export type Module = {
     order: number;
     videos_count: number;
     videos: Video[];
+    status: string;
 }
 
 export type Resource = {
