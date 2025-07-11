@@ -1,6 +1,6 @@
 import {create} from 'zustand';
 import { persist } from 'zustand/middleware';
-import { Consultant, Booking, Course, Cart, Coupon } from '@/app/Types/types';
+import { Consultant, Booking, Course, Cart, Coupon, Enrollment } from '@/app/Types/types';
 
 type GeneralState = {
   consultant: Consultant | null;
@@ -18,6 +18,9 @@ type GeneralState = {
   couponId: string | null;
   coupons: Coupon[];
 
+  enrollment: Enrollment | null;
+  enrollments: Enrollment[];
+
   setConsultant: (consultant: Consultant) => void
   setConsultants: (consultants: Consultant[]) => void
 
@@ -32,6 +35,9 @@ type GeneralState = {
 
   setCouponId: (couponId: string | undefined) => void
   setCoupons: (coupons: Coupon[]) => void
+
+  setEnrollment: (enrollment: Enrollment) => void
+  setEnrollments: (enrollments: Enrollment[]) => void
 
   getConsultantById: (id: number) => Consultant | undefined;
 
@@ -56,6 +62,9 @@ export const genralStore = create<GeneralState>() (
       couponId: null,
       coupons: [],
 
+      enrollment: null,
+      enrollments: [],
+
       setBooking: (booking) => set({booking}),
       setBookings: (bookings) => set({bookings}),
 
@@ -71,6 +80,9 @@ export const genralStore = create<GeneralState>() (
       setCouponId: (couponId) => set({couponId}),
       setCoupons: (coupons) => set({coupons}),
 
+      setEnrollment: (enrollment) => set({enrollment}),
+      setEnrollments: (enrollments) => set({enrollments}),
+
       getConsultantById: (id) => get().consultants.find((c) => c.id === id),
       
       clearAll: () => {
@@ -80,6 +92,7 @@ export const genralStore = create<GeneralState>() (
         course: null, courses: [], 
         cartId: null, cart: [],
         couponId: null, coupons: [],
+        enrollment: null, enrollments: [],
       }); 
       localStorage.removeItem('general-storage'); // Remove persisted state
       }

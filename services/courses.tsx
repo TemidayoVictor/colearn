@@ -626,3 +626,16 @@ export const enroll = async (id: number | undefined, cart: Cart[]) => {
     }
 }
 
+export const enrolled_courses = async (id: number | undefined) => {
+    try {
+        const response = await axiosInstance.post("/enrolled-courses", {
+            id
+        });
+        return handleApiResponse(response);
+    }
+
+    catch(error: any) {
+        return handleApiError(error)
+    }
+}
+

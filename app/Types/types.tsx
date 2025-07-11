@@ -140,6 +140,7 @@ export type Course = {
     total_duration: number | null;
     level: string | null;
     instructor: Instructor;
+    resources: Resource[];
 }
 
 export type Module = {
@@ -261,4 +262,11 @@ export type Cart = {
     course: Course;
     coupon: Coupon;
     purchase_price: number | null;
+}
+
+export type Enrollment = {
+    id: string | undefined;
+    user_id: string | undefined;
+    course_id: string | undefined;
+    course: Course;
 }

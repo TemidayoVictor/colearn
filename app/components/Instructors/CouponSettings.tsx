@@ -73,7 +73,7 @@ const CouponSettings = () => {
                                                 <div className="flex items-center justify-between">
                                                     <h2 className="title-3">{item.code}</h2>
                                                     <div onClick={(e) => deleteResourceTrigger(item.id)}>
-                                                        <p className="font-semibold color-error">Delete</p>
+                                                        <p className="font-semibold color-error cursor-pointer">Delete</p>
                                                         {/* <div onClick={() => openModal("editbank", item)}>
                                                         <Image
                                                             aria-hidden
