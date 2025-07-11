@@ -8,10 +8,10 @@ const StudentCourseOverview = () => {
     return (
         <div>
             <div className="mt-[1em]">
-                <div className="in-nav no">
+                {/* <div className="in-nav no">
                     <span className={`in-nav-link three flex gap-2 items-center two color-grey-text ${selectedTab == 'overview' ? 'active' : ''}`} onClick={() => setSelectedTab('overview')}> <span>Overview</span></span>
                     <span className={`in-nav-link three flex gap-2 items-center two color-grey-text ${selectedTab == 'content' ? 'active' : ''}`} onClick={() => setSelectedTab('content')}> <span>Course Content</span></span>
-                </div>
+                </div> */}
             </div>
 
             <div>

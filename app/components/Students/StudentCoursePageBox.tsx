@@ -24,7 +24,7 @@ const StudentCoursePageBox = ({courseType}: StudentCoursePageBoxProps) => {
                                             <p className="font-bold">{item.course.title}</p>    
                                         </div>
                                         <div className="right flex items-end justify-end desktop-flex">
-                                            <Link href='/students/view-course' className="bt-btn btn btn-small normal">
+                                            <Link href={`/students/view-course/${item.course.id}`} className="bt-btn btn btn-small normal">
                                                 <span>View Course</span>
                                                 {/* <span>
                                                     <Image

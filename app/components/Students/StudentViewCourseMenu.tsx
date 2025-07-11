@@ -22,8 +22,8 @@ const StudentViewCourseMenu = ({selectedTab, changeTab}: StudentViewCourseMenuPr
             </div>
             <div className={`left-content ${selectedTab == "material" ? 'active' : ''}`} onClick={() => toggleModules()}>
                 <div className="flex items-center justify-between gap-2">
-                    <p className="text-[.9rem]">Course Material</p>
-                    <span className="number">3</span>
+                    <p className="text-[.9rem]">Course Content</p>
+                    {/* <span className="number">3</span> */}
                     {/* {
                         openMaterial ? (
                             <Image

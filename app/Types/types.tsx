@@ -135,21 +135,13 @@ export type Course = {
     is_published: boolean;
     price: number;
     is_free: boolean;
-    created_at: Date
+    created_at: Date;
     videos_count: number;
     total_duration: number | null;
     level: string | null;
     instructor: Instructor;
     resources: Resource[];
-}
-
-export type Module = {
-    id: string | undefined;
-    course_id: number;
-    title: string;
-    description: string;
-    order: number;
-    videos_count: number;
+    modules: Module[];
 }
 
 export type Video = {
@@ -159,6 +151,16 @@ export type Video = {
     video_url: string;
     duration: number;
     order: number;
+}
+
+export type Module = {
+    id: string | undefined;
+    course_id: number;
+    title: string;
+    description: string;
+    order: number;
+    videos_count: number;
+    videos: Video[];
 }
 
 export type Resource = {
