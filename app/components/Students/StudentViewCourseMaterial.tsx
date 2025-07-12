@@ -2,10 +2,14 @@
 import React, {useState} from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { useParams } from "next/navigation";
 import { courseStore } from "@/zustand/courseStore";
 import EmptyPage from "../EmptyPage";
 
 const StudentViewCourseMaterial = () => {
+    const params = useParams();
+    const courseId = params?.course as string;
+
     const course = courseStore((state) => state.course);
     const modules = course?.modules;
     const [openIndex, setOpenIndex] = useState<number | null>(0);
@@ -44,7 +48,7 @@ const StudentViewCourseMaterial = () => {
                                                     <div>
                                                         {
                                                             item?.videos.map((item, index) => (
-                                                                <Link href={`/students/view-course/lecture/${item.id}`} key={index} className="material-box">
+                                                                <Link href={`/students/view-course/${courseId}/lecture/${item.id}`} key={index} className="material-box">
                                                                     <div>
                                                                         <Image
                                                                             aria-hidden

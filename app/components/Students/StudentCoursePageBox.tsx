@@ -159,7 +159,7 @@ const StudentCoursePageBox = ({courseType}: StudentCoursePageBoxProps) => {
                                     </div>
                                     <div className="mobile">
                                         <div className="flex items-center gap-2 justify-between">
-                                            <Link href='/students/view-course' className="mt-3 bt-btn btn btn-small normal">
+                                            <Link href={`/students/view-course/${item.course.id}`} className="mt-3 bt-btn btn btn-small normal">
                                                 <span>View Course</span>
                                                 {/* <span>
                                                     <Image

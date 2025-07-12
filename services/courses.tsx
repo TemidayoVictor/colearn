@@ -639,3 +639,42 @@ export const enrolled_courses = async (id: number | undefined) => {
     }
 }
 
+export const watch_video = async (
+    userId: number | undefined,
+    videoId: string | undefined,
+    courseId: string | undefined,
+) => {
+    try {
+        console.log(`${userId} ${videoId} ${courseId}`)
+        const response = await axiosInstance.post("/watch-video", {
+            userId,
+            videoId,
+            courseId,
+        });
+        return handleApiResponse(response);
+    }
+
+    catch(error: any) {
+        return handleApiError(error)
+    }
+}
+
+export const mark_video_as_complete = async (
+    userId: number | undefined,
+    videoId: string | undefined,
+    courseId: string | undefined,
+) => {
+    try {
+        const response = await axiosInstance.post("/mark-video-as-complete", {
+            userId,
+            videoId,
+            courseId,
+        });
+        return handleApiResponse(response);
+    }
+
+    catch(error: any) {
+        return handleApiError(error)
+    }
+}
+

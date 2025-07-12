@@ -5,6 +5,7 @@ const StudentViewCourseContent = () => {
     return (
         <div>
             <div>
+                <h2 className="title-3">Course Overview</h2>
                 <StudentCourseOverview />
             </div>
         </div>

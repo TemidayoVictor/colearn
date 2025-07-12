@@ -144,6 +144,15 @@ export type Course = {
     modules: Module[];
 }
 
+export type Progress = {
+    id: string | undefined;
+    user_id: string | undefined;
+    course_video_id: string | undefined;
+    course_id: string | undefined;
+    watched_percentage: string | undefined;
+    completed_at: string | null;
+}
+
 export type Video = {
     id: string | undefined;
     course_section_id: number;
@@ -152,8 +161,7 @@ export type Video = {
     duration: number;
     order: number;
     overall_order: number;
-    status: string;
-    progress: string;
+    progresses: Progress;
 }
 
 export type Module = {

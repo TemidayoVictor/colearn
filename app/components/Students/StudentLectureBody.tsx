@@ -1,10 +1,32 @@
 'use client';
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { checkAuth } from "@/hooks/useAuth";
+import { useParams } from "next/navigation";
+import { useRouter } from "next/navigation";
+import { watch_video } from "@/services/courses";
+import { authStore } from "@/zustand/authStore";
+import { showErrorToast } from "@/utils/toastTypes";
+import { Video } from "@/app/Types/types";
+import Loader from "../Loader";
 
 const StudentLectureBody = () => {
+    const router = useRouter();
+
+    const params = useParams();
+    const courseId = params?.course as string;
+    const lectureId = params?.lecture as string;
+
+    const user = authStore((state) => state.user);
+    const userId = user?.id;
+
+    const [loading, setLoading] = useState<Boolean>(true);
     const [openMaterial, setOpenMaterial] = useState<number | null>(null);
+    const [video, setVideo] = useState<Video>()
+    const [nextVideo, setNextVideo] = useState<Video | null>()
+    const [prevVideo, setPrevVideo] = useState<Video | null>()
+
     const openMaterialBox = (index:number ) => {
         setOpenMaterial(prev => (prev == index ? null : index));
     }
@@ -16,6 +38,53 @@ const StudentLectureBody = () => {
     const toggleCourseContent = () => {
         setCourseContent(prev => !prev);
     }
+
+    const handleNextVideo = () => {
+        if (nextVideo) {
+          // Navigate to next video
+          router.push(`/watch/${nextVideo.id}`);
+        }
+    };
+      
+    const handlePrevVideo = () => {
+        if (prevVideo) {
+            // Navigate to previous video
+            router.push(`/watch/${prevVideo.id}`);
+        }
+    };
+
+    useEffect(() => {
+        setLoading(true);
+        const init = async () => {
+            await checkAuth(router); // ✅ valid usage
+            if(!userId) return
+            try {
+                const response = await watch_video(userId, lectureId, courseId);
+
+                if (response.success) {
+                    setVideo(response.data.video);
+                    setNextVideo(response.data.nextVideo);
+                    setPrevVideo(response.data.prevVideo);
+                } 
+    
+                else {
+                    showErrorToast(response.message)
+                    console.log(response)
+                }
+            }
+
+            catch(error: any) {
+                showErrorToast('Something unexpected happened')
+                console.log(error)
+            }
+            setLoading(false);
+        };
+        init();
+
+    }, [courseId]);
+
+    if(loading) return <Loader />
+
     return (
         <div>
             <div>
@@ -33,7 +102,7 @@ const StudentLectureBody = () => {
                     <p className="text-[.9rem] font-semibold">Back</p>
                 </Link>
                 <div>
-                    <h2 className="title-3">Google cybersecurity Professional Certificate</h2>
+                    <h2 className="title-3">{video?.title}</h2>
                 </div>
 
                 <div className="student-view-course-body">
@@ -139,7 +208,7 @@ const StudentLectureBody = () => {
                         </div>
                     }
                     <div className="right">
-                        <h2 className="title-3 mt-1">Video Title</h2>
+                        <h2 className="title-3 mt-1">{video?.title}</h2>
                         <div className="lecture-video">
                             <Image
                                 aria-hidden
@@ -151,6 +220,37 @@ const StudentLectureBody = () => {
                             />
                         </div>
                         <div className="res-flex gap-2 mt-3">
+                            <div className="flex gap-3 mt-4">
+                                <button
+                                    className="bt-btn btn btn-primary-outline flex items-center gap-2"
+                                    onClick={handlePrevVideo}
+                                    disabled={!prevVideo} // Optional: disable if no prev
+                                >
+                                    <Image
+                                    src="/assets/images/arrow-left.png"
+                                    alt="Previous"
+                                    width={18}
+                                    height={18}
+                                    className="object-contain"
+                                    />
+                                    <span>Previous</span>
+                                </button>
+
+                                <button
+                                    className="bt-btn btn btn-primary-outline flex items-center gap-2"
+                                    onClick={handleNextVideo}
+                                    disabled={!nextVideo} // Optional: disable if no next
+                                >
+                                    <span>Next</span>
+                                    <Image
+                                    src="/assets/images/arrow-right.png"
+                                    alt="Next"
+                                    width={18}
+                                    height={18}
+                                    className="object-contain"
+                                    />
+                                </button>
+                            </div>
                             <button className="bt-btn btn btn-primary-fill ">
                                 <span>Mark Completed</span>
                                 <span>
