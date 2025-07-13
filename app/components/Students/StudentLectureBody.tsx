@@ -7,11 +7,15 @@ import { useParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 import { watch_video } from "@/services/courses";
 import { authStore } from "@/zustand/authStore";
+import { UseCourses } from "@/hooks/useCourses";
 import { showErrorToast } from "@/utils/toastTypes";
 import { Video } from "@/app/Types/types";
 import Loader from "../Loader";
+import ButtonLoader from "../buttonLoader";
 
 const StudentLectureBody = () => {
+    const {buttonLoader, markVideoAsComplete} = UseCourses();
+
     const router = useRouter();
 
     const params = useParams();
@@ -41,15 +45,14 @@ const StudentLectureBody = () => {
 
     const handleNextVideo = () => {
         if (nextVideo) {
-          // Navigate to next video
-          router.push(`/watch/${nextVideo.id}`);
+          router.push(`/students/view-course/${courseId}/lecture/${nextVideo.id}`);
         }
     };
       
     const handlePrevVideo = () => {
         if (prevVideo) {
             // Navigate to previous video
-            router.push(`/watch/${prevVideo.id}`);
+            router.push(`/students/view-course/${courseId}/lecture/${prevVideo.id}`);
         }
     };
 
@@ -57,7 +60,7 @@ const StudentLectureBody = () => {
         setLoading(true);
         const init = async () => {
             await checkAuth(router); // ✅ valid usage
-            if(!userId) return
+            if(!userId || !courseId) return
             try {
                 const response = await watch_video(userId, lectureId, courseId);
 
@@ -81,7 +84,7 @@ const StudentLectureBody = () => {
         };
         init();
 
-    }, [courseId]);
+    }, [userId, courseId]);
 
     if(loading) return <Loader />
 
@@ -251,18 +254,28 @@ const StudentLectureBody = () => {
                                     />
                                 </button>
                             </div>
-                            <button className="bt-btn btn btn-primary-fill ">
-                                <span>Mark Completed</span>
-                                <span>
-                                    <Image
-                                        aria-hidden
-                                        src="/assets/images/check-white.png"
-                                        alt="Colearn Logo"
-                                        width={20}
-                                        height={20}
-                                        className="object-contain"
-                                    />
-                                </span>
+                            <button className="bt-btn btn btn-primary-fill" onClick={() => markVideoAsComplete(userId, lectureId, courseId)}>
+                                {
+                                    buttonLoader ? (
+                                        <ButtonLoader content="Please wait . . ." />
+                                    ) : 
+                                    
+                                    (
+                                        <div className="bt-btn two">
+                                            <span>Mark Completed</span>
+                                            <span>
+                                                <Image
+                                                    aria-hidden
+                                                    src="/assets/images/check-white.png"
+                                                    alt="Colearn Logo"
+                                                    width={20}
+                                                    height={20}
+                                                    className="object-contain"
+                                                />
+                                            </span>           
+                                        </div>                                        
+                                    )
+                                }
                             </button>
                             
                             <button className="bt-btn btn normal">

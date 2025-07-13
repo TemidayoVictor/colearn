@@ -153,6 +153,13 @@ export type Progress = {
     completed_at: string | null;
 }
 
+export type ModuleProgress = {
+    id: string | undefined;
+    user_id: string | undefined;
+    course_section_id: string | undefined;
+    completed_at: string | null;
+}
+
 export type Video = {
     id: string | undefined;
     course_section_id: number;
@@ -161,7 +168,7 @@ export type Video = {
     duration: number;
     order: number;
     overall_order: number;
-    progresses: Progress;
+    progresses: Progress[];
 }
 
 export type Module = {
@@ -173,6 +180,7 @@ export type Module = {
     videos_count: number;
     videos: Video[];
     status: string;
+    progresses: ModuleProgress[];
 }
 
 export type Resource = {

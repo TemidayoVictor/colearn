@@ -28,7 +28,22 @@ const StudentViewCourseMaterial = () => {
                             modules?.map((item, index ) => (
                                 <div className="faq-body-2" key={index}>
                                     <div className="faq" onClick={() => toggleCourse(index)}>
-                                        <p className="font-semibold w-[80%]">{item.title}</p>
+                                        <div>
+                                            <p className="font-semibold">{item.title}</p>
+                                            {
+                                                item.progresses && item.progresses.length > 0 ? (
+                                                    <div>
+                                                        {item.progresses[0].completed_at ? (
+                                                        <p className="font-semibold success text-[.8rem]">Completed</p>
+                                                        ) : (
+                                                        <p className="font-semibold warning text-[.8rem]">Ongoing</p>
+                                                        )}
+                                                    </div>
+                                                ) : (
+                                                    <p className="font-semibold text-[.8rem]">Pending</p>
+                                                )
+                                            }
+                                        </div>
                                         <div>
                                             <Image
                                                 aria-hidden
@@ -66,6 +81,23 @@ const StudentViewCourseMaterial = () => {
                                                                                 <p>video</p>
                                                                                 <p>&middot;</p>
                                                                                 <p>{item.duration} mins</p>
+                                                                                <p>&middot;</p>
+                                                                                <span>
+                                                                                {
+                                                                                    item.progresses && item.progresses.length > 0 ? (
+                                                                                        <div>
+                                                                                            {item.progresses[0].completed_at ? (
+                                                                                            <p className="font-semibold success">Completed</p>
+                                                                                            ) : (
+                                                                                            <p className="font-semibold warning">Ongoing</p>
+                                                                                            )}
+                                                                                        </div>
+                                                                                    ) : (
+                                                                                        <p className="font-semibold">Pending</p>
+                                                                                    )
+                                                                                }
+
+                                                                                </span>
                                                                             </div>
                                                                         </div>
                                                                         

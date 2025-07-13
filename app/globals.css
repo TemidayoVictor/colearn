@@ -391,6 +391,10 @@ input, textarea, select {
   color: var(--succcess-color);
 }
 
+.warning {
+  color: var(--warning-color-normal);
+}
+
 .d-none {
   display: none;
 }
