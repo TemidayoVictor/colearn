@@ -122,7 +122,7 @@ const UploadVideoBody = () => {
                         </div>
                         <p className="text-[.9rem] font-semibold">Back</p>
                     </button>
-                    <h2 className="title-3 desktop">Video Lessons</h2>
+                    <h2 className="title-3 desktop">Lectures</h2>
                 </div>
                 <div>
                     <p className="text-[.9rem] color-grey-text">Step 3 of 3</p>
@@ -135,14 +135,14 @@ const UploadVideoBody = () => {
                 <div className="upload-course-form">
                     <h2 className="title-3">Module: {module?.title}</h2>
                     <div className="upload-course-body">
-                        <h2 className="title-3 mt-2">Add and Manage Videos.</h2>
-                        <p className="text-[.9rem] color-grey-text mt-1">Videos are the main content your students will engage with. After creating modules, upload relevant videos under each to deliver your lessons in a clear and structured way.</p>
+                        <h2 className="title-3 mt-2">Add and Manage Lectures.</h2>
+                        <p className="text-[.9rem] color-grey-text mt-1">Lectures are the main content your students will engage with. After creating modules, upload relevant videos or text content under each to deliver your lessons in a clear and structured way.</p>
                     </div>
 
                     <div className="upload-course-btns mb-4">
                         <button className="flex items-center justify-center gap-2 btn btn-primary-fill w-full" onClick={(e) => openModal('add-video')}>
                             <div className="bt-btn two">
-                                <span>Add New Video</span>
+                                <span>Add New Lecture</span>
                                 <span>
                                     <Image
                                         aria-hidden
@@ -213,7 +213,7 @@ const UploadVideoBody = () => {
                                 ))
                             ) : (
                                 <div>
-                                    <EmptyPage image="/assets/images/empty-image.png"  header="No Videos Yet" content="You haven’t added any videos to this module. Start by uploading your first lesson and bring your course to life!" imageWidth={400} imageHeight={240}/>
+                                    <EmptyPage image="/assets/images/empty-image.png"  header="No Lectures Yet" content="You haven’t added any videos to this module. Start by uploading your first lesson and bring your course to life!" imageWidth={400} imageHeight={240}/>
                                 </div>
                             )
                         }

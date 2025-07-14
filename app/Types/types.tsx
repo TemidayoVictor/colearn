@@ -169,6 +169,8 @@ export type Video = {
     order: number;
     overall_order: number;
     progresses: Progress[];
+    body: string | null;
+    type: string;
 }
 
 export type Module = {

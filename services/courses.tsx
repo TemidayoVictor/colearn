@@ -239,6 +239,8 @@ export const upload_video = async (formData: {
     title: string;
     video: File | null;
     duration: number;
+    body: string,
+    type: string,
 }, moduleId: string | undefined) => {
 
     // setUploading(true);
@@ -252,6 +254,8 @@ export const upload_video = async (formData: {
         }
 
         data.append('title', formData.title);
+        data.append('body', formData.body);
+        data.append('type', formData.type);
         data.append('duration', String(formData.duration));
         data.append('moduleId', String(moduleId));
 
@@ -285,6 +289,8 @@ export const edit_video = async (formData: {
     duration: number;
     order: number;
     videoId: string | undefined;
+    body: string,
+    type: string,
 }, moduleId: string | undefined) => {
 
     // setUploading(true);
@@ -300,6 +306,8 @@ export const edit_video = async (formData: {
         data.append('title', formData.title);
         data.append('duration', String(formData.duration));
         data.append('order', String(formData.order));
+        data.append('body', formData.body);
+        data.append('type', formData.type);
         data.append('videoId', String(formData.videoId));
         data.append('moduleId', String(moduleId));
 

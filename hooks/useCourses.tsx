@@ -112,16 +112,22 @@ export const UseCourses = () => {
         title: string;
         video: File | null;
         duration: number;
+        body: string,
+        type: string,
       }>({
         title: '',
         video: null,
-        duration: 0
+        duration: 0,
+        body: '',
+        type: '',
     });
 
     const [errors3, setErrors3] = useState({
         title: false,
         video: false,
         duration:false,
+        body: false,
+        type: false,
     });
 
     const [formData3b, setFormData3b] = useState<{
@@ -130,12 +136,16 @@ export const UseCourses = () => {
         duration: number;
         order: number;
         videoId: string | undefined;
+        body: string,
+        type: string,
       }>({
         title: '',
         video: null,
         duration: 0,
         order: 0,
         videoId: '',
+        body: '',
+        type: '',
     });
 
     const [errors3b, setErrors3b] = useState({
@@ -143,6 +153,8 @@ export const UseCourses = () => {
         duration:false,
         order: false,
         videoId: false,
+        body: false,
+        type: false,
     });
 
     const [formData4, setFormData4] = useState<{
@@ -577,8 +589,10 @@ export const UseCourses = () => {
 
         const newErrors = {
             title: formData3.title.trim() === '',
-            video: formData3.video === null,
+            video: formData3.type === 'video' && formData3.video === null,
             duration: formData3.duration === 0,
+            body: formData3.type === 'text' && formData3.body === '',
+            type: formData3.type === '',
         };
       
         setErrors3(newErrors);
@@ -620,6 +634,8 @@ export const UseCourses = () => {
             duration: formData3b.duration === 0,
             order: formData3b.order === 0,
             videoId: formData3b.videoId === '',
+            body: formData3b.type === 'text' && formData3b.body === '',
+            type: formData3b.type === '',
         };
       
         setErrors3b(newErrors);
