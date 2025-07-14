@@ -15,7 +15,7 @@ import {
             create_coupon,delete_coupon, add_coupon, checkout_calcuate,
             enroll, mark_video_as_complete
         } from "@/services/courses";
-import { Module, Video, Resource, Cart } from "@/app/Types/types";
+import { Module, Video, Resource, Cart, Review } from "@/app/Types/types";
 
 export const UseCourses = () => {
     const router = useRouter();
@@ -235,6 +235,21 @@ export const UseCourses = () => {
         expiry: false,
     });
 
+    const [reviewData, setReviewData] = useState<Review>({
+        id: '',
+        user_id: '',
+        course_id: '',
+        title: '',
+        review: '',
+        rating: 0,
+    });
+
+    const [reviewError, setReviewError] = useState({
+        title: false,
+        review: false,
+        rating: false,
+    });
+
     const openModal = (key: string) => {
         setShowModal(key);
     }
@@ -308,6 +323,12 @@ export const UseCourses = () => {
         const { name, value } = e.target;
         setCouponData((prev) => ({ ...prev, [name]: value }));
         setCouponError((prev) => ({ ...prev, [name]: false }));
+    };
+
+    const handleReviewChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+        const { name, value } = e.target;
+        setReviewData((prev) => ({ ...prev, [name]: value }));
+        setReviewError((prev) => ({ ...prev, [name]: false }));
     };
     
     const handleImageClick = () => {
@@ -1046,6 +1067,32 @@ export const UseCourses = () => {
         }
     }
 
+    const addReview = async (id: string | null) => {
+        try {
+            setButtonLoader(true)
+            const response = await add_coupon(id, couponCode);
+            if (response.success) {
+                setButtonLoader(false)
+                showSuccessToast(response.message)
+                courseStore.getState().setNewUpdate('set');
+            } 
+
+            else {
+                setButtonLoader(false)
+                showErrorToast(response.message)
+                console.log(response)
+                courseStore.getState().setNewUpdate('set');
+            }
+        }
+
+        catch (err: any) {
+            console.log(err)
+            setButtonLoader(false)
+            showErrorToast('Unexpected error occurred');
+            courseStore.getState().setNewUpdate('set');
+        }
+    }
+
     return {
         formData,
         errors,
@@ -1122,5 +1169,10 @@ export const UseCourses = () => {
         checkoutTotal,
         enrollStudent,
         markVideoAsComplete,
+        addReview,
+        reviewData,
+        setReviewData,
+        reviewError,
+        handleReviewChange,
     }
 }

@@ -20,6 +20,7 @@ import ButtonLoader from "../buttonLoader";
 import BookingFeedback from "../BookingFeedback";
 import AddCoupon from "../Students/AddCoupon";
 import ManageCoupon from "./ManageCoupon";
+import AddReview from "../AddReview";
 
 type AccountModalProps = {
     modalType: string;
@@ -450,6 +451,11 @@ const AccountModal = ({modalType, modalClose, experience, bank, subType}: Accoun
                 {
                     modalType == 'add-coupon' &&
                     <AddCoupon />
+                }
+
+                {
+                    modalType == 'review' &&
+                    <AddReview />
                 }
 
                 {

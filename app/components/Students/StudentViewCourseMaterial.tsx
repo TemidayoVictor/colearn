@@ -78,7 +78,7 @@ const StudentViewCourseMaterial = () => {
                                                                         <div>
                                                                             <p>{item.title}</p>
                                                                             <div className="flex items-center gap-2 text-[.8rem] mt-1">
-                                                                                <p>video</p>
+                                                                                <p>{item.type}</p>
                                                                                 <p>&middot;</p>
                                                                                 <p>{item.duration} mins</p>
                                                                                 <p>&middot;</p>

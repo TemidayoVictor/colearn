@@ -1,6 +1,6 @@
 import {create} from 'zustand';
 import { persist } from 'zustand/middleware';
-import { Consultant, Booking, Course, Cart, Coupon, Enrollment } from '@/app/Types/types';
+import { Consultant, Booking, Course, Cart, Coupon, Enrollment, Review } from '@/app/Types/types';
 
 type GeneralState = {
   consultant: Consultant | null;
@@ -21,6 +21,9 @@ type GeneralState = {
   enrollment: Enrollment | null;
   enrollments: Enrollment[];
 
+  review: Review | null;
+  reviews: Review[];
+
   setConsultant: (consultant: Consultant) => void
   setConsultants: (consultants: Consultant[]) => void
 
@@ -38,6 +41,9 @@ type GeneralState = {
 
   setEnrollment: (enrollment: Enrollment) => void
   setEnrollments: (enrollments: Enrollment[]) => void
+
+  setReview: (review: Review) => void
+  setReviews: (reviews: Review[]) => void
 
   getConsultantById: (id: number) => Consultant | undefined;
 
@@ -65,6 +71,9 @@ export const genralStore = create<GeneralState>() (
       enrollment: null,
       enrollments: [],
 
+      review: null,
+      reviews: [],
+
       setBooking: (booking) => set({booking}),
       setBookings: (bookings) => set({bookings}),
 
@@ -83,6 +92,9 @@ export const genralStore = create<GeneralState>() (
       setEnrollment: (enrollment) => set({enrollment}),
       setEnrollments: (enrollments) => set({enrollments}),
 
+      setReview: (review) => set({review}),
+      setReviews: (reviews) => set({reviews}),
+
       getConsultantById: (id) => get().consultants.find((c) => c.id === id),
       
       clearAll: () => {
@@ -93,6 +105,7 @@ export const genralStore = create<GeneralState>() (
         cartId: null, cart: [],
         couponId: null, coupons: [],
         enrollment: null, enrollments: [],
+        review: null, reviews: [],
       }); 
       localStorage.removeItem('general-storage'); // Remove persisted state
       }

@@ -288,9 +288,20 @@ export type Cart = {
     purchase_price: number | null;
 }
 
+export type Review = {
+    id: string | undefined;
+    user_id: string | number;
+    course_id: string | undefined;
+    title: string;
+    rating: number;
+    review: string
+}
+
 export type Enrollment = {
     id: string | undefined;
     user_id: string | undefined;
     course_id: string | undefined;
     course: Course;
+    review: Review;
 }
+

@@ -1,16 +1,32 @@
-import React from "react";
+'use client';
+import React, {useState} from "react";
 import Image from "next/image";
 import Link from "next/link";
 import EmptyPage from "../EmptyPage";
 import { genralStore } from "@/zustand/generalStore";
+import AccountModal from "../Instructors/AccountModal";
+import { Course, Review } from "@/app/Types/types";
 
 type StudentCoursePageBoxProps = {
     courseType: string 
 }
 
 const StudentCoursePageBox = ({courseType}: StudentCoursePageBoxProps) => {
+    const [showModal, setShowModal] = useState<string | null>(null);
     const courses = genralStore((state) => state.enrollments)
-    console.log(courses)
+    
+    const openModal = (key: string) => {
+        setShowModal(key);
+    }
+
+    const closeModal = () => setShowModal(null);
+
+    const reviewTrigger = (item: Review, course: Course): void => {
+        genralStore.getState().setReview(item);
+        genralStore.getState().setCourse(course);
+        openModal("review");
+    }
+
     return (
         <div>
             {
@@ -23,9 +39,9 @@ const StudentCoursePageBox = ({courseType}: StudentCoursePageBoxProps) => {
                                         <div className="left">
                                             <p className="font-bold">{item.course.title}</p>    
                                         </div>
-                                        <div className="right flex items-end justify-end desktop-flex">
+                                        <div className="right flex items-end gap-1 justify-end desktop-flex">
                                             <Link href={`/students/view-course/${item.course.id}`} className="bt-btn btn btn-small normal">
-                                                <span>View Course</span>
+                                                <span>View</span>
                                                 {/* <span>
                                                     <Image
                                                         aria-hidden
@@ -37,6 +53,10 @@ const StudentCoursePageBox = ({courseType}: StudentCoursePageBoxProps) => {
                                                     />
                                                 </span> */}
                                             </Link>
+
+                                            <button className="bt-btn btn btn-small normal" onClick={(e) => reviewTrigger(item.review, item.course)}>
+                                                <span>Review</span>
+                                            </button>
                                         </div>
                                     </div>
                                     <div className="middle">
@@ -189,6 +209,10 @@ const StudentCoursePageBox = ({courseType}: StudentCoursePageBoxProps) => {
                         <EmptyPage image="/assets/images/empty-image.png" linkTitle="Explore courses" header="No Enrollment Yet" content="You haven't enrolled in any course yet. Start learning by exploring our available courses!" link="/students/explore" imageWidth={400} imageHeight={240}/>
                     </div>
                 )
+            }
+            {
+                showModal && 
+                <AccountModal modalType={showModal} modalClose={closeModal}/>
             }
         </div>
 

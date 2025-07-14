@@ -164,14 +164,30 @@ const UploadVideoBody = () => {
                                     <div className="best-instructor-box" key={index}>
                                         <div className="flex items-center gap-2 left">
                                             <div>
-                                                <Image
-                                                    aria-hidden
-                                                    src="/assets/images/video-1.png"
-                                                    alt="Colearn Image"
-                                                    width={48}
-                                                    height={48}
-                                                    className="object-cover rounded-[50%]"
-                                                />
+                                                {
+                                                    item.type == 'text' &&
+                                                    <Image
+                                                        aria-hidden
+                                                        src="/assets/images/resource-1.png"
+                                                        alt="Colearn Image"
+                                                        width={48}
+                                                        height={48}
+                                                        className="object-cover rounded-[50%]"
+                                                    />
+                                                }
+
+                                                {
+                                                    item.type == 'video' &&
+                                                    <Image
+                                                        aria-hidden
+                                                        src="/assets/images/video-1.png"
+                                                        alt="Colearn Image"
+                                                        width={48}
+                                                        height={48}
+                                                        className="object-cover rounded-[50%]"
+                                                    />
+                                                }
+
                                             </div>
                                             <div className="w-[70%]">
                                                 <p className="font-semibold">{item.title}</p>
