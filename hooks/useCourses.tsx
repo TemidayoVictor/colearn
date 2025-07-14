@@ -13,7 +13,7 @@ import {
             upload_resource, edit_resource, delete_resource,
             publish_course, add_to_cart, remove_from_cart,
             create_coupon,delete_coupon, add_coupon, checkout_calcuate,
-            enroll, mark_video_as_complete
+            enroll, mark_video_as_complete, add_review,
         } from "@/services/courses";
 import { Module, Video, Resource, Cart, Review } from "@/app/Types/types";
 
@@ -1067,10 +1067,26 @@ export const UseCourses = () => {
         }
     }
 
-    const addReview = async (id: string | null) => {
+    const addReview = async () => {
+
+        const newErrors = {
+            title: reviewData.title.trim() === '',
+            rating: reviewData.rating === 0,
+            review: reviewData.review.trim() === '',
+        };
+      
+        setReviewError(newErrors);
+
+        const hasError = Object.values(newErrors).some(Boolean);
+
+        if (hasError) {
+            showErrorToast('Please fill in all required fields');
+            return;
+        }
+
         try {
             setButtonLoader(true)
-            const response = await add_coupon(id, couponCode);
+            const response = await add_review(reviewData);
             if (response.success) {
                 setButtonLoader(false)
                 showSuccessToast(response.message)

@@ -1,6 +1,7 @@
 'use client';
 import React, {useEffect} from "react";
 import { genralStore } from "@/zustand/generalStore";
+import { authStore } from "@/zustand/authStore";
 import { UseCourses } from "@/hooks/useCourses";
 import ButtonLoader from "./buttonLoader";
 
@@ -16,11 +17,13 @@ const AddReview = () => {
     const review = genralStore((state) => state.review)
     const course = genralStore((state) => state.course)
 
+    const userId = authStore((state) => (state.user?.id))
+
     useEffect(() => {
         const init = async () => {
             setReviewData({
                 id: review?.id || "",
-                user_id: course?.instructor?.user?.id  || "",
+                user_id: userId  || "",
                 course_id: course?.id || "",
                 title: review?.title || "",
                 review: review?.review || "",
@@ -48,7 +51,7 @@ const AddReview = () => {
                             <input 
                                 type="text" 
                                 className="input-field" 
-                                placeholder="Title e.g. Very Good Service" 
+                                placeholder="Title e.g Very Good Service" 
                                 name="title"
                                 onChange={handleReviewChange}
                                 value={reviewData.title}
@@ -66,13 +69,13 @@ const AddReview = () => {
                                 <option value="">Select Rating</option>
                                 <option value="1">1 Star</option>
                                 <option value="2">2 Stars</option>
-                                <option value="3">3 Star</option>
+                                <option value="3">3 Stars</option>
                                 <option value="4">4 Stars</option>
                                 <option value="5">5 Stars</option>
                             </select>
                         </div>
 
-                        <button className="flex items-center justify-center gap-2 btn btn-primary-fill tw w-full">
+                        <button className="flex items-center justify-center gap-2 btn btn-primary-fill tw w-full" onClick={addReview}>
                         {
                             buttonLoader ? (
                                 <ButtonLoader content="Please wait . . ." />

@@ -1,7 +1,7 @@
 import axiosInstance from "@/utils/api";
 import { handleApiResponse, handleApiError } from '@/utils/handleApiResponse';
 import { courseStore } from "@/zustand/courseStore";
-import { Cart } from "@/app/Types/types";
+import { Cart, Review } from "@/app/Types/types";
 
 export const get_all_courses = async () => {
     try {
@@ -678,6 +678,25 @@ export const mark_video_as_complete = async (
             videoId,
             courseId,
         });
+        return handleApiResponse(response);
+    }
+
+    catch(error: any) {
+        return handleApiError(error)
+    }
+}
+
+export const add_review = async (formData: Review) => {
+    try {
+        const data = new FormData();
+
+        data.append('user_id', String(formData.user_id));
+        data.append('course_id', String(formData.course_id));
+        data.append('title', formData.title);
+        data.append('rating', String(formData.rating));
+        data.append('review', formData.review);
+
+        const response = await axiosInstance.post("/review", data);
         return handleApiResponse(response);
     }
 

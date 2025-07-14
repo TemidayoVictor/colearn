@@ -178,8 +178,8 @@ const StudentCoursePageBox = ({courseType}: StudentCoursePageBoxProps) => {
                                         </div>
                                     </div>
                                     <div className="mobile">
-                                        <div className="flex items-center gap-2 justify-between">
-                                            <Link href={`/students/view-course/${item.course.id}`} className="mt-3 bt-btn btn btn-small normal">
+                                        <div className="flex items-center gap-2 justify-between mt-3">
+                                            <Link href={`/students/view-course/${item.course.id}`} className="bt-btn btn btn-small normal">
                                                 <span>View Course</span>
                                                 {/* <span>
                                                     <Image
@@ -192,6 +192,12 @@ const StudentCoursePageBox = ({courseType}: StudentCoursePageBoxProps) => {
                                                     />
                                                 </span> */}
                                             </Link>
+                                            <button className="bt-btn btn btn-small normal" onClick={(e) => reviewTrigger(item.review, item.course)}>
+                                                <span>Review</span>
+                                            </button>
+                                        </div>
+
+                                        <div>
                                             {
                                                 courseType == "completed" &&
                                                 <Link href='/students/courses/certificate' className="mt-3 bt-btn btn btn-primary-fill">
