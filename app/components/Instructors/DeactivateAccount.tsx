@@ -1,8 +1,15 @@
 'use client';
 import React, {useState} from "react";
 import Image from "next/image";
+import { useSettings } from "@/hooks/useSettings";
+import ButtonLoader from "../buttonLoader";
 
 const DeactivateAccount = () => {
+    const {
+        buttonLoader,
+        setReason,
+        deactivateAccount,
+    } = useSettings();
     const [showSuccess, setShowSuccess] = useState<boolean>(false);
     return (
         <div>
@@ -13,7 +20,7 @@ const DeactivateAccount = () => {
                     <p className="my-3 text-[.9rem] color-grey-text">Please note that after this request is processed, you will no longer be able to access your account but the course content you sold would be accessible to the active and past students or user. For further  information please see our Privacy Policy. For other information or requests about your personal information, please see our privacy policy.</p>
 
                     <div className="flex flex-col gap-4">
-                        <p className="font-semibold">Select a reason</p>
+                        {/* <p className="font-semibold">Select a reason</p>
                         <div>
                             <div className="flex items-center gap-2">
                                 <input type="radio" name="reason" />
@@ -33,15 +40,21 @@ const DeactivateAccount = () => {
                                 <input type="radio" name="reason" />
                                 <label htmlFor="" className="text-[.9rem] color-grey-text">Lorem ipsum dolor sit amet consectetur.</label>
                             </div>
-                        </div>
+                        </div> */}
 
                         <div>
-                            <label htmlFor="" className="font-semibold text-[.9rem]">Other Information (Optional)</label>
-                            <textarea name="" id="" className="upload-course-textarea two"></textarea>
+                            <label htmlFor="" className="font-semibold text-[.9rem]">Why do you want to deactivate your account?<span className="text-red-500">*</span></label>
+                            <textarea name="reason" className="upload-course-textarea two" onChange={(e) => setReason(e.target.value)}></textarea>
                         </div>
                         <div className="flex justify-end mt-4">
-                            <button className="bt-btn btn btn-normal-fill" onClick={() => setShowSuccess(true)}>
-                                <span>Deactivate Account</span>
+                            <button className="bt-btn btn btn-primary-fill" onClick={deactivateAccount}>
+                                {
+                                    buttonLoader ? (
+                                        <ButtonLoader  content="Please wait . . ."/>
+                                    ) : (
+                                        <span>Deactivate Account</span>
+                                    ) 
+                                }
                             </button>
                         </div>
                     </div>

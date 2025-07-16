@@ -184,11 +184,6 @@ export const useSettings = () => {
     }
 
     const changePassword = async () => {
-        if (!newEmail) {
-            showErrorToast('Please enter your email');
-            return;
-        }
-
         if (!currentPassword || !password || !confirmPassword) {
             showErrorToast('Please fill in all fields');
             return;
@@ -208,6 +203,36 @@ export const useSettings = () => {
         setButtonLoader(true);
         try {
             const response = await change_password(currentPassword, password, userId);
+            if (response.success) {
+                setButtonLoader(false)
+                showSuccessToast(response.message)
+                logoutHook(setLoading);
+            } 
+
+            else {
+                setButtonLoader(false)
+                showErrorToast(response.message)
+                console.log(response)
+            }
+        }
+
+        catch (err: any) {
+            console.log(err)
+            setButtonLoader(false)
+            showErrorToast('Unexpected error occurred');
+        }
+    }
+
+    const deactivateAccount = async () => {
+        if (!reason) {
+            showErrorToast('Please fill in the required field');
+            return;
+        }
+
+        // submit
+        setButtonLoader(true);
+        try {
+            const response = await deactivate_account(userId, reason);
             if (response.success) {
                 setButtonLoader(false)
                 showSuccessToast(response.message)
@@ -251,5 +276,6 @@ export const useSettings = () => {
         setEmailGeneral,
         resend,
         changePassword,
+        deactivateAccount,
     }
 } 
