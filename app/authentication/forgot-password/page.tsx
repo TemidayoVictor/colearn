@@ -5,13 +5,18 @@ import Link from "next/link";
 import { motion, AnimatePresence, Variants  } from "framer-motion";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+import { forgot_password, verify_reset_code, reset_password } from "@/services/auth";
+import ButtonLoader from "@/app/components/buttonLoader";
+import { showErrorToast, showSuccessToast } from "@/utils/toastTypes";
 
 const ForgotPassword = () => {
+    const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string> ('');
     const [showPassword, setShowPassword] = useState <boolean | null> (false);
     const [step, setStep] = useState<number> (1);
     const [direction, setDirection] = useState<number> (1);
     const [hasMounted, setHasMounted] = useState<boolean | null> (false);
+    const [buttonLoader, setButtonLoader] = useState<boolean>(false);
 
     const inputLength = 6;
     const [otp, setOtp] = useState<string[]>(Array(inputLength).fill(''));
@@ -76,6 +81,35 @@ const ForgotPassword = () => {
         }
     };
 
+    const sendOtp = async () => {
+        if (!email) {
+            showErrorToast('Please enter your email');
+            return;
+        }
+
+        try {
+            setButtonLoader(true)
+            const response = await forgot_password({ email });
+            if (response.success) {
+                setButtonLoader(false)
+                showSuccessToast(response.message)
+                next();
+            } 
+
+            else {
+                setButtonLoader(false)
+                showErrorToast(response.message)
+                console.log(response)
+            }
+        }
+
+        catch (err: any) {
+            console.log(err)
+            setButtonLoader(false)
+            showErrorToast('Unexpected error occurred');
+        }
+    }
+
     useEffect(() => {
         setHasMounted(true);
     }, []);
@@ -133,7 +167,12 @@ const ForgotPassword = () => {
                             >
                                 <div className="input-box">
                                     <label className="font-bold text-[.9em]">Email</label>
-                                    <input type="email" className="input-field" placeholder="linda@framcreative.com" />
+                                    <input 
+                                        type="email" 
+                                        className="input-field" 
+                                        placeholder="linda@framcreative.com" 
+                                        onChange={(e) => setEmail(e.target.value)}
+                                    />
                                 </div>
                             </motion.div>
                         )}
@@ -239,71 +278,79 @@ const ForgotPassword = () => {
                 
                     <div>
                         {
-                            step === 1 &&
-                            <button className="bt-btn two btn btn-primary-fill" onClick={next}>
-                                <span>Proceed</span>
-                                <span>
-                                    <Image
-                                        aria-hidden
-                                        src="/assets/images/arrow-right.png"
-                                        alt="Colearn Logo"
-                                        width={12}
-                                        height={12}
-                                        className="object-contain"
-                                    />
-                                </span>
-                            </button>
-                        }
-
-                        {
-                            step === 2 &&
-                            <button className="bt-btn two btn btn-primary-fill" onClick={next}>
-                                <span>Proceed</span>
-                                <span>
-                                    <Image
-                                        aria-hidden
-                                        src="/assets/images/arrow-right.png"
-                                        alt="Colearn Logo"
-                                        width={12}
-                                        height={12}
-                                        className="object-contain"
-                                    />
-                                </span>
-                            </button>
-                        }
-
-                        {
-                            step === 3 &&
-                            <button className="bt-btn two btn btn-primary-fill" onClick={next}>
-                                <span>Create New Password</span>
-                                <span>
-                                    <Image
-                                        aria-hidden
-                                        src="/assets/images/arrow-right.png"
-                                        alt="Colearn Logo"
-                                        width={12}
-                                        height={12}
-                                        className="object-contain"
-                                    />
-                                </span>
-                            </button>
-                        }
-
-                        {
-                            step === 4 &&
-                            <Link href="login" className="bt-btn two btn btn-primary-fill">
-                                <span>Proceed</span>
-                                <span>
-                                    <Image
-                                        aria-hidden
-                                        src="/assets/images/arrow-right.png"
-                                        alt="Colearn Logo"
-                                        width={12}
-                                        height={12}
-                                        className="object-contain"
-                                    />
-                                </span>
-                            </Link>
+                            buttonLoader ? (
+                                <ButtonLoader content='Please wait . . . '/>
+                            ) : (
+                                <>
+                                    {
+                                        step === 1 &&
+                                        <button className="bt-btn two btn btn-primary-fill" onClick={sendOtp}>
+                                            <span>Proceed</span>
+                                            <span>
+                                                <Image
+                                                    aria-hidden
+                                                    src="/assets/images/arrow-right.png"
+                                                    alt="Colearn Logo"
+                                                    width={12}
+                                                    height={12}
+                                                    className="object-contain"
+                                                />
+                                            </span>
+                                        </button>
+                                    }
+        
+                                    {
+                                        step === 2 &&
+                                        <button className="bt-btn two btn btn-primary-fill" onClick={next}>
+                                            <span>Proceed</span>
+                                            <span>
+                                                <Image
+                                                    aria-hidden
+                                                    src="/assets/images/arrow-right.png"
+                                                    alt="Colearn Logo"
+                                                    width={12}
+                                                    height={12}
+                                                    className="object-contain"
+                                                />
+                                            </span>
+                                        </button>
+                                    }
+        
+                                    {
+                                        step === 3 &&
+                                        <button className="bt-btn two btn btn-primary-fill" onClick={next}>
+                                            <span>Create New Password</span>
+                                            <span>
+                                                <Image
+                                                    aria-hidden
+                                                    src="/assets/images/arrow-right.png"
+                                                    alt="Colearn Logo"
+                                                    width={12}
+                                                    height={12}
+                                                    className="object-contain"
+                                                />
+                                            </span>
+                                        </button>
+                                    }
+        
+                                    {
+                                        step === 4 &&
+                                        <Link href="login" className="bt-btn two btn btn-primary-fill">
+                                            <span>Proceed</span>
+                                            <span>
+                                                <Image
+                                                    aria-hidden
+                                                    src="/assets/images/arrow-right.png"
+                                                    alt="Colearn Logo"
+                                                    width={12}
+                                                    height={12}
+                                                    className="object-contain"
+                                                />
+                                            </span>
+                                        </Link>
+                                    }
+                                </>
+                            )
                         }
 
                     </div>

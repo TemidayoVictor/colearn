@@ -1,3 +1,5 @@
+'use client';
+import React, {useState} from "react";
 import { logout } from "@/services/auth";
 import { useRouter } from 'next/navigation';
 import { showErrorToast, showSuccessToast } from "@/utils/toastTypes";
@@ -11,6 +13,7 @@ import { instructorStore } from "@/zustand/instructorStore";
 
 export const useLogout = () => {
     const router = useRouter();
+
     const logoutHook = async(setLoading: (value: boolean) => void) => {
         setLoading(true)
         try {

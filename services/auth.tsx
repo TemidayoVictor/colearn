@@ -55,3 +55,58 @@ export const logout = async() => {
     return handleApiError(error)
   }
 }
+
+export const forgot_password = async (formData: {
+  email: string
+}) => {
+  try {
+    await axiosInstanceWeb.get(`/sanctum/csrf-cookie?refresh=${Date.now()}`, {
+      withCredentials: true,
+    });
+
+    const response = await axiosInstance.post("/forgot-password", formData);
+    return handleApiResponse(response);
+  } 
+
+  catch (error: any) {
+    return handleApiError(error)
+  }
+};
+
+export const verify_reset_code = async (formData: {
+  email: string,
+  code: string,
+}) => {
+  try {
+    await axiosInstanceWeb.get(`/sanctum/csrf-cookie?refresh=${Date.now()}`, {
+      withCredentials: true,
+    });
+
+    const response = await axiosInstance.post("/verify-reset-code", formData);
+    return handleApiResponse(response);
+  } 
+
+  catch (error: any) {
+    return handleApiError(error)
+  }
+};
+
+export const reset_password = async (formData: {
+  email: string,
+  code: string,
+  password: string
+}) => {
+  try {
+    await axiosInstanceWeb.get(`/sanctum/csrf-cookie?refresh=${Date.now()}`, {
+      withCredentials: true,
+    });
+
+    const response = await axiosInstance.post("/reset-password", formData);
+    return handleApiResponse(response);
+  } 
+
+  catch (error: any) {
+    return handleApiError(error)
+  }
+};
+
