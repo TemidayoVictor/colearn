@@ -2,19 +2,28 @@
 import React, {useState} from "react";
 import Image from "next/image";
 import ChangeEmailVerify from "./ChangeEmailVerify";
+import { useSettings } from "@/hooks/useSettings";
+import ButtonLoader from "../buttonLoader";
 
 const ChangeEmail = () => {
-        const [showVerify, setShowVerify] = useState<boolean>(false);
+    const {
+        setEmail,
+        changeEmail,
+        buttonLoader,
+        showVerify, 
+        setEmailGeneral,
+    } = useSettings();
+
     return (
         <div>
             {
                 !showVerify &&
                 <div>
                     <h2 className="title-3"> Change Email </h2>
-                    <p className="color-grey-text text-[.8rem]">Enter your current email and the new email you want to change your email</p>
+                    <p className="color-grey-text text-[.8rem]">Enter the new email you want to change your email</p>
 
                     <div>
-                        <div className="input-box">
+                        {/* <div className="input-box">
                             <label htmlFor="" className="font-semibold text-[.9rem]">Current Email</label>
                             <div className="input-field">
                                 <Image
@@ -27,7 +36,7 @@ const ChangeEmail = () => {
                                 />
                                 <input type="email" className="input-field-2" placeholder="Enter your current email"/>
                             </div>
-                        </div>
+                        </div> */}
 
                         <div className="input-box">
                             <label htmlFor="" className="font-semibold text-[.9rem]">New Email</label>
@@ -40,13 +49,24 @@ const ChangeEmail = () => {
                                     height={20}
                                     className="object-cover ab-img"
                                 />
-                                <input type="email" className="input-field-2" placeholder="Enter your new email"/>
+                                <input 
+                                    type="email" 
+                                    className="input-field-2" 
+                                    placeholder="Enter your new email"
+                                    onChange={setEmailGeneral}
+                                />
                             </div>
                         </div>
 
                         <div className="flex justify-end mt-4">
-                            <button className="bt-btn btn btn-normal-fill" onClick={() => setShowVerify(true)}>
-                                <span>Change Email</span>
+                            <button className="bt-btn btn btn-primary-fill" onClick={changeEmail}>
+                                {
+                                    buttonLoader ? (
+                                        <ButtonLoader content="Please wait. . ." />
+                                    ) : (
+                                        <span>Change Email</span>
+                                    )
+                                }
                             </button>
                         </div>
                     </div>

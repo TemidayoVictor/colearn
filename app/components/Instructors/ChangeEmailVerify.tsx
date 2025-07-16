@@ -1,41 +1,50 @@
 'use client';
-import React, {useState, useRef} from "react";
+import React, {useState, useEffect} from "react";
 import Image from "next/image";
+import { useSettings } from "@/hooks/useSettings";
+import { genralStore } from "@/zustand/generalStore";
+import ButtonLoader from "../buttonLoader";
 
 const ChangeEmailVerify = () => {
-    const [step, setStep] = useState<number>(1);
-    const inputLength = 6;
-    const [otp, setOtp] = useState<string[]>(Array(inputLength).fill(''));
-    const inputsRef = useRef<Array<HTMLInputElement | null>>([]);
+    const {
+        step,
+        handleChange,
+        inputsRef,
+        otp,
+        handleKeyDown,
+        setStep,
+        verifyEmailCode,
+        maskEmail,
+        resend,
+        buttonLoader,
+    } = useSettings();
 
-    const handleChange = (value: string, index: number) => {
-        if (!/^\d*$/.test(value)) return; // Allow only digits
-    
-        const newOtp = [...otp];
-        newOtp[index] = value;
-        setOtp(newOtp);
-    
-        if (value && index < inputLength - 1) {
-            inputsRef.current[index + 1]?.focus();
-        }
-    };
-    
-    const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>, index: number) => {
-        if (e.key === 'Backspace' && !otp[index] && index > 0) {
-            const newOtp = [...otp];
-            newOtp[index - 1] = '';
-            setOtp(newOtp);
-            inputsRef.current[index - 1]?.focus();
-        }
-    };
+    const newEmail = genralStore((state) => state.newEmail)
 
+    const [timer, setTimer] = useState(60);
+    const [canResend, setCanResend] = useState(false);
+
+    useEffect(() => {
+        let countdown: NodeJS.Timeout;
+    
+        if (step === 1 && timer > 0) {
+            countdown = setTimeout(() => {
+                setTimer((prev) => prev - 1);
+            }, 1000);
+        } else if (timer === 0) {
+            setCanResend(true);
+        }
+    
+        return () => clearTimeout(countdown);
+    }, [step, timer]);
+    
     return (
         <div className="mt-4">
             {
                 step === 1 &&
                 <div>
-                    <h2 className="title-3 text-center mb-3">Enter the 6 digit code sent to you at favi*********@gmail.com</h2>
-                    <div className="flex justify-between">
+                    <h2 className="title-2">Enter the 6 digit code sent to you at {maskEmail(newEmail)}</h2>
+                    <div className="flex justify-between mt-4">
                         {otp.map((digit, idx) => (
                             <input
                             key={idx}
@@ -52,14 +61,35 @@ const ChangeEmailVerify = () => {
                     </div>
 
                     <div className="mt-4">
-                        <p className="text-[.8rem] color-grey-text">Didn’t get Code? Resend code in <span className="font-bold text-black">(0:09)</span></p>
+                        <p className="text-[.8rem] color-grey-text">
+                            Didn’t get Code?{" "}
+                            <span
+                                onClick={canResend ? resend : undefined}
+                                className={`font-semibold ${
+                                    canResend ? "text-blue-600 cursor-pointer" : "text-gray-400 cursor-not-allowed"
+                                }`}
+                            >
+                                Resend code
+                            </span>{" "}
+                            {!canResend && (
+                                <span className="font-bold text-black">
+                                    ({Math.floor(timer / 60)}:{String(timer % 60).padStart(2, "0")})
+                                </span>
+                            )}
+                        </p>
                     </div>
 
                     <div className="upload-course-btns">
                         <button className="btn normal">Cancel</button>
 
-                        <button className="flex items-center gap-2 btn btn-normal-fill" onClick={() => setStep(2)}>
-                            <span>Verify</span>
+                        <button className="flex items-center gap-2 btn btn-primary-fill" onClick={verifyEmailCode}>
+                            {
+                                buttonLoader ? (
+                                    <ButtonLoader content="Please wait. . ." />
+                                ) : (
+                                    <span>Verify</span>
+                                )
+                            }
                         </button>
                     </div>
                 </div>

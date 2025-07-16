@@ -75,7 +75,7 @@ export const forgot_password = async (formData: {
 
 export const verify_reset_code = async (formData: {
   email: string,
-  code: string,
+  code: number,
 }) => {
   try {
     await axiosInstanceWeb.get(`/sanctum/csrf-cookie?refresh=${Date.now()}`, {
@@ -93,7 +93,7 @@ export const verify_reset_code = async (formData: {
 
 export const reset_password = async (formData: {
   email: string,
-  code: string,
+  code: number | undefined,
   password: string
 }) => {
   try {

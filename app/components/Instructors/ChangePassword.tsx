@@ -2,14 +2,24 @@ import React, {useState} from "react";
 import Image from "next/image";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+import { useSettings } from "@/hooks/useSettings";
+import ButtonLoader from "../buttonLoader";
 
 type ChangePasswordProps = {
     type?: string
 }
 
 const ChangePassword = ({type}: ChangePasswordProps) => {
+    const {
+        buttonLoader,
+        changePassword,
+        password,
+        setPassword,
+        setConfirmPassword,
+        setCurrentPassword,
+    } = useSettings();
+
     const [showSuccess, setShowSuccess] = useState<boolean>(false);
-    const [password, setPassword] = useState<string> ('');
     const [showPassword, setShowPassword] = useState <boolean | null> (false);
 
     const togglePassword = () => setShowPassword(prev => !prev);
@@ -42,7 +52,12 @@ const ChangePassword = ({type}: ChangePasswordProps) => {
                                         height={20}
                                         className="object-cover ab-img"
                                     />
-                                    <input type="password" className="input-field-2" placeholder="Enter your current password"/>
+                                    <input 
+                                        type={showPassword ? "text" : "password"}
+                                        className="input-field-2"
+                                        placeholder="Enter new password"
+                                        onChange={(e) => setCurrentPassword(e.target.value)}
+                                    />
                                 </div>
                             </div>
                         }
@@ -62,7 +77,6 @@ const ChangePassword = ({type}: ChangePasswordProps) => {
                                     type={showPassword ? "text" : "password"}
                                     className="input-field-2"
                                     placeholder="Enter new password"
-                                    value={password}
                                     onChange={(e) => setPassword(e.target.value)}
                                 />
                             </div>
@@ -87,13 +101,24 @@ const ChangePassword = ({type}: ChangePasswordProps) => {
                                     height={20}
                                     className="object-cover ab-img"
                                 />
-                                <input type="password" className="input-field-2" placeholder="Confirm password"/>
+                                <input 
+                                    type={showPassword ? "text" : "password"}
+                                    className="input-field-2"
+                                    placeholder="Enter new password"
+                                    onChange={(e) => setConfirmPassword(e.target.value)}
+                                />
                             </div>
                         </div>
 
                         <div className="flex justify-end mt-4">
-                            <button className="bt-btn btn btn-normal-fill" onClick={() => setShowSuccess(true)}>
-                                <span>Change Password</span>
+                            <button className="bt-btn btn btn-primary-fill" onClick={changePassword}>
+                                {
+                                    buttonLoader ? (
+                                        <ButtonLoader content="Please wait. . ." />
+                                    ) : (
+                                        <span>Change Password</span>
+                                    )
+                                }
                             </button>
                         </div>
                     </div>

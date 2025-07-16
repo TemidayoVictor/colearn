@@ -11,12 +11,17 @@ import { showErrorToast, showSuccessToast } from "@/utils/toastTypes";
 
 const ForgotPassword = () => {
     const [email, setEmail] = useState<string>('');
+    const [otpValue, setOtpValue] = useState<number>();
     const [password, setPassword] = useState<string> ('');
+    const [confirmPassword, setConfirmPassword] = useState<string> ('');
     const [showPassword, setShowPassword] = useState <boolean | null> (false);
     const [step, setStep] = useState<number> (1);
     const [direction, setDirection] = useState<number> (1);
     const [hasMounted, setHasMounted] = useState<boolean | null> (false);
     const [buttonLoader, setButtonLoader] = useState<boolean>(false);
+
+    const [timer, setTimer] = useState(60);
+    const [canResend, setCanResend] = useState(false);
 
     const inputLength = 6;
     const [otp, setOtp] = useState<string[]>(Array(inputLength).fill(''));
@@ -29,6 +34,15 @@ const ForgotPassword = () => {
     const hasUppercase = /[A-Z]/.test(password);
     const hasLowercase = /[a-z]/.test(password);
     const hasMinLength = password.length >= 8;
+
+    const isStrongPassword = (password: string) => {
+        const hasSpecialChar = /[^A-Za-z0-9]/.test(password);
+        const hasNumber = /[0-9]/.test(password);
+        const hasUppercase = /[A-Z]/.test(password);
+        const hasLowercase = /[a-z]/.test(password);
+        const hasMinLength = password.length >= 8;
+        return hasSpecialChar && hasNumber && hasUppercase && hasLowercase && hasMinLength;
+    };
 
     const slideVariants: Variants = {
         initial: (direction: number) => ({
@@ -59,6 +73,17 @@ const ForgotPassword = () => {
         setDirection(-1);
         setStep(step + 1);
     };
+
+    function maskEmail(email: string): string {
+        const [username, domain] = email.split("@");
+        if (username.length <= 3) {
+          return `${username[0]}***@${domain}`;
+        }
+      
+        const visiblePart = (username ?? "").slice(0, 4);
+        const maskedPart = "*".repeat(username.length - 4);
+        return `${visiblePart}${maskedPart}@${domain ?? "domain"}`;
+    }
 
     const handleChange = (value: string, index: number) => {
         if (!/^\d*$/.test(value)) return; // Allow only digits
@@ -93,7 +118,98 @@ const ForgotPassword = () => {
             if (response.success) {
                 setButtonLoader(false)
                 showSuccessToast(response.message)
-                next();
+                if(step == 1) {
+                    next();
+                }   
+            } 
+
+            else {
+                setButtonLoader(false)
+                showErrorToast(response.message)
+                console.log(response)
+            }
+        }
+
+        catch (err: any) {
+            console.log(err)
+            setButtonLoader(false)
+            showErrorToast('Unexpected error occurred');
+        }
+    }
+
+    const verifyOtp = async () => {
+        if (!email) {
+            showErrorToast('Please enter your email');
+            return;
+        }
+
+        const isOtpComplete = otp.every(digit => digit.trim() !== '');
+
+        if (!isOtpComplete) {
+            showErrorToast('Please enter the full 6-digit OTP');
+            return;
+        }
+
+        const code = Number(otp.join(''));
+        setOtpValue(code)
+
+        try {
+            setButtonLoader(true)
+            const response = await verify_reset_code({ email, code });
+            if (response.success) {
+                setButtonLoader(false)
+                showSuccessToast(response.message)
+                if(step == 2) {
+                    next();
+                }   
+            } 
+
+            else {
+                setButtonLoader(false)
+                showErrorToast(response.message)
+                console.log(response)
+            }
+        }
+
+        catch (err: any) {
+            console.log(err)
+            setButtonLoader(false)
+            showErrorToast('Unexpected error occurred');
+        }
+    }
+
+    const changePassword = async () => {
+        if (!email) {
+            showErrorToast('Please enter your email');
+            return;
+        }
+
+        if (!password || !confirmPassword) {
+            showErrorToast('Please fill in all fields');
+            return;
+        }
+
+        if(confirmPassword !== password) {
+            showErrorToast('Passwords do not match');
+            return;
+        }
+
+        if(!isStrongPassword(password)) {
+            showErrorToast('Please use a strong password');
+            return
+        }
+
+        const code = otpValue
+
+        try {
+            setButtonLoader(true)
+            const response = await reset_password({ email, code, password });
+            if (response.success) {
+                setButtonLoader(false)
+                showSuccessToast(response.message)
+                if(step == 3) {
+                    next();
+                }   
             } 
 
             else {
@@ -113,6 +229,20 @@ const ForgotPassword = () => {
     useEffect(() => {
         setHasMounted(true);
     }, []);
+
+    useEffect(() => {
+        let countdown: NodeJS.Timeout;
+    
+        if (step === 2 && timer > 0) {
+            countdown = setTimeout(() => {
+                setTimer((prev) => prev - 1);
+            }, 1000);
+        } else if (timer === 0) {
+            setCanResend(true);
+        }
+    
+        return () => clearTimeout(countdown);
+    }, [step, timer]);
 
     return (
         <div className="auth">
@@ -141,7 +271,7 @@ const ForgotPassword = () => {
                 {
                     step === 2 && (
                         <>
-                            <h2 className="title-2">Enter the 6 digit code sent to you at favi*********@gmail.com</h2>
+                            <h2 className="title-2">Enter the 6 digit code sent to you at {maskEmail(email)}</h2>
                         </>
                     )
                 }
@@ -203,7 +333,22 @@ const ForgotPassword = () => {
                                 </div>
 
                                 <div className="mt-4">
-                                    <p className="text-[.8rem] color-grey-text">Didn’t get Code? Resend code in <span className="font-bold text-black">(0:09)</span></p>
+                                    <p className="text-[.8rem] color-grey-text">
+                                        Didn’t get Code?{" "}
+                                        <span
+                                            onClick={canResend ? sendOtp : undefined}
+                                            className={`font-semibold ${
+                                                canResend ? "text-blue-600 cursor-pointer" : "text-gray-400 cursor-not-allowed"
+                                            }`}
+                                        >
+                                            Resend code
+                                        </span>{" "}
+                                        {!canResend && (
+                                            <span className="font-bold text-black">
+                                                ({Math.floor(timer / 60)}:{String(timer % 60).padStart(2, "0")})
+                                            </span>
+                                        )}
+                                    </p>
                                 </div>
                             </motion.div>
                         )}
@@ -237,7 +382,13 @@ const ForgotPassword = () => {
                                 </div>
                                 <div className="input-box">
                                     <label className="font-bold text-[.9em]">Confirm Password</label>
-                                    <input type="password" className="input-field" placeholder="Password" />
+                                    <input
+                                        type={showPassword ? "text" : "password"}
+                                        className="input-field"
+                                        placeholder="Confirm Password"
+                                        value={confirmPassword}
+                                        onChange={(e) => setConfirmPassword(e.target.value)}
+                                    />
                                 </div>
                                 {/* <div className="flex items-center justify-start text-[.9em] color-normal cursor-pointer mt-4" onClick={back}>
                                     <p className="font-semibold">Back</p>
@@ -279,7 +430,9 @@ const ForgotPassword = () => {
                     <div>
                         {
                             buttonLoader ? (
-                                <ButtonLoader content='Please wait . . . '/>
+                                <div className="bt-btn two btn btn-primary-fill">
+                                    <ButtonLoader content='Please wait . . . '/>
+                                </div>
                             ) : (
                                 <>
                                     {
@@ -301,7 +454,7 @@ const ForgotPassword = () => {
         
                                     {
                                         step === 2 &&
-                                        <button className="bt-btn two btn btn-primary-fill" onClick={next}>
+                                        <button className="bt-btn two btn btn-primary-fill" onClick={verifyOtp}>
                                             <span>Proceed</span>
                                             <span>
                                                 <Image
@@ -318,7 +471,7 @@ const ForgotPassword = () => {
         
                                     {
                                         step === 3 &&
-                                        <button className="bt-btn two btn btn-primary-fill" onClick={next}>
+                                        <button className="bt-btn two btn btn-primary-fill" onClick={changePassword}>
                                             <span>Create New Password</span>
                                             <span>
                                                 <Image
