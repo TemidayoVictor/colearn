@@ -2,11 +2,7 @@
 import React,  { useState, useRef, useEffect } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
-
-type Options = {
-    id: number;
-    name: string;
-}
+import { Options } from "../Types/types";
 
 type Props = {
     options: Options[];
@@ -41,7 +37,6 @@ const MultiDropdownSelector: React.FC<Props> = ({options, selected, setSelected,
           }
         };
         document.addEventListener("mousedown", handleClickOutside);
-        
         if (initial && initial.length > 0) {
             const initialNames = initial.map(i => i[selector as keyof Options] as string);
             setSelected(initialNames);

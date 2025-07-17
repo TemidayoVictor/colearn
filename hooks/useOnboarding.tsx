@@ -10,8 +10,10 @@ import {
     add_preferences, 
     submit_professional_details,
     submit_experiences, 
+    edit_details,
 } from "@/services/onboarding";
 import { utilitiesStore } from "@/zustand/utilitiesStore";
+import { courseStore } from "@/zustand/courseStore";
 import { useRouter } from 'next/navigation';
 import { useLogout } from "./useLogout";
 
@@ -222,7 +224,7 @@ export const useOnboarding = () => {
         if (selectedCountry) {
           setDialCode(selectedCountry.phonecode);
           setFormData((prev) => ({ ...prev, 
-            country: selectedCountry.nicename,
+            country: selectedCountry.name,
             country_phone_code: selectedCountry.phonecode,
             country_iso: selectedCountry.iso,
             country_iso3: selectedCountry.iso3,    
@@ -385,6 +387,52 @@ export const useOnboarding = () => {
         }
     }
 
+    const editDetails = async (e: React.FormEvent) => {
+        e.preventDefault();
+
+        const newErrors = {
+            profilePhoto: false,
+            gender: formData.gender.trim() === '',
+            languages: selectedItems.length === 0,
+            country: formData.country.trim() === '',
+            phone:  formData.phone.trim() === '',
+        };
+      
+        setErrors(newErrors);
+
+        const hasError = Object.values(newErrors).some(Boolean);
+
+        if (hasError) {
+            showErrorToast('Please fill in all fields');
+            return;
+        }
+
+        else {
+            // submit
+            setButtonLoader(true);
+            try {
+                const response = await edit_details(formData, selectedItems, userId);
+                if (response.success) {
+                    setButtonLoader(false)
+                    showSuccessToast(response.message)
+                    courseStore.getState().setNewUpdate('set');
+                } 
+
+                else {
+                    setButtonLoader(false)
+                    showErrorToast(response.message)
+                    console.log(response)
+                }
+            }
+
+            catch (err: any) {
+                console.log(err)
+                setButtonLoader(false)
+                showErrorToast('Unexpected error occurred');
+            }
+        }
+    }
+
     const addPreferences = async (e: React.FormEvent) => {
         e.preventDefault();
         
@@ -498,6 +546,7 @@ export const useOnboarding = () => {
         handleChange,
         handleInputChange,
         formData,
+        setFormData,
         formData2,
         errors,
         errors2,
@@ -537,5 +586,6 @@ export const useOnboarding = () => {
         loading, 
         setLoading,
         handleLogout,
+        editDetails,
     }
 }

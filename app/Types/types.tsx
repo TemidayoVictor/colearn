@@ -37,6 +37,8 @@ export type User = {
     country_iso3: string;
     timezone: string | null;
     profile_photo: string | null;
+    country_phone_code: number;
+    country_iso: string;
 };
   
 export type Student = {
@@ -305,3 +307,7 @@ export type Enrollment = {
     review: Review;
 }
 
+export type Options = {
+    id: number;
+    name: string;
+}

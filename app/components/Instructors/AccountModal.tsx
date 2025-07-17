@@ -21,6 +21,7 @@ import BookingFeedback from "../BookingFeedback";
 import AddCoupon from "../Students/AddCoupon";
 import ManageCoupon from "./ManageCoupon";
 import AddReview from "../AddReview";
+import EditAccount from "../EditAccount";
 
 type AccountModalProps = {
     modalType: string;
@@ -52,16 +53,17 @@ const AccountModal = ({modalType, modalClose, experience, bank, subType}: Accoun
     return (
         <div className="modal-container">
             <div className="modal">
+
+                {
+                    modalType == 'personal' &&
+                    <EditAccount />
+                }
                 
                 {
-                    (modalType == 'personal' || modalType == 'personal2') &&
+                    (modalType == 'personal2') &&
                     <div>
                         <div>
                             <h2 className="title-3">Edit Personal Information</h2>
-                            {
-                                modalType == 'personal' &&
-                                <p className="color-grey-text text-[.8rem]">Provide course information.</p>
-                            }
                         </div>
 
                         <div className="mt-[1rem]">
