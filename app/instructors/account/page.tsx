@@ -1,16 +1,12 @@
 import React from "react";
 import UserLayout from "@/app/components/UserLayout";
-import ViewTutorsHero from "@/app/components/ViewTutorsHero";
-import AccountBody from "@/app/components/Instructors/AccountBody";
+import InstructorAccountBody from "@/app/components/Instructors/InstructorAccountBody";
 
 const AccountPage = () => {
     return (
         <div>
             <UserLayout>
-                <ViewTutorsHero />
-                <div>
-                    <AccountBody />
-                </div>
+                <InstructorAccountBody />
             </UserLayout>
         </div>
     )

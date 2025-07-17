@@ -159,3 +159,18 @@ export const submit_experiences = async (experiences: ExperienceType[], userId: 
         return handleApiError(error)
     }
 }
+
+export const instructor_experiences = async (id: string | undefined) => {
+    
+    try {
+        const response = await axiosInstance.post("/instructor-experiences", {
+            id,
+          });
+
+        return handleApiResponse(response);
+    }
+
+    catch(error: any) {
+        return handleApiError(error)
+    }
+}

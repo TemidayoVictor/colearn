@@ -2,6 +2,7 @@ import React, {useState} from "react";
 import Image from "next/image";
 import Link from "next/link";
 import AccountModal from "./AccountModal";
+import { authStore } from "@/zustand/authStore";
 
 type AccountAboutprops = {
     type?: string
@@ -11,6 +12,10 @@ const AccountAbout = ({type}:AccountAboutprops) => {
     const [showModal, setShowModal] = useState<string | null>(null);
     const openModal = (key: string) => setShowModal(key);
     const closeModal = () => setShowModal(null);
+
+    const user = authStore((state) => state.user);
+    const instructor = authStore((state) => state.instructor);
+
     return (
         <div className="res-flex justify-between items-start">
             <div className={`view-course-content left-1 ${type == "admin" ? "admin" : ""}`}>
@@ -32,28 +37,36 @@ const AccountAbout = ({type}:AccountAboutprops) => {
                         }
                     </div>
 
-                    <div className="mt-3">
-                        <div className="res-flex justify-between">
+                    <div className="">
+                        <div className="res-flex justify-between mt-3">
                             <div className="account-about-body">
                                 <p className="color-grey-text font-bold text-[.9rem]">Full Name</p>
-                                <p className="text-[.9rem]">Favi Ayomide</p>
-                            </div>
-
-                            <div className="account-about-body">
-                                <p className="color-grey-text font-bold text-[.9rem]">Email Address</p>
-                                <p className="text-[.9rem]">faviayomide@gmail.com</p>
+                                <p className="text-[.9rem]"> {user?.first_name} {user?.last_name} </p>
                             </div>
                         </div>
 
                         <div className="res-flex justify-between mt-3">
                             <div className="account-about-body">
-                                <p className="color-grey-text font-bold text-[.9rem]">Address</p>
-                                <p className="text-[.9rem]">Washington D.C, USA</p>
+                                <p className="color-grey-text font-bold text-[.9rem]">Email Address</p>
+                                <p className="text-[.9rem]">{user?.email}</p>
+                            </div>
+                        </div>
+
+                        <div className="res-flex justify-between mt-3">
+                            <div className="account-about-body">
+                                <p className="color-grey-text font-bold text-[.9rem]">Country</p>
+                                <p className="text-[.9rem]">{instructor?.country}</p>
                             </div>
 
                             <div className="account-about-body">
                                 <p className="color-grey-text font-bold text-[.9rem]">Language</p>
-                                <p className="text-[.9rem]">English, French</p>
+                                <p className="text-[.9rem]">
+                                    {
+                                        Array.isArray(instructor?.languages)
+                                        ? instructor.languages.join(", ")
+                                        : JSON.parse(instructor?.languages || '[]').join(", ")
+                                    }
+                                </p>
                             </div>
                         </div>
 
@@ -82,38 +95,51 @@ const AccountAbout = ({type}:AccountAboutprops) => {
                     </div>
 
                     <div className="flex items-center gap-2 mt-4">
-                        <Link href='/'>
-                            <Image
-                                aria-hidden
-                                src="/assets/images/facebook-2.png"
-                                alt="Colearn Logo"
-                                width={32}
-                                height={32}
-                                className="object-cover"
-                            />
-                        </Link>
+                        {
+                            instructor?.linkedin_url && (
+                                <Link href={instructor?.linkedin_url}>
+                                    <Image
+                                        aria-hidden
+                                        src="/assets/images/facebook-2.png"
+                                        alt="Colearn Logo"
+                                        width={32}
+                                        height={32}
+                                        className="object-cover"
+                                    />
+                                </Link>
+                            )
+                        }
 
-                        <Link href='/'>
-                            <Image
-                                aria-hidden
-                                src="/assets/images/X-2.png"
-                                alt="Colearn Logo"
-                                width={32}
-                                height={32}
-                                className="object-contain"
-                            />
-                        </Link>
+                        {
+                            instructor?.twitter_url && (
+                                <Link href={instructor?.twitter_url}>
+                                    <Image
+                                        aria-hidden
+                                        src="/assets/images/X-2.png"
+                                        alt="Colearn Logo"
+                                        width={32}
+                                        height={32}
+                                        className="object-cover"
+                                    />
+                                </Link>
+                            ) 
+                        }
+
+                        {
+                            instructor?.youtube_url && (
+                                <Link href={instructor?.youtube_url}>
+                                    <Image
+                                        aria-hidden
+                                        src="/assets/images/instagram-2.png"
+                                        alt="Colearn Logo"
+                                        width={32}
+                                        height={32}
+                                        className="object-cover"
+                                    />
+                                </Link>
+                            )  
+                        }
                         
-                        <Link href='/'>
-                            <Image
-                                aria-hidden
-                                src="/assets/images/instagram-2.png"
-                                alt="Colearn Logo"
-                                width={32}
-                                height={32}
-                                className="object-contain"
-                            />
-                        </Link>
                     </div>
                 </div>
 
@@ -136,8 +162,7 @@ const AccountAbout = ({type}:AccountAboutprops) => {
                     }
                 </div>
                 <div className="account-bio">
-                    <p>Lorem ipsum dolor sit amet consectetur. In senectus fames faucibus cursus risus in sit neque. Sed convallis amet est eget. Placerat augue id pellentesque fermentum. Elementum laoreet turpis elit pulvinar in sit ut. Feugiat arcu rhoncus urna ultricies magna fermentum curabitur. Ac consequat vitae orci malesuada viverra. Et leo proin scelerisque imperdiet ullamcorper quam. Ac habitasse tortor sed quis gravida. Nunc massa sapien eget bibendum sagittis integer et ante diam.</p>
-                    <p>Lorem ipsum dolor sit amet consectetur. In senectus fames faucibus cursus risus in sit neque. Sed convallis amet est eget. Placerat augue id pellentesque fermentum. Elementum laoreet turpis elit pulvinar in sit ut. Feugiat arcu rhoncus urna ultricies magna fermentum curabitur. Ac consequat vitae orci malesuada viverra. Et leo proin scelerisque imperdiet ullamcorper quam. Ac habitasse tortor sed quis gravida. Nunc massa sapien eget bibendum sagittis integer et ante diam.</p>
+                    <p>{instructor?.bio}</p>
                 </div>
             </div>
             {
