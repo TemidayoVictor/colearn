@@ -112,7 +112,6 @@ export const useOnboarding = () => {
         currently_working: false,
     });
 
-
     const [errors, setErrors] = useState({
         profilePhoto: false,
         gender: false,

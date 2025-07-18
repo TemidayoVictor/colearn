@@ -110,3 +110,31 @@ export const reset_password = async (formData: {
   }
 };
 
+export const add_admin = async (formData: {
+  first_name: string;
+  last_name: string;
+  email: string;
+  password: string;
+  role: string;   
+}) => {
+  try {
+    await axiosInstanceWeb.get(`/sanctum/csrf-cookie?refresh=${Date.now()}`, {
+      withCredentials: true,
+    });
+    
+    const data = new FormData();
+    data.append('first_name', formData.first_name);
+    data.append('last_name', formData.last_name);
+    data.append('email', formData.email);
+    data.append('password', formData.password);
+    data.append('role', formData.role);
+
+    const response = await axiosInstance.post("/add-admin", data);
+
+    return handleApiResponse(response);
+  }
+
+  catch(error: any) {
+      return handleApiError(error)
+  }
+}
