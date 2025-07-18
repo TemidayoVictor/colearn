@@ -33,6 +33,7 @@ const EditDetails = ({type}:EditDetailsProps) => {
         editExperience,
         handleExpChange,
         setExperience,
+        deleteExperience,
     } = useOnboarding();
 
     const instructor = authStore((state) => state.instructor);
@@ -73,7 +74,7 @@ const EditDetails = ({type}:EditDetailsProps) => {
                 description: experienceFetch?.description || "",
                 start_date: experienceFetch?.start_date || "",
                 end_date: experienceFetch?.end_date || "",
-                currently_working: experienceFetch?.currently_working || false,
+                currently_working: experienceFetch?.is_current || false,
             });
     
         }, [experienceFetch]);

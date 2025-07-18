@@ -13,6 +13,7 @@ export type ExperienceType = {
     start_date: string,
     end_date: string,
     currently_working: boolean,
+    is_current?: boolean,
 }
 
 export type Bank = {

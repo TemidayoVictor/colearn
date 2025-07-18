@@ -295,6 +295,21 @@ export const edit_experience = async (experience: ExperienceType) => {
     }
 }
 
+export const delete_experience = async (id: number | null | undefined) => {
+    
+    try {
+        const response = await axiosInstance.post("/delete-experience", {
+            id,
+          });
+
+        return handleApiResponse(response);
+    }
+
+    catch(error: any) {
+        return handleApiError(error)
+    }
+}
+
 export const instructor_experiences = async (id: string | undefined) => {
     
     try {

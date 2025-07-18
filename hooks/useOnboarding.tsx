@@ -2,6 +2,7 @@
 import React, {useState, useRef} from "react";
 import { showErrorToast, showSuccessToast } from "@/utils/toastTypes";
 import { authStore } from "@/zustand/authStore";
+import { instructorStore } from "@/zustand/instructorStore";
 import { 
     verify_otp, 
     resend_otp, 
@@ -15,6 +16,7 @@ import {
     edit_professional_details,
     add_experiences,
     edit_experience,
+    delete_experience,
 } from "@/services/onboarding";
 import { utilitiesStore } from "@/zustand/utilitiesStore";
 import { courseStore } from "@/zustand/courseStore";
@@ -37,6 +39,9 @@ export const useOnboarding = () => {
     const countries = utilitiesStore((state) => state.countries);
     const languages = utilitiesStore((state) => state.languages);
     const categories = utilitiesStore((state) => state.categories);
+
+    const currentExperience = instructorStore((state) => state.experience);
+    const currentExperienceId = currentExperience?.id;
 
     const [selectedItems, setSelectedItems] = useState<string[]>([]);
 
@@ -776,6 +781,31 @@ export const useOnboarding = () => {
         }
     }
 
+    const deleteExperience = async () => {
+        // submit
+        setButtonLoader(true);
+        try {
+            const response = await delete_experience(currentExperienceId);
+            if (response.success) {
+                setButtonLoader(false)
+                showSuccessToast(response.message)
+                courseStore.getState().setNewUpdate('set');
+            } 
+
+            else {
+                setButtonLoader(false)
+                showErrorToast(response.message)
+                console.log(response)
+            }
+        }
+
+        catch (err: any) {
+            console.log(err)
+            setButtonLoader(false)
+            showErrorToast('Unexpected error occurred');
+        }
+    }
+
     const {logoutHook} = useLogout();
 
     const handleLogout = () => {
@@ -842,5 +872,6 @@ export const useOnboarding = () => {
         setExperience,
         experience,
         handleExpChange,
+        deleteExperience
     }
 }
