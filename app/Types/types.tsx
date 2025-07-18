@@ -6,11 +6,12 @@ export type Experience = {
 };
 
 export type ExperienceType = {
-    title: String,
-    organization: String,
-    description: String,
-    start_date: String,
-    end_date: String,
+    id?: number | null,
+    title: string,
+    organization: string,
+    description: string,
+    start_date: string,
+    end_date: string,
     currently_working: boolean,
 }
 
@@ -39,6 +40,7 @@ export type User = {
     profile_photo: string | null;
     country_phone_code: number;
     country_iso: string;
+    preferences: string;
 };
   
 export type Student = {

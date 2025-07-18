@@ -22,6 +22,8 @@ import AddCoupon from "../Students/AddCoupon";
 import ManageCoupon from "./ManageCoupon";
 import AddReview from "../AddReview";
 import EditAccount from "../EditAccount";
+import EditName from "../EditName";
+import EditDetails from "../EditDetails";
 
 type AccountModalProps = {
     modalType: string;
@@ -57,6 +59,11 @@ const AccountModal = ({modalType, modalClose, experience, bank, subType}: Accoun
                 {
                     modalType == 'personal' &&
                     <EditAccount />
+                }
+
+                {
+                    modalType == 'edit-name' &&
+                    <EditName />
                 }
                 
                 {
@@ -149,89 +156,23 @@ const AccountModal = ({modalType, modalClose, experience, bank, subType}: Accoun
                 }
 
                 {
-                    modalType == 'social' && 
-                    <div>
-                        <div>
-                            <h2 className="title-3">Edit Social Media Information</h2>
-                            <p className="color-grey-text text-[.8rem]">Update Social Media information.</p>
-                        </div>
-
-                        <div className="mt-[1rem]">
-
-                            <div className="mt-4">
-                                <div className="input-box">
-                                    <label htmlFor="">Facebook URL label <span className="text-red-500">*</span></label>
-                                    <input type="text" className="input-field" placeholder="Enter Facebook URL" />
-                                </div>
-
-                                <div className="input-box">
-                                    <label htmlFor="">Instagram URL label  <span className="text-red-500">*</span></label>
-                                    <input type="text" className="input-field" placeholder="Enter Instagram URL" />
-                                </div>
-
-                                <div className="input-box">
-                                    <label htmlFor="">X URL label  <span className="text-red-500">*</span></label>
-                                    <input type="text" className="input-field" placeholder="Enter X URL" />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    modalType == 'edit-instructor-data' && 
+                    <EditDetails type="edit-instructor-data" />
                 }
 
                 {
                     modalType == 'bio' && 
-                    <div>
-                        <div>
-                            <h2 className="title-3">Edit Bio</h2>
-                            <p className="color-grey-text text-[.8rem]">Update Bio information.</p>
-                        </div>
-
-                        <div className="mt-[1rem]">
-
-                            <div className="mt-4">
-                                <div className="input-box">
-                                    <label htmlFor="">Bio <span className="text-red-500">*</span></label>
-                                    <textarea name="" id="" className="upload-course-textarea two"></textarea>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <EditDetails type="bio" />
                 }
 
                 {
                     modalType == 'addexperience' &&
-                    <div>
-                        <div>
-                            <h2 className="title-3">Add Work Experience</h2>
-                            <p className="color-grey-text text-[.8rem]">Add Work Experience.</p>
-                        </div>
+                    <EditDetails type='addexperience' />
+                }
 
-                        <div className="mt-[1rem]">
-                            <div className="mt-4">
-                                
-                                <div className="input-box">
-                                    <label htmlFor="">Company <span className="text-red-500">*</span></label>
-                                    <input type="text" className="input-field" />
-                                </div>
-
-                                <div className="input-box">
-                                    <label htmlFor="">Position <span className="text-red-500">*</span></label>
-                                    <input type="text" className="input-field"/>
-                                </div>
-
-                                <div className="input-box">
-                                    <label htmlFor="">Time Period <span className="text-red-500">*</span></label>
-                                    <input type="text" className="input-field"/>
-                                </div>
-
-                                <div className="input-box">
-                                    <label htmlFor="">Experience<span className="text-red-500">*</span></label>
-                                    <textarea name="" id="" className="upload-course-textarea two"></textarea>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
+                {
+                    modalType == 'editexperience' &&
+                    <EditDetails type='editexperience' />
                 }
 
                 {
@@ -272,53 +213,12 @@ const AccountModal = ({modalType, modalClose, experience, bank, subType}: Accoun
 
                 {
                     modalType == 'career' &&
-                    <div>
-                        <div>
-                            <h2 className="title-3">Edit Career Information</h2>
-                            <p className="color-grey-text text-[.8rem]">Update Career information.</p>
-                        </div>
-
-                        <div className="mt-[1rem]">
-                            <div className="mt-4">
-                                <div className="input-box">
-                                    <label htmlFor="">Primary Discipline / Expertise <span className="text-red-500">*</span></label>
-                                    <input type="text" className="input-field"/>
-                                </div>
-
-                                {/* <div className="input-box">
-                                    <label htmlFor="">Which disciplines are relevant in your expertise(s)? <span className="text-red-500">*</span></label>
-                                    <MultiDropdownSelector
-                                        options={["English", "French", "Yoruba", "Igbo", "Hausa", "German", "Spanish", "Chinese", "Japanese", "Korean"]}
-                                        selected={selectedItems}
-                                        setSelected={setSelectedItems}
-                                    />
-                                </div> */}
-                            </div>
-                        </div>
-                    </div>
+                    <EditDetails type='career' />
                 }
 
                 {
                     modalType == 'skills' &&
-                    <div>
-                        <div>
-                            <h2 className="title-3">Edit Skills</h2>
-                            <p className="color-grey-text text-[.8rem]">Update Skills.</p>
-                        </div>
-
-                        <div className="mt-[1rem]">
-                            <div className="mt-4">
-                                {/* <div className="input-box">
-                                    <label htmlFor="">Which skill(s) do you have experience in? <span className="text-red-500">*</span></label>
-                                    <MultiDropdownSelector
-                                        options={["English", "French", "Yoruba", "Igbo", "Hausa", "German", "Spanish", "Chinese", "Japanese", "Korean"]}
-                                        selected={selectedItems}
-                                        setSelected={setSelectedItems}
-                                    />
-                                </div> */}
-                            </div>
-                        </div>
-                    </div>
+                    <EditDetails type='skills' /> 
                 }
 
                 {

@@ -2,41 +2,36 @@
 import React, {useState} from "react";
 import Image from "next/image";
 import AccountModal from "./AccountModal";
-import { Experience } from "@/app/Types/types";
+import { Experience, ExperienceType } from "@/app/Types/types";
+import { authStore } from "@/zustand/authStore";
+import { instructorStore } from "@/zustand/instructorStore";
+import dayjs from 'dayjs';
+import advancedFormat from 'dayjs/plugin/advancedFormat';
+
+dayjs.extend(advancedFormat);
 
 type AccountCareerprops = {
     type?: string
 }
 
-const experiences = [
-    {
-      title: "Frontend Developer",
-      company: "UBSS Ltd",
-      duration: "2015 - Present",
-      description: "Lorem ipsum dolor sit amet...",
-    },
-    {
-      title: "UI Designer",
-      company: "Design Co",
-      duration: "2013 - 2015",
-      description: "Dolores ipsum ad aliquid...",
-    },
-    {
-      title: "UX Researcher",
-      company: "Tech Solutions",
-      duration: "2011 - 2013",
-      description: "Quod tempora corporis voluptatum...",
-    },
-  ];
 
 const AccountCareer = ({type}: AccountCareerprops) => {
+    const instructor = authStore((state) => state.instructor);
+
     const [showModal, setShowModal] = useState<string | null>(null);
     const [selectedExperience, setSelectedExperience] = useState<Experience | null>(null);
     const openModal = (key: string, item?: Experience | null) => {
         setShowModal(key);
         setSelectedExperience(item || null);
     }
+
+    const openModalTwo = (key: string, item: ExperienceType | null) => {
+        instructorStore.getState().setExperience(item);
+        setShowModal(key);
+    }
     const closeModal = () => setShowModal(null);
+
+    const experiences = instructorStore((state) => state.experiences)
     return (
         <div className="res-flex justify-between items-start">
             <div className={`view-course-content left-1 ${type == "admin" ? "admin" : ""}`}>
@@ -66,7 +61,7 @@ const AccountCareer = ({type}: AccountCareerprops) => {
                                     <p className="font-semibold my-[.8em] text-[.9rem]">{item.title}</p>
                                     {
                                         type != "admin" ? (
-                                            <div onClick={() => openModal("experience", item)} className="cursor-pointer">
+                                            <div onClick={() => openModalTwo("editexperience", item)} className="cursor-pointer">
                                                 <Image
                                                     aria-hidden
                                                     src="/assets/images/edit-2.png"
@@ -77,13 +72,16 @@ const AccountCareer = ({type}: AccountCareerprops) => {
                                                 />
                                             </div>
                                         ) : (
-                                            <div onClick={() => openModal("view-experience", item)}>
-                                                <p className="underline text-[.9rem] color-normal font-semibold cursor-pointer">View</p>
+                                            <div>
+                                                
                                             </div>
+                                            // <div onClick={() => openModal("view-experience", item)}>
+                                            //     <p className="underline text-[.9rem] color-normal font-semibold cursor-pointer">View</p>
+                                            // </div>
                                         )
                                     }
                                 </div>
-                                <p className="color-grey-text font-semibold text-[.8rem]">{item.company}</p>
+                                <p className="color-grey-text font-semibold text-[.8rem]">{item.organization}</p>
                                 <div className="flex items-center gap-2 my-[.5em]">
                                     <Image
                                         aria-hidden
@@ -93,7 +91,7 @@ const AccountCareer = ({type}: AccountCareerprops) => {
                                         height={16}
                                         className="object-contain"
                                     />
-                                    <p className="text-[.8rem] color-grey-text">{item.duration}</p>
+                                    <p className="text-[.8rem] color-grey-text">{item.start_date ? dayjs(item.start_date.toString()).format("Do MMMM, YYYY") : "No date available"} - {item.currently_working ? "Current" : item.end_date ? dayjs(item.end_date.toString()).format("Do MMMM, YYYY") : "No date available"}</p>
                                 </div>
                                 <p className="color-grey-text text-[.9rem]">{item.description}</p>
                             </div>
@@ -104,31 +102,9 @@ const AccountCareer = ({type}: AccountCareerprops) => {
 
             <div className={`view-course-content right-1 ${type == "admin" ? "admin" : ""}`}>
                 <div>
-                    <div className="flex items-center justify-between">
-                        <p className="font-bold">Career Information</p>
-                        {
-                            type != "admin" &&
-                            <div onClick={() => openModal("career")}>
-                                <Image
-                                    aria-hidden
-                                    src="/assets/images/edit-2.png"
-                                    alt="Colearn Logo"
-                                    width={20}
-                                    height={20}
-                                    className="object-contain"
-                                />
-                            </div>
-                        }
-                    </div>
-
-                    <div className="my-[1em]">
-                        <p className="text-[.9rem] color-grey-text font-semibold">Primary Discipline/Expertise</p>
-                        <p className="text-[.9rem]">Structural Engineer</p>
-                    </div>
-
                     <div>
                         <div className="flex items-center justify-between">
-                            <p className="font-bold">Skills</p>
+                            <p className="font-bold">Disciplines</p>
                             
                             {
                                 type != "admin" &&
@@ -148,8 +124,13 @@ const AccountCareer = ({type}: AccountCareerprops) => {
                         <div className="mt-[1em]">
                             <div className="skill-tag-cont">
                                 {
-                                    [1,2,3,4,5].map((item, index) => (
-                                        <span className="skill-tag text-[.8rem]" key={index}>UI/UX Design</span>
+                                    (Array.isArray(instructor?.disciplines)
+                                        ? instructor.disciplines
+                                        : JSON.parse(instructor?.disciplines || '[]')
+                                    ).map((item: string, index: number) => (
+                                        <span className="skill-tag text-[.8rem]" key={index}>
+                                        {item}
+                                        </span>
                                     ))
                                 }
                             </div>

@@ -133,6 +133,29 @@ export const edit_details = async (
     }
 }
 
+export const edit_name = async (
+    formData: {
+        first_name: string;
+        last_name: string;
+    }, userId: number | undefined) => {
+    
+    try {
+        const data = new FormData();
+
+        data.append('first_name', formData.first_name);
+        data.append('last_name', formData.last_name);
+        data.append('userId', String(userId));
+
+        const response = await axiosInstance.post("/edit-name", data);
+
+        return handleApiResponse(response);
+    }
+
+    catch(error: any) {
+        return handleApiError(error)
+    }
+}
+
 export const add_preferences = async ( preferences: string[] | null, userId: number | undefined) => {
     try {
         const data = new FormData();
@@ -189,12 +212,79 @@ export const submit_professional_details = async (
     }
 }
 
+export const edit_professional_details = async (
+    formData: {
+        title: string;
+        headline: string;
+        category: string;
+        bio: string;
+        linkedin: string | undefined;
+        youtube: string | undefined;
+        twitter: string | undefined;
+        website: string | undefined;
+    }, 
+    userId: number | undefined) => {
+    
+    try {
+        const data = new FormData();
+
+        data.append('title', formData.title);
+        data.append('headline', formData.headline);
+        data.append('category', formData.category);
+        data.append('bio', formData.bio);
+        data.append('linkedin', String(formData.linkedin));
+        data.append('youtube', String(formData.youtube));
+        data.append('twitter', String(formData.twitter));
+        data.append('website', String(formData.website));
+        data.append('userId', String(userId));
+
+        const response = await axiosInstance.post("/edit-professional-data", data);
+
+        return handleApiResponse(response);
+    }
+
+    catch(error: any) {
+        return handleApiError(error)
+    }
+}
+
 export const submit_experiences = async (experiences: ExperienceType[], userId: number | undefined) => {
     
     try {
         const response = await axiosInstance.post("/submit-experiences", {
             experiences,
             userId,
+          });
+
+        return handleApiResponse(response);
+    }
+
+    catch(error: any) {
+        return handleApiError(error)
+    }
+}
+
+export const add_experiences = async (experiences: ExperienceType[], userId: number | undefined) => {
+    
+    try {
+        const response = await axiosInstance.post("/add-experiences", {
+            experiences,
+            userId,
+          });
+
+        return handleApiResponse(response);
+    }
+
+    catch(error: any) {
+        return handleApiError(error)
+    }
+}
+
+export const edit_experience = async (experience: ExperienceType) => {
+    
+    try {
+        const response = await axiosInstance.post("/edit-experience", {
+            experience,
           });
 
         return handleApiResponse(response);

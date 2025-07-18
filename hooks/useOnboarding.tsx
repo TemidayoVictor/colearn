@@ -11,6 +11,10 @@ import {
     submit_professional_details,
     submit_experiences, 
     edit_details,
+    edit_name,
+    edit_professional_details,
+    add_experiences,
+    edit_experience,
 } from "@/services/onboarding";
 import { utilitiesStore } from "@/zustand/utilitiesStore";
 import { courseStore } from "@/zustand/courseStore";
@@ -85,6 +89,25 @@ export const useOnboarding = () => {
         },
     ]);
 
+    const [experience, setExperience] = useState<{
+        id: number | null,
+        title: string;
+        organization: string;
+        description: string;
+        start_date: string;
+        end_date: string;
+        currently_working: boolean;
+      }>({
+        id: 0,
+        title: '',
+        organization: '',
+        description: '',
+        start_date: '',
+        end_date: '',
+        currently_working: false,
+    });
+
+
     const [errors, setErrors] = useState({
         profilePhoto: false,
         gender: false,
@@ -110,6 +133,27 @@ export const useOnboarding = () => {
         }))
     );
 
+    const [experienceErrors, setExperienceErrors] = useState({
+        title: false,
+        organization: false,
+        description: false,
+        start_date: false,
+        end_date: false,
+    });
+
+    const [editNameData, setEditNameData] = useState<{
+        first_name: string;
+        last_name: string;
+      }>({
+        first_name: '',
+        last_name: '',
+    });
+
+    const [editNameError, setEditNameError] = useState({
+        first_name: false,
+        last_name: false,
+    });
+
     const initialSelected: any = [];
     const [selectedSubjects, setSelectedSubjects] = useState<string[]>(initialSelected);
 
@@ -131,6 +175,18 @@ export const useOnboarding = () => {
             idx === index ? { ...exp, [field]: value } : exp
           )
         );
+    };
+
+    const handleExpChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+        const { name, value } = e.target;
+        setExperience((prev) => ({ ...prev, [name]: value }));
+        setExperienceErrors((prev) => ({ ...prev, [name]: false }));
+    };
+
+    const handleEditName = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+        const { name, value } = e.target;
+        setEditNameData((prev) => ({ ...prev, [name]: value }));
+        setEditNameError((prev) => ({ ...prev, [name]: false }));
     };
 
     const addExperience = () => {
@@ -433,6 +489,49 @@ export const useOnboarding = () => {
         }
     }
 
+    const editName = async (e: React.FormEvent) => {
+        e.preventDefault();
+
+        const newErrors = {
+            first_name: editNameData.first_name.trim() === '',
+            last_name: editNameData.last_name.trim() === '',
+        };
+      
+        setEditNameError(newErrors);
+
+        const hasError = Object.values(newErrors).some(Boolean);
+
+        if (hasError) {
+            showErrorToast('Please fill in all fields');
+            return;
+        }
+
+        else {
+            // submit
+            setButtonLoader(true);
+            try {
+                const response = await edit_name(editNameData, userId);
+                if (response.success) {
+                    setButtonLoader(false)
+                    showSuccessToast(response.message)
+                    courseStore.getState().setNewUpdate('set');
+                } 
+
+                else {
+                    setButtonLoader(false)
+                    showErrorToast(response.message)
+                    console.log(response)
+                }
+            }
+
+            catch (err: any) {
+                console.log(err)
+                setButtonLoader(false)
+                showErrorToast('Unexpected error occurred');
+            }
+        }
+    }
+
     const addPreferences = async (e: React.FormEvent) => {
         e.preventDefault();
         
@@ -443,6 +542,32 @@ export const useOnboarding = () => {
                 setButtonLoader(false)
                 showSuccessToast(response.message)
                 router.push(`/${userType}s/dashboard`);
+            } 
+
+            else {
+                setButtonLoader(false)
+                showErrorToast(response.message)
+                console.log(response)
+            }
+        }
+
+        catch (err: any) {
+            console.log(err)
+            setButtonLoader(false)
+            showErrorToast('Unexpected error occurred');
+        }
+    }
+
+    const editPreferences = async (e: React.FormEvent) => {
+        e.preventDefault();
+
+        setButtonLoader(true);
+        try {
+            const response = await add_preferences(selectedSubjects, userId);
+            if (response.success) {
+                setButtonLoader(false)
+                showSuccessToast(response.message)
+                courseStore.getState().setNewUpdate('set');
             } 
 
             else {
@@ -504,6 +629,51 @@ export const useOnboarding = () => {
         }
     }
 
+    const editProfessionalDetails = async (e: React.FormEvent) => {
+        e.preventDefault();
+
+        const newErrors = {
+            title: formData2.title === '',
+            headline: formData2.headline.trim() === '',
+            category: formData2.category === '',
+            bio: formData2.bio === '',
+        };
+      
+        setErrors2(newErrors);
+
+        const hasError = Object.values(newErrors).some(Boolean);
+
+        if (hasError) {
+            showErrorToast('Please fill in all required fields');
+            return;
+        }
+
+        else {
+            // submit
+            setButtonLoader(true);
+            try {
+                const response = await edit_professional_details(formData2, userId);
+                if (response.success) {
+                    setButtonLoader(false)
+                    showSuccessToast(response.message)
+                    courseStore.getState().setNewUpdate('set');
+                } 
+
+                else {
+                    setButtonLoader(false)
+                    showErrorToast(response.message)
+                    console.log(response)
+                }
+            }
+
+            catch (err: any) {
+                console.log(err)
+                setButtonLoader(false)
+                showErrorToast('Unexpected error occurred');
+            }
+        }
+    }
+
     const submitExperiences = async () => {
         if (!validateExperiences()) {
                 showErrorToast('Please fill in all fields');
@@ -534,6 +704,78 @@ export const useOnboarding = () => {
         }
     }
 
+    const addExperiences = async () => {
+        if (!validateExperiences()) {
+                showErrorToast('Please fill in all fields');
+            return;
+        }
+
+        // submit
+        setButtonLoader(true);
+        try {
+            const response = await add_experiences(experiences, userId);
+            if (response.success) {
+                setButtonLoader(false)
+                showSuccessToast(response.message)
+                courseStore.getState().setNewUpdate('set');
+            } 
+
+            else {
+                setButtonLoader(false)
+                showErrorToast(response.message)
+                console.log(response)
+            }
+        }
+
+        catch (err: any) {
+            console.log(err)
+            setButtonLoader(false)
+            showErrorToast('Unexpected error occurred');
+        }
+    }
+
+    const editExperience = async () => {
+        const newErrors = {
+            title: experience.title.trim() === '',
+            organization: experience.organization.trim() === '',
+            description: experience.description.trim() === '',
+            start_date: experience.start_date.trim() === '',
+            end_date: !experience.currently_working && experience.end_date.trim() === '',
+        };
+
+        setExperienceErrors(newErrors);
+
+        const hasError = Object.values(newErrors).some(Boolean);
+
+        if (hasError) {
+            showErrorToast('Please fill in all required fields');
+            return;
+        }
+
+        // submit
+        setButtonLoader(true);
+        try {
+            const response = await edit_experience(experience);
+            if (response.success) {
+                setButtonLoader(false)
+                showSuccessToast(response.message)
+                courseStore.getState().setNewUpdate('set');
+            } 
+
+            else {
+                setButtonLoader(false)
+                showErrorToast(response.message)
+                console.log(response)
+            }
+        }
+
+        catch (err: any) {
+            console.log(err)
+            setButtonLoader(false)
+            showErrorToast('Unexpected error occurred');
+        }
+    }
+
     const {logoutHook} = useLogout();
 
     const handleLogout = () => {
@@ -548,6 +790,7 @@ export const useOnboarding = () => {
         formData,
         setFormData,
         formData2,
+        setFormData2,
         errors,
         errors2,
         handleKeyDown,
@@ -587,5 +830,17 @@ export const useOnboarding = () => {
         setLoading,
         handleLogout,
         editDetails,
+        editName,
+        editNameData, 
+        setEditNameData,
+        editNameError,
+        handleEditName,
+        editProfessionalDetails,
+        addExperiences,
+        editPreferences,
+        editExperience,
+        setExperience,
+        experience,
+        handleExpChange,
     }
 }
