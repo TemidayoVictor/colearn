@@ -43,6 +43,7 @@ const AccountCareer = ({type}: AccountCareerprops) => {
 
     const deleteExperienceTrigger = (item: ExperienceType) => {
         instructorStore.getState().setExperience(item);
+        setDeleteModal(true);
     }
 
     const closeDeleteModal = () => {
@@ -117,7 +118,7 @@ const AccountCareer = ({type}: AccountCareerprops) => {
                                         className="text-[.9rem] text-red-500 underline"
                                         onClick={() => deleteExperienceTrigger(item)}
                                     >
-                                    Remove
+                                    Delete
                                     </button>
                                 </div>
 
@@ -139,7 +140,7 @@ const AccountCareer = ({type}: AccountCareerprops) => {
                                                 >
                                                 <h2 className="title-3">Confirm Delete</h2>
                                                 <p className="text-[.9rem] color-grey-text">
-                                                    Are you sure you want to delete this module? This action cannot be undone.
+                                                    Are you sure you want to delete this item? This action cannot be undone.
                                                 </p>
 
                                                 <div className="mt-6 flex justify-end gap-3">
