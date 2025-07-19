@@ -59,11 +59,15 @@ const useLogin = () => {
                     utilitiesStore.getState().setPreference(response.data.preferences);
                     utilitiesStore.getState().setCategory(response.data.categories);
                     
-                    if(response.data.user.type != "Inactive" && response.data.user.profile_progress != "completed") {
+                    if(response.data.user.type == "admin") {
+                        router.push(`/admin/dashboard`);
+                    }
+
+                    else if(response.data.user.type != "Inactive" && response.data.user.profile_progress != "completed" && response.data.user.type != "admin") {
                         router.push(`/onboarding/${response.data.user.type}`);
                     }
 
-                    else if(response.data.user.type != "Inactive" && response.data.user.profile_progress == "completed") {
+                    else if(response.data.user.type != "Inactive" && response.data.user.type != "admin" && response.data.user.profile_progress == "completed" ) {
                         router.push(`/${response.data.user.type}s/dashboard`);
                     }
 

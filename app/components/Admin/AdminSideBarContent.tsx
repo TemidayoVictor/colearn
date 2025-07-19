@@ -1,12 +1,18 @@
 'use client';
-import React from "react";
+import React, {useState} from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useLogout } from "@/hooks/useLogout";
 
 
 const AdminSideBarContent = () => {
+    const [loading, setLoading] = useState<boolean>(false);
     const pathname = usePathname();
+    const {
+        logoutHook
+    } = useLogout();
+
     return (
         <div className="sidebar-body container-3">
             <div>
@@ -121,6 +127,35 @@ const AdminSideBarContent = () => {
                         <p className="text-[.9rem]">User Management</p>
                     </Link>
 
+                    <Link href='/admin/bookings' className={`sidebar-link ${pathname.startsWith('/admin/bookings')  ? 'active' : ''}`}>
+                        {
+                            pathname.startsWith('/admin/bookings')  ? (
+
+                                <Image
+                                    aria-hidden
+                                    src="/assets/images/calendar-3-active.png"
+                                    alt="Colearn Image"
+                                    width={20}
+                                    height={20}
+                                    className="object-cover"
+                                />
+
+                            ) : (
+
+                                <Image
+                                    aria-hidden
+                                    src="/assets/images/calendar-3b.png"
+                                    alt="Colearn Image"
+                                    width={20}
+                                    height={20}
+                                    className="object-cover"
+                                />
+
+                            )
+                        }
+                        <p className="text-[.9rem]">Bookings Overview</p>
+                    </Link>
+
                 <div className="sidebar-break">
                 <Link href='/admin/admin-users' className={`sidebar-link ${pathname == '/admin/admin-users' ? 'active' : ''}`}>
                         {
@@ -175,7 +210,7 @@ const AdminSideBarContent = () => {
                 </div>
             </div>
             <div className="sidebar-break">
-                <Link href='/' className="sidebar-link">
+                <button className="sidebar-link" onClick={() => logoutHook(setLoading)}>
                     <Image
                         aria-hidden
                         src="/assets/images/logout.png"
@@ -185,7 +220,7 @@ const AdminSideBarContent = () => {
                         className="object-cover"
                     />
                     <p className="text-[.9rem] color-error">Log Out</p>
-                </Link>
+                </button>
             </div>
         </div>
     )

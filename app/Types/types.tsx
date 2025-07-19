@@ -42,6 +42,7 @@ export type User = {
     country_phone_code: number;
     country_iso: string;
     preferences: string;
+    verification_status: boolean;
 };
   
 export type Student = {
