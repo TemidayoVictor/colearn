@@ -184,6 +184,17 @@ export const get_consultant = async (consultantId: string | undefined,) => {
     }
 }
 
+export const get_all_sessions = async () => {
+    try {
+        const response = await axiosInstance.get("/get-all-sessions");
+        return handleApiResponse(response);
+    }
+
+    catch(error: any) {
+        return handleApiError(error)
+    }
+}
+
 export const get_sessions = async (userId: number | undefined) => {
     try {
         const response = await axiosInstance.post("/get-sessions", {userId});
@@ -289,6 +300,20 @@ export const cancel_session_user = async (id: string | undefined, note: string |
 export const cancel_session_consultant = async (id: string | undefined, note: string | undefined | null) => {
     try {
         const response = await axiosInstance.post("/cancel-session-consultant", {
+            id,
+            note
+        });
+        return handleApiResponse(response);
+    }
+
+    catch(error: any) {
+        return handleApiError(error)
+    }
+}
+
+export const cancel_session_admin = async (id: string | undefined, note: string | undefined | null) => {
+    try {
+        const response = await axiosInstance.post("/cancel-session-admin", {
             id,
             note
         });

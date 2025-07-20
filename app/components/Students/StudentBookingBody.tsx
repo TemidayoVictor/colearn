@@ -169,6 +169,7 @@ const StudentBookingBody = ({userType}: StudentBookingBodyProps) => {
                         const isMissedConsultant = item.status === 'missed_consultant';
                         const isConsultantCancelled = item.status === 'cancelled-by-consultant';
                         const isUserCancelled = item.status === 'cancelled-by-user';
+                        const isAdminCancelled = item.status === 'cancelled-by-admin';
                         const isPending = item.status === 'pending';
                         const isRescheduledByUser = item.status === 'rescheduled-by-user';
                         const isRescheduledByConsultant = item.status === 'rescheduled-by-consultant';
@@ -229,9 +230,16 @@ const StudentBookingBody = ({userType}: StudentBookingBodyProps) => {
                                         <p className="color-error text-[.9rem] font-semibold">This session has been cancelled by the consultant</p>
                                     </div>
                                 }
+
+                                {
+                                    isAdminCancelled &&
+                                    <div className="alert no notification error text-[.9rem]">
+                                        <p className="color-error text-[.9rem] font-semibold">This session has been cancelled by the Administrator</p>
+                                    </div>
+                                }
                                 
                                 {
-                                    !isUserCancelled && !isConsultantCancelled &&
+                                    !isUserCancelled && !isConsultantCancelled && !isAdminCancelled &&
                                     <div>
                                         {
                                             !isPast ? (

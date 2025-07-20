@@ -17,6 +17,7 @@ import {
     update_session,
     cancel_session_user,
     cancel_session_consultant,
+    cancel_session_admin,
     update_session_consultant,
     reschedule_session_consultant,
     approve_reschedule,
@@ -888,6 +889,37 @@ export const useConsultant = () => {
         }
     }
 
+    const cancelSessionAdmin = async () => {
+        if(!cancelNote) {
+            showErrorToast('Please add a reason for cancelling');
+            return
+        }
+
+        // submit
+        setButtonLoader(true);
+        
+        try {
+            const response = await cancel_session_admin(bookingId, cancelNote);
+            if (response.success) {
+                setButtonLoader(false)
+                showSuccessToast(response.message)
+                courseStore.getState().setNewUpdate('set');
+            } 
+
+            else {
+                setButtonLoader(false)
+                showErrorToast(response.message)
+                console.log(response)
+            }
+        }
+
+        catch (err: any) {
+            console.log(err)
+            setButtonLoader(false)
+            showErrorToast('Unexpected error occurred');
+        }
+    }
+
     const approveSession = async () => {
         const newErrors = {
             channel: approveBooking.channel.trim() === '',
@@ -1255,5 +1287,6 @@ export const useConsultant = () => {
         markAsMissedConsultant,
         feedbackNote, 
         setFeedbackNote,
+        cancelSessionAdmin,
     }
 }

@@ -156,6 +156,7 @@ const InstructorsBookingBody = ({userType}: StudentBookingBodyProps) => {
                         const isRescheduledByConsultant = item.status === 'rescheduled-by-consultant';
                         const userMissed = Boolean(item.missed_client);
                         const consultantMissed = Boolean(item.missed_consultant);
+                        const isAdminCancelled = item.status === 'cancelled-by-admin';
                     
                         return (
                             <div className="booking-cont" key={index}>
@@ -215,7 +216,14 @@ const InstructorsBookingBody = ({userType}: StudentBookingBodyProps) => {
                                 }
 
                                 {
-                                    !isUserCancelled && !isConsultantCancelled &&
+                                    isAdminCancelled &&
+                                    <div className="alert no notification error text-[.9rem]">
+                                        <p className="color-error text-[.9rem] font-semibold">This session has been cancelled by the Administrator</p>
+                                    </div>
+                                }
+
+                                {
+                                    !isUserCancelled && !isConsultantCancelled && !isAdminCancelled &&
                                     <div>
                                         {
                                             !isPast ? (
