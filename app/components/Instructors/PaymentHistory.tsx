@@ -1,10 +1,27 @@
-import React from "react";
+'use client';
+import React, {useState} from "react";
 import Image from "next/image";
 
-const PaymentHistory = () => {
+type PaymentHistoryProps = {
+    type?: string;
+}
+
+const PaymentHistory = ({type}: PaymentHistoryProps) => {
+    const [selectedTab, setSelectedTab] = useState<string>('revenue');
+    
     return (
         <div className="spacing-inter">
-            <div className="res-flex items-center justify-between mb-4">
+            {
+                type == 'admin' &&
+                <div className="mt-[1.5em]">
+                    <div className="in-nav scrollable">
+                        <span className={`in-nav-link three flex gap-2 items-center two color-grey-text ${selectedTab == 'revenue' ? 'active' : ''}`} onClick={() => setSelectedTab('revenue')}>Revenue</span>
+                        <span className={`in-nav-link three flex gap-2 items-center two color-grey-text ${selectedTab == 'transactions' ? 'active' : ''}`} onClick={() => setSelectedTab('transactions')}> <span>All Transactions</span></span>
+                    </div>
+                </div>
+            }
+
+            <div className="res-flex items-center justify-between my-4">
                 <h2 className="font-semibold">Transaction History</h2>
                 <div className="flex items-center justify-between gap-2 bg-white py-[.1em] px-[.7em] rounded-[.3rem] bod-grey res-w-full">
                     <Image

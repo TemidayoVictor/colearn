@@ -7,6 +7,7 @@ import DashboardTopCourses from "../Instructors/DashboardTopCourses";
 import DashboardTopCoursesTable from "../Instructors/DashboardTopCoursesTable";
 import { useRouter } from "next/navigation";
 import { useAuthAdmin } from "@/hooks/useAuth";
+import Loader from "../Loader";
 
 const AdminDashboardBody = () => {
 
@@ -20,6 +21,8 @@ const AdminDashboardBody = () => {
         };
         init();
     }, []);
+
+    if (loading) return <Loader />
     
     return (
         <div>

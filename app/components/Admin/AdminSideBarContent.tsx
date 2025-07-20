@@ -99,33 +99,35 @@ const AdminSideBarContent = () => {
                 </div>
 
                 <Link href='/admin/user-management' className={`sidebar-link ${pathname.startsWith('/admin/user-management')  ? 'active' : ''}`}>
-                        {
-                            pathname.startsWith('/admin/user-management')  ? (
+                    {
+                        pathname.startsWith('/admin/user-management')  ? (
 
-                                <Image
-                                    aria-hidden
-                                    src="/assets/images/people-active.png"
-                                    alt="Colearn Image"
-                                    width={20}
-                                    height={20}
-                                    className="object-cover"
-                                />
+                            <Image
+                                aria-hidden
+                                src="/assets/images/people-active.png"
+                                alt="Colearn Image"
+                                width={20}
+                                height={20}
+                                className="object-cover"
+                            />
 
-                            ) : (
+                        ) : (
 
-                                <Image
-                                    aria-hidden
-                                    src="/assets/images/people.png"
-                                    alt="Colearn Image"
-                                    width={20}
-                                    height={20}
-                                    className="object-cover"
-                                />
+                            <Image
+                                aria-hidden
+                                src="/assets/images/people.png"
+                                alt="Colearn Image"
+                                width={20}
+                                height={20}
+                                className="object-cover"
+                            />
 
-                            )
-                        }
-                        <p className="text-[.9rem]">User Management</p>
-                    </Link>
+                        )
+                    }
+                    <p className="text-[.9rem]">User Management</p>
+                </Link>
+
+                <div className="sidebar-break">
 
                     <Link href='/admin/bookings' className={`sidebar-link ${pathname.startsWith('/admin/bookings')  ? 'active' : ''}`}>
                         {
@@ -156,8 +158,35 @@ const AdminSideBarContent = () => {
                         <p className="text-[.9rem]">Bookings Overview</p>
                     </Link>
 
+                    <Link href='/admin/financials' className={`sidebar-link ${pathname == '/admin/financials' ? 'active' : ''}`}>
+                        {
+                            pathname == '/admin/financials' ? (
+                                <Image
+                                    aria-hidden
+                                    src="/assets/images/note-active.png"
+                                    alt="Colearn Image"
+                                    width={20}
+                                    height={20}
+                                    className="object-cover"
+                                />
+                            ) : (
+                                <Image
+                                    aria-hidden
+                                    src="/assets/images/note.png"
+                                    alt="Colearn Image"
+                                    width={20}
+                                    height={20}
+                                    className="object-cover"
+                                />
+                            )
+                        }
+                        <p className="text-[.9rem]">Financials</p>
+                    </Link>
+
+                </div>
+
                 <div className="sidebar-break">
-                <Link href='/admin/admin-users' className={`sidebar-link ${pathname == '/admin/admin-users' ? 'active' : ''}`}>
+                    <Link href='/admin/admin-users' className={`sidebar-link ${pathname == '/admin/admin-users' ? 'active' : ''}`}>
                         {
                             pathname == '/admin/admin-users' ? (
                                 <Image

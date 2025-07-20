@@ -4,7 +4,11 @@ import Image from "next/image";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 
-const PaymentInfo = () => {
+type PaymentInfoProps = {
+    type?: string
+}
+
+const PaymentInfo = ({type}: PaymentInfoProps) => {
     const [showBalance, setShowBalance] = useState<boolean | null>(false);
     const toggleBalance = () => setShowBalance(prev => !prev);
     return (

@@ -5,10 +5,24 @@ import { authStore } from "@/zustand/authStore";
 import { useRouter } from "next/navigation";
 import { courseStore } from "@/zustand/courseStore";
 import { add_admin } from "@/services/auth";
+import { 
+    credit_wallet, 
+    debit_wallet, 
+    all_transactions, 
+    admin_transactions, 
+    admin_credit_transactions, 
+    admin_debit_transactions 
+} from "@/services/admin";
+import { genralStore } from "@/zustand/generalStore";
 
 export const useAdmin = () => {
     const router = useRouter();
+    
+    const selectedUser = genralStore((state) => state.user);
+    const selectedUserId = selectedUser?.id;
+
     const [buttonLoader, setButtonLoader] = useState<boolean>(false);
+    const [amount, setAmount] = useState<number>(0);
 
     const [formData, setFormData] = useState<{
         first_name: string;
@@ -83,10 +97,72 @@ export const useAdmin = () => {
         }
     }
 
+    const creditWallet = async() => {
+
+        if(!amount) {
+            showErrorToast('Please add an amount')
+            return
+        }
+
+        // submit
+        setButtonLoader(true);
+        try {
+            const response = await credit_wallet(selectedUserId, amount);
+            if (response.success) {
+                setButtonLoader(false)
+                showSuccessToast(response.message)
+            } 
+
+            else {
+                setButtonLoader(false)
+                showErrorToast(response.message)
+                console.log(response)
+            }
+        }
+
+        catch (err: any) {
+            console.log(err)
+            setButtonLoader(false)
+            showErrorToast('Unexpected error occurred');
+        }
+    }
+
+    const debitWallet = async() => {
+
+        if(!amount) {
+            showErrorToast('Please add an amount')
+            return
+        }
+
+        // submit
+        setButtonLoader(true);
+        try {
+            const response = await debit_wallet(selectedUserId, amount);
+            if (response.success) {
+                setButtonLoader(false)
+                showSuccessToast(response.message)
+            } 
+
+            else {
+                setButtonLoader(false)
+                showErrorToast(response.message)
+                console.log(response)
+            }
+        }
+
+        catch (err: any) {
+            console.log(err)
+            setButtonLoader(false)
+            showErrorToast('Unexpected error occurred');
+        }
+    }
+
     return {
         buttonLoader,
         formData,
         handleInputChange,
         addAdminUser,
+        creditWallet,
+        debitWallet,
     }
 }

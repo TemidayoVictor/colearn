@@ -315,3 +315,15 @@ export type Options = {
     id: number;
     name: string;
 }
+
+export type Transaction = {
+    id: number;
+    user_id: number;
+    type: string;
+    amount: number;
+    reference: string;
+    description: string;
+    processed_at: string;
+    wallet_id: number;
+    user_type: string;
+}
