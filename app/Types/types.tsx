@@ -326,4 +326,7 @@ export type Transaction = {
     processed_at: string;
     wallet_id: number;
     user_type: string;
+    created_at: string;
+    user: User;
+    spendable: number;
 }

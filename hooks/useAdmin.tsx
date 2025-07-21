@@ -11,7 +11,9 @@ import {
     all_transactions, 
     admin_transactions, 
     admin_credit_transactions, 
-    admin_debit_transactions 
+    admin_debit_transactions,
+    admin_credit,
+    admin_debit, 
 } from "@/services/admin";
 import { genralStore } from "@/zustand/generalStore";
 
@@ -157,6 +159,66 @@ export const useAdmin = () => {
         }
     }
 
+    const adminCredit = async() => {
+
+        if(!amount) {
+            showErrorToast('Please add an amount')
+            return
+        }
+
+        // submit
+        setButtonLoader(true);
+        try {
+            const response = await admin_credit(selectedUserId, amount);
+            if (response.success) {
+                setButtonLoader(false)
+                showSuccessToast(response.message)
+            } 
+
+            else {
+                setButtonLoader(false)
+                showErrorToast(response.message)
+                console.log(response)
+            }
+        }
+
+        catch (err: any) {
+            console.log(err)
+            setButtonLoader(false)
+            showErrorToast('Unexpected error occurred');
+        }
+    }
+
+    const adminDebit = async() => {
+
+        if(!amount) {
+            showErrorToast('Please add an amount')
+            return
+        }
+
+        // submit
+        setButtonLoader(true);
+        try {
+            const response = await admin_debit(selectedUserId, amount);
+            if (response.success) {
+                setButtonLoader(false)
+                showSuccessToast(response.message)
+            } 
+
+            else {
+                setButtonLoader(false)
+                showErrorToast(response.message)
+                console.log(response)
+            }
+        }
+
+        catch (err: any) {
+            console.log(err)
+            setButtonLoader(false)
+            showErrorToast('Unexpected error occurred');
+        }
+    }
+
     return {
         buttonLoader,
         formData,
@@ -164,5 +226,7 @@ export const useAdmin = () => {
         addAdminUser,
         creditWallet,
         debitWallet,
+        adminCredit,
+        adminDebit,
     }
 }

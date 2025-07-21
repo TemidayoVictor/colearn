@@ -145,6 +145,10 @@ input, textarea, select {
   background-color: var(--success-color-light);
 }
 
+.bg-error-light {
+  background-color: var(--error-color-light-active);
+}
+
 .bg-secondary-light {
   background-color: var(--secondary-color-light);
 }
