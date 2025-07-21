@@ -25,6 +25,7 @@ import EditAccount from "../EditAccount";
 import EditName from "../EditName";
 import EditDetails from "../EditDetails";
 import AddAdmin from "../Admin/AddAdmin";
+import TransactionUpdate from "../TransactionUpdate";
 
 type AccountModalProps = {
     modalType: string;
@@ -359,6 +360,26 @@ const AccountModal = ({modalType, modalClose, experience, bank, subType}: Accoun
                 {
                     modalType == 'review' &&
                     <AddReview />
+                }
+
+                {
+                    modalType == 'admin-credit' &&
+                    <TransactionUpdate type='admin-credit' />
+                }
+
+                {
+                    modalType == 'admin-debit' &&
+                    <TransactionUpdate type='admin-debit' />
+                }
+
+                {
+                    modalType == 'credit-wallet' &&
+                    <TransactionUpdate type='credit-wallet' />
+                }
+
+                {
+                    modalType == 'debit-wallet' &&
+                    <TransactionUpdate type='debit-wallet' />
                 }
 
                 {

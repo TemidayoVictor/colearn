@@ -589,6 +589,7 @@ input, textarea, select {
   display: flex;
   align-items: center;
   justify-content: center;
+  z-index: 100000;
 }
 
 .modal {
@@ -601,6 +602,7 @@ input, textarea, select {
   position: relative;
   max-height: 35rem;
   overflow-y: auto;
+  z-index: 100000;
 }
 
 .modal-close {

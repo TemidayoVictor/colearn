@@ -330,3 +330,10 @@ export type Transaction = {
     user: User;
     spendable: number;
 }
+
+export type Wallet = {
+    user_id: number;
+    balance: number;
+    type: string;
+    spendable: number;
+}

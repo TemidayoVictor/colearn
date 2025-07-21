@@ -100,3 +100,14 @@ export const admin_debit_transactions = async () => {
         return handleApiError(error)
     }
 }
+
+export const all_users_admin = async () => {
+    try {
+        const response = await axiosInstance.post("/all-users-admin");
+        return handleApiResponse(response);
+    }
+
+    catch(error: any) {
+        return handleApiError(error)
+    }
+}

@@ -42,35 +42,6 @@ const AdminSideBarContent = () => {
                         <p className="text-[.9rem]">Dashboard</p>
                     </Link>
 
-                    <Link href='/admin/courses' className={`sidebar-link ${pathname.startsWith('/admin/courses')  ? 'active' : ''}`}>
-                        {
-                            pathname.startsWith('/admin/courses')  ? (
-
-                                <Image
-                                    aria-hidden
-                                    src="/assets/images/teacher-active.png"
-                                    alt="Colearn Image"
-                                    width={20}
-                                    height={20}
-                                    className="object-cover"
-                                />
-
-                            ) : (
-
-                                <Image
-                                    aria-hidden
-                                    src="/assets/images/teacher.png"
-                                    alt="Colearn Image"
-                                    width={20}
-                                    height={20}
-                                    className="object-cover"
-                                />
-
-                            )
-                        }
-                        <p className="text-[.9rem]">Course Management</p>
-                    </Link>
-
                     <Link href='/admin/user-verification' className={`sidebar-link ${pathname.startsWith('/admin/user-verification') ? 'active' : ''}`}>
                         {
                             pathname.startsWith('/admin/user-verification') ? (
@@ -128,6 +99,35 @@ const AdminSideBarContent = () => {
                 </Link>
 
                 <div className="sidebar-break">
+
+                    <Link href='/admin/courses' className={`sidebar-link ${pathname.startsWith('/admin/courses')  ? 'active' : ''}`}>
+                        {
+                            pathname.startsWith('/admin/courses')  ? (
+
+                                <Image
+                                    aria-hidden
+                                    src="/assets/images/teacher-active.png"
+                                    alt="Colearn Image"
+                                    width={20}
+                                    height={20}
+                                    className="object-cover"
+                                />
+
+                            ) : (
+
+                                <Image
+                                    aria-hidden
+                                    src="/assets/images/teacher.png"
+                                    alt="Colearn Image"
+                                    width={20}
+                                    height={20}
+                                    className="object-cover"
+                                />
+
+                            )
+                        }
+                        <p className="text-[.9rem]">Course Management</p>
+                    </Link>
 
                     <Link href='/admin/bookings' className={`sidebar-link ${pathname.startsWith('/admin/bookings')  ? 'active' : ''}`}>
                         {

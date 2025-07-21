@@ -5,6 +5,7 @@ import { useAuthAdmin } from "@/hooks/useAuth";
 import { all_transactions } from "@/services/admin";
 import { showErrorToast } from "@/utils/toastTypes";
 import { genralStore } from "@/zustand/generalStore";
+import { courseStore } from "@/zustand/courseStore";
 import PaymentHistory from "../Instructors/PaymentHistory";
 import PaymentInfo from "../Instructors/PaymentInfo";
 import Loader from "../Loader";
@@ -13,9 +14,12 @@ const AdminTransactionBody = () => {
     
     const router = useRouter();
     const [loading, setLoading] = useState<boolean>(true)
+    const newUpdate = courseStore((state) => state.newUpdate);
+
 
     useEffect(() => {
         const init = async () => {
+            setLoading(true)
             await useAuthAdmin(router); // ✅ valid usage
             
             try {
@@ -24,7 +28,7 @@ const AdminTransactionBody = () => {
                 if (response.success) {
                     // save state globally
                     genralStore.getState().setTransactions(response.data.transactions);
-                    genralStore.getState().setWalletBalance(response.data.adminBalance);
+                    genralStore.getState().setWallet(response.data.adminWallet);
                 } 
     
                 else {
@@ -38,11 +42,12 @@ const AdminTransactionBody = () => {
                 console.log(error)
             }
             
+            courseStore.getState().setNewUpdate('reset');
             setLoading(false);
         };
         init();
 
-    }, []);
+    }, [newUpdate]);
 
     if (loading) return <Loader />
     

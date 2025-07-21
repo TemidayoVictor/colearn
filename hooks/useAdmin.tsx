@@ -1,5 +1,5 @@
 'use client';
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect, use} from "react";
 import { showErrorToast, showSuccessToast } from "@/utils/toastTypes";
 import { authStore } from "@/zustand/authStore";
 import { useRouter } from "next/navigation";
@@ -22,6 +22,9 @@ export const useAdmin = () => {
     
     const selectedUser = genralStore((state) => state.user);
     const selectedUserId = selectedUser?.id;
+
+    const user = authStore((state) => state.user);
+    const userId = user?.id
 
     const [buttonLoader, setButtonLoader] = useState<boolean>(false);
     const [amount, setAmount] = useState<number>(0);
@@ -113,6 +116,7 @@ export const useAdmin = () => {
             if (response.success) {
                 setButtonLoader(false)
                 showSuccessToast(response.message)
+                courseStore.getState().setNewUpdate('set');
             } 
 
             else {
@@ -143,6 +147,7 @@ export const useAdmin = () => {
             if (response.success) {
                 setButtonLoader(false)
                 showSuccessToast(response.message)
+                courseStore.getState().setNewUpdate('set');
             } 
 
             else {
@@ -169,10 +174,11 @@ export const useAdmin = () => {
         // submit
         setButtonLoader(true);
         try {
-            const response = await admin_credit(selectedUserId, amount);
+            const response = await admin_credit(userId, amount);
             if (response.success) {
                 setButtonLoader(false)
                 showSuccessToast(response.message)
+                courseStore.getState().setNewUpdate('set');
             } 
 
             else {
@@ -199,10 +205,11 @@ export const useAdmin = () => {
         // submit
         setButtonLoader(true);
         try {
-            const response = await admin_debit(selectedUserId, amount);
+            const response = await admin_debit(userId, amount);
             if (response.success) {
                 setButtonLoader(false)
                 showSuccessToast(response.message)
+                courseStore.getState().setNewUpdate('set');
             } 
 
             else {
@@ -228,5 +235,6 @@ export const useAdmin = () => {
         debitWallet,
         adminCredit,
         adminDebit,
+        setAmount,
     }
 }

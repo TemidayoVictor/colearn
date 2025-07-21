@@ -82,7 +82,7 @@ const PaymentHistory = ({type}: PaymentHistoryProps) => {
                                 <h2 className="font-semibold"> {month} </h2>
                                 <div className="mt-4">
                                     {
-                                        (eachTransaction as Transaction[]).map((item, index) => (
+                                        (eachTransaction as Transaction[]).sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime()).map((item, index) => (
                                             <div className="flex gap-2 justify-between my-[1em]" key={index}>
                                                 <div className="left">
                                                     {
