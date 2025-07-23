@@ -29,6 +29,7 @@ const AdminTransactionBody = () => {
                     // save state globally
                     genralStore.getState().setTransactions(response.data.transactions);
                     genralStore.getState().setWallet(response.data.adminWallet);
+                    genralStore.getState().setGeneralSettings(response.data.settings);
                 } 
     
                 else {

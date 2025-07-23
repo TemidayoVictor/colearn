@@ -107,7 +107,7 @@ const TransactionUpdate = ({type}: TransactionnUpdateProps) => {
                         <label htmlFor="">Amount<span className="text-red-500">*</span></label>
                         <div className="flex items-center gap-1">
                             <span className="input-field font-bold">$</span>
-                            <input name="amount" type="number" className="input-field" onChange = {(e) => setAmount(Number(e.target.value))}/>
+                            <input name="amount" type="number" className="input-field flex-1" onChange = {(e) => setAmount(Number(e.target.value))}/>
                         </div>
                     </div>
                     <button className="flex items-center justify-center gap-2 btn btn-success tw w-full" onClick={debitWallet}>

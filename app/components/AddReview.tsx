@@ -51,7 +51,7 @@ const AddReview = () => {
                             <input 
                                 type="text" 
                                 className="input-field" 
-                                placeholder="Title e.g Very Good Service" 
+                                placeholder="Title e.g Very Good Course" 
                                 name="title"
                                 onChange={handleReviewChange}
                                 value={reviewData.title}

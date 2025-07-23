@@ -1,5 +1,5 @@
 'use client';
-import React, {useState, useEffect, use} from "react";
+import React, {useState} from "react";
 import { showErrorToast, showSuccessToast } from "@/utils/toastTypes";
 import { authStore } from "@/zustand/authStore";
 import { useRouter } from "next/navigation";
@@ -14,17 +14,19 @@ import {
     admin_debit_transactions,
     admin_credit,
     admin_debit, 
+    update_general_settings,
 } from "@/services/admin";
 import { genralStore } from "@/zustand/generalStore";
+import { GeneralSettings } from "@/app/Types/types";
 
 export const useAdmin = () => {
     const router = useRouter();
     
-    const selectedUser = genralStore((state) => state.user);
-    const selectedUserId = selectedUser?.id;
-
     const user = authStore((state) => state.user);
     const userId = user?.id
+
+    const selectedUser = genralStore((state) => state.user);
+    const selectedUserId = selectedUser?.id;
 
     const [buttonLoader, setButtonLoader] = useState<boolean>(false);
     const [amount, setAmount] = useState<number>(0);
@@ -55,6 +57,24 @@ export const useAdmin = () => {
         const { name, value } = e.target;
         setFormData((prev) => ({ ...prev, [name]: value }));
         setErrors((prev) => ({ ...prev, [name]: false }));
+    };
+
+    const [settingsData, setSettingsData] = useState<GeneralSettings>({
+        course_percentage: 0,
+        consultation_perentage: 0,
+        minimum_withdrawal: 0,
+    });
+
+    const [setttingsErrors, setSettingsErrors] = useState({
+        course_percentage: false,
+        consultation_perentage: false,
+        minimum_withdrawal: false,
+    });
+
+    const handleSettingsChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+        const { name, value } = e.target;
+        setSettingsData((prev) => ({ ...prev, [name]: value }));
+        setSettingsErrors((prev) => ({ ...prev, [name]: false }));
     };
 
     const addAdminUser = async (e: React.FormEvent) => {
@@ -226,6 +246,47 @@ export const useAdmin = () => {
         }
     }
 
+    const updateGeneralSetting = async() => {
+        
+        const newErrors = {
+            course_percentage: settingsData.course_percentage === 0,
+            consultation_perentage: settingsData.consultation_perentage === 0,
+            minimum_withdrawal: settingsData.minimum_withdrawal === 0,
+        };
+        
+        setSettingsErrors(newErrors);
+
+        const hasError = Object.values(newErrors).some(Boolean);
+
+        if (hasError) {
+            showErrorToast('Please empty or 0 values not allowed');
+            return;
+        }
+
+        // submit
+        setButtonLoader(true);
+        try {
+            const response = await update_general_settings(settingsData);
+            if (response.success) {
+                setButtonLoader(false)
+                showSuccessToast(response.message)
+                courseStore.getState().setNewUpdate('set');
+            } 
+
+            else {
+                setButtonLoader(false)
+                showErrorToast(response.message)
+                console.log(response)
+            }
+        }
+
+        catch (err: any) {
+            console.log(err)
+            setButtonLoader(false)
+            showErrorToast('Unexpected error occurred');
+        }
+    }
+    
     return {
         buttonLoader,
         formData,
@@ -236,5 +297,9 @@ export const useAdmin = () => {
         adminCredit,
         adminDebit,
         setAmount,
+        handleSettingsChange,
+        settingsData,
+        setSettingsData,
+        updateGeneralSetting,
     }
 }

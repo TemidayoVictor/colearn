@@ -11,6 +11,7 @@ import { get_user_details } from "@/services/admin";
 import { showErrorToast } from "@/utils/toastTypes";
 import { useAuthAdmin } from "@/hooks/useAuth";
 import { genralStore } from "@/zustand/generalStore";
+import { courseStore } from "@/zustand/courseStore";
 import { useRouter } from "next/navigation";
 import { User } from "@/app/Types/types";
 import Loader from "../Loader";
@@ -35,6 +36,8 @@ const AdminuserProfileBody = ({type}: AdminuserProfileBodyProps) => {
     const [showModal, setShowModal] = useState<string | null>(null);
     const openModal = (key: string) => setShowModal(key);
     const closeModal = () => setShowModal(null);
+
+    const newUpdate = courseStore((state) => state.newUpdate);
 
     function formatDateTime(datetime: string | undefined): string {
         if(!datetime) return 'N/A';
@@ -89,11 +92,13 @@ const AdminuserProfileBody = ({type}: AdminuserProfileBodyProps) => {
                 console.log(error)
             }
             
+            courseStore.getState().setNewUpdate('reset');
+            closeModal();
             setLoading(false);
         };
         init();
 
-    }, []);
+    }, [newUpdate]);
 
     if (loading) return <Loader />
 
@@ -181,8 +186,8 @@ const AdminuserProfileBody = ({type}: AdminuserProfileBodyProps) => {
                             </div>
                             
                             <div className="flex gap-2">
-                                <button className="btn btn-primary-fill" onClick={() => openModal("admin-credit")}>Credit Wallet</button>
-                                <button className="btn error two" onClick={() => openModal("admin-debit")}>Debit Wallet</button>
+                                <button className="btn btn-primary-fill" onClick={() => openModal("credit-wallet")}>Credit Wallet</button>
+                                <button className="btn error two" onClick={() => openModal("debit-wallet")}>Debit Wallet</button>
                             </div>
 
                         </div>

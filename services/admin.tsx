@@ -1,5 +1,6 @@
 import axiosInstance from "@/utils/api";
 import { handleApiError, handleApiResponse } from "@/utils/handleApiResponse";
+import { GeneralSettings } from "@/app/Types/types";
 
 export const credit_wallet = async (id: number | undefined, amount: number) => {
     try {
@@ -124,3 +125,15 @@ export const get_user_details = async (id: string | undefined) => {
         return handleApiError(error)
     }
 }
+
+export const update_general_settings = async (formData: GeneralSettings) => {
+    try {
+        const response = await axiosInstance.post("/update-general-settings", formData);
+        return handleApiResponse(response);
+    }
+
+    catch(error: any) {
+        return handleApiError(error)
+    }
+}
+

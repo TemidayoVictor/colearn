@@ -1,6 +1,18 @@
 import {create} from 'zustand';
 import { persist } from 'zustand/middleware';
-import { User, Consultant, Booking, Course, Cart, Coupon, Enrollment, Review, Transaction, Wallet } from '@/app/Types/types';
+import { 
+  User, 
+  Consultant, 
+  Booking, 
+  Course, 
+  Cart, 
+  Coupon, 
+  Enrollment, 
+  Review, 
+  Transaction, 
+  Wallet,
+  GeneralSettings, 
+} from '@/app/Types/types';
 
 type GeneralState = {
   consultant: Consultant | null;
@@ -34,6 +46,8 @@ type GeneralState = {
 
   wallet: Wallet | null;
 
+  generalSettings: GeneralSettings | null;
+
   setConsultant: (consultant: Consultant) => void
   setConsultants: (consultants: Consultant[]) => void
 
@@ -64,6 +78,8 @@ type GeneralState = {
   setNewEmail: (newEmail: string) => void
 
   setWallet: (wallet: Wallet | null) => void
+
+  setGeneralSettings: (settings: GeneralSettings) => void;
 
   getConsultantById: (id: number) => Consultant | undefined;
 
@@ -104,6 +120,8 @@ export const genralStore = create<GeneralState>() (
 
       wallet: null,
 
+      generalSettings: null,
+
       setBooking: (booking) => set({booking}),
       setBookings: (bookings) => set({bookings}),
 
@@ -135,6 +153,8 @@ export const genralStore = create<GeneralState>() (
 
       setWallet: (wallet) => set({wallet}),
 
+      setGeneralSettings: (settings: GeneralSettings) => set({generalSettings: settings}),
+
       getConsultantById: (id) => get().consultants.find((c) => c.id === id),
       
       clearAll: () => {
@@ -150,6 +170,7 @@ export const genralStore = create<GeneralState>() (
         transaction: null, transactions: [],
         newEmail: '',
         wallet: null,
+        generalSettings: null,
       }); 
 
       localStorage.removeItem('general-storage'); // Remove persisted state

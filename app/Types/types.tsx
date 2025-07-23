@@ -341,3 +341,9 @@ export type Wallet = {
     type: string;
     spendable: number;
 }
+
+export type GeneralSettings = {
+    course_percentage: number;
+    consultation_perentage: number;
+    minimum_withdrawal: number;
+}
