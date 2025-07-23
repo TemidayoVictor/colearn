@@ -3,6 +3,7 @@ import React, {useState} from "react";
 import Image from "next/image";
 import Link from "next/link";
 import AccountModal from "../Instructors/AccountModal";
+import { genralStore } from "@/zustand/generalStore";
 
 type AdminVerificationTableProps = {
     type?: string
@@ -28,6 +29,9 @@ const AdminVerificationTable = ({type}: AdminVerificationTableProps) => {
     }
 
     const closeModal = () => setShowModal(null);
+
+    const users = genralStore((state) => state.users)
+
     return (
         <div className="spacing-inter">
             <div className="res-flex items-center justify-between gap-2">
@@ -74,20 +78,16 @@ const AdminVerificationTable = ({type}: AdminVerificationTableProps) => {
                                 <th>Name</th>
                                 <th>Email</th>
                                 <th>Role</th>
-                                {
-                                    type != 'admin-users' &&
-                                    <th>Country</th>
-                                }
                                 <th>Status</th>
                             </tr>
                         </thead>
                         <tbody>
                             {
-                                [1,2,3,4,5,6].map((items, index) => (
+                                users.map((item, index) => (
                                     <tr key={index}>
                                         <td>{index + 1}</td>
                                         <td className="flex items-center gap-2">
-                                            <Link href={userLink(type)} className="flex gap-2 items-center">
+                                            <Link href={`user-management/${item.id}`} className="flex gap-2 items-center">
                                                 <Image
                                                     aria-hidden
                                                     src="/assets/images/avatars.png"
@@ -99,20 +99,24 @@ const AdminVerificationTable = ({type}: AdminVerificationTableProps) => {
             
                                                 <span className="flex flex-col overflow-hidden">
                                                     <span className="text-sm font-semibold text-gray-800 truncate sm:whitespace-normal sm:truncate-0">
-                                                        Favi Ayomide
+                                                        {item.first_name} {item.last_name}
                                                     </span>
                                                 </span>
                                             </Link>
                                         </td>
-                                        <td>faviayomide11@gmail.com</td>
-                                        <td>Instructor</td>
+                                        <td>{item.email}</td>
+                                        <td className="capitalize">{item.type}</td>
                                         {
-                                            type != 'admin-users' &&
-                                            <td>Nigeria</td>
+                                            item.profile_progress != 'completed' ? (
+                                                <td>
+                                                    <span className="badge ongoing">Pending</span>
+                                                </td>
+                                            ) : (
+                                                <td>
+                                                    <span className="badge completed">Active</span>
+                                                </td>
+                                            )
                                         }
-                                        <td>
-                                            <span className="badge completed">Active</span>
-                                        </td>
                                     </tr>
                                 ))
                             }

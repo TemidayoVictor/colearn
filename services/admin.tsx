@@ -103,7 +103,20 @@ export const admin_debit_transactions = async () => {
 
 export const all_users_admin = async () => {
     try {
-        const response = await axiosInstance.post("/all-users-admin");
+        const response = await axiosInstance.get("/all-users-admin");
+        return handleApiResponse(response);
+    }
+
+    catch(error: any) {
+        return handleApiError(error)
+    }
+}
+
+export const get_user_details = async (id: string | undefined) => {
+    try {
+        const response = await axiosInstance.post("/get-user-details", {
+            id,
+        });
         return handleApiResponse(response);
     }
 

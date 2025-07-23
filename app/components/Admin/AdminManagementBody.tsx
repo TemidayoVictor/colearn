@@ -1,8 +1,51 @@
-import React from "react";
+'use client';
+import React, {useState, useEffect} from "react";
 import DashboardPerformance from "../Instructors/DashboardPerformance";
 import AdminVerificationTable from "./AdminVerificationTable";
+import { all_users_admin } from "@/services/admin";
+import { useAuthAdmin } from "@/hooks/useAuth";
+import { genralStore } from "@/zustand/generalStore";
+import { useRouter } from "next/navigation";
+import { showErrorToast } from "@/utils/toastTypes";
+import Loader from "../Loader";
 
 const AdminManagementBody = () => {
+
+    const router = useRouter();
+    const [loading, setLoading] = useState<boolean>(true)
+
+    useEffect(() => {
+        const init = async () => {
+            setLoading(true)
+            await useAuthAdmin(router); // ✅ valid usage
+            
+            try {
+                const response = await all_users_admin();
+                
+                if (response.success) {
+                    // save state globally
+                    genralStore.getState().setUsers(response.data.users);
+                } 
+    
+                else {
+                    showErrorToast(response.message)
+                    console.log(response)
+                }
+            }
+
+            catch(error: any) {
+                showErrorToast('Something unexpected happened')
+                console.log(error)
+            }
+            
+            setLoading(false);
+        };
+        init();
+
+    }, []);
+
+    if (loading) return <Loader />
+
     return (
         <div>
             <div className="container-3">

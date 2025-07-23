@@ -43,6 +43,10 @@ export type User = {
     country_iso: string;
     preferences: string;
     verification_status: boolean;
+    student?: Student;
+    instructor?: Instructor;
+    created_at: string | undefined;
+    wallet: Wallet | null;
 };
   
 export type Student = {

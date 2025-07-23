@@ -34,7 +34,7 @@ const PaymentHistory = ({type}: PaymentHistoryProps) => {
         }); // 11:41 AM
       
         return `${day} ${month}, ${year} · ${time}`;
-      }
+    }
 
     useEffect(() => {
         const init = async () => {
