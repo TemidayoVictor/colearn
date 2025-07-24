@@ -9,6 +9,7 @@ import { watch_video } from "@/services/courses";
 import { authStore } from "@/zustand/authStore";
 import { UseCourses } from "@/hooks/useCourses";
 import { showErrorToast } from "@/utils/toastTypes";
+import { courseStore } from "@/zustand/courseStore";
 import { Video } from "@/app/Types/types";
 import Loader from "../Loader";
 import ButtonLoader from "../buttonLoader";
@@ -25,11 +26,16 @@ const StudentLectureBody = () => {
     const user = authStore((state) => state.user);
     const userId = user?.id;
 
+    const course = courseStore((state) => state.course);
+    const modules = course?.modules;
+
+    const newUpdate = courseStore((state) => state.newUpdate);
+
     const [loading, setLoading] = useState<Boolean>(true);
     const [openMaterial, setOpenMaterial] = useState<number | null>(null);
     const [video, setVideo] = useState<Video>()
-    const [nextVideo, setNextVideo] = useState<Video | null>()
-    const [prevVideo, setPrevVideo] = useState<Video | null>()
+    const [nextVideo, setNextVideo] = useState<Video|null>()
+    const [prevVideo, setPrevVideo] = useState<Video|null>()
 
     const openMaterialBox = (index:number ) => {
         setOpenMaterial(prev => (prev == index ? null : index));
@@ -60,6 +66,9 @@ const StudentLectureBody = () => {
         setLoading(true);
         const init = async () => {
             await checkAuth(router); // ✅ valid usage
+            if(!course) {
+                router.push(`/students/view-course/${courseId}`);
+            }
             if(!userId || !courseId) return
             try {
                 const response = await watch_video(userId, lectureId, courseId);
@@ -80,11 +89,13 @@ const StudentLectureBody = () => {
                 showErrorToast('Something unexpected happened')
                 console.log(error)
             }
+
+            courseStore.getState().setNewUpdate('reset');
             setLoading(false);
         };
         init();
 
-    }, [userId, courseId]);
+    }, [userId, courseId, newUpdate]);
 
     if(loading) return <Loader />
 
@@ -141,10 +152,10 @@ const StudentLectureBody = () => {
                             <div className="student-view-course-menu">
                                 
                                 {
-                                    [1,2,3,4,5].map((item, index) => (
+                                    modules?.map((item, index) => (
                                         <div className={`left-content ${openMaterial == index ? 'active' : ''}`} key={index} onClick={() => openMaterialBox(index)}>
                                             <div className="flex items-center justify-between gap-2">
-                                                <p className="text-[.9rem]">Course Material</p>
+                                                <p className="text-[.9rem]"> {item.title} </p>
                                                 {
                                                     openMaterial == index ? (
                                                         <Image
@@ -173,30 +184,64 @@ const StudentLectureBody = () => {
 
                                                 <div className="">
                                                     {
-                                                        [1,2,3].map((item, index2) => (
+                                                        item?.videos.map((item, index2) => (
                                                             <div className={`module ${selectedVideo == index2 + index ? 'active' : ''}`} key={index2} onClick={(e) => {
                                                                 e.stopPropagation();
                                                                 openVideo(index2 + index)
                                                                 }}>
                                                                     
-                                                                <div className="flex items-center gap-1">
-                                                                    <div>
-                                                                        <Image
-                                                                            aria-hidden
-                                                                            src="/assets/images/video.png"
-                                                                            alt="Colearn Logo"
-                                                                            width={24}
-                                                                            height={24}
-                                                                            className="object-contain"
-                                                                        />
-                                                                    </div>
+                                                                <Link href={`/students/view-course/${courseId}/lecture/${item.id}`} className="flex items-center gap-2">
+                                                                    
+                                                                    {
+                                                                        item.progresses && item.progresses.length > 0 ? (
+                                                                            <div>
+                                                                                {item.progresses[0].completed_at ? (
+                                                                                
+                                                                                    <div>
+                                                                                        <Image
+                                                                                            aria-hidden
+                                                                                            src="/assets/images/success-check.png"
+                                                                                            alt="Colearn Logo"
+                                                                                            width={16}
+                                                                                            height={16}
+                                                                                            className="object-contain"
+                                                                                        />
+                                                                                    </div>
+                                                                                
+                                                                                ) : (
+                                                                                    <div>
+                                                                                        <Image
+                                                                                            aria-hidden
+                                                                                            src="/assets/images/video.png"
+                                                                                            alt="Colearn Logo"
+                                                                                            width={24}
+                                                                                            height={24}
+                                                                                            className="object-contain"
+                                                                                        />
+                                                                                    </div>
+                                                                                )}
+                                                                            </div>
+                                                                        ) : (
+                                                                            <div>
+                                                                                <Image
+                                                                                    aria-hidden
+                                                                                    src="/assets/images/video.png"
+                                                                                    alt="Colearn Logo"
+                                                                                    width={24}
+                                                                                    height={24}
+                                                                                    className="object-contain"
+                                                                                />
+                                                                            </div>
+                                                                        )
+                                                                    }
+
                                                                     <div className="flex items-center justify-between w-[80%]">
-                                                                        <p className="w-[68%]">Module {index2} Lorm . . .</p>
+                                                                        <p className="w-[68%]"> {item?.title} </p>
                                                                         <div className="w-[31%] flex items-end justify-end">
-                                                                            <p>115 mins</p>
+                                                                            <p>{item?.duration} mins</p>
                                                                         </div>
                                                                     </div>
-                                                                </div>
+                                                                </Link>
                                                             </div>
                                                         ))
                                                     }

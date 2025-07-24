@@ -61,11 +61,11 @@ const StudentViewCourseMenu = ({selectedTab, changeTab}: StudentViewCourseMenuPr
                 } */}
             </div>
             <div className={`left-content ${selectedTab == "articles" ? 'active' : ''}`} onClick={() => changeTab('articles')}>
-                <p className="text-[.9rem]">Articles</p>
+                <p className="text-[.9rem]">Resources</p>
             </div>
-            <div className={`left-content ${selectedTab == "test" ? 'active' : ''}`} onClick={() => changeTab('test')}>
+            {/* <div className={`left-content ${selectedTab == "test" ? 'active' : ''}`} onClick={() => changeTab('test')}>
                 <p className="text-[.9rem]">Quiz / Practice Test</p>
-            </div>
+            </div> */}
         </div>
     )
 }
