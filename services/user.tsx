@@ -1,0 +1,16 @@
+import axiosInstance from "@/utils/api";
+import { handleApiError, handleApiResponse } from "@/utils/handleApiResponse";
+import { GeneralSettings } from "@/app/Types/types";
+
+export const get_user_transactions = async (id: number | undefined) => {
+    try {
+        const response = await axiosInstance.post("/get-user-transactions", {
+            id,
+        });
+        return handleApiResponse(response);
+    }
+
+    catch(error: any) {
+        return handleApiError(error)
+    }
+}

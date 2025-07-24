@@ -15,6 +15,9 @@ import {
     admin_credit,
     admin_debit, 
     update_general_settings,
+    withdraw_funds,
+    approve_withdrawal,
+    reject_withdrawal,
 } from "@/services/admin";
 import { genralStore } from "@/zustand/generalStore";
 import { GeneralSettings } from "@/app/Types/types";
@@ -27,6 +30,9 @@ export const useAdmin = () => {
 
     const selectedUser = genralStore((state) => state.user);
     const selectedUserId = selectedUser?.id;
+
+    const transaction = genralStore((state) => state.transaction);
+    const transactionId = transaction?.id;
 
     const [buttonLoader, setButtonLoader] = useState<boolean>(false);
     const [amount, setAmount] = useState<number>(0);
@@ -286,6 +292,99 @@ export const useAdmin = () => {
             showErrorToast('Unexpected error occurred');
         }
     }
+
+    const withdrawFunds = async() => {
+        
+        if(!amount) {
+            showErrorToast('Please add an amount')
+            return
+        }
+
+        // submit
+        setButtonLoader(true);
+        try {
+            const response = await withdraw_funds(userId, amount);
+            if (response.success) {
+                setButtonLoader(false)
+                showSuccessToast(response.message)
+                courseStore.getState().setNewUpdate('set');
+            } 
+
+            else {
+                setButtonLoader(false)
+                showErrorToast(response.message)
+                console.log(response)
+            }
+        }
+
+        catch (err: any) {
+            console.log(err)
+            setButtonLoader(false)
+            showErrorToast('Unexpected error occurred');
+        }
+    }
+
+    const approveWithdrawal = async() => {
+        
+        if(!transactionId) {
+            showErrorToast('Please add an amount')
+            return
+        }
+
+        // submit
+        setButtonLoader(true);
+        try {
+            const response = await approve_withdrawal(transactionId);
+            if (response.success) {
+                setButtonLoader(false)
+                showSuccessToast(response.message)
+                courseStore.getState().setNewUpdate('set');
+            } 
+
+            else {
+                setButtonLoader(false)
+                showErrorToast(response.message)
+                console.log(response)
+            }
+        }
+
+        catch (err: any) {
+            console.log(err)
+            setButtonLoader(false)
+            showErrorToast('Unexpected error occurred');
+        }
+    }
+
+    const rejectWithdrawal = async() => {
+        
+        if(!transactionId) {
+            showErrorToast('Please add an amount')
+            return
+        }
+
+        // submit
+        setButtonLoader(true);
+        try {
+            const response = await reject_withdrawal(transactionId);
+            if (response.success) {
+                setButtonLoader(false)
+                showSuccessToast(response.message)
+                courseStore.getState().setNewUpdate('set');
+            } 
+
+            else {
+                setButtonLoader(false)
+                showErrorToast(response.message)
+                console.log(response)
+            }
+        }
+
+        catch (err: any) {
+            console.log(err)
+            setButtonLoader(false)
+            showErrorToast('Unexpected error occurred');
+        }
+    }
     
     return {
         buttonLoader,
@@ -301,5 +400,8 @@ export const useAdmin = () => {
         settingsData,
         setSettingsData,
         updateGeneralSetting,
+        withdrawFunds,
+        approveWithdrawal,
+        rejectWithdrawal,
     }
 }

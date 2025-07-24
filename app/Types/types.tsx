@@ -333,6 +333,7 @@ export type Transaction = {
     created_at: string;
     user: User;
     spendable: number;
+    status: string;
 }
 
 export type Wallet = {

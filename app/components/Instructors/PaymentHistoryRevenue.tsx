@@ -5,7 +5,11 @@ import { Transaction } from "@/app/Types/types";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowDown, faArrowUp, faWallet } from '@fortawesome/free-solid-svg-icons'
 
-const PaymentHistoryRevenue = () => {
+type PaymentRevenueProps = {
+    type?: string;
+}
+
+const PaymentHistoryRevenue = ({type}: PaymentRevenueProps) => {
     const transactionsFetch = genralStore((state) => state.transactions);
 
     const groupedTransactions = useMemo(() => {
@@ -100,7 +104,27 @@ const PaymentHistoryRevenue = () => {
 
                                                     <div className="res-flex items-center justify-between gap-2 right">
                                                         <div>
-                                                            <p className="font-semibold"> {item.description} </p>
+                                                            <p className="font-semibold">
+                                                                {item.description}{' '}
+                                                                {item.status && (
+                                                                    <span
+                                                                    className={`
+                                                                        px-2 py-1 rounded text-white text-xs ml-2 capitalize
+                                                                        ${
+                                                                        item.status === 'approved'
+                                                                            ? 'bg-green-600'
+                                                                            : item.status === 'pending'
+                                                                            ? 'bg-yellow-500'
+                                                                            : item.status === 'declined'
+                                                                            ? 'bg-red-600'
+                                                                            : 'bg-gray-400'
+                                                                        }
+                                                                    `}
+                                                                    >
+                                                                    {item.status}
+                                                                    </span>
+                                                                )}
+                                                            </p>
                                                             <p className="color-grey-text text-[.7rem] my-[.3em]"> {item.type == 'credit' ? 'To' : 'From'} : {item.user.email}</p>
                                                         </div>
                                                         <div className="flex-mob">

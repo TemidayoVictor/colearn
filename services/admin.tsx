@@ -137,3 +137,43 @@ export const update_general_settings = async (formData: GeneralSettings) => {
     }
 }
 
+export const withdraw_funds = async (id: number | undefined, amount: number) => {
+    try {
+        const response = await axiosInstance.post("/withdraw-funds", {
+            id,
+            amount
+        });
+        return handleApiResponse(response);
+    }
+
+    catch(error: any) {
+        return handleApiError(error)
+    }
+}
+
+export const approve_withdrawal = async (id: number | undefined) => {
+    try {
+        const response = await axiosInstance.post("/approve-withdrawal", {
+            id,
+        });
+        return handleApiResponse(response);
+    }
+
+    catch(error: any) {
+        return handleApiError(error)
+    }
+}
+
+export const reject_withdrawal = async (id: number | undefined) => {
+    try {
+        const response = await axiosInstance.post("/reject-withdrawal", {
+            id,
+        });
+        return handleApiResponse(response);
+    }
+
+    catch(error: any) {
+        return handleApiError(error)
+    }
+}
+

@@ -383,6 +383,11 @@ const AccountModal = ({modalType, modalClose, experience, bank, subType}: Accoun
                 }
 
                 {
+                    modalType == 'withdraw-funds' &&
+                    <TransactionUpdate type='withdraw-funds' />
+                }
+
+                {
                     modalType == 'block-instructor' &&
                     <div>
                         <div>

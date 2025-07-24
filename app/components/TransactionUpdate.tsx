@@ -14,6 +14,9 @@ const TransactionUpdate = ({type}: TransactionnUpdateProps) => {
         adminCredit,
         adminDebit,
         setAmount,
+        withdrawFunds,
+        approveWithdrawal,
+        rejectWithdrawal,
     } = useAdmin();
     
     return (
@@ -111,6 +114,81 @@ const TransactionUpdate = ({type}: TransactionnUpdateProps) => {
                         </div>
                     </div>
                     <button className="flex items-center justify-center gap-2 btn btn-success tw w-full" onClick={debitWallet}>
+                        {
+                            buttonLoader ? (
+                                <ButtonLoader content="Please wait . . ." />
+                            ) : 
+                            
+                            (
+                                <div className="bt-btn two">
+                                    <span>Submit</span>
+                                </div>                                        
+                            )
+                        }
+                    </button>
+                </div>
+            }
+
+            {
+                type == 'withdraw-funds' &&
+                <div>
+                    <h2 className="title-3">How much do you want to withdraw?</h2>
+                    <div className="input-box">
+                        <label htmlFor="">Amount<span className="text-red-500">*</span></label>
+                        <div className="flex items-center gap-1">
+                            <span className="input-field font-bold">$</span>
+                            <input name="amount" type="number" className="input-field flex-1" onChange = {(e) => setAmount(Number(e.target.value))}/>
+                        </div>
+                    </div>
+                    <button className="flex items-center justify-center gap-2 btn btn-success tw w-full" onClick={withdrawFunds}>
+                        {
+                            buttonLoader ? (
+                                <ButtonLoader content="Please wait . . ." />
+                            ) : 
+                            
+                            (
+                                <div className="bt-btn two">
+                                    <span>Submit</span>
+                                </div>                                        
+                            )
+                        }
+                    </button>
+                </div>
+            }
+
+            {
+                type == 'approve-withdrawal' &&
+                <div>
+                    <h2 className="text-xl font-semibold mt-4">Confirm Approval</h2>
+                    <p className="text-gray-600 mt-2">
+                        Are you sure you want to approve this withdrawal request? <br />
+                        The amount will be marked as completed.
+                    </p>
+                    <button className="flex items-center justify-center gap-2 btn btn-success tw w-full" onClick={withdrawFunds}>
+                        {
+                            buttonLoader ? (
+                                <ButtonLoader content="Please wait . . ." />
+                            ) : 
+                            
+                            (
+                                <div className="bt-btn two">
+                                    <span>Submit</span>
+                                </div>                                        
+                            )
+                        }
+                    </button>
+                </div>
+            }
+
+            {
+                type == 'reject-withdrawal' &&
+                <div>
+                    <h2 className="text-xl font-semibold mt-4">Confirm Rejection</h2>
+                    <p className="text-gray-600 mt-2">
+                        Are you sure you want to reject this withdrawal request? <br />
+                        This action cannot be undone.
+                    </p>
+                    <button className="flex items-center justify-center gap-2 btn btn-success tw w-full" onClick={withdrawFunds}>
                         {
                             buttonLoader ? (
                                 <ButtonLoader content="Please wait . . ." />

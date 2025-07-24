@@ -42,6 +42,9 @@ type GeneralState = {
   transaction: Transaction | null;
   transactions: Transaction[];
 
+  withdrawal: Transaction | null;
+  withdrawals: Transaction[];
+
   newEmail: string;
 
   wallet: Wallet | null;
@@ -74,6 +77,9 @@ type GeneralState = {
 
   setTransaction: (transaction: Transaction) => void
   setTransactions: (transactions: Transaction[]) => void
+
+  setWithdrawal: (withdrawal: Transaction) => void
+  setWithdrawals: (withdrawals: Transaction[]) => void
 
   setNewEmail: (newEmail: string) => void
 
@@ -115,6 +121,9 @@ export const genralStore = create<GeneralState>() (
 
       transaction: null,
       transactions: [],
+      
+      withdrawal: null,
+      withdrawals: [],
 
       newEmail: '',
 
@@ -148,6 +157,9 @@ export const genralStore = create<GeneralState>() (
 
       setTransaction: (transaction) => set({transaction}),
       setTransactions: (transactions) => set({transactions}),
+
+      setWithdrawal: (withdrawal) => set({withdrawal}),
+      setWithdrawals: (withdrawals) => set({withdrawals}),
       
       setNewEmail: (newEmail) => set({newEmail}),
 
