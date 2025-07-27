@@ -15,7 +15,7 @@ const StudentCourseBox = () => {
                 {
                     enrollments.length > 0 ? (
                         enrollments.map((item, index) => (
-                            <Link href='course-page' className="course-box" key={index}>
+                            <Link href={`/students/view-course/${item.course.id}`} className="course-box" key={index}>
                                 <div className="course-top">
                                     <Image
                                         aria-hidden
@@ -46,15 +46,15 @@ const StudentCourseBox = () => {
     
                                     <div>
                                         <div className="progress-container">
-                                            <div className="progress-bar two" style={{ width: `${index * 10}%` }}></div>
+                                            <div className="progress-bar two" style={{ width: `${item.progress}%` }}></div>
                                         </div>
-                                        <p className="text-res-2 mb-2 mt-1">Completed <span className="font-semibold">{index * 10}%</span></p>
+                                        <p className="text-res-2 mb-2 mt-1">Completed <span className="font-semibold">{item.progress}%</span></p>
                                     </div>
     
                                     <div className="flex flex-col gap-3">
                                         <div className="flex items-center justify-between">
                                             
-                                            <div className="flex items-center gap-1">
+                                            {/* <div className="flex items-center gap-1">
                                                 <div>
                                                     <Image
                                                         aria-hidden
@@ -66,9 +66,9 @@ const StudentCourseBox = () => {
                                                     />
                                                 </div>
                                                 <p className="text-res-2">$ {item.course.price} </p>
-                                            </div>
+                                            </div> */}
     
-                                            <div className="flex items-center gap-1">
+                                            {/* <div className="flex items-center gap-1">
                                                 <div>
                                                     <Image
                                                         aria-hidden
@@ -80,7 +80,7 @@ const StudentCourseBox = () => {
                                                     />
                                                 </div>
                                                 <p className="text-res-2">134 Enrolled</p>
-                                            </div>
+                                            </div> */}
                                         </div>
                                     </div>
                                 </div>

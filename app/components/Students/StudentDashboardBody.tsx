@@ -17,6 +17,7 @@ import { student_dashboard } from "@/services/user";
 const StudentDashboardBody = () => {
     const router = useRouter(); 
     const [loading, setLoading] = useState<boolean>(true);
+    const [totalProgress, setTotalProgress] = useState<number>(0);
 
     const user = authStore((state) => state.user);
     const userId = user?.id;
@@ -36,6 +37,7 @@ const StudentDashboardBody = () => {
                     genralStore.getState().setEnrollments(response.data.enrollments);
                     genralStore.getState().setInstructors(response.data.instructors);
                     genralStore.getState().setCourses(response.data.popularCourses);
+                    setTotalProgress(response.data.totalProgress);
                 } 
     
                 else {
@@ -64,7 +66,7 @@ const StudentDashboardBody = () => {
                 <DashboardHeader />
             </div>
             <div className="container-3">
-                <StudentDashboardPerformance />
+                <StudentDashboardPerformance progress={totalProgress}/>
                 <StudentCourseBox />
                 <StudentPopularCertificatesBox />
                 <StudentBestInstructor />

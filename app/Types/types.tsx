@@ -314,6 +314,7 @@ export type Enrollment = {
     course: Course;
     review: Review;
     completed_at: string | null;
+    progress?: number | null;
 }
 
 export type Options = {

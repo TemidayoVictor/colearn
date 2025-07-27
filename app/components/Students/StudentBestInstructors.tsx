@@ -1,8 +1,10 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { genralStore } from "@/zustand/generalStore";
 
 const StudentBestInstructor = () => {
+    const instructors = genralStore((state) => state.instructors);
     return (
         <div className="mt-[2em]">
             <div className="flex items-center justify-between mb-4">
@@ -11,7 +13,7 @@ const StudentBestInstructor = () => {
             </div>
             <div className="best-instructor-cont">
                 {
-                    [1,2,3,4].map((item, index) => (
+                    instructors.map((item, index) => (
                         <div className="best-instructor-box" key={index}>
                             <div className="flex items-center gap-2 left">
                                 <div>
@@ -25,13 +27,13 @@ const StudentBestInstructor = () => {
                                     />
                                 </div>
                                 <div>
-                                    <p className="font-semibold">Benson Thomas</p>
-                                    <p className="color-grey-text text-[.8rem]">10 IT & Engineering Courses</p>
+                                    <p className="font-semibold">{`${item.user?.first_name} ${item.user?.last_name}`}</p>
+                                    <p className="color-grey-text text-[.8rem]">{item.professional_headline}</p>
                                 </div>
                             </div>
                             <div className="right">
                                 <Link href='/' className="bt-btn btn btn-primary-fill desktop">
-                                    <span>View Courses</span>
+                                    <span>View Profile</span>
                                     <span>
                                         <Image
                                             aria-hidden

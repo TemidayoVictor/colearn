@@ -1,13 +1,19 @@
 'use client';
 import React, {useState} from "react";
+import Image from "next/image";
+import Link from "next/link";
+import { UseCourses } from "@/hooks/useCourses";
 import ViewCoursesContent from "./ViewCoursesContent";
 import ViewCoursesContentMain from "./ViewCoursesContentMain";
 import ViewCoursesTestimonials from "./ViewCoursesTestimonials";
-import Image from "next/image";
-import Link from "next/link";
 
 const ViewCoursesBody = () => {
+    const {addToCart} = UseCourses();
     const [selectedTab, setSelectedTab] = useState<string>('overview');
+
+    const addToCartTrigger = (item: string | undefined) => {
+        addToCart(item);
+    }
 
     return (
         <div className="container">

@@ -1,8 +1,17 @@
+'use client';
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { genralStore } from "@/zustand/generalStore";
+import { UseCourses } from "@/hooks/useCourses";
 
 const StudentPopularCertificatesBox = () => {
+    const {addToCart} = UseCourses();
+    const courses = genralStore((state) => state.courses);
+    
+    const addToCartTrigger = (item: string | undefined) => {
+        addToCart(item);
+    }
     return (
         <div className="mt-[2em]">
             <div className="flex items-center justify-between mb-4">
@@ -11,17 +20,17 @@ const StudentPopularCertificatesBox = () => {
             </div>
             <div className="blog-cont two scrollable">
                 {
-                    [1,2,3,4].map((item, index) => (
+                    courses.map((item, index) => (
                         <div className="course two" key={index}>
                             <div className="relative w-fit">
                                 <div className="relative">
                                     <Image
                                         aria-hidden
-                                        src="/assets/images/course.png"
+                                        src={item.thumbnail ? `${process.env.NEXT_PUBLIC_API_URL}/storage/${item.thumbnail}` : "/assets/images/course.png"}
                                         alt="Colearn Logo"
                                         width={400}
                                         height={264}
-                                        className="object-cover rounded-[.5em]"
+                                        className="object-cover rounded-[.5em] course-image"
                                     />
                                     <div className="absolute right-0 bottom-0 flex gap-2 items-center bg-white p-2 rounded-tl-[.3rem]">
                                         <Image
@@ -37,24 +46,24 @@ const StudentPopularCertificatesBox = () => {
                                     </div>
                                 </div>
                             </div>
-                            <h3 className="mt-2 text-[.9rem] font-bold">The Complete  Guide to cybersecurity:  From Beginner to expert</h3>
+                            <h3 className="mt-2 text-[.9rem] font-bold"> {item.title} </h3>
                             <div className="flex gap-2 items-center mt-2">
                             <Image
                                     aria-hidden
-                                    src="/assets/images/avatars.png"
+                                    src={item?.instructor.profile_photo ? `${process.env.NEXT_PUBLIC_API_URL}/storage/${item?.instructor.profile_photo}` : "/assets/images/course-img-2.png"}
                                     alt="Colearn Logo"
                                     width={40}
                                     height={40}
                                     className="object-contain rounded-[50%]"
                                 />
-                                <p className="text-[.9rem]">Favi Design</p>
+                                <p className="text-[.9rem]">{`${item.instructor.user?.first_name} ${item.instructor.user?.last_name}`}</p>
                             </div>
                             <div className="flex justify-between items-center mt-2">
                                 <div>
-                                    <span className="font-semibold text-[.8rem]">$30.00</span>
+                                    <span className="font-semibold text-[.8rem]">${item.price}</span>
                                 </div>
-                                <Link href='/' className="btn normal btn-small">Buy Now</Link>
-                            </div>
+                                    <button className={`btn normal`} onClick={(e) => addToCartTrigger(item.id)}>View</button>                            
+                                </div>
                             <div>
 
                             </div>
