@@ -146,12 +146,15 @@ export type Course = {
     price: number;
     is_free: boolean;
     created_at: Date;
+    updated_at: Date;
     videos_count: number;
     total_duration: number | null;
     level: string | null;
     instructor: Instructor;
     resources: Resource[];
     modules: Module[];
+    reviews: Review[];
+    summary: string;
 }
 
 export type Progress = {

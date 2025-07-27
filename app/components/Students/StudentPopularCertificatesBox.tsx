@@ -62,7 +62,8 @@ const StudentPopularCertificatesBox = () => {
                                 <div>
                                     <span className="font-semibold text-[.8rem]">${item.price}</span>
                                 </div>
-                                    <button className={`btn normal`} onClick={(e) => addToCartTrigger(item.id)}>View</button>                            
+                                    {/* <button className={`btn normal`} onClick={(e) => addToCartTrigger(item.id)}>View</button>*/}
+                                    <Link href={`/students/course-details/${item.id}`} className="btn normal btn-small">View</Link>
                                 </div>
                             <div>
 

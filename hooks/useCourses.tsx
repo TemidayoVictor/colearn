@@ -55,6 +55,7 @@ export const UseCourses = () => {
         course_picture: File | null;
         total_duration: number;
         level: string;
+        summary: string
       }>({
         title: '',
         description: '',
@@ -64,6 +65,7 @@ export const UseCourses = () => {
         course_picture: null,
         total_duration: 1,
         level: '',
+        summary: ''
     });
 
     const [errors, setErrors] = useState({
@@ -73,7 +75,8 @@ export const UseCourses = () => {
         price: false,
         categories: false,
         total_duration: false,
-        level: false
+        level: false,
+        summary: false,
         // course_picture: false
     });
 
@@ -399,6 +402,7 @@ export const UseCourses = () => {
             categories: selectedItems.length === 0,
             total_duration: formData.total_duration === 0,
             level: formData.level === '',
+            summary: formData.summary.trim() === '',
         };
       
         setErrors(newErrors);
@@ -442,6 +446,7 @@ export const UseCourses = () => {
             categories: selectedItems.length === 0,
             total_duration: formData.total_duration === 0,
             level: formData.level === '',
+            summary: formData.summary.trim() === '',
             // course_picture: formData.course_picture == null
         };
       

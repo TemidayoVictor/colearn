@@ -19,7 +19,7 @@ const StudentBestInstructor = () => {
                                 <div>
                                     <Image
                                         aria-hidden
-                                        src="/assets/images/avatars-2.png"
+                                        src={item?.profile_photo ? `${process.env.NEXT_PUBLIC_API_URL}/storage/${item?.profile_photo}` : "/assets/images/course-img-2.png"}
                                         alt="Colearn Image"
                                         width={56}
                                         height={56}

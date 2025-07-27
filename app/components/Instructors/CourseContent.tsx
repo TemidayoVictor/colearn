@@ -1,14 +1,26 @@
 import React from "react";
+import { genralStore } from "@/zustand/generalStore";
 import Image from "next/image";
 import Link from "next/link";
 
 const CourseContent = () => {
+    const course = genralStore((state) => state.course);
+
+    const formatDate = (dateString: Date | undefined) => {
+        if (!dateString) return "N/A";
+        const date = new Date(dateString);
+        return new Intl.DateTimeFormat("en-US", {
+          month: "short",
+          day: "2-digit",
+          year: "numeric",
+        }).format(date);
+    };
     return (
         <div>
             <div className="flex flex-col gap-2">
                 <div className="mt-3 flex flex-col gap-2">
 
-                    <h2 className="title-2">The Complete AI-Powered Copywriting Course & ChatGPT Course</h2>
+                    <h2 className="title-2"> {course?.title} </h2>
                     
                     <p className="text-[.9rem] text-justify color-grey-text">
                         Become a Pro Copywriter with the Complete Copywriting and Content Marketing Course. Use ChatGPT. Get 70+ Pro Templates.
@@ -76,9 +88,9 @@ const CourseContent = () => {
                                     height={16}
                                     className="object-contain rounded-[50%]"
                                 />
-                                <p>Date Uploaded</p>
+                                <p>Last updated</p>
                             </div>
-                            <p className="font-semibold">Nov, 2024</p>
+                            <p className="font-semibold"> {formatDate(course?.updated_at)} </p>
                         </div>
 
                         <div className="flex items-center gap-2">

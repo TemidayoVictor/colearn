@@ -43,6 +43,7 @@ const UploadCourseStep1 = ({type}:UploadCourseProps) => {
                     course_picture: null,
                     total_duration: course?.total_duration || 0,
                     level: course?.level || "",
+                    summary: course?.summary || "",
                 });
             };
     
@@ -87,6 +88,17 @@ const UploadCourseStep1 = ({type}:UploadCourseProps) => {
                                 onChange={handleInputChange}
                             />
 
+                        </div>
+
+                        <div className="mt-4">
+                            <label htmlFor="" className="text-[.9rem] font-semibold">Summary of Course<span className="text-red-500">*</span> </label>
+                            <textarea
+                                name="summary"
+                                className={`upload-course-textarea ${errors.summary ? 'error' : ''}`}
+                                placeholder="Provide a concise summary that captures the core essence of the course in just a few words.."
+                                value={formData.summary}
+                                onChange={handleInputChange}
+                            />
                         </div>
 
                         <div className="mt-4">
@@ -273,6 +285,17 @@ const UploadCourseStep1 = ({type}:UploadCourseProps) => {
                                 onChange={handleInputChange}
                             />
 
+                        </div>
+
+                        <div className="mt-4">
+                            <label htmlFor="" className="text-[.9rem] font-semibold">Summary of Course<span className="text-red-500">*</span> </label>
+                            <textarea
+                                name="summary"
+                                className={`upload-course-textarea ${errors.summary ? 'error' : ''}`}
+                                placeholder="Provide a concise summary that captures the core essence of the course in just a few words.."
+                                value={formData.summary}
+                                onChange={handleInputChange}
+                            />
                         </div>
 
                         <div className="mt-4">

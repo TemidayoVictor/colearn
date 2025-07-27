@@ -38,6 +38,7 @@ export const upload_course = async (formData: {
     course_picture: File | null;
     total_duration: number;
     level: string;
+    summary: string;
 }, categories: string[], userId: number | null | undefined) => {
     try {
         const data = new FormData();
@@ -54,6 +55,7 @@ export const upload_course = async (formData: {
         data.append('userId', String(userId));
         data.append('total_duration', String(formData.total_duration));
         data.append('level', formData.level);
+        data.append('summary', formData.summary);
 
         categories.forEach((category, index) => {
             data.append(`categories[${index}]`, category);
@@ -81,6 +83,7 @@ export const edit_course = async (formData: {
     course_picture: File | null; 
     total_duration: number;
     level: string;
+    summary: string;
 }, categories: string[], courseId: string | undefined) => {
     try {
         const data = new FormData();
@@ -97,6 +100,7 @@ export const edit_course = async (formData: {
         data.append('courseId', String(courseId));
         data.append('total_duration', String(formData.total_duration));
         data.append('level', formData.level);
+        data.append('summary', formData.summary);
 
         categories.forEach((category, index) => {
             data.append(`categories[${index}]`, category);
@@ -123,6 +127,21 @@ export const get_course_details = async (courseId: string) => {
         data.append('courseId', courseId);
 
         const response = await axiosInstance.post("/get-course-details", data);
+        return handleApiResponse(response);
+    }
+
+    catch(error: any) {
+        return handleApiError(error)
+    }
+}
+
+export const get_course_student = async (courseId: string) => {
+    try {
+        const data = new FormData();
+
+        data.append('courseId', courseId);
+
+        const response = await axiosInstance.post("/get-course-student", data);
         return handleApiResponse(response);
     }
 
