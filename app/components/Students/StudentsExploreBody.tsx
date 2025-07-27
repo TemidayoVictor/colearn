@@ -25,68 +25,50 @@ const StudentsExploreBody = ({title, type, tabs, addContainerClass, loggedIn}: S
     const [loading, setLoading] = useState<boolean>(true);
 
     const newUpdate = courseStore((state) => state.newUpdate);
+    const courses = genralStore((state) => state.courses);
 
-    // fetch courses
     useEffect(() => {
         setLoading(true);
+      
         const init = async () => {
-            await useAuthStudent(router); 
-            // fetch all consultants
-            try {
-                const response = await get_all_courses();
+          try {
+                await useAuthStudent(router);
+        
+                const [coursesRes, consultantsRes] = await Promise.all([
+                    get_all_courses(),
+                    get_all_consultants(),
+                ]);
+        
+                if (coursesRes.success) {
+                    genralStore.getState().setCourses(coursesRes.data.courses);
+                } 
                 
-                if (response.success) {
-                    // save state globally
-                    genralStore.getState().setCourses(response.data.courses);
-                } 
-    
                 else {
-                    showErrorToast(response.message)
-                    console.log(response)
+                    showErrorToast(coursesRes.message);
                 }
+        
+                if (consultantsRes.success) {
+                    genralStore.getState().setConsultants(consultantsRes.data.consultants);
+                } 
+                else {
+                    showErrorToast(consultantsRes.message);
+                }
+            } 
+            
+            catch (error) {
+                showErrorToast("Something unexpected happened");
+                console.error(error);
             }
-
-            catch(error: any) {
-                showErrorToast('Something unexpected happened')
-                console.log(error)
-            }
-
-            courseStore.getState().setNewUpdate('reset');
+      
+            courseStore.getState().setNewUpdate("reset");
             setLoading(false);
         };
+      
         init();
-
     }, [newUpdate]);
+      
 
-    // fetch the consultants
-    useEffect(() => {
-        setLoading(true);
-        const init = async () => {
-            try {
-                const response = await get_all_consultants();
-                if (response.success) {
-                    // save state globally
-                    genralStore.getState().setConsultants(response.data.consultants);
-                } 
-    
-                else {
-                    showErrorToast(response.message)
-                    console.log(response)
-                }
-            }
-
-            catch(error: any) {
-                showErrorToast('Something unexpected happened')
-                console.log(error)
-            }
-            courseStore.getState().setNewUpdate('reset');
-            setLoading(false);
-        };
-        init();
-
-    }, [newUpdate]);
-
-    if(loading) return <Loader />
+    if(loading || !courses || courses.length === 0) return <Loader />
     
     return (
         <div>

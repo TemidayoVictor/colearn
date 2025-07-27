@@ -313,6 +313,7 @@ export type Enrollment = {
     course_id: string | undefined;
     course: Course;
     review: Review;
+    completed_at: string | null;
 }
 
 export type Options = {
@@ -334,6 +335,7 @@ export type Transaction = {
     user: User;
     spendable: number;
     status: string;
+    wallet: Wallet;
 }
 
 export type Wallet = {
@@ -347,4 +349,9 @@ export type GeneralSettings = {
     course_percentage: number;
     consultation_perentage: number;
     minimum_withdrawal: number;
+}
+
+export type Dashboard = {
+    activeCourses?: number,
+    completedCourses?: number,
 }

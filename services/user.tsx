@@ -14,3 +14,16 @@ export const get_user_transactions = async (id: number | undefined) => {
         return handleApiError(error)
     }
 }
+
+export const student_dashboard = async (id: number | undefined) => {
+    try {
+        const response = await axiosInstance.post("/student-dashboard", {
+            id,
+        });
+        return handleApiResponse(response);
+    }
+
+    catch(error: any) {
+        return handleApiError(error)
+    }
+}

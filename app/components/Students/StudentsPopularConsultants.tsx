@@ -6,7 +6,7 @@ import EmptyPage from "../EmptyPage";
 
 const StudentPopularConsultant = () => {
     const consultants = genralStore((state) => state.consultants)
-
+    
     return (
         <div className="mt-[2em]">
             <div className="flex items-center justify-between mb-4">

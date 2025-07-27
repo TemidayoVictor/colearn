@@ -159,12 +159,12 @@ const TransactionUpdate = ({type}: TransactionnUpdateProps) => {
             {
                 type == 'approve-withdrawal' &&
                 <div>
-                    <h2 className="text-xl font-semibold mt-4">Confirm Approval</h2>
-                    <p className="text-gray-600 mt-2">
-                        Are you sure you want to approve this withdrawal request? <br />
+                    <h2 className="title-3">Confirm Approval</h2>
+                    <p className="text-gray-600 my-2 text-center">
+                        Are you sure you want to approve this withdrawal request?
                         The amount will be marked as completed.
                     </p>
-                    <button className="flex items-center justify-center gap-2 btn btn-success tw w-full" onClick={withdrawFunds}>
+                    <button className="flex items-center justify-center gap-2 btn btn-success tw w-full" onClick={approveWithdrawal}>
                         {
                             buttonLoader ? (
                                 <ButtonLoader content="Please wait . . ." />
@@ -172,7 +172,7 @@ const TransactionUpdate = ({type}: TransactionnUpdateProps) => {
                             
                             (
                                 <div className="bt-btn two">
-                                    <span>Submit</span>
+                                    <span>Approve</span>
                                 </div>                                        
                             )
                         }
@@ -183,12 +183,12 @@ const TransactionUpdate = ({type}: TransactionnUpdateProps) => {
             {
                 type == 'reject-withdrawal' &&
                 <div>
-                    <h2 className="text-xl font-semibold mt-4">Confirm Rejection</h2>
-                    <p className="text-gray-600 mt-2">
+                    <h2 className="title-3">Confirm Rejection</h2>
+                    <p className="text-gray-600 my-2 text-center">
                         Are you sure you want to reject this withdrawal request? <br />
                         This action cannot be undone.
                     </p>
-                    <button className="flex items-center justify-center gap-2 btn btn-success tw w-full" onClick={withdrawFunds}>
+                    <button className="flex items-center justify-center gap-2 btn error two w-full" onClick={rejectWithdrawal}>
                         {
                             buttonLoader ? (
                                 <ButtonLoader content="Please wait . . ." />
@@ -196,7 +196,7 @@ const TransactionUpdate = ({type}: TransactionnUpdateProps) => {
                             
                             (
                                 <div className="bt-btn two">
-                                    <span>Submit</span>
+                                    <span>Decline</span>
                                 </div>                                        
                             )
                         }

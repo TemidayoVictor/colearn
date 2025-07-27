@@ -12,6 +12,8 @@ import {
   Transaction, 
   Wallet,
   GeneralSettings, 
+  Instructor,
+  Dashboard,
 } from '@/app/Types/types';
 
 type GeneralState = {
@@ -44,6 +46,9 @@ type GeneralState = {
 
   withdrawal: Transaction | null;
   withdrawals: Transaction[];
+
+  instructor: Instructor | null;
+  instructors: Instructor[];
 
   newEmail: string;
 
@@ -80,6 +85,9 @@ type GeneralState = {
 
   setWithdrawal: (withdrawal: Transaction) => void
   setWithdrawals: (withdrawals: Transaction[]) => void
+
+  setInstructor: (instructor: Instructor) => void
+  setInstructors: (instructors: Instructor[]) => void
 
   setNewEmail: (newEmail: string) => void
 
@@ -125,6 +133,9 @@ export const genralStore = create<GeneralState>() (
       withdrawal: null,
       withdrawals: [],
 
+      instructor: null,
+      instructors: [],
+
       newEmail: '',
 
       wallet: null,
@@ -160,6 +171,9 @@ export const genralStore = create<GeneralState>() (
 
       setWithdrawal: (withdrawal) => set({withdrawal}),
       setWithdrawals: (withdrawals) => set({withdrawals}),
+
+      setInstructor: (instructor) => set({instructor}),
+      setInstructors: (instructors) => set({instructors}),
       
       setNewEmail: (newEmail) => set({newEmail}),
 
@@ -180,6 +194,8 @@ export const genralStore = create<GeneralState>() (
         enrollment: null, enrollments: [],
         review: null, reviews: [],
         transaction: null, transactions: [],
+        withdrawal: null, withdrawals: [],
+        instructor: null, instructors: [],
         newEmail: '',
         wallet: null,
         generalSettings: null,

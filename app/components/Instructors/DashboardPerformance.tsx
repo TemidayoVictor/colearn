@@ -1,5 +1,7 @@
-import React from "react";
+'use client';
+import React, {useEffect, useMemo} from "react";
 import Image from "next/image";
+import { genralStore } from "@/zustand/generalStore";
 
 type DashboardPerformanceProps = {
     type?: string | null
@@ -18,6 +20,18 @@ const renderHeading = (type: string | null | undefined) => {
   };
 
 const DashboardPerformance = ({type, user}: DashboardPerformanceProps) => {
+    const enrollments = genralStore((state) => state.enrollments)
+
+    const completeEnrollments = useMemo(() => {
+        return Array.isArray(enrollments)
+          ? enrollments.filter((enrollment) => enrollment.completed_at != null).length
+          : 0;
+      }, [enrollments]);
+
+    const totalEnrollments = useMemo(() => {
+        return Array.isArray(enrollments) ? enrollments.length : 0;
+    }, [enrollments]);
+
     return (
         <div className="dashboard-performance">
             { renderHeading(type) }
@@ -93,20 +107,20 @@ const DashboardPerformance = ({type, user}: DashboardPerformanceProps) => {
             {
                 user == "student" &&
                 <div className="dashboard-grid">
-                    <div className="flex flex-col gap-1 perf-detail none">
+                    {/* <div className="flex flex-col gap-1 perf-detail none">
                         <p className="color-grey-text text-[.9rem]">Certifications</p>
                         <h3 className="font-semibold">4</h3>
                         <p className="color-grey-text text-[.7rem]">Total Certifications</p>
+                    </div> */}
+                    <div className="flex flex-col gap-1 perf-detail none">
+                        <p className="color-grey-text text-[.9rem]">Active Enrolled Courses</p>
+                        <h3 className="font-semibold">{totalEnrollments}</h3>
+                        <p className="color-grey-text text-[.7rem]">Your Active enrolled courses</p>
                     </div>
                     <div className="flex flex-col gap-1 perf-detail">
                         <p className="color-grey-text text-[.9rem]">Completed Courses</p>
-                        <h3 className="font-semibold">4</h3>
+                        <h3 className="font-semibold">{completeEnrollments}</h3>
                         <p className="color-grey-text text-[.7rem]">Total Completed Courses</p>
-                    </div>
-                    <div className="flex flex-col gap-1 perf-detail">
-                        <p className="color-grey-text text-[.9rem]">Active Enrolled Courses</p>
-                        <h3 className="font-semibold">2</h3>
-                        <p className="color-grey-text text-[.7rem]">Your Active enrolled courses</p>
                     </div>
                 </div>
             }

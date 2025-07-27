@@ -10,7 +10,7 @@ const DashboardHeader = () => {
                         Explore our extensive course catalog to find the perfect fit for your interests and goals. Discover new skills, enhance your expertise, and unlock your full potential. From beginner-friendly introductions to advanced specializations, our courses are designed to help you succeed in your chosen field.
                     </p>
 
-                    <Link href='/' className="bt-btn btn btn-primary-fill">
+                    <Link href='/students/explore' className="bt-btn btn btn-primary-fill">
                         <span>Explore Courses</span>
                         <span>
                             <Image
