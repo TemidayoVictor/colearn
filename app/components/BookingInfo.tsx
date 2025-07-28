@@ -1,8 +1,9 @@
 import React from "react";
 import Image from "next/image";
-import Unavailable from "./Unavailable";
+import { genralStore } from "@/zustand/generalStore";
 
 const BookingInfo = () => {
+    const consultant = genralStore((state) => state.consultant);
     return (
         <div className="booking-info">
             
@@ -24,7 +25,7 @@ const BookingInfo = () => {
                 <div className="right">
                     <div>
                         <div className="r-l mb-1">
-                            <p className="font-semibold">Favi Ayomide Arowolo</p>
+                            <p className="font-semibold"> {consultant?.instructor?.user?.first_name} {consultant?.instructor?.user?.last_name}</p>
                             
                             <div className="flex gap-2 items-center">
                                 <div className="flex">
@@ -77,14 +78,14 @@ const BookingInfo = () => {
                         </div>
 
                         <div className="mb-1">
-                            <p>Senior Product Designer at Apple</p>
+                            <p> {consultant?.instructor?.professional_headline} </p>
                         </div>
 
                         <div className="mb-1">
-                            <p>New York, USA.</p>
+                            <p> {consultant?.instructor?.country} </p>
                         </div>
 
-                        <div className="flex gap-2 mb-1">
+                        {/* <div className="flex gap-2 mb-1">
                             <Image
                                 aria-hidden
                                 src="/assets/images/ic_deals-2.png"
@@ -94,7 +95,7 @@ const BookingInfo = () => {
                                 className="object-contain rounded-[50%]"
                             />
                             <p className="font-semibold">UBSS LTD</p>
-                        </div>
+                        </div> */}
 
                         <div className="flex gap-2 mb-1">
                             <Image
@@ -105,17 +106,31 @@ const BookingInfo = () => {
                                 height={16}
                                 className="object-contain rounded-[50%]"
                             />
-                            <p>Speaks: <span className="font-semibold">English, French</span></p>
+                            <p>Speaks:  
+                                <span className="font-semibold ml-1">
+                                {
+                                    Array.isArray(consultant?.instructor?.languages)
+                                    ? consultant?.instructor?.languages.join(", ")
+                                    : JSON.parse(consultant?.instructor?.languages || '[]').join(", ")
+                                }
+                                </span>
+                            </p>
                         </div>
                     </div>
 
                     <div>
-                        <p className="free">Free</p>
+                        {
+                            consultant?.type == 'paid' ? (
+                                <p className="font-semibold text-[1.2rem]">${consultant?.hourly_rate} / hr</p>
+                            ) : (
+                                <p className="free">Free</p>
+                            )
+                        }
                     </div>
                 </div>
             </div>  
 
-            <div className="booking-time">
+            {/* <div className="booking-time">
                 <div className="flex gap-2 items-start">
                     <Image
                         aria-hidden
@@ -145,7 +160,7 @@ const BookingInfo = () => {
                         <p className="font-bold text-[.8rem]">09:00 - 09:30 AM</p>
                     </div>
                 </div>
-            </div>
+            </div> */}
 
             {/* <Unavailable />  */}
 

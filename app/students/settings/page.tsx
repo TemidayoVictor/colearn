@@ -1,12 +1,12 @@
 import React from "react";
 import UserLayout from "@/app/components/UserLayout";
-import InstructorSettingBody from "@/app/components/Instructors/InstructorSettingBody";
+import StudentSettingsBody from "@/app/components/Students/StudentSettingsBody";
 
 const StudentSetting = () => {
     return (
         <div>
             <UserLayout userType="student">
-                <InstructorSettingBody userType="student"/>
+                <StudentSettingsBody />
             </UserLayout> 
         </div>
     )
