@@ -2,6 +2,7 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { genralStore } from "@/zustand/generalStore";
+import EmptyPage from "../EmptyPage";
 
 const StudentCourseBox = () => {
     const enrollments = genralStore((state) => state.enrollments)
@@ -91,8 +92,8 @@ const StudentCourseBox = () => {
                         }
                     </div>
                 ) : (
-                    <div className="flex items-center justify-center h-[20vh]">
-                        <p className="text-[1rem] color-grey-text">You have not enrolled in any courses yet.</p>
+                    <div>
+                        <EmptyPage image="/assets/images/empty-image.png"  header="No Enrollment" content="You have not enrolled in any courses yet." imageWidth={400} imageHeight={240}/>
                     </div>
                 )
             }

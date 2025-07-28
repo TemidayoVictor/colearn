@@ -1,9 +1,11 @@
 import React from "react";
 import { genralStore } from "@/zustand/generalStore";
+import { UseCourses } from "@/hooks/useCourses";
 import Image from "next/image";
 import Link from "next/link";
 
 const CourseContent = () => {
+    const {addToCart} = UseCourses();
     const course = genralStore((state) => state.course);
 
     const reviews = course?.reviews || [];
@@ -26,6 +28,10 @@ const CourseContent = () => {
           year: "numeric",
         }).format(date);
     };
+
+    const addToCartTrigger = (item: string | undefined) => {
+        addToCart(item);
+    }
 
     console.log(course);
     return (
@@ -94,6 +100,10 @@ const CourseContent = () => {
                             />
                             <p>English</p>         
                         </div>
+                    </div>
+
+                    <div>
+                        <button className={`btn btn-primary-fill`} onClick={(e) => addToCartTrigger(course?.id)}>Add to cart</button>
                     </div>
                 </div>   
 

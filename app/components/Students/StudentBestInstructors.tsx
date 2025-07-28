@@ -2,6 +2,7 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { genralStore } from "@/zustand/generalStore";
+import EmptyPage from "../EmptyPage";
 
 const StudentBestInstructor = () => {
     const instructors = genralStore((state) => state.instructors);
@@ -57,8 +58,8 @@ const StudentBestInstructor = () => {
                         }
                     </div>
                 ) : (
-                    <div className="flex items-center justify-center h-[20vh]">
-                        <p className="text-[1rem] color-grey-text">No instructors available at the moment.</p>
+                    <div>
+                        <EmptyPage image="/assets/images/empty-image.png"  header="Please check back" content="No instructors available at the moment. Please check back" imageWidth={400} imageHeight={240}/>
                     </div>
                 )
             }

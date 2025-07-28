@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { genralStore } from "@/zustand/generalStore";
 import { UseCourses } from "@/hooks/useCourses";
+import EmptyPage from "../EmptyPage";
 
 const StudentPopularCertificatesBox = () => {
     const {addToCart} = UseCourses();
@@ -75,8 +76,8 @@ const StudentPopularCertificatesBox = () => {
                         }
                     </div>
                 ) :(
-                    <div className="flex items-center justify-center h-[20vh]">
-                        <p className="text-[1rem] color-grey-text">No popular certificates available at the moment.</p>
+                    <div>
+                        <EmptyPage image="/assets/images/empty-image.png"  header="No Popular Courses" content="No popular certificates available at the moment. Please check back." imageWidth={400} imageHeight={240}/>
                     </div>
                 )
             }

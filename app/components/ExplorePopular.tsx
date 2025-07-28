@@ -131,7 +131,8 @@ const ExplorePopular = ({title, type, tabs, addContainerClass, nav, loggedIn}: E
                                                     {/* <span className="line-through mr-2 text-[#5A5C5E] font-semibold">$30.00</span> */}
                                                     <span className="font-semibold">${item.price}</span>
                                                 </div>
-                                                <button className={`btn normal`} onClick={(e) => addToCartTrigger(item.id)}>Add to cart</button>
+                                                {/* <button className={`btn normal`} onClick={(e) => addToCartTrigger(item.id)}>Add to cart</button> */}
+                                                <Link href={`/students/course-details/${item.id}`} className="btn normal">View</Link>
                                             </div>
                                             <div>
         
