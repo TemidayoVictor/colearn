@@ -5,7 +5,7 @@ import { courseStore } from "@/zustand/courseStore";
 import { genralStore } from "@/zustand/generalStore";
 import { useAuthStudent } from "@/hooks/useAuth";
 import { useParams } from "next/navigation";
-import { get_course_details } from "@/services/courses";
+import { get_course_student } from "@/services/courses";
 import CourseContentBody from "../Instructors/CourseContentBody";
 import CourseContentReviews from "../Instructors/CourseContentReviews";
 import Loader from "../Loader";
@@ -26,7 +26,7 @@ const CourseDetailsPageBody = () => {
             await useAuthStudent(router); // ✅ valid usage
             if(!courseId) return
             try {
-                const response = await get_course_details(courseId);
+                const response = await get_course_student(courseId);
                 if (response.success) {
                     console.log(response)
                     // save state globally

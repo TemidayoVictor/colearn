@@ -36,9 +36,9 @@ const CourseContentBody = ({type}:CourseContentBodyProps) => {
                         <div className="spacing-inter">
                             <ViewCoursesContent />
                         </div>
-                        <div className="spacing-inter">
+                        {/* <div className="spacing-inter">
                             <ViewCoursesContentMain />
-                        </div>
+                        </div> */}
                     </div>   
                 }
 

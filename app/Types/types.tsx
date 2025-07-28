@@ -155,6 +155,7 @@ export type Course = {
     modules: Module[];
     reviews: Review[];
     summary: string;
+    enrollments: Enrollment[];
 }
 
 export type Progress = {
@@ -307,7 +308,9 @@ export type Review = {
     course_id: string | undefined;
     title: string;
     rating: number;
-    review: string
+    review: string;
+    user?: User;
+    created_at?: string;
 }
 
 export type Enrollment = {
