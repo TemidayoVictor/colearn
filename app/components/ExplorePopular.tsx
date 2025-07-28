@@ -74,12 +74,12 @@ const ExplorePopular = ({title, type, tabs, addContainerClass, nav, loggedIn}: E
                     }
                     <div className="tabs mt-3">
                         
-                        {
+                        {/* {
                             tabs &&
                             posts.map((item, index) => (
                                 <Link href={item.link} className="tab" key={index}>{item.name}</Link>
                             ))
-                        }
+                        } */}
                     </div>
                 </div>
 

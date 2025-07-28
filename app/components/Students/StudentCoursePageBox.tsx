@@ -1,5 +1,5 @@
 'use client';
-import React, {useState} from "react";
+import React, {useState, useMemo} from "react";
 import Image from "next/image";
 import Link from "next/link";
 import EmptyPage from "../EmptyPage";
@@ -13,7 +13,20 @@ type StudentCoursePageBoxProps = {
 
 const StudentCoursePageBox = ({courseType}: StudentCoursePageBoxProps) => {
     const [showModal, setShowModal] = useState<string | null>(null);
-    const courses = genralStore((state) => state.enrollments)
+
+    const courses = genralStore((state) => state.enrollments);
+    const courseUse = useMemo(() => {
+        if (courseType === 'completed') {
+            return Array.isArray(courses)
+                ? courses.filter((course) => course.completed_at != null)
+                : [];
+        } else {
+            return courses;
+        }
+    }, [courseType, courses]);
+
+    console.log(courseUse);
+
     
     const openModal = (key: string) => {
         setShowModal(key);
@@ -30,10 +43,10 @@ const StudentCoursePageBox = ({courseType}: StudentCoursePageBoxProps) => {
     return (
         <div>
             {
-                (courses ?? []).length > 0 ? (
+                (courseUse ?? []).length > 0 ? (
                     <div className="spacing-inter">
                         {
-                            courses.map((item, index) => (
+                            courseUse.map((item, index) => (
                                 <div className="student-course-page-box spacing-inter bod-grey rounded-[.5em] p-2" key={index}>
                                     <div className="top flex items-center justify-between">
                                         <div className="left">
@@ -212,7 +225,13 @@ const StudentCoursePageBox = ({courseType}: StudentCoursePageBoxProps) => {
                     </div>
                 ) : (
                     <div>
-                        <EmptyPage image="/assets/images/empty-image.png" linkTitle="Explore courses" header="No Enrollment Yet" content="You haven't enrolled in any course yet. Start learning by exploring our available courses!" link="/students/explore" imageWidth={400} imageHeight={240}/>
+                        {
+                            courseType == "completed" ? (
+                                <EmptyPage image="/assets/images/empty-image.png" linkTitle="Explore courses" header="No completed courses" content="You haven't completed any course yet. " link="/students/explore" imageWidth={400} imageHeight={240}/>
+                            ) : (
+                                <EmptyPage image="/assets/images/empty-image.png" linkTitle="Explore courses" header="No Enrollment Yet" content="You haven't enrolled in any course yet. Start learning by exploring our available courses!" link="/students/explore" imageWidth={400} imageHeight={240}/>
+                            )
+                        }
                     </div>
                 )
             }
