@@ -40,3 +40,16 @@ export const user_profile = async (id: number | undefined) => {
         return handleApiError(error)
     }
 }
+
+export const instructor_dashboard = async (id: number | undefined) => {
+    try {
+        const response = await axiosInstance.post("/instructor-dashboard", {
+            id,
+        });
+        return handleApiResponse(response);
+    }
+
+    catch(error: any) {
+        return handleApiError(error)
+    }
+}

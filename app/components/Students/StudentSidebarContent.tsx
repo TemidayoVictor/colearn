@@ -142,6 +142,56 @@ const StudentSidebarContent = () => {
 
                 <div className="sidebar-break">
 
+                    <Link href='/students/cart' className={`sidebar-link ${pathname == '/students/cart' ? 'active' : ''}`}>
+                        {
+                            pathname == '/students/cart' ? (
+                                <Image
+                                    aria-hidden
+                                    src="/assets/images/cart-icon-active.png"
+                                    alt="Colearn Image"
+                                    width={20}
+                                    height={20}
+                                    className="object-cover"
+                                />
+                            ) : (
+                                <Image
+                                    aria-hidden
+                                    src="/assets/images/cart-icon.png"
+                                    alt="Colearn Image"
+                                    width={20}
+                                    height={20}
+                                    className="object-cover"
+                                />
+                            )
+                        }
+                        <p className="text-[.9rem]">Cart</p>
+                    </Link>
+
+                    <Link href='/students/payment-transactions' className={`sidebar-link ${pathname == '/students/payment-transactions' ? 'active' : ''}`}>
+                        {
+                            pathname == '/students/payment-transactions' ? (
+                                <Image
+                                    aria-hidden
+                                    src="/assets/images/note-active.png"
+                                    alt="Colearn Image"
+                                    width={20}
+                                    height={20}
+                                    className="object-cover"
+                                />
+                            ) : (
+                                <Image
+                                    aria-hidden
+                                    src="/assets/images/note.png"
+                                    alt="Colearn Image"
+                                    width={20}
+                                    height={20}
+                                    className="object-cover"
+                                />
+                            )
+                        }
+                        <p className="text-[.9rem]">Payment Transaction</p>
+                    </Link>
+
                     <Link href='/students/account' className={`sidebar-link ${pathname == '/students/account' ? 'active' : ''}`}>
                         {
                             pathname == '/students/account' ? (
@@ -166,31 +216,6 @@ const StudentSidebarContent = () => {
                             )
                         }
                         <p className="text-[.9rem]">Account</p>
-                    </Link>
-
-                    <Link href='/students/cart' className={`sidebar-link ${pathname == '/students/cart' ? 'active' : ''}`}>
-                        {
-                            pathname == '/students/cart' ? (
-                                <Image
-                                    aria-hidden
-                                    src="/assets/images/cart-icon-active.png"
-                                    alt="Colearn Image"
-                                    width={20}
-                                    height={20}
-                                    className="object-cover"
-                                />
-                            ) : (
-                                <Image
-                                    aria-hidden
-                                    src="/assets/images/cart-icon.png"
-                                    alt="Colearn Image"
-                                    width={20}
-                                    height={20}
-                                    className="object-cover"
-                                />
-                            )
-                        }
-                        <p className="text-[.9rem]">Cart</p>
                     </Link>
 
                     <Link href='/students/settings' className={`sidebar-link ${pathname == '/students/settings' ? 'active' : ''}`}>

@@ -1,7 +1,7 @@
 'use client';
 import React, {useEffect, useState} from "react";
 import { useRouter } from "next/navigation";
-import { useAuthInstructors } from "@/hooks/useAuth";
+import { checkAuth } from "@/hooks/useAuth";
 import { showErrorToast } from "@/utils/toastTypes";
 import { genralStore } from "@/zustand/generalStore";
 import { courseStore } from "@/zustand/courseStore";
@@ -24,7 +24,7 @@ const TransactionBody = () => {
             setLoading(true)
             
             if(!userId) return
-            await useAuthInstructors(router); // ✅ valid usage
+            await checkAuth(router); // ✅ valid usage
             
             try {
                 const response = await get_user_transactions(userId);
