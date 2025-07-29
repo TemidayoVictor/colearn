@@ -1,5 +1,5 @@
 import React from "react";
-import TableContent from "./TableContent";
+import TableContentCourses from "./TableContentCourses";
 import GridContent from "./GridContent";
 
 type CoursesBoxProps = {
@@ -20,7 +20,7 @@ const CoursesBox = ({view, tab}: CoursesBoxProps) => {
             {
                 view == 'table' &&
                 <div className="spacing-inter bod-grey p-[1em] rounded-[.5em]">
-                    <TableContent tab={tab} />
+                    <TableContentCourses tab={tab} />
                 </div>
             }
         </div>

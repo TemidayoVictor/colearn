@@ -373,5 +373,7 @@ export type Dashboard = {
     total_revenue?: number;
     wallet?: Wallet | null;
     earnings?: [];
+    total_average_rating?: number;
+    total_reviews?: number;
     courses?: Course[];
 }

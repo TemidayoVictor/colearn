@@ -1,6 +1,7 @@
-import React from "react";
+'use client';
+import React, {useMemo} from "react";
 import Image from "next/image";
-import { genralStore } from "@/zustand/generalStore";
+import { courseStore } from "@/zustand/courseStore";
 import EmptyPage from "../EmptyPage";
 
 type TableContentProps = {
@@ -8,14 +9,31 @@ type TableContentProps = {
     tab?: string
 }
 
-const TableContent = ({type}: TableContentProps) => {
-    const data = genralStore((state) => state.data);
-    const courses = data?.courses || [];
-    
+const TableContentCourses = ({type, tab}: TableContentProps) => {
+    const courses = courseStore((state) => state.courses);
+
+    const courseUse = useMemo(() => {
+        if (tab === 'live') {
+            return Array.isArray(courses)
+                ? courses.filter((course) => course.is_published)
+                : [];
+        }
+
+        else if( tab === 'draft') {
+            return Array.isArray(courses)
+                ? courses.filter((course) => !course.is_published)
+                : [];
+        }
+
+            else {
+            return courses;
+        }
+    }, [tab, courses]);
+
     return (
         <div className="table-container">
             {
-                courses.length > 0 ? (
+                courseUse.length > 0 ? (
                     <div>
                         <table>
                             <thead>
@@ -29,7 +47,7 @@ const TableContent = ({type}: TableContentProps) => {
                                             <th>Course Price</th>                            
                                         </>
                                     }
-                                    <th>Total Revenue</th>
+                                    {/* <th>Total Revenue</th> */}
                                     <th>Total  Enrollment</th>
                                     <th>Total Completion</th>
                                     <th>Review</th>
@@ -37,7 +55,7 @@ const TableContent = ({type}: TableContentProps) => {
                             </thead>
                             <tbody>
                                 {
-                                    courses.map((item, index) => (
+                                    courseUse.map((item, index) => (
                                         <tr key={index}>
                                             <td>{index + 1}</td>
                                             <td className="flex items-center gap-2">
@@ -54,9 +72,9 @@ const TableContent = ({type}: TableContentProps) => {
                                                 <span className="text-sm font-semibold text-gray-800 truncate sm:whitespace-normal sm:truncate-0">
                                                     {item?.title} 
                                                 </span>
-                                                {/* <span className="text-xs text-gray-500 mt-1 line-clamp-2">
-                                                    Data Science and. . .
-                                                </span> */}
+                                                <span className="text-xs text-gray-500 mt-1 line-clamp-2">
+                                                    { item.summary && item.summary.length > 20 ? item.summary.slice(0, 20) + '...' : item.summary}
+                                                </span>
                                                 </span>
                                             </td>
                                             {
@@ -66,10 +84,10 @@ const TableContent = ({type}: TableContentProps) => {
                                                     <td>$400</td>                            
                                                 </>
                                             }
-                                            <td>${Number(item?.total_revenue).toLocaleString()}</td>
-                                            <td>{Number(item?.total_enrollments).toLocaleString()}</td>
-                                            <td>{Number(item?.total_completions).toLocaleString()}</td>
-                                            <td>{Number(item?.review_count).toLocaleString()}</td>
+                                            {/* <td>${Number(item?.total_revenue).toLocaleString()}</td> */}
+                                            <td>{Number(item.enrollments.length).toLocaleString()}</td>
+                                            <td>{Number(item.enrollments.filter(enrollment => enrollment?.completed_at).length).toLocaleString()}</td>
+                                            <td>{Number(item.reviews.length).toLocaleString()}</td>
                                         </tr>
                                     ))
                                 }
@@ -78,7 +96,12 @@ const TableContent = ({type}: TableContentProps) => {
                     </div>
                 ) : (
                     <div>
-                        <EmptyPage image="/assets/images/empty-image.png" link="/instructors/upload-course" linkTitle="Upload Course" header="Let Get You Started!!" content="Get started! Upload your first course and share your knowledge with the world." imageWidth={400} imageHeight={240}/>
+                        {
+                            tab === 'draft' ?
+                            <EmptyPage image="/assets/images/empty-image.png" header="No Draft Courses" content="You have not created any draft course yet" imageWidth={400} imageHeight={240}/>    
+                            :
+                            <EmptyPage image="/assets/images/empty-image.png" header="No Published Courses" content="You have not published any course yet" imageWidth={400} imageHeight={240}/>
+                        }
                     </div>
                 )
             }
@@ -86,4 +109,4 @@ const TableContent = ({type}: TableContentProps) => {
     )
 }
 
-export default TableContent;
+export default TableContentCourses;

@@ -151,7 +151,7 @@ const GridContent = ({tab}: GridContentProps) => {
                                                             className="object-cover"
                                                         />
                                                     </div>
-                                                    <p className="text-res-2">134 Enrolled</p>
+                                                    <p className="text-res-2">{item.enrollments.length} Enrolled</p>
                                                 </div>
                                             </div>
 
@@ -167,7 +167,7 @@ const GridContent = ({tab}: GridContentProps) => {
                                                             className="object-cover"
                                                         />
                                                     </div>
-                                                    <p className="text-res-2">54 completed</p>
+                                                    <p className="text-res-2">{item.enrollments.filter(enrollment => enrollment?.completed_at).length} completed</p>
                                                 </div>
 
                                                 <div className="flex items-center gap-[.2em]">
@@ -181,7 +181,7 @@ const GridContent = ({tab}: GridContentProps) => {
                                                             className="object-cover"
                                                         />
                                                     </div>
-                                                    <p className="text-res-2">56 comments</p>
+                                                    <p className="text-res-2">{item.reviews.length} review {item.reviews.length > 1 ? 's' : ''}</p>
                                                 </div>
                                             </div>
                                         </div>

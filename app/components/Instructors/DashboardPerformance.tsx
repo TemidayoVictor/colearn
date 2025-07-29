@@ -85,9 +85,9 @@ const DashboardPerformance = ({type, user}: DashboardPerformanceProps) => {
                     {
                         (type == "Course" || type == "Course-2") &&
                         <div className="flex flex-col gap-1 perf-detail">
-                            <p className="color-grey-text text-[.9rem]">Total Comments</p>
+                            <p className="color-grey-text text-[.9rem]">Total Reviews</p>
                             <div className="flex items-center gap-3">
-                                <h3 className="font-semibold">439</h3>
+                                <h3 className="font-semibold">{Number(data?.total_reviews).toLocaleString()}</h3>
                                 <div className="flex items-center gap-2">
                                     <Image
                                         aria-hidden
@@ -97,10 +97,10 @@ const DashboardPerformance = ({type, user}: DashboardPerformanceProps) => {
                                         height={15}
                                         className="object-cover"
                                     />
-                                    <p className="text-[.8rem]"><span className="font-semibold">4.96 /</span> 5 Rating</p>
+                                    <p className="text-[.8rem]"><span className="font-semibold">{Number(data?.total_average_rating).toLocaleString()}</span> Rating</p>
                                 </div>
                             </div>
-                            <p className="color-grey-text text-[.7rem]">Total Comments</p>
+                            <p className="color-grey-text text-[.7rem]">Total Reviews</p>
                         </div>
                     }
                 </div>
