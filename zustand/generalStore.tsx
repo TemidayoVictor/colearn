@@ -56,6 +56,8 @@ type GeneralState = {
 
   generalSettings: GeneralSettings | null;
 
+  data: Dashboard |  null;
+
   setConsultant: (consultant: Consultant) => void
   setConsultants: (consultants: Consultant[]) => void
 
@@ -96,6 +98,8 @@ type GeneralState = {
   setGeneralSettings: (settings: GeneralSettings) => void;
 
   getConsultantById: (id: number) => Consultant | undefined;
+
+  setData: (data: Dashboard | null) => void;
 
   clearAll: () => void,
 }
@@ -142,6 +146,8 @@ export const genralStore = create<GeneralState>() (
 
       generalSettings: null,
 
+      data: null,
+
       setBooking: (booking) => set({booking}),
       setBookings: (bookings) => set({bookings}),
 
@@ -182,6 +188,8 @@ export const genralStore = create<GeneralState>() (
       setGeneralSettings: (settings: GeneralSettings) => set({generalSettings: settings}),
 
       getConsultantById: (id) => get().consultants.find((c) => c.id === id),
+
+      setData: (data) => set({data}),
       
       clearAll: () => {
       set({
@@ -199,6 +207,7 @@ export const genralStore = create<GeneralState>() (
         newEmail: '',
         wallet: null,
         generalSettings: null,
+        data: null,
       }); 
 
       localStorage.removeItem('general-storage'); // Remove persisted state

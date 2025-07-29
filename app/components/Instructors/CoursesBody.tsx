@@ -1,11 +1,16 @@
 'use client';
-import React, {useState, useEffect} from "react";
+import React, {useState, useMemo} from "react";
 import Image from "next/image";
 import Link from "next/link";
 import CoursesBox from "./CoursesBox";
+import { courseStore } from "@/zustand/courseStore";
 
 const CoursesBody = () => {
+    const courses = courseStore((state) => state.courses);
+    const publishedCoursesCount = courses.filter(course => course.is_published).length;
+    const draftedCoursesCount = courses.filter(course => !course.is_published).length;
     
+
     const [selectedTab, setSelectedTab] = useState<string>('live');
     const [selectedView, setSelectedView] = useState<string>('grid');
 
@@ -13,8 +18,8 @@ const CoursesBody = () => {
         <div className="mt-[2em]">
             <div className="in-nav mb-[1.5em] flex items-center justify-between">
                 <div className="in-nav two scrollable">
-                    <span className={`in-nav-link three flex gap-2 items-center two color-grey-text ${selectedTab == 'live' ? 'active' : ''}`} onClick={() => setSelectedTab('live')}> <span>Published Courses</span> <span className="number">3</span></span>
-                    <span className={`in-nav-link three flex gap-2 items-center two color-grey-text ${selectedTab == 'draft' ? 'active' : ''}`} onClick={() => setSelectedTab('draft')}> <span>Drafts</span> <span className="number">3</span></span>
+                    <span className={`in-nav-link three flex gap-2 items-center two color-grey-text ${selectedTab == 'live' ? 'active' : ''}`} onClick={() => setSelectedTab('live')}> <span>Published Courses</span> <span className="number"> {publishedCoursesCount} </span></span>
+                    <span className={`in-nav-link three flex gap-2 items-center two color-grey-text ${selectedTab == 'draft' ? 'active' : ''}`} onClick={() => setSelectedTab('draft')}> <span>Drafts</span> <span className="number">{draftedCoursesCount}</span></span>
                 </div>
 
                 <div className="desktop-flex items-center gap-3">
@@ -98,7 +103,7 @@ const CoursesBody = () => {
             </div>
 
             <div className="spacing-inter">
-                <CoursesBox view={selectedView}  />
+                <CoursesBox view={selectedView} tab={selectedTab}  />
             </div>
         </div>
     )

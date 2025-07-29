@@ -2,11 +2,12 @@
 import React from "react";
 import Chart from "react-apexcharts";
 import { ApexOptions } from "apexcharts";
+import { genralStore } from "@/zustand/generalStore";
 
 const series = [
   {
     name: "Earnings",
-    data: [3000, 4000, 3200, 4500, 5000, 200, 1500, 12000, 1100, 350, 2000, 1200],
+    data: genralStore.getState().data?.earnings || [],
   },
 ];
 
@@ -34,7 +35,7 @@ const options: ApexOptions = {
   tooltip: {
     enabled: true,
     y: {
-      formatter: (val) => `₦${val.toLocaleString()}`,
+      formatter: (val) => `$${val.toLocaleString()}`,
     },
   },
   grid: {

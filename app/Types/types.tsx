@@ -156,6 +156,11 @@ export type Course = {
     reviews: Review[];
     summary: string;
     enrollments: Enrollment[];
+    average_rating?: number;
+    total_completions?: number;
+    total_enrollments?: number;
+    total_revenue?: number;
+    review_count?: number;
 }
 
 export type Progress = {
@@ -361,4 +366,12 @@ export type GeneralSettings = {
 export type Dashboard = {
     activeCourses?: number,
     completedCourses?: number,
+    total_sales_amount?: string;
+    total_courses_uploaded?: number;
+    total_enrollments?: number;
+    total_courses_completed?: number;
+    total_revenue?: number;
+    wallet?: Wallet | null;
+    earnings?: [];
+    courses?: Course[];
 }

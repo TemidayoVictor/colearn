@@ -32,6 +32,8 @@ const DashboardPerformance = ({type, user}: DashboardPerformanceProps) => {
         return Array.isArray(enrollments) ? enrollments.length : 0;
     }, [enrollments]);
 
+    const data = genralStore((state) => state.data);
+
     return (
         <div className="dashboard-performance">
             { renderHeading(type) }
@@ -42,7 +44,7 @@ const DashboardPerformance = ({type, user}: DashboardPerformanceProps) => {
                        type !== "Course-2" &&
                         <div className="flex flex-col gap-1 perf-detail none">
                             <p className="color-grey-text text-[.9rem]">Total Sales Amount</p>
-                            <h3 className="font-semibold">$3429.45</h3>
+                            <h3 className="font-semibold">${Number(data?.total_sales_amount).toLocaleString()}</h3>
                             <p className="color-grey-text text-[.7rem]">Total Sales Amount</p>
                         </div> 
                     }
@@ -58,7 +60,7 @@ const DashboardPerformance = ({type, user}: DashboardPerformanceProps) => {
                         type == "Dashboard" &&
                         <div className="flex flex-col gap-1 perf-detail">
                             <p className="color-grey-text text-[.9rem]">Wallet Balance</p>
-                            <h3 className="font-semibold">$1427.82</h3>
+                            <h3 className="font-semibold">${Number(data?.wallet?.balance).toLocaleString()}</h3>
                             <p className="color-grey-text text-[.7rem]">Wallet Balance</p>
                         </div>
                     }
@@ -66,18 +68,18 @@ const DashboardPerformance = ({type, user}: DashboardPerformanceProps) => {
                         type !== "Course-2" &&
                         <div className="flex flex-col gap-1 perf-detail">
                             <p className="color-grey-text text-[.9rem]">Total Course Upload</p>
-                            <h3 className="font-semibold">24</h3>
+                            <h3 className="font-semibold">{Number(data?.total_courses_uploaded).toLocaleString()}</h3>
                             <p className="color-grey-text text-[.7rem]">Total Course Upload</p>
                         </div>
                     }
                     <div className="flex flex-col gap-1 perf-detail">
                         <p className="color-grey-text text-[.9rem]">Total Enrollment</p>
-                        <h3 className="font-semibold">155</h3>
+                        <h3 className="font-semibold">{Number(data?.total_enrollments).toLocaleString()}</h3>
                         <p className="color-grey-text text-[.7rem]">Total Enrollment</p>
                     </div>
                     <div className="flex flex-col gap-1 perf-detail">
                         <p className="color-grey-text text-[.9rem]">Total Course Completed</p>
-                        <h3 className="font-semibold">124</h3>
+                        <h3 className="font-semibold">{Number(data?.total_courses_completed).toLocaleString()}</h3>
                         <p className="color-grey-text text-[.7rem]">Total Course Completed</p>
                     </div>
                     {
