@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useLogout } from "@/hooks/useLogout";
+import { authStore } from "@/zustand/authStore";
 import Loader from "../Loader";
 
 const InstructorSidebarContent = () => {
@@ -11,6 +12,8 @@ const InstructorSidebarContent = () => {
     const {
         logoutHook
     } = useLogout();
+
+    const instructor = authStore((state) => state.instructor);
 
     // if (loading) return <Loader />
 
@@ -223,6 +226,68 @@ const InstructorSidebarContent = () => {
                 </div>
             </div>
             <div className="sidebar-break">
+                {
+                    instructor?.consultant_active ? (
+                        <Link href='/consultants/set-availability' className={`sidebar-link ${pathname == '/consultants/set-availability' ? 'active' : ''}`}>
+                            {
+                                pathname == '/consultants/set-availability' ? (
+        
+                                    <Image
+                                        aria-hidden
+                                        src="/assets/images/teacher-active.png"
+                                        alt="Colearn Image"
+                                        width={20}
+                                        height={20}
+                                        className="object-cover"
+                                    />
+        
+                                ) : (
+        
+                                    <Image
+                                        aria-hidden
+                                        src="/assets/images/teacher.png"
+                                        alt="Colearn Image"
+                                        width={20}
+                                        height={20}
+                                        className="object-cover"
+                                    />
+        
+                                )
+                            }
+                            <p className="text-[.9rem]">Update Availability</p>
+                        </Link>
+                    ) : (
+                        <Link href='/instructors/become-consultant' className={`sidebar-link ${pathname == '/instructors/become-consultant' ? 'active' : ''}`}>
+                            {
+                                pathname == '/instructors/become-consultant' ? (
+        
+                                    <Image
+                                        aria-hidden
+                                        src="/assets/images/teacher-active.png"
+                                        alt="Colearn Image"
+                                        width={20}
+                                        height={20}
+                                        className="object-cover"
+                                    />
+        
+                                ) : (
+        
+                                    <Image
+                                        aria-hidden
+                                        src="/assets/images/teacher.png"
+                                        alt="Colearn Image"
+                                        width={20}
+                                        height={20}
+                                        className="object-cover"
+                                    />
+        
+                                )
+                            }
+                            <p className="text-[.9rem]">Become a Consultant</p>
+                        </Link>
+                    )
+                }
+
                 <Link href='/instructors/help-desk' className={`sidebar-link ${pathname == '/instructors/help-desk' ? 'active' : ''}`}>
                     {
                         pathname == '/instructors/help-desk' ? (
@@ -246,35 +311,6 @@ const InstructorSidebarContent = () => {
                         )
                     }          
                     <p className="text-[.9rem]">Help Desk</p>
-                </Link>
-
-                <Link href='/instructors/become-consultant' className={`sidebar-link ${pathname == '/instructors/become-consultant' ? 'active' : ''}`}>
-                    {
-                        pathname == '/instructors/become-consultant' ? (
-
-                            <Image
-                                aria-hidden
-                                src="/assets/images/teacher-active.png"
-                                alt="Colearn Image"
-                                width={20}
-                                height={20}
-                                className="object-cover"
-                            />
-
-                        ) : (
-
-                            <Image
-                                aria-hidden
-                                src="/assets/images/teacher.png"
-                                alt="Colearn Image"
-                                width={20}
-                                height={20}
-                                className="object-cover"
-                            />
-
-                        )
-                    }
-                    <p className="text-[.9rem]">Become a Consultant</p>
                 </Link>
 
                 <button className="sidebar-link" onClick={() => logoutHook(setLoading)}>
