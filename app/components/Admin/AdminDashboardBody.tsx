@@ -5,6 +5,9 @@ import AdminDashboardDetails from "./AdminDashboardDetails";
 import DashboardRevenue from "../Instructors/DashboardRevenue";
 import DashboardTopCourses from "../Instructors/DashboardTopCourses";
 import DashboardTopCoursesTable from "../Instructors/DashboardTopCoursesTable";
+import { genralStore } from "@/zustand/generalStore";
+import { admin_dashboard } from "@/services/admin";
+import { showErrorToast } from "@/utils/toastTypes";
 import { useRouter } from "next/navigation";
 import { useAuthAdmin } from "@/hooks/useAuth";
 import Loader from "../Loader";
@@ -16,7 +19,25 @@ const AdminDashboardBody = () => {
 
     useEffect(() => {
         const init = async () => {
-            await useAuthAdmin(router); // ✅ valid usage
+            await useAuthAdmin(router);
+            try {
+                const response = await admin_dashboard();
+                
+                if (response.success) {
+                    // save state globally
+                    genralStore.getState().setData(response.data);
+                } 
+    
+                else {
+                    showErrorToast(response.message)
+                    console.log(response)
+                }
+            }
+
+            catch(error: any) {
+                showErrorToast('Something unexpected happened')
+                console.log(error)
+            }
             setLoading(false);
         };
         init();

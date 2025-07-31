@@ -1,14 +1,11 @@
 'use client';
 import React from "react";
-import Image from "next/image";
-import Link from "next/link";
 import dynamic from "next/dynamic";
 import { genralStore } from "@/zustand/generalStore";
 
 type DashboardRevenueProps = {
   style?: string
   type?: string
-
 }
 
 const ChartBox = dynamic(() => import("../ChartBox"), {
@@ -18,7 +15,6 @@ const ChartBox = dynamic(() => import("../ChartBox"), {
 const UserByCountryChart = dynamic(() => import("../UserByCountryChart"), {
   ssr: false,
 });
-
 
 const DashboardRevenue = ({style, type}:DashboardRevenueProps) => {
   const data = genralStore((state) => state.data);

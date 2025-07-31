@@ -161,6 +161,7 @@ export type Course = {
     total_enrollments?: number;
     total_revenue?: number;
     review_count?: number;
+    enrollments_count?: number;
 }
 
 export type Progress = {
@@ -376,4 +377,22 @@ export type Dashboard = {
     total_average_rating?: number;
     total_reviews?: number;
     courses?: Course[];
+    percentage_student_active?: number;
+    percentage_instructors_active?: number;
+    monthly_sales_amount?: number;
+    total_consultation_amount?: number;
+    total_students?: number;
+    active_students?: number;
+    total_instructors?: number;
+    active_instructors?: number;
+    total_consultants?: number;
+    active_consultants?: number;
+    new_students?: number;
+    new_instructors?: number;
+    new_consultants?: number;
+    users_by_country?: {
+        country_iso3: string;
+        user_count: number;
+    }[]; 
+    top_courses?: Course[];
 }

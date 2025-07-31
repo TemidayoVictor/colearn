@@ -2,6 +2,17 @@ import axiosInstance from "@/utils/api";
 import { handleApiError, handleApiResponse } from "@/utils/handleApiResponse";
 import { GeneralSettings } from "@/app/Types/types";
 
+export const admin_dashboard = async () => {
+    try {
+        const response = await axiosInstance.get("/admin-dashboard");
+        return handleApiResponse(response);
+    }
+
+    catch(error: any) {
+        return handleApiError(error)
+    }
+}
+
 export const credit_wallet = async (id: number | undefined, amount: number) => {
     try {
         const response = await axiosInstance.post("/credit-wallet", {

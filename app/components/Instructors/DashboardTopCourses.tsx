@@ -2,6 +2,7 @@
 import React, {useState} from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { genralStore } from "@/zustand/generalStore";
 
 type DashboardTopCoursesProps = {
     type?: string
@@ -10,6 +11,7 @@ type DashboardTopCoursesProps = {
 
 const DashboardTopCourses = ({type, title="Top Courses"}: DashboardTopCoursesProps) => {
     const [selectedTab, setSelectedTab] = useState<string>('courses');
+    const courses = genralStore((state) => state.data?.top_courses || []);
     return (
         <div className="bod-grey p-[1em] rounded-[.5em] dashboard-top-courses">
             <div className="flex items-center justify-between">
@@ -80,29 +82,29 @@ const DashboardTopCourses = ({type, title="Top Courses"}: DashboardTopCoursesPro
                 selectedTab == 'courses' &&
                 <div className="mt-[1.5em]">
                     {
-                        [1,2,3,4,5,6].map((item, index) => (
+                        courses.map((item, index) => (
                             <div className="flex items-center justify-between mb-[1em]" key={index}>
                                 <div className="flex items-center gap-3 top-courses-body-left">
                                     <div>
                                         <Image
                                             aria-hidden
-                                            src="/assets/images/top-course.png"
+                                            src={item.thumbnail ? `${process.env.NEXT_PUBLIC_API_URL}/storage/${item.thumbnail}` : "/assets/images/course-img-2.png"}
                                             alt="Colearn Logo"
                                             width={40}
                                             height={40}
-                                            className="object-contain"
+                                            className="object-contain rounded-[.3em]"
                                         />
                                     </div>
                                     <p className="text-[.9rem]">
                                         {
-                                            type ==  "sellers" ? ("John Doe") : ("Data Science and machine learning")
+                                            type ==  "sellers" ? ("John Doe") : (item?.title || "Course Title")
                                         }
                                     </p>
                                 </div>
                                 <div className="bg-grey-normal bod-grey py-[.2em] px-[.5em] rounded-[.3em] text-center top-courses-body-right">
                                     <p className="color-grey-text text-[.7rem]">
                                         {
-                                            type ==  "sellers" ? ("$12,000") : ("4 total Sales")
+                                            type ==  "sellers" ? ("$12,000") : (`${item?.enrollments_count || 0} total sale`)
                                         }
                                     </p>
                                 </div>
