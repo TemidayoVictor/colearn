@@ -1,3 +1,4 @@
+'use client';
 import React from "react";
 import Image from "next/image";
 import { genralStore } from "@/zustand/generalStore";
@@ -62,8 +63,8 @@ const TableContent = ({type}: TableContentProps) => {
                                             {
                                                 type == "admin" &&
                                                 <>
-                                                    <td>Joe Doe</td>
-                                                    <td>$400</td>                            
+                                                    <td>{item.instructor.user?.first_name} {item.instructor.user?.last_name}</td>
+                                                    <td>${item.price}</td>                            
                                                 </>
                                             }
                                             <td>${Number(item?.total_revenue).toLocaleString()}</td>

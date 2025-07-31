@@ -11,7 +11,15 @@ type DashboardTopCoursesProps = {
 
 const DashboardTopCourses = ({type, title="Top Courses"}: DashboardTopCoursesProps) => {
     const [selectedTab, setSelectedTab] = useState<string>('courses');
-    const courses = genralStore((state) => state.data?.top_courses || []);
+    const courses = genralStore((state) => state.data?.top_courses);
+    const instructors = genralStore((state) => state.data?.top_instructors);
+    let items;
+    if(type == "sellers") {
+        items = instructors;
+    }
+    else {
+        items = courses;
+    }
     return (
         <div className="bod-grey p-[1em] rounded-[.5em] dashboard-top-courses">
             <div className="flex items-center justify-between">
@@ -65,7 +73,7 @@ const DashboardTopCourses = ({type, title="Top Courses"}: DashboardTopCoursesPro
                         )
                     }
                 </div>
-                <div className="bg-light flex py-[.2em] px-[.5em] items-center text-[.8rem] bod-normal rounded-[.3em]">
+                {/* <div className="bg-light flex py-[.2em] px-[.5em] items-center text-[.8rem] bod-normal rounded-[.3em]">
                     <p>See All</p>
                     <Image
                         aria-hidden
@@ -75,41 +83,73 @@ const DashboardTopCourses = ({type, title="Top Courses"}: DashboardTopCoursesPro
                         height={20}
                         className="object-contain"
                     />
-                </div>
+                </div> */}
             </div>
 
             {
                 selectedTab == 'courses' &&
                 <div className="mt-[1.5em]">
                     {
-                        courses.map((item, index) => (
-                            <div className="flex items-center justify-between mb-[1em]" key={index}>
-                                <div className="flex items-center gap-3 top-courses-body-left">
-                                    <div>
-                                        <Image
-                                            aria-hidden
-                                            src={item.thumbnail ? `${process.env.NEXT_PUBLIC_API_URL}/storage/${item.thumbnail}` : "/assets/images/course-img-2.png"}
-                                            alt="Colearn Logo"
-                                            width={40}
-                                            height={40}
-                                            className="object-contain rounded-[.3em]"
-                                        />
+                        type == "sellers" ? (
+                            instructors?.map((item, index) => (
+                                <div className="flex items-center justify-between mb-[1em]" key={index}>
+                                    <div className="flex items-center gap-3 top-courses-body-left">
+                                        <div>
+                                            <Image
+                                                aria-hidden
+                                                src={item.profile_photo ? `${process.env.NEXT_PUBLIC_API_URL}/storage/${item.profile_photo}` : "/assets/images/course-img-2.png"}
+                                                alt="Colearn Logo"
+                                                width={40}
+                                                height={40}
+                                                className="object-contain rounded-[.3em] w-[40px] h-[40px]"
+                                            />
+                                        </div>
+                                        <p className="text-[.9rem]">
+                                            {
+                                                type ==  "sellers" ? (`${item.user.first_name} ${item.user.last_name}`) : (item?.title || "Course Title")
+                                            }
+                                        </p>
                                     </div>
-                                    <p className="text-[.9rem]">
-                                        {
-                                            type ==  "sellers" ? ("John Doe") : (item?.title || "Course Title")
-                                        }
-                                    </p>
+                                    <div className="bg-grey-normal bod-grey py-[.2em] px-[.5em] rounded-[.3em] text-center top-courses-body-right">
+                                        <p className="color-grey-text text-[.7rem]">
+                                            {
+                                                (`$${item.total_sales || 0}`)
+                                            }
+                                        </p>
+                                    </div>
                                 </div>
-                                <div className="bg-grey-normal bod-grey py-[.2em] px-[.5em] rounded-[.3em] text-center top-courses-body-right">
-                                    <p className="color-grey-text text-[.7rem]">
-                                        {
-                                            type ==  "sellers" ? ("$12,000") : (`${item?.enrollments_count || 0} total sale`)
-                                        }
-                                    </p>
+                            ))
+
+                        ) : (
+                            courses?.map((item, index) => (
+                                <div className="flex items-center justify-between mb-[1em]" key={index}>
+                                    <div className="flex items-center gap-3 top-courses-body-left">
+                                        <div>
+                                            <Image
+                                                aria-hidden
+                                                src={item.thumbnail ? `${process.env.NEXT_PUBLIC_API_URL}/storage/${item.thumbnail}` : "/assets/images/course-img-2.png"}
+                                                alt="Colearn Logo"
+                                                width={40}
+                                                height={40}
+                                                className="object-contain rounded-[.3em] w-[40px] h-[40px]"
+                                            />
+                                        </div>
+                                        <p className="text-[.9rem]">
+                                            {
+                                                type ==  "sellers" ? ("John Doe") : (item?.title || "Course Title")
+                                            }
+                                        </p>
+                                    </div>
+                                    <div className="bg-grey-normal bod-grey py-[.2em] px-[.5em] rounded-[.3em] text-center top-courses-body-right">
+                                        <p className="color-grey-text text-[.7rem]">
+                                            {
+                                                type ==  "sellers" ? ("$12,000") : (`${item?.enrollments_count || 0} total sale`)
+                                            }
+                                        </p>
+                                    </div>
                                 </div>
-                            </div>
-                        ))
+                            ))
+                        )
                     }
 
                 </div>

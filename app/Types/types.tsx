@@ -111,6 +111,7 @@ export type Instructors = {
     consultant_progress: number;
     experience_years: string;
     user: User;
+    total_sales?: number;
 }
 
 export type Consultant = {
@@ -395,4 +396,7 @@ export type Dashboard = {
         user_count: number;
     }[]; 
     top_courses?: Course[];
+    total_courses_published?: number;
+    top_instructors?: Instructors[];
+
 }

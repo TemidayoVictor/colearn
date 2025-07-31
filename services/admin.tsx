@@ -13,6 +13,17 @@ export const admin_dashboard = async () => {
     }
 }
 
+export const admin_courses = async () => {
+    try {
+        const response = await axiosInstance.get("/admin-course");
+        return handleApiResponse(response);
+    }
+
+    catch(error: any) {
+        return handleApiError(error)
+    }
+}
+
 export const credit_wallet = async (id: number | undefined, amount: number) => {
     try {
         const response = await axiosInstance.post("/credit-wallet", {

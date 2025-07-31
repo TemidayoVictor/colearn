@@ -6,6 +6,7 @@ import { genralStore } from "@/zustand/generalStore";
 type DashboardPerformanceProps = {
     type?: string | null
     user?: string 
+    subType?: string
 }
 
 const renderHeading = (type: string | null | undefined) => {
@@ -19,7 +20,7 @@ const renderHeading = (type: string | null | undefined) => {
     }
   };
 
-const DashboardPerformance = ({type, user}: DashboardPerformanceProps) => {
+const DashboardPerformance = ({type, user, subType}: DashboardPerformanceProps) => {
     const enrollments = genralStore((state) => state.enrollments)
 
     const completeEnrollments = useMemo(() => {
@@ -88,17 +89,20 @@ const DashboardPerformance = ({type, user}: DashboardPerformanceProps) => {
                             <p className="color-grey-text text-[.9rem]">Total Reviews</p>
                             <div className="flex items-center gap-3">
                                 <h3 className="font-semibold">{Number(data?.total_reviews).toLocaleString()}</h3>
-                                <div className="flex items-center gap-2">
-                                    <Image
-                                        aria-hidden
-                                        src="/assets/images/star.png"
-                                        alt="Colearn Image"
-                                        width={15}
-                                        height={15}
-                                        className="object-cover"
-                                    />
-                                    <p className="text-[.8rem]"><span className="font-semibold">{Number(data?.total_average_rating).toLocaleString()}</span> Rating</p>
-                                </div>
+                                {
+                                    subType != 'Admin' &&
+                                    <div className="flex items-center gap-2">
+                                        <Image
+                                            aria-hidden
+                                            src="/assets/images/star.png"
+                                            alt="Colearn Image"
+                                            width={15}
+                                            height={15}
+                                            className="object-cover"
+                                        />
+                                        <p className="text-[.8rem]"><span className="font-semibold">{Number(data?.total_average_rating).toLocaleString()}</span> Rating</p>
+                                    </div>
+                                }
                             </div>
                             <p className="color-grey-text text-[.7rem]">Total Reviews</p>
                         </div>

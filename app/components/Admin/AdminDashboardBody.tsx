@@ -53,9 +53,9 @@ const AdminDashboardBody = () => {
                 <DashboardRevenue type="countries"/>
                 <DashboardTopCourses/>
             </div>
-            <div>
+            {/* <div>
                 <DashboardTopCoursesTable />
-            </div>
+            </div> */}
         </div>
     )
 }
