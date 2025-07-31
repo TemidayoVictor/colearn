@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import AccountModal from "./AccountModal";
 import { authStore } from "@/zustand/authStore";
+import { genralStore } from "@/zustand/generalStore";
 
 type AccountAboutprops = {
     type?: string
@@ -13,8 +14,14 @@ const AccountAbout = ({type}:AccountAboutprops) => {
     const openModal = (key: string) => setShowModal(key);
     const closeModal = () => setShowModal(null);
 
-    const user = authStore((state) => state.user);
-    const instructor = authStore((state) => state.instructor);
+    const authUser = authStore((state) => state.user);
+    const authInstructor = authStore((state) => state.instructor);
+
+    const generalUser = genralStore((state) => state.user)
+    const generalInstructor = genralStore((state) => state.instructor);
+
+    const user = type == "admin" ? generalUser : authUser;
+    const instructor = type == "admin" ? generalInstructor : authInstructor;
 
     return (
         <div className="res-flex justify-between items-start">
@@ -42,16 +49,19 @@ const AccountAbout = ({type}:AccountAboutprops) => {
                             <div className="experience-box">
                                 <div className="flex items-center justify-between">
                                     <p className="color-grey-text font-bold text-[.9rem]">Full Name</p>
-                                    <div onClick={() => openModal("edit-name")} className="cursor-pointer">
-                                        <Image
-                                            aria-hidden
-                                            src="/assets/images/edit-2.png"
-                                            alt="Colearn Logo"
-                                            width={20}
-                                            height={20}
-                                            className="object-contain"
-                                        />
-                                    </div>
+                                    {
+                                        type != "admin" &&
+                                        <div onClick={() => openModal("edit-name")} className="cursor-pointer">
+                                            <Image
+                                                aria-hidden
+                                                src="/assets/images/edit-2.png"
+                                                alt="Colearn Logo"
+                                                width={20}
+                                                height={20}
+                                                className="object-contain"
+                                            />
+                                        </div>
+                                    }
                                 </div>
                                 <p className="text-[.9rem]"> {user?.first_name} {user?.last_name} </p>
                             </div>

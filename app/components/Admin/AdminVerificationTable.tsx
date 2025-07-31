@@ -31,6 +31,7 @@ const AdminVerificationTable = ({type}: AdminVerificationTableProps) => {
     const closeModal = () => setShowModal(null);
 
     const users = genralStore((state) => state.users)
+    const instructors = genralStore((state) => state.instructors)
 
     return (
         <div className="spacing-inter">
@@ -83,42 +84,90 @@ const AdminVerificationTable = ({type}: AdminVerificationTableProps) => {
                         </thead>
                         <tbody>
                             {
-                                users.map((item, index) => (
-                                    <tr key={index}>
-                                        <td>{index + 1}</td>
-                                        <td className="flex items-center gap-2">
-                                            <Link href={`user-management/${item.id}`} className="flex gap-2 items-center">
-                                                <Image
-                                                    aria-hidden
-                                                    src="/assets/images/avatars.png"
-                                                    alt="Colearn Logo"
-                                                    width={24}
-                                                    height={24}
-                                                    className="object-contain rounded-[50%]"
-                                                />
-            
-                                                <span className="flex flex-col overflow-hidden">
-                                                    <span className="text-sm font-semibold text-gray-800 truncate sm:whitespace-normal sm:truncate-0">
-                                                        {item.first_name} {item.last_name}
-                                                    </span>
-                                                </span>
-                                            </Link>
-                                        </td>
-                                        <td>{item.email}</td>
-                                        <td className="capitalize">{item.type}</td>
+                                type == 'verification' ? (
+                                    <>
                                         {
-                                            item.profile_progress != 'completed' ? (
-                                                <td>
-                                                    <span className="badge ongoing">Pending</span>
-                                                </td>
-                                            ) : (
-                                                <td>
-                                                    <span className="badge completed">Active</span>
-                                                </td>
-                                            )
+                                            instructors.map((item, index) => (
+                                                <tr key={index}>
+                                                    <td>{index + 1}</td>
+                                                    <td className="flex items-center gap-2">
+                                                        <Link href={`user-management/${item.user?.id}`} className="flex gap-2 items-center">
+                                                            <Image
+                                                                aria-hidden
+                                                                src="/assets/images/avatars.png"
+                                                                alt="Colearn Logo"
+                                                                width={24}
+                                                                height={24}
+                                                                className="object-contain rounded-[50%]"
+                                                            />
+                        
+                                                            <span className="flex flex-col overflow-hidden">
+                                                                <span className="text-sm font-semibold text-gray-800 truncate sm:whitespace-normal sm:truncate-0">
+                                                                    {item.user?.first_name} {item.user?.last_name}
+                                                                </span>
+                                                            </span>
+                                                        </Link>
+                                                    </td>
+                                                    <td>{item.user?.email}</td>
+                                                    <td className="capitalize">{item.user?.type}</td>
+                                                    {
+                                                        item.user?.profile_progress != 'completed' ? (
+                                                            <td>
+                                                                <span className="badge ongoing">Pending</span>
+                                                            </td>
+                                                        ) : (
+                                                            <td>
+                                                                <span className="badge completed">Active</span>
+                                                            </td>
+                                                        )
+                                                    }
+                                                </tr>
+                                            ))
                                         }
-                                    </tr>
-                                ))
+                                    </>
+
+                                ) : (
+                                    <>
+                                        {
+                                            users.map((item, index) => (
+                                                <tr key={index}>
+                                                    <td>{index + 1}</td>
+                                                    <td className="flex items-center gap-2">
+                                                        <Link href={`user-management/${item.id}`} className="flex gap-2 items-center">
+                                                            <Image
+                                                                aria-hidden
+                                                                src="/assets/images/avatars.png"
+                                                                alt="Colearn Logo"
+                                                                width={24}
+                                                                height={24}
+                                                                className="object-contain rounded-[50%]"
+                                                            />
+                        
+                                                            <span className="flex flex-col overflow-hidden">
+                                                                <span className="text-sm font-semibold text-gray-800 truncate sm:whitespace-normal sm:truncate-0">
+                                                                    {item.first_name} {item.last_name}
+                                                                </span>
+                                                            </span>
+                                                        </Link>
+                                                    </td>
+                                                    <td>{item.email}</td>
+                                                    <td className="capitalize">{item.type}</td>
+                                                    {
+                                                        item.profile_progress != 'completed' ? (
+                                                            <td>
+                                                                <span className="badge ongoing">Pending</span>
+                                                            </td>
+                                                        ) : (
+                                                            <td>
+                                                                <span className="badge completed">Active</span>
+                                                            </td>
+                                                        )
+                                                    }
+                                                </tr>
+                                            ))
+                                        }
+                                    </>
+                                )
                             }
                         </tbody>
                     </table>

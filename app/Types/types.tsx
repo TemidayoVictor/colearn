@@ -398,5 +398,9 @@ export type Dashboard = {
     top_courses?: Course[];
     total_courses_published?: number;
     top_instructors?: Instructors[];
+    total_users?: number;
+    total_pending_consultants?: number;
+    total_verified_consultants?: number;
+    total_declined_consultants?: number;
 
 }

@@ -76,6 +76,8 @@ const AdminuserProfileBody = ({type}: AdminuserProfileBodyProps) => {
                 if (response.success) {
                     // save state globally
                     genralStore.getState().setUser(response.data.user);
+                    genralStore.getState().setData(response.data.data);
+                    genralStore.getState().setInstructor(response.data.instructor);
 
                     // save state on page
                     setUser(response.data.user);

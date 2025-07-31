@@ -199,3 +199,38 @@ export const reject_withdrawal = async (id: number | undefined) => {
     }
 }
 
+export const all_unapproved_consultants = async () => {
+    try {
+        const response = await axiosInstance.get("/all-unapproved-consultants");
+        return handleApiResponse(response);
+    }
+
+    catch(error: any) {
+        return handleApiError(error)
+    }
+}
+
+export const approve_consultant = async (instructorId: string | undefined) => {
+    
+    try {
+        const response = await axiosInstance.post("/approve-consultant", {instructorId});
+        return handleApiResponse(response);
+    }
+
+    catch(error: any) {
+        return handleApiError(error)
+    }
+}
+
+export const decline_consultant = async (instructorId: string | undefined) => {
+    
+    try {
+        const response = await axiosInstance.post("/decline-consultant", {instructorId});
+        return handleApiResponse(response);
+    }
+
+    catch(error: any) {
+        return handleApiError(error)
+    }
+}
+
