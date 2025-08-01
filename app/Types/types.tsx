@@ -85,6 +85,8 @@ export type Instructor = {
     consultant_progress: number;
     experience_years: string;
     user: User | null;
+    experience?: ExperienceType[] | null;
+    schools?: School[] | null;
 }
 
 export type Instructors = {

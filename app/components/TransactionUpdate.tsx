@@ -204,6 +204,52 @@ const TransactionUpdate = ({type}: TransactionnUpdateProps) => {
                 </div>
             }
 
+            {
+                type == 'approve-consultant' &&
+                <div>
+                    <h2 className="title-3">Confirm Application Approval</h2>
+                    <p className="text-gray-600 my-2 text-center">
+                        Are you sure you want to approve the request of this Instructor to become a Consultant?
+                    </p>
+                    <button className="flex items-center justify-center gap-2 btn btn-success two w-full" onClick={rejectWithdrawal}>
+                        {
+                            buttonLoader ? (
+                                <ButtonLoader content="Please wait . . ." />
+                            ) : 
+                            
+                            (
+                                <div className="bt-btn two">
+                                    <span>Approve</span>
+                                </div>                                        
+                            )
+                        }
+                    </button>
+                </div>
+            }
+
+            {
+                type == 'decline-consultant' &&
+                <div>
+                    <h2 className="title-3">Confirm Application Decline</h2>
+                    <p className="text-gray-600 my-2 text-center">
+                        Are you sure you want to reject the request of this Instructor to become a consultant? <br />
+                    </p>
+                    <button className="flex items-center justify-center gap-2 btn error two w-full" onClick={rejectWithdrawal}>
+                        {
+                            buttonLoader ? (
+                                <ButtonLoader content="Please wait . . ." />
+                            ) : 
+                            
+                            (
+                                <div className="bt-btn two">
+                                    <span>Decline</span>
+                                </div>                                        
+                            )
+                        }
+                    </button>
+                </div>
+            }
+
         </div>
     )
 }

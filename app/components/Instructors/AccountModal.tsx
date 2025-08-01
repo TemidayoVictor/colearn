@@ -398,6 +398,16 @@ const AccountModal = ({modalType, modalClose, experience, bank, subType}: Accoun
                 }
 
                 {
+                    modalType == 'approve-consultant' &&
+                    <TransactionUpdate type='approve-consultant' />
+                }
+
+                {
+                    modalType == 'decline-consultant' &&
+                    <TransactionUpdate type='decline-consultant' />
+                }
+
+                {
                     modalType == 'block-instructor' &&
                     <div>
                         <div>

@@ -16,11 +16,11 @@ import { useRouter } from "next/navigation";
 import { User } from "@/app/Types/types";
 import Loader from "../Loader";
 import AccountModal from "../Instructors/AccountModal";
+import AccountInfo from "../Instructors/AccountInfo";
 
 type AdminuserProfileBodyProps = {
     type?: string
 }
-
 
 const AdminuserProfileBody = ({type}: AdminuserProfileBodyProps) => {
     const params = useParams();
@@ -128,7 +128,7 @@ const AdminuserProfileBody = ({type}: AdminuserProfileBodyProps) => {
                         <div className="res-box">
                             <Image
                                 aria-hidden
-                                src="/assets/images/avatars-big.png"
+                                src={user?.profile_photo ? `${process.env.NEXT_PUBLIC_API_URL}/storage/${user?.profile_photo}` : "/assets/images/course-img-2.png"}
                                 alt="Colearn Logo"
                                 width={80}
                                 height={80}
@@ -186,11 +186,20 @@ const AdminuserProfileBody = ({type}: AdminuserProfileBodyProps) => {
                                     <p className="text-[.9rem]">${user?.wallet?.balance || 0} </p>
                                 </div>
                             </div>
-                            
-                            <div className="flex gap-2">
-                                <button className="btn btn-primary-fill" onClick={() => openModal("credit-wallet")}>Credit Wallet</button>
-                                <button className="btn error two" onClick={() => openModal("debit-wallet")}>Debit Wallet</button>
-                            </div>
+
+                            {
+                                type == 'management' ? (
+                                    <div className="flex gap-2">
+                                        <button className="btn btn-primary-fill" onClick={() => openModal("credit-wallet")}>Credit Wallet</button>
+                                        <button className="btn error two" onClick={() => openModal("debit-wallet")}>Debit Wallet</button>
+                                    </div>
+                                ) : (
+                                    <div className="flex gap-2">
+                                        <button className="btn btn btn-success tw" onClick={() => openModal("approve-consultant")}>Approve</button>
+                                        <button className="btn error two" onClick={() => openModal("decline-consultant")}>Decline</button>
+                                    </div>
+                                )
+                            }
 
                         </div>
 
@@ -248,6 +257,16 @@ const AdminuserProfileBody = ({type}: AdminuserProfileBodyProps) => {
                     {
                         selectedTab == 'professional' &&
                         <AccountCareer type="admin" />
+                    }
+
+                    {
+                        selectedTab == 'education' &&
+                        <AccountInfo type='education' />
+                    }
+
+                    {
+                        selectedTab == 'video' &&
+                        <AccountInfo type='video' />
                     }
                 </div>
             </div>

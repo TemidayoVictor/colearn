@@ -4,6 +4,7 @@ import Image from "next/image";
 import AccountModal from "./AccountModal";
 import { Experience, ExperienceType } from "@/app/Types/types";
 import { authStore } from "@/zustand/authStore";
+import { genralStore } from "@/zustand/generalStore";
 import { instructorStore } from "@/zustand/instructorStore";
 import { motion, AnimatePresence } from 'framer-motion';
 import { useOnboarding } from "@/hooks/useOnboarding";
@@ -23,7 +24,11 @@ const AccountCareer = ({type}: AccountCareerprops) => {
         buttonLoader,
         deleteExperience,
     } = useOnboarding();
-    const instructor = authStore((state) => state.instructor);
+
+    const authInstructor = authStore((state) => state.instructor);
+    const generalInstructor = genralStore((state) => state.instructor);
+
+    const instructor = type == "admin" ? generalInstructor : authInstructor;
 
     const [showModal, setShowModal] = useState<string | null>(null);
     const [selectedExperience, setSelectedExperience] = useState<Experience | null>(null);
@@ -39,7 +44,10 @@ const AccountCareer = ({type}: AccountCareerprops) => {
     }
     const closeModal = () => setShowModal(null);
 
-    const experiences = instructorStore((state) => state.experiences)
+    const authexperiences = instructorStore((state) => state.experiences)
+    const generalExperiences = genralStore((state) => state.instructor?.experience);
+
+    const experiences = type == "admin" ? generalExperiences : authexperiences;
 
     const deleteExperienceTrigger = (item: ExperienceType) => {
         instructorStore.getState().setExperience(item);
@@ -73,7 +81,7 @@ const AccountCareer = ({type}: AccountCareerprops) => {
                     </div>
 
                     {
-                        experiences.map((item, index) => (
+                        experiences?.map((item, index) => (
                             <div className="experience-box" key={index}>
                                 <div className="flex items-center justify-between">
                                     <p className="font-semibold my-[.8em] text-[.9rem]">{item.title}</p>
@@ -112,15 +120,18 @@ const AccountCareer = ({type}: AccountCareerprops) => {
                                     <p className="text-[.8rem] color-grey-text">{item.start_date ? dayjs(item.start_date.toString()).format("Do MMMM, YYYY") : "No date available"} - {item.is_current ? "Current" : item.end_date ? dayjs(item.end_date.toString()).format("Do MMMM, YYYY") : "No date available"}</p>
                                 </div>
                                 <p className="color-grey-text text-[.9rem]">{item.description}</p>
-                                <div className="flex items-end justify-end">
-                                    <button
-                                        type="button"
-                                        className="text-[.9rem] text-red-500 underline"
-                                        onClick={() => deleteExperienceTrigger(item)}
-                                    >
-                                    Delete
-                                    </button>
-                                </div>
+                                {
+                                    type != 'admin' &&
+                                    <div className="flex items-end justify-end">
+                                        <button
+                                            type="button"
+                                            className="text-[.9rem] text-red-500 underline"
+                                            onClick={() => deleteExperienceTrigger(item)}
+                                        >
+                                        Delete
+                                        </button>
+                                    </div>
+                                }
 
                                 {
                                     deleteModal &&

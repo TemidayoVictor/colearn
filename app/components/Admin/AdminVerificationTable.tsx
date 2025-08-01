@@ -91,10 +91,10 @@ const AdminVerificationTable = ({type}: AdminVerificationTableProps) => {
                                                 <tr key={index}>
                                                     <td>{index + 1}</td>
                                                     <td className="flex items-center gap-2">
-                                                        <Link href={`user-management/${item.user?.id}`} className="flex gap-2 items-center">
+                                                        <Link href={`user-verification/${item.user?.id}`} className="flex gap-2 items-center">
                                                             <Image
                                                                 aria-hidden
-                                                                src="/assets/images/avatars.png"
+                                                                src={item.user?.profile_photo ? `${process.env.NEXT_PUBLIC_API_URL}/storage/${item.user?.profile_photo}` : "/assets/images/course-img-2.png"}
                                                                 alt="Colearn Logo"
                                                                 width={24}
                                                                 height={24}
@@ -136,7 +136,7 @@ const AdminVerificationTable = ({type}: AdminVerificationTableProps) => {
                                                         <Link href={`user-management/${item.id}`} className="flex gap-2 items-center">
                                                             <Image
                                                                 aria-hidden
-                                                                src="/assets/images/avatars.png"
+                                                                src={item.profile_photo ? `${process.env.NEXT_PUBLIC_API_URL}/storage/${item.profile_photo}` : "/assets/images/course-img-2.png"}
                                                                 alt="Colearn Logo"
                                                                 width={24}
                                                                 height={24}
