@@ -18,6 +18,8 @@ import {
     withdraw_funds,
     approve_withdrawal,
     reject_withdrawal,
+    approve_consultant,
+    decline_consultant
 } from "@/services/admin";
 import { genralStore } from "@/zustand/generalStore";
 import { GeneralSettings } from "@/app/Types/types";
@@ -28,6 +30,9 @@ export const useAdmin = () => {
     const user = authStore((state) => state.user);
     const userId = user?.id
 
+    const instructor = genralStore((state) => state.instructor);
+    const instructorId = instructor?.id;
+
     const selectedUser = genralStore((state) => state.user);
     const selectedUserId = selectedUser?.id;
 
@@ -36,6 +41,7 @@ export const useAdmin = () => {
 
     const [buttonLoader, setButtonLoader] = useState<boolean>(false);
     const [amount, setAmount] = useState<number>(0);
+    const [reason, setReason] = useState<string>('');
 
     const [formData, setFormData] = useState<{
         first_name: string;
@@ -385,6 +391,67 @@ export const useAdmin = () => {
             showErrorToast('Unexpected error occurred');
         }
     }
+
+    const approveConsultant = async() => {
+        
+        if(!instructorId) {
+            return
+        }
+
+        // submit
+        setButtonLoader(true);
+        try {
+            const response = await approve_consultant(instructorId);
+            if (response.success) {
+                setButtonLoader(false)
+                showSuccessToast(response.message)
+                courseStore.getState().setNewUpdate('set');
+            } 
+
+            else {
+                setButtonLoader(false)
+                showErrorToast(response.message)
+                console.log(response)
+            }
+        }
+
+        catch (err: any) {
+            console.log(err)
+            setButtonLoader(false)
+            showErrorToast('Unexpected error occurred');
+        }
+    }
+
+    const declineConsultant = async() => {
+        
+        if(!instructorId && !reason) {
+            showErrorToast('Please add a reason');
+            return
+        }
+
+        // submit
+        setButtonLoader(true);
+        try {
+            const response = await decline_consultant(instructorId, reason);
+            if (response.success) {
+                setButtonLoader(false)
+                showSuccessToast(response.message)
+                courseStore.getState().setNewUpdate('set');
+            } 
+
+            else {
+                setButtonLoader(false)
+                showErrorToast(response.message)
+                console.log(response)
+            }
+        }
+
+        catch (err: any) {
+            console.log(err)
+            setButtonLoader(false)
+            showErrorToast('Unexpected error occurred');
+        }
+    }
     
     return {
         buttonLoader,
@@ -403,5 +470,9 @@ export const useAdmin = () => {
         withdrawFunds,
         approveWithdrawal,
         rejectWithdrawal,
+        approveConsultant,
+        reason, 
+        setReason,
+        declineConsultant,
     }
 }

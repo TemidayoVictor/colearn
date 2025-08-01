@@ -222,10 +222,10 @@ export const approve_consultant = async (instructorId: string | undefined) => {
     }
 }
 
-export const decline_consultant = async (instructorId: string | undefined) => {
+export const decline_consultant = async (instructorId: string | undefined, reason: string | undefined) => {
     
     try {
-        const response = await axiosInstance.post("/decline-consultant", {instructorId});
+        const response = await axiosInstance.post("/decline-consultant", {instructorId, reason});
         return handleApiResponse(response);
     }
 

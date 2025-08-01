@@ -17,6 +17,10 @@ const TransactionUpdate = ({type}: TransactionnUpdateProps) => {
         withdrawFunds,
         approveWithdrawal,
         rejectWithdrawal,
+        approveConsultant,
+        reason, 
+        setReason,
+        declineConsultant,
     } = useAdmin();
     
     return (
@@ -211,7 +215,7 @@ const TransactionUpdate = ({type}: TransactionnUpdateProps) => {
                     <p className="text-gray-600 my-2 text-center">
                         Are you sure you want to approve the request of this Instructor to become a Consultant?
                     </p>
-                    <button className="flex items-center justify-center gap-2 btn btn-success two w-full" onClick={rejectWithdrawal}>
+                    <button className="flex items-center justify-center gap-2 btn btn-success tw w-full" onClick={approveConsultant}>
                         {
                             buttonLoader ? (
                                 <ButtonLoader content="Please wait . . ." />
@@ -231,10 +235,11 @@ const TransactionUpdate = ({type}: TransactionnUpdateProps) => {
                 type == 'decline-consultant' &&
                 <div>
                     <h2 className="title-3">Confirm Application Decline</h2>
-                    <p className="text-gray-600 my-2 text-center">
-                        Are you sure you want to reject the request of this Instructor to become a consultant? <br />
+                    <p className="text-gray-600 my-2">
+                        Kindly add a reason why you want to decline this application<br />
                     </p>
-                    <button className="flex items-center justify-center gap-2 btn error two w-full" onClick={rejectWithdrawal}>
+                    <textarea name="cancel_note" id="" className="textarea mt-2" value={reason} onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setReason(e.target.value)}></textarea>
+                    <button className="flex items-center justify-center gap-2 btn error two w-full" onClick={declineConsultant}>
                         {
                             buttonLoader ? (
                                 <ButtonLoader content="Please wait . . ." />

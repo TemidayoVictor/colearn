@@ -87,6 +87,7 @@ export type Instructor = {
     user: User | null;
     experience?: ExperienceType[] | null;
     schools?: School[] | null;
+    reason?: string;
 }
 
 export type Instructors = {

@@ -15,6 +15,7 @@ import { courseStore } from "@/zustand/courseStore";
 import { useRouter } from "next/navigation";
 import { User } from "@/app/Types/types";
 import Loader from "../Loader";
+import { Instructor } from "@/app/Types/types";
 import AccountModal from "../Instructors/AccountModal";
 import AccountInfo from "../Instructors/AccountInfo";
 
@@ -38,6 +39,12 @@ const AdminuserProfileBody = ({type}: AdminuserProfileBodyProps) => {
     const closeModal = () => setShowModal(null);
 
     const newUpdate = courseStore((state) => state.newUpdate);
+
+    const openModalTrigger = (key:string, item:Instructor | undefined) => {
+        if(!item) return
+        genralStore.getState().setInstructor(item);
+        setShowModal(key);
+    }
 
     function formatDateTime(datetime: string | undefined): string {
         if(!datetime) return 'N/A';
@@ -195,8 +202,8 @@ const AdminuserProfileBody = ({type}: AdminuserProfileBodyProps) => {
                                     </div>
                                 ) : (
                                     <div className="flex gap-2">
-                                        <button className="btn btn btn-success tw" onClick={() => openModal("approve-consultant")}>Approve</button>
-                                        <button className="btn error two" onClick={() => openModal("decline-consultant")}>Decline</button>
+                                        <button className="btn btn btn-success tw" onClick={() => openModalTrigger("approve-consultant", user?.instructor)}>Approve</button>
+                                        <button className="btn error two" onClick={() => openModalTrigger("decline-consultant", user?.instructor)}>Decline</button>
                                     </div>
                                 )
                             }
