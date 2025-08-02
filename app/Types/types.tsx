@@ -47,6 +47,7 @@ export type User = {
     instructor?: Instructor;
     created_at: string | undefined;
     wallet: Wallet | null;
+    enrollments: Enrollment[];
 };
   
 export type Student = {

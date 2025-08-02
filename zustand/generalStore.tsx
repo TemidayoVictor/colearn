@@ -14,6 +14,7 @@ import {
   GeneralSettings, 
   Instructor,
   Dashboard,
+  Student
 } from '@/app/Types/types';
 
 type GeneralState = {
@@ -49,6 +50,9 @@ type GeneralState = {
 
   instructor: Instructor | null;
   instructors: Instructor[];
+
+  student: Student | null;
+  students: Student[];
 
   newEmail: string;
 
@@ -90,6 +94,9 @@ type GeneralState = {
 
   setInstructor: (instructor: Instructor) => void
   setInstructors: (instructors: Instructor[]) => void
+
+  setStudent: (student: Student) => void
+  setStudents: (students: Student[]) => void
 
   setNewEmail: (newEmail: string) => void
 
@@ -140,6 +147,9 @@ export const genralStore = create<GeneralState>() (
       instructor: null,
       instructors: [],
 
+      student: null,
+      students: [],
+
       newEmail: '',
 
       wallet: null,
@@ -180,6 +190,9 @@ export const genralStore = create<GeneralState>() (
 
       setInstructor: (instructor) => set({instructor}),
       setInstructors: (instructors) => set({instructors}),
+
+      setStudent: (student) => set({student}),
+      setStudents: (students) => set({students}),
       
       setNewEmail: (newEmail) => set({newEmail}),
 
@@ -204,6 +217,7 @@ export const genralStore = create<GeneralState>() (
         transaction: null, transactions: [],
         withdrawal: null, withdrawals: [],
         instructor: null, instructors: [],
+        student: null, students: [],
         newEmail: '',
         wallet: null,
         generalSettings: null,

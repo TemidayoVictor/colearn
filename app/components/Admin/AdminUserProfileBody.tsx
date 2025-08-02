@@ -18,6 +18,7 @@ import Loader from "../Loader";
 import { Instructor } from "@/app/Types/types";
 import AccountModal from "../Instructors/AccountModal";
 import AccountInfo from "../Instructors/AccountInfo";
+import AccountStudent from "./AccountStudent";
 
 type AdminuserProfileBodyProps = {
     type?: string
@@ -84,7 +85,9 @@ const AdminuserProfileBody = ({type}: AdminuserProfileBodyProps) => {
                     // save state globally
                     genralStore.getState().setUser(response.data.user);
                     genralStore.getState().setData(response.data.data);
+                    genralStore.getState().setStudent(response.data.student);
                     genralStore.getState().setInstructor(response.data.instructor);
+                    genralStore.getState().setEnrollments(response.data.data.enrollments);
 
                     // save state on page
                     setUser(response.data.user);
@@ -115,7 +118,7 @@ const AdminuserProfileBody = ({type}: AdminuserProfileBodyProps) => {
         <div className="">
             <div className="container-3">
                 <div>
-                    <Link href='/' className="flex items-center gap-2 cursor-pointer">
+                    <Link href='/admin/user-management' className="flex items-center gap-2 cursor-pointer">
                         <div>
                             <Image
                                 aria-hidden
@@ -139,7 +142,7 @@ const AdminuserProfileBody = ({type}: AdminuserProfileBodyProps) => {
                                 alt="Colearn Logo"
                                 width={80}
                                 height={80}
-                                className="object-contain"
+                                className="object-contain rounded-[.3em]"
                             />
 
                             <Image
@@ -218,14 +221,14 @@ const AdminuserProfileBody = ({type}: AdminuserProfileBodyProps) => {
                     </div>
 
                     <div className="flex gap-2 items-center">
-                        <Image
+                        {/* <Image
                             aria-hidden
                             src="/assets/images/dots-big.png"
                             alt="Colearn Logo"
                             width={24}
                             height={24}
                             className="object-contain desktop"
-                        />
+                        /> */}
                         <button className="btn btn-success">Verify User</button>
                     </div>
                 </div>
@@ -238,16 +241,26 @@ const AdminuserProfileBody = ({type}: AdminuserProfileBodyProps) => {
                             <span className={`in-nav-link admin  ${selectedTab == 'overview' ? 'active' : ''}`} onClick={() => setSelectedTab('overview')}> <span>Overview</span></span>
                         }
                         <span className={`in-nav-link admin  ${selectedTab == 'personal' ? 'active' : ''}`} onClick={() => setSelectedTab('personal')}> <span>Personal Information</span></span>
-                        <span className={`in-nav-link admin  ${selectedTab == 'professional' ? 'active' : ''}`} onClick={() => setSelectedTab('professional')}> <span>Professional Information</span></span>
-                        <span className={`in-nav-link admin  ${selectedTab == 'education' ? 'active' : ''}`} onClick={() => setSelectedTab('education')}> <span>Educational Information</span></span>
-                        <span className={`in-nav-link admin  ${selectedTab == 'video' ? 'active' : ''}`} onClick={() => setSelectedTab('video')}> <span>Intro'd Video</span></span>
-                        <span className={`in-nav-link admin  ${selectedTab == 'decline' ? 'active' : ''}`} onClick={() => setSelectedTab('decline')}> <span>Reason for Decline</span></span>
+                        {
+                            user?.type == 'instructor' && 
+                            <>
+                                <span className={`in-nav-link admin  ${selectedTab == 'professional' ? 'active' : ''}`} onClick={() => setSelectedTab('professional')}> <span>Professional Information</span></span>
+                                {
+                                    type != 'management' &&
+                                    <>
+                                        <span className={`in-nav-link admin  ${selectedTab == 'education' ? 'active' : ''}`} onClick={() => setSelectedTab('education')}> <span>Educational Information</span></span>
+                                        <span className={`in-nav-link admin  ${selectedTab == 'video' ? 'active' : ''}`} onClick={() => setSelectedTab('video')}> <span>Intro'd Video</span></span>
+                                        <span className={`in-nav-link admin  ${selectedTab == 'decline' ? 'active' : ''}`} onClick={() => setSelectedTab('decline')}> <span>Reason for Decline</span></span>
+                                    </>
+                                }
+                            </>
+                        }
                     </div>
                 </div>
 
                 <div className="mt-[1em]">
                     {
-                        selectedTab == 'overview' &&
+                        selectedTab == 'overview' && user?.type == 'instructor' &&
                         <div>
                             <DashboardPerformance />
                             <div className="spacing-inter">
@@ -257,8 +270,23 @@ const AdminuserProfileBody = ({type}: AdminuserProfileBodyProps) => {
                     }
 
                     {
-                        selectedTab == 'personal' &&
+                        selectedTab == 'overview' && user?.type == 'student' &&
+                        <div>
+                            <DashboardPerformance user="student"/>
+                            <div className="spacing-inter">
+                                <DashboardTopCoursesTable type="student-view"/>
+                            </div>
+                        </div>
+                    }
+
+                    {
+                        selectedTab == 'personal' && user?.type == 'instructor' &&
                         <AccountAbout type="admin" />
+                    }
+
+                    {
+                        selectedTab == 'personal' && user?.type == 'student' &&
+                        <AccountStudent />
                     }
 
                     {

@@ -406,6 +406,7 @@ export const useAdmin = () => {
                 setButtonLoader(false)
                 showSuccessToast(response.message)
                 courseStore.getState().setNewUpdate('set');
+                router.push('/admin/user-verification');
             } 
 
             else {
@@ -437,6 +438,7 @@ export const useAdmin = () => {
                 setButtonLoader(false)
                 showSuccessToast(response.message)
                 courseStore.getState().setNewUpdate('set');
+                router.push('/admin/user-verification');
             } 
 
             else {

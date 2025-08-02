@@ -31,6 +31,10 @@ const renderHeading = (type: string | null |undefined) => {
         case 'instructor-view':
             return <h2 className="font-semibold">All Courses</h2>
             break;
+
+        case 'student-view':
+            return <h2 className="font-semibold">All Enrollments</h2>
+            break;
         
         default:
             return (

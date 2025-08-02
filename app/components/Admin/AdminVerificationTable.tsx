@@ -133,7 +133,7 @@ const AdminVerificationTable = ({type}: AdminVerificationTableProps) => {
                                                 <tr key={index}>
                                                     <td>{index + 1}</td>
                                                     <td className="flex items-center gap-2">
-                                                        <Link href={`user-management/${item.id}`} className="flex gap-2 items-center">
+                                                        <Link href={item.profile_progress == 'completed' ? `user-management/${item.id}` : '#'} className="flex gap-2 items-center">
                                                             <Image
                                                                 aria-hidden
                                                                 src={item.profile_photo ? `${process.env.NEXT_PUBLIC_API_URL}/storage/${item.profile_photo}` : "/assets/images/course-img-2.png"}
