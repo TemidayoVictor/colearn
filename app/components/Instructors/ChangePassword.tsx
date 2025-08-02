@@ -39,28 +39,27 @@ const ChangePassword = ({type}: ChangePasswordProps) => {
                     <p className="color-grey-text text-[.8rem]">Enter your current password and the new password you want too.</p>
 
                     <div>
-                        {
-                            type != "admin" &&
-                            <div className="input-box">
-                                <label htmlFor="" className="font-semibold text-[.9rem]">Current Password</label>
-                                <div className="input-field">
-                                    <Image
-                                        aria-hidden
-                                        src="/assets/images/lock-2.png"
-                                        alt="Colearn Image"
-                                        width={20}
-                                        height={20}
-                                        className="object-cover ab-img"
-                                    />
-                                    <input 
-                                        type={showPassword ? "text" : "password"}
-                                        className="input-field-2"
-                                        placeholder="Enter new password"
-                                        onChange={(e) => setCurrentPassword(e.target.value)}
-                                    />
-                                </div>
+
+                        <div className="input-box">
+                            <label htmlFor="" className="font-semibold text-[.9rem]">Current Password</label>
+                            <div className="input-field">
+                                <Image
+                                    aria-hidden
+                                    src="/assets/images/lock-2.png"
+                                    alt="Colearn Image"
+                                    width={20}
+                                    height={20}
+                                    className="object-cover ab-img"
+                                />
+                                <input 
+                                    type={showPassword ? "text" : "password"}
+                                    className="input-field-2"
+                                    placeholder="Enter new password"
+                                    onChange={(e) => setCurrentPassword(e.target.value)}
+                                />
                             </div>
-                        }
+                        </div>
+                        
 
                         <div className="input-box relative">
                             <label className="font-bold text-[.9em]">New Password</label>
