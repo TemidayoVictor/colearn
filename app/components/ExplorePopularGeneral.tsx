@@ -1,3 +1,4 @@
+'use client';
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
@@ -5,7 +6,7 @@ import { genralStore } from "@/zustand/generalStore";
 import EmptyPage from "./EmptyPage";
 
 
-const HomeCertCourses = () => {
+const ExplorePopularGeneral = () => {
     const categories = genralStore((state) => state.web?.categories)
     const courses = genralStore((state) => state.web?.courses)
 
@@ -28,39 +29,9 @@ const HomeCertCourses = () => {
     : [];
 
     return (
-        <div className="container section">
-            <div>
-                <h2 className="title-3">Get Cerification on</h2>
-                <div className="home-cert-courses mt-[1em]">
-
-                    {
-                        randomSixCategories?.map((item, index) => (
-                            <div key={index}>
-                                <div className="flex flex-col items-center justify-center gap-2 cert-con">
-                                    <Image
-                                        aria-hidden
-                                        src="/assets/images/ui-ux.png"
-                                        alt="Colearn Logo"
-                                        width={88}
-                                        height={64}
-                                        className="object-contain"
-                                    />
-                                    <p>{item.name}</p>
-                                </div>
-                            </div>
-                        ))
-                    }
-
-                </div>
-            </div>
-
-
-            <div className="my-[3em] flex flex-col gap-4">
-                <h2 className="title text-center">Engaging  Features to Enhance Your Learning</h2>
-                <p className="text-center">
-                    Experience the best of e-learning: Our platform offers interactive courses, expert support, <br /> and more, helping you achieve your goals faster and easier
-                </p>
-
+        <div className="container">
+            <h2 className="title">Explore Popular Courses and Skills</h2>
+            <div className="my-[1em] flex flex-col gap-4">
                 <div className="tabs mt-3 px-3">
                     {
                         secondRandomSixCategories?.map((item, index) => (
@@ -77,7 +48,7 @@ const HomeCertCourses = () => {
                                 <div className="courses-list my-[3em]">
                                     
                                     {
-                                        randomSixCourses?.map((item, index) => (
+                                        courses?.map((item, index) => (
                                             <div className="course three" key={index}>
                                                 <div className="relative w-fit">
                                                     <div className="relative">
@@ -161,4 +132,4 @@ const HomeCertCourses = () => {
     )
 }
 
-export default HomeCertCourses;
+export default ExplorePopularGeneral;
