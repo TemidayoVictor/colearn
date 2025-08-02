@@ -408,3 +408,10 @@ export type Dashboard = {
     total_declined_consultants?: number;
 
 }
+
+export type Web = {
+    categories?: Category[];
+    courses?: Course[];
+    instructors?: Instructor[];
+    consultants?: Consultant[];
+}

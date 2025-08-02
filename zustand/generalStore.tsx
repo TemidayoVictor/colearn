@@ -14,7 +14,8 @@ import {
   GeneralSettings, 
   Instructor,
   Dashboard,
-  Student
+  Student,
+  Web,
 } from '@/app/Types/types';
 
 type GeneralState = {
@@ -62,6 +63,8 @@ type GeneralState = {
 
   data: Dashboard |  null;
 
+  web: Web | null;
+
   setConsultant: (consultant: Consultant) => void
   setConsultants: (consultants: Consultant[]) => void
 
@@ -107,6 +110,8 @@ type GeneralState = {
   getConsultantById: (id: number) => Consultant | undefined;
 
   setData: (data: Dashboard | null) => void;
+
+  setWeb: (web: Web | null) => void;
 
   clearAll: () => void,
 }
@@ -158,6 +163,8 @@ export const genralStore = create<GeneralState>() (
 
       data: null,
 
+      web: null,
+
       setBooking: (booking) => set({booking}),
       setBookings: (bookings) => set({bookings}),
 
@@ -203,6 +210,8 @@ export const genralStore = create<GeneralState>() (
       getConsultantById: (id) => get().consultants.find((c) => c.id === id),
 
       setData: (data) => set({data}),
+
+      setWeb: (web) => set({web}),
       
       clearAll: () => {
       set({
@@ -222,6 +231,7 @@ export const genralStore = create<GeneralState>() (
         wallet: null,
         generalSettings: null,
         data: null,
+        web: null,
       }); 
 
       localStorage.removeItem('general-storage'); // Remove persisted state

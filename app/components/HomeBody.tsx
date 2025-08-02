@@ -2,6 +2,7 @@
 import React, {useEffect, useState} from "react";
 import { showErrorToast } from "@/utils/toastTypes";
 import { web_data } from "@/services/user";
+import { genralStore } from "@/zustand/generalStore";
 import HomeHero from "./HomeHero";
 import HomeCourseList from "./HomeCourseList";
 import HomeCertCourses from "./HomeCertCourses";
@@ -24,7 +25,8 @@ const HomeBody = () => {
                 const response = await web_data();
 
                 if (response.success) {
-
+                    console.log(response)
+                    genralStore.getState().setWeb(response.data)
                 } 
     
                 else {
