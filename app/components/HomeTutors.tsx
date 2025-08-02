@@ -4,13 +4,20 @@ import Link from "next/link";
 import { genralStore } from "@/zustand/generalStore";
 import EmptyPage from "./EmptyPage";
 
-const HomeTutors = () => {
+type Props = {
+    page?: boolean
+}
+
+const HomeTutors = ({page}: Props) => {
     const instructors = genralStore((state) => state.web?.instructors) 
     const randomSixInstructors = instructors?.length
     ? [...instructors]
         .sort(() => 0.5 - Math.random()) // Shuffle
         .slice(0, 7) // Take first 6
     : [];
+
+    const dataUse = page == true ? instructors : randomSixInstructors;
+
     return (
         <div className="section">
             <div className="container">
@@ -24,7 +31,7 @@ const HomeTutors = () => {
                         <div>
                             <div className="tutors-container">
                                 {
-                                    randomSixInstructors?.map((item, index) => (
+                                    dataUse?.map((item, index) => (
                                         <div className="booking" key={index}>
                                             <div>
                                                 <Image
