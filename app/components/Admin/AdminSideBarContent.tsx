@@ -100,9 +100,9 @@ const AdminSideBarContent = () => {
 
                 <div className="sidebar-break">
 
-                    <Link href='/admin/courses' className={`sidebar-link ${pathname.startsWith('/admin/courses')  ? 'active' : ''}`}>
+                    <Link href='/admin/courses' className={`sidebar-link ${pathname.startsWith('/admin/courses') || pathname.startsWith('/admin/view')  ? 'active' : ''}`}>
                         {
-                            pathname.startsWith('/admin/courses')  ? (
+                            pathname.startsWith('/admin/courses') || pathname.startsWith('/admin/view') ? (
 
                                 <Image
                                     aria-hidden

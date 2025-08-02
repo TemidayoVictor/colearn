@@ -14,9 +14,14 @@ import StudentViewCourseArticle from "./StudentViewCourseArticle";
 import StudentViewCourseTest from "./StudentViewCourseTest";
 import StudentViewCourseMenu from "./StudentViewCourseMenu";
 import StudentViewCourseMaterial from "./StudentViewCourseMaterial";
+import AdminViewCourseMaterial from "../Admin/AdminViewCourseMaterial";
 import Loader from "../Loader";
 
-const StudentViewCourseBody = () => {
+type Props = {
+    type?: string
+}
+
+const StudentViewCourseBody = ({type}: Props) => {
     const params = useParams();
     const courseId = params?.course as string;
 
@@ -42,7 +47,7 @@ const StudentViewCourseBody = () => {
             await checkAuth(router); // ✅ valid usage
             if(!courseId) return
             try {
-                const response = await get_course_details(courseId);
+                const response = await get_course_details(courseId, userId);
                 if (response.success) {
                     console.log(response)
                     // save state globally
@@ -74,7 +79,7 @@ const StudentViewCourseBody = () => {
     return (
         <div>
             <div>
-                <Link href='/students/courses' className="flex items-center gap-2 cursor-pointer">
+                <Link href={ type == 'admin' ? '/admin/courses' : '/students/courses'} className="flex items-center gap-2 cursor-pointer">
                     <div>
                         <Image
                             aria-hidden
@@ -104,8 +109,13 @@ const StudentViewCourseBody = () => {
                         }
 
                         {
-                            selectedTab == "material" &&
+                            selectedTab == "material" && user?.type != "admin" &&
                             <StudentViewCourseMaterial />
+                        }
+
+                        {
+                            selectedTab == "material" && user?.type == "admin" &&
+                            <AdminViewCourseMaterial />
                         }
 
                         {

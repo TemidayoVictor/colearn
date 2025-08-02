@@ -4,6 +4,7 @@ import Image from "next/image";
 import { genralStore } from "@/zustand/generalStore";
 import EmptyPage from "../EmptyPage";
 import { spawn } from "child_process";
+import Link from "next/link";
 
 type TableContentProps = {
     type?: string
@@ -56,9 +57,16 @@ const TableContent = ({type}: TableContentProps) => {
                                                     />
     
                                                     <span className="flex flex-col overflow-hidden">
-                                                    <span className="text-sm font-semibold text-gray-800 truncate sm:whitespace-normal sm:truncate-0">
-                                                        {item?.title} 
-                                                    </span>
+                                                    
+                                                    {
+                                                        type == "admin" ? (
+                                                            <Link className="text-sm font-semibold text-gray-800 truncate sm:whitespace-normal sm:truncate-0" href={`/admin/view-course/${item.id}`}> {item.title} </Link>
+                                                        ) : (
+                                                            <span className="text-sm font-semibold text-gray-800 truncate sm:whitespace-normal sm:truncate-0">
+                                                                {item?.title} 
+                                                            </span>
+                                                        )
+                                                    }
                                                     {/* <span className="text-xs text-gray-500 mt-1 line-clamp-2">
                                                         Data Science and. . .
                                                     </span> */}

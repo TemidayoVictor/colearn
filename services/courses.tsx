@@ -120,11 +120,12 @@ export const edit_course = async (formData: {
     }
 }
 
-export const get_course_details = async (courseId: string) => {
+export const get_course_details = async (courseId: string, userId: number | undefined) => {
     try {
         const data = new FormData();
 
         data.append('courseId', courseId);
+        data.append('userId', String(userId))
 
         const response = await axiosInstance.post("/get-course-details", data);
         return handleApiResponse(response);
