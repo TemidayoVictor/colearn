@@ -15,7 +15,7 @@ const HomeHero = () => {
                 </div>
 
                 <div className="flex items-center gap-4">
-                    <Link href='/' className="flex gap-2 btn btn-primary-fill">
+                    <Link href='/authentication/login' className="flex gap-2 btn btn-primary-fill">
                     <p>Join for Free</p>
                     <Image
                         aria-hidden
@@ -26,16 +26,16 @@ const HomeHero = () => {
                         className="object-contain"
                     />
                     </Link>
-                    <Link href='/' className="flex gap-2 btn">
-                    <Image
-                        aria-hidden
-                        src="/assets/images/book-saved.png"
-                        alt="Colearn Logo"
-                        width={20}
-                        height={20}
-                        className="object-contain"
-                    />
-                    <p>Explore</p>
+                    <Link href='/explore' className="flex gap-2 btn">
+                        <Image
+                            aria-hidden
+                            src="/assets/images/book-saved.png"
+                            alt="Colearn Logo"
+                            width={20}
+                            height={20}
+                            className="object-contain"
+                        />
+                        <p>Explore</p>
                     </Link>
                 </div>
 

@@ -1,4 +1,5 @@
 import axiosInstance from "@/utils/api";
+import axiosInstanceWeb from "@/utils/web";
 import { handleApiError, handleApiResponse } from "@/utils/handleApiResponse";
 import { GeneralSettings } from "@/app/Types/types";
 
@@ -53,3 +54,17 @@ export const instructor_dashboard = async (id: number | undefined) => {
         return handleApiError(error)
     }
 }
+
+export const web_data = async () => {
+  try {
+    await axiosInstanceWeb.get(`/sanctum/csrf-cookie?refresh=${Date.now()}`, {
+      withCredentials: true,
+    });
+    const response = await axiosInstanceWeb.get("/web-data");
+    return handleApiResponse(response);
+  } 
+  
+  catch (error: any) {
+    return handleApiError(error)
+  }
+};
