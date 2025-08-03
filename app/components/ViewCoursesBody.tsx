@@ -2,20 +2,33 @@
 import React, {useState} from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { UseCourses } from "@/hooks/useCourses";
+import { authStore } from "@/zustand/authStore";
 import { courseStore } from "@/zustand/courseStore";
+import { showErrorToast } from "@/utils/toastTypes";
 import ViewCoursesContent from "./ViewCoursesContent";
 import ViewCoursesContentMain from "./ViewCoursesContentMain";
 import ViewCoursesTestimonials from "./ViewCoursesTestimonials";
 
 const ViewCoursesBody = () => {
+    const router = useRouter();
     const course = courseStore((state) => state.course)
+
+    const loggedIn = authStore((state) => state.isInitialized);
 
     const {addToCart} = UseCourses();
     const [selectedTab, setSelectedTab] = useState<string>('overview');
 
     const addToCartTrigger = (item: string | undefined) => {
-        addToCart(item);
+        if(loggedIn) {
+            addToCart(item);
+        }
+
+        else {
+            showErrorToast('Please login to add to cart')
+            router.push('/authentication/login')
+        }
     }
 
     return (
@@ -94,10 +107,10 @@ const ViewCoursesBody = () => {
                                     height={20}
                                     className="object-contain"
                                 />
-                                <p className="text-[.9rem]">26.5 hours on-demand video</p>
+                                <p className="text-[.9rem]">{course?.total_duration} hour{course?.total_duration && course?.total_duration > 1 ? 's' : ''} on-demand video</p>
                             </div>
 
-                            <div className="flex items-center gap-2 mb-2">
+                            {/* <div className="flex items-center gap-2 mb-2">
                                 <Image
                                     aria-hidden
                                     src="/assets/images/help-2.png"
@@ -119,9 +132,9 @@ const ViewCoursesBody = () => {
                                     className="object-contain"
                                 />
                                 <p className="text-[.9rem]">Assignment</p>
-                            </div>
+                            </div> */}
 
-                            <div className="flex items-center gap-2 mb-2">
+                            {/* <div className="flex items-center gap-2 mb-2">
                                 <Image
                                     aria-hidden
                                     src="/assets/images/note-text.png"
@@ -131,19 +144,25 @@ const ViewCoursesBody = () => {
                                     className="object-contain"
                                 />
                                 <p className="text-[.9rem]">1 Article</p>
-                            </div>
+                            </div> */}
 
-                            <div className="flex items-center gap-2 mb-2">
-                                <Image
-                                    aria-hidden
-                                    src="/assets/images/folder-2.png"
-                                    alt="Colearn Logo"
-                                    width={20}
-                                    height={20}
-                                    className="object-contain"
-                                />
-                                <p className="text-[.9rem]">8 downloadable resources</p>
-                            </div>
+                            {
+                                (course?.resources ?? []).length > 0 ? (
+                                    <div className="flex items-center gap-2 mb-2">
+                                        <Image
+                                            aria-hidden
+                                            src="/assets/images/folder-2.png"
+                                            alt="Colearn Logo"
+                                            width={20}
+                                            height={20}
+                                            className="object-contain"
+                                        />
+                                        <p className="text-[.9rem]">{course?.resources.length || 0} Resources</p>
+                                    </div>
+                                ) : (
+                                    ""
+                                )
+                            }
 
                             <div className="flex items-center gap-2 mb-2">
                                 <Image
@@ -171,7 +190,7 @@ const ViewCoursesBody = () => {
                         </div>
                     </div>
 
-                    <div className="coupon">
+                    {/* <div className="coupon">
                         <p className="text-[.8rem]">Promo / Coupon Code</p>
                         <div className="flex items-center gap-1 mt-2">
                             <Image
@@ -195,7 +214,7 @@ const ViewCoursesBody = () => {
                             </div>
                         </div>
 
-                    </div>
+                    </div> */}
                 </div>
             </div>
         </div>

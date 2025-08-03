@@ -13,48 +13,17 @@ type ExplorePopularProps = {
     addContainerClass: boolean
     nav?: boolean
     loggedIn?: boolean
+    web?: boolean;
 }
 
-const posts = [
-    {
-        id: 1,
-        name: "All",
-        link: "/",
-    },
+const ExplorePopular = ({title, type, tabs, addContainerClass, nav, loggedIn, web}: ExplorePopularProps) => {
+    const generalCourses = genralStore((state) => state.courses);
+    const webCourses = genralStore((state) => state.web?.courses);
 
-    {
-        id: 2,
-        name: "Computer Sciences",
-        link: "/",
-    },
+    const courses = web ? webCourses : generalCourses;
 
-    {
-        id: 3,
-        name: "Data Sciences",
-        link: "/",
-    },
-
-    {
-        id: 4,
-        name: "Python",
-        link: "/",
-    },
-
-    {
-        id: 5,
-        name: "Business",
-        link: "/",
-    },
-
-    {
-        id: 6,
-        name: "Information Technology",
-        link: "/",
-    },
-]
-
-const ExplorePopular = ({title, type, tabs, addContainerClass, nav, loggedIn}: ExplorePopularProps) => {
-    const courses = genralStore((state) => state.courses);
+    console.log(courses)
+    
     const {addToCart} = UseCourses();
 
     const addToCartTrigger = (item: string | undefined) => {
@@ -85,10 +54,10 @@ const ExplorePopular = ({title, type, tabs, addContainerClass, nav, loggedIn}: E
 
                 <div>
                     {
-                        courses.length > 0 ? (
+                        (courses ?? []).length > 0 ? (
                             <div className={`${loggedIn ? 'blog-cont three' : 'blog-cont'} mt-[2em]`}>
                                 {
-                                    courses.map((item, index) => (
+                                    courses?.map((item, index) => (
                                         <div className="course three" key={index}>
                                             <div className="relative w-fit">
                                                 <div className="relative">
@@ -132,7 +101,7 @@ const ExplorePopular = ({title, type, tabs, addContainerClass, nav, loggedIn}: E
                                                     <span className="font-semibold">${item.price}</span>
                                                 </div>
                                                 {/* <button className={`btn normal`} onClick={(e) => addToCartTrigger(item.id)}>Add to cart</button> */}
-                                                <Link href={`/students/course-details/${item.id}`} className="btn normal">View</Link>
+                                                <Link href={ web ? `/view-courses/${item.id}` : `/students/course-details/${item.id}`} className="btn normal">View</Link>
                                             </div>
                                             <div>
         

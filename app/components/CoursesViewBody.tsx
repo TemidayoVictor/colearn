@@ -15,12 +15,12 @@ const CoursesViewBody = () => {
     if(course) {
         courseStore.getState().setCourse(course)
     }
-    
+
     return (
         <div>
             <ViewCoursesHero />
             <ViewCoursesBody />
-            <ExplorePopular title="Student Also Bought" type="head" addContainerClass={true}/>
+            <ExplorePopular title="Student Also Bought" type="head" addContainerClass={true} web={true} />
         </div>
     )
 }
