@@ -121,7 +121,7 @@ const HomeCertCourses = () => {
                                                         <span className="font-semibold">${item.price}</span>
                                                     </div>
                                                     {/* <button className={`btn normal`} onClick={(e) => addToCartTrigger(item.id)}>Add to cart</button> */}
-                                                    <Link href={`/students/course-details/${item.id}`} className="btn normal">View</Link>
+                                                    <Link href={`/view-courses/${item.id}`} className="btn normal">View</Link>
                                                 </div>
                                                 <div>
 

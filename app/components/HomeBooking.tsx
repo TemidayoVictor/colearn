@@ -4,99 +4,20 @@ import Link from "next/link";
 import { genralStore } from "@/zustand/generalStore";
 import EmptyPage from "./EmptyPage";
 
-const tutors  = [
-    {
-        id: 1,
-        name: "Favi Design",
-        country: "USA",
-        title: "Senior Staff IT Director at Apple",
-        courses: "120",
-        reviews: "34",
-        image: "/assets/images/Frame 67.png",
-        experience: "14"
-    },
-    {
-        id: 2,
-        name: "Favi Design",
-        country: "USA",
-        title: "Senior Staff IT Director at Apple",
-        courses: "120",
-        reviews: "34",
-        image: "/assets/images/lady.png",
-        experience: "14"
-    },
-    {
-        id: 3,
-        name: "Favi Design",
-        country: "USA",
-        title: "Senior Staff IT Director at Apple",
-        courses: "120",
-        reviews: "34",
-        image: "/assets/images/Frame 67.png",
-        experience: "14"
-    },
-    {
-        id: 4,
-        name: "Favi Design",
-        country: "USA",
-        title: "Senior Staff IT Director at Apple",
-        courses: "120",
-        reviews: "34",
-        image: "/assets/images/lady.png",
-        experience: "14"
-    },
-    {
-        id: 5,
-        name: "Favi Design",
-        country: "USA",
-        title: "Senior Staff IT Director at Apple",
-        courses: "120",
-        reviews: "34",
-        image: "/assets/images/Frame 67.png",
-        experience: "14"
-    },
-    {
-        id: 6,
-        name: "Favi Design",
-        country: "USA",
-        title: "Senior Staff IT Director at Apple",
-        courses: "120",
-        reviews: "34",
-        image: "/assets/images/lady.png",
-        experience: "14"
-    },
+type Props = {
+    page?: boolean
+}
 
-    {
-        id: 7,
-        name: "Favi Design",
-        country: "USA",
-        title: "Senior Staff IT Director at Apple",
-        courses: "120",
-        reviews: "34",
-        image: "/assets/images/lady.png",
-        experience: "14"
-    },
-
-    {
-        id: 8,
-        name: "Favi Design",
-        country: "USA",
-        title: "Senior Staff IT Director at Apple",
-        courses: "120",
-        reviews: "34",
-        image: "/assets/images/Frame 67.png",
-        experience: "14"
-    },
-    
-]
-
-const HomeBookings = () => {
+const HomeBookings = ({page}: Props) => {
     const consultants = genralStore((state) => state.web?.consultants)
     const randomSixConsultants = consultants?.length
     ? [...consultants]
         .sort(() => 0.5 - Math.random()) // Shuffle
         .slice(0, 7) // Take first 6
     : [];
+
+    const dataUse = page == true ? consultants : randomSixConsultants;
+
     return (
         <div className="section">
             <div className="container">
@@ -171,22 +92,24 @@ const HomeBookings = () => {
                                     ))
                                 }
                             </div>
-                            
-                            {/* <div className="mt-[2.5rem] flex justify-center items-center">
-                                <Link href='/' className="flex items-center btn btn-primary-fill gap-2 normal">
-                                    <p>Explore More</p>
-                                    <div className="bg-white rounded-[50%]">
-                                        <Image
-                                            aria-hidden
-                                            src="/assets/images/arrow-top-right.png"
-                                            alt="Colearn Logo"
-                                            width={20}
-                                            height={20}
-                                            className="object-cover"
-                                        />
-                                    </div> 
-                                </Link>
-                            </div> */}
+                            {
+                                !page &&
+                                <div className="mt-[2.5rem] flex justify-center items-center">
+                                    <Link href='/consultant' className="flex items-center btn btn-primary-fill gap-2 normal">
+                                        <p>Explore More</p>
+                                        <div className="bg-white rounded-[50%]">
+                                            <Image
+                                                aria-hidden
+                                                src="/assets/images/arrow-top-right.png"
+                                                alt="Colearn Logo"
+                                                width={20}
+                                                height={20}
+                                                className="object-cover"
+                                            />
+                                        </div> 
+                                    </Link>
+                                </div>
+                            }
                         </div>
                     ) : (
                         <div>

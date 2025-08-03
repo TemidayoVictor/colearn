@@ -82,21 +82,24 @@ const HomeTutors = ({page}: Props) => {
                                     ))
                                 }
                             </div>
-                            {/* <div className="mt-[2.5rem] flex justify-center items-center">
-                                <Link href='/' className="flex items-center btn btn-primary-fill gap-2 normal">
-                                    <p>Explore More</p>
-                                    <div className="bg-white rounded-[50%]">
-                                        <Image
-                                            aria-hidden
-                                            src="/assets/images/arrow-top-right.png"
-                                            alt="Colearn Logo"
-                                            width={20}
-                                            height={20}
-                                            className="object-cover"
-                                        />
-                                    </div> 
-                                </Link>
-                            </div> */}
+                            {
+                                !page &&
+                                <div className="mt-[2.5rem] flex justify-center items-center">
+                                    <Link href='/tutors' className="flex items-center btn btn-primary-fill gap-2 normal">
+                                        <p>Explore More</p>
+                                        <div className="bg-white rounded-[50%]">
+                                            <Image
+                                                aria-hidden
+                                                src="/assets/images/arrow-top-right.png"
+                                                alt="Colearn Logo"
+                                                width={20}
+                                                height={20}
+                                                className="object-cover"
+                                            />
+                                        </div> 
+                                    </Link>
+                                </div>
+                            }
                         </div>
                     ) : (
                         <div>
