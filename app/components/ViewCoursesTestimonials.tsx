@@ -1,13 +1,21 @@
 import React from "react";
 import Image from "next/image";
 import { genralStore } from "@/zustand/generalStore";
+import { courseStore } from "@/zustand/courseStore";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 
 dayjs.extend(relativeTime);
 
-const ViewCoursesTestimonials = () => {
-    const reviews = genralStore((state) => state.course?.reviews) || [];
+type Props = {
+    type?: string;
+}
+
+const ViewCoursesTestimonials = ({type}: Props) => {
+    const genralReviews = genralStore((state) => state.course?.reviews) || [];
+    const webReviews = courseStore((state) => state.course?.reviews) || [];
+
+    const reviews = type == "web" ? webReviews : genralReviews
 
     const totalStars = 5;
 
@@ -26,7 +34,7 @@ const ViewCoursesTestimonials = () => {
                                     height={40}
                                     className="object-contain rounded-[50%]"
                                 />
-                                <p className="font-bold"> {item.user?.first_name} {item.user?.last_name} </p>
+                                <p className="font-semibold"> {item.user?.first_name} {item.user?.last_name} </p>
                             </div>
                             <div>
                                 <h3 className="font-bold text-[1.1rem]"> {item.title} </h3>

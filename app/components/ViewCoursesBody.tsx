@@ -3,11 +3,14 @@ import React, {useState} from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { UseCourses } from "@/hooks/useCourses";
+import { courseStore } from "@/zustand/courseStore";
 import ViewCoursesContent from "./ViewCoursesContent";
 import ViewCoursesContentMain from "./ViewCoursesContentMain";
 import ViewCoursesTestimonials from "./ViewCoursesTestimonials";
 
 const ViewCoursesBody = () => {
+    const course = courseStore((state) => state.course)
+
     const {addToCart} = UseCourses();
     const [selectedTab, setSelectedTab] = useState<string>('overview');
 
@@ -19,7 +22,7 @@ const ViewCoursesBody = () => {
         <div className="container">
             <div className="in-nav mb-[1.5em]">
                 <span className={`in-nav-link color-grey-text ${selectedTab == 'overview' ? 'active' : ''}`} onClick={() => setSelectedTab('overview')}>Overview</span>
-                <span className={`in-nav-link color-grey-text ${selectedTab == 'course-content' ? 'active' : ''}`} onClick={() => setSelectedTab('course-content')}>Content</span>
+                {/* <span className={`in-nav-link color-grey-text ${selectedTab == 'course-content' ? 'active' : ''}`} onClick={() => setSelectedTab('course-content')}>Content</span> */}
                 <span className={`in-nav-link color-grey-text ${selectedTab == 'testimonials' ? 'active' : ''}`} onClick={() => setSelectedTab('testimonials')}>Testimonials</span>
             </div>
 
@@ -27,7 +30,7 @@ const ViewCoursesBody = () => {
                 <div className="left">
                     {
                         selectedTab == 'overview' &&
-                        <ViewCoursesContent />
+                        <ViewCoursesContent/>
                     }
 
                     {
@@ -37,7 +40,7 @@ const ViewCoursesBody = () => {
 
                     {
                         selectedTab == 'testimonials' &&
-                        <ViewCoursesTestimonials />
+                        <ViewCoursesTestimonials type="web"/>
                     }
                 </div>
 
@@ -46,11 +49,11 @@ const ViewCoursesBody = () => {
                         <p>Subtotals</p>
                         
                         <div>
-                            <h2 className="cart-total">$65.00</h2>
-                            <h2 className="cart-total old">$90.00</h2>
+                            <h2 className="cart-total">${course?.price}</h2>
+                            {/* <h2 className="cart-total old">$90.00</h2> */}
                         </div>
                         
-                        <Link href='/' className="bt-btn two btn btn-primary-fill">
+                        <button className="bt-btn two btn btn-primary-fill" onClick={(e) => addToCartTrigger(course?.id)}>
                             <span>Add to Cart</span>
                             <span>
                                 <Image
@@ -62,9 +65,9 @@ const ViewCoursesBody = () => {
                                     className="object-contain"
                                 />
                             </span>
-                        </Link>
+                        </button>
 
-                        <Link href='/' className="bt-btn two btn normal">
+                        {/* <Link href='/' className="bt-btn two btn normal">
                             <span>Buy Now</span>
                             <span>
                                 <Image
@@ -76,7 +79,7 @@ const ViewCoursesBody = () => {
                                     className="object-contain"
                                 />
                             </span>
-                        </Link>
+                        </Link> */}
                     </div>
 
                     <div className="course-features">

@@ -103,7 +103,7 @@ const CourseContent = () => {
                     </div>
 
                     <div>
-                        <button className={`btn btn-primary-fill`} onClick={(e) => addToCartTrigger(course?.id)}>Add to cart</button>
+                        <button className={`btn btn-primary-fill`} onClick={(e) => addToCartTrigger(course?.id)}>Add to cart (${course?.price})</button>
                     </div>
                 </div>   
 

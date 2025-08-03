@@ -109,11 +109,14 @@ type GeneralState = {
 
   getConsultantById: (id: number) => Consultant | undefined;
 
+  getCourseById: (id: number) => Course | undefined;
+
   setData: (data: Dashboard | null) => void;
 
   setWeb: (web: Web | null) => void;
 
   clearAll: () => void,
+  
 }
 
 export const genralStore = create<GeneralState>() (
@@ -208,6 +211,8 @@ export const genralStore = create<GeneralState>() (
       setGeneralSettings: (settings: GeneralSettings) => set({generalSettings: settings}),
 
       getConsultantById: (id) => get().consultants.find((c) => c.id === id),
+
+      getCourseById: (id) => get().web?.courses?.find((c) => Number(c.id) === Number(id)),
 
       setData: (data) => set({data}),
 
