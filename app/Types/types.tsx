@@ -425,5 +425,8 @@ export type Blog = {
     excerpt: string;
     body: string;
     is_published: boolean;
-    thumbnail: File | null;
+    thumbnail?: string;
+    image: File | null;
+    created_at?: string;
+    
 }

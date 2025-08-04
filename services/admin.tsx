@@ -239,8 +239,8 @@ export const create_blog = async (formData: Blog) => {
     try {
         const data = new FormData();
 
-        if (formData.thumbnail) {
-            data.append('thumbnail', formData.thumbnail);
+        if (formData.image) {
+            data.append('thumbnail', formData.image);
         }
 
         data.append('user_id', String(formData.user_id));
@@ -270,15 +270,40 @@ export const edit_blog = async (formData: Blog) => {
         if (formData.thumbnail) {
             data.append('thumbnail', formData.thumbnail);
         }
-        
+
         data.append('title', formData.title);
         data.append('excerpt', formData.excerpt);
         data.append('body', String(formData.body));
+        data.append('id', String(formData.id));
 
         const response = await axiosInstance.post("/edit-blog", data, {
             headers: {
                 'Content-Type': 'multipart/form-data',
             },
+        });
+        return handleApiResponse(response);
+    }
+
+    catch(error: any) {
+        return handleApiError(error)
+    }
+}
+
+export const get_all_blogs = async () => {
+    try {
+        const response = await axiosInstance.get("/get-all-blogs");
+        return handleApiResponse(response);
+    }
+
+    catch(error: any) {
+        return handleApiError(error)
+    }
+}
+
+export const delete_blog = async (id: number | undefined) => {
+    try {
+        const response = await axiosInstance.post("/delete-blog", {
+            id,
         });
         return handleApiResponse(response);
     }

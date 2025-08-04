@@ -22,6 +22,7 @@ import {
     decline_consultant,
     create_blog,
     edit_blog,
+    delete_blog,
 } from "@/services/admin";
 import { genralStore } from "@/zustand/generalStore";
 import { GeneralSettings, Blog } from "@/app/Types/types";
@@ -40,6 +41,9 @@ export const useAdmin = () => {
 
     const transaction = genralStore((state) => state.transaction);
     const transactionId = transaction?.id;
+
+    const blog = genralStore((state) => state.blog)
+    const blogId = blog?.id
 
     const [buttonLoader, setButtonLoader] = useState<boolean>(false);
     const [amount, setAmount] = useState<number>(0);
@@ -97,7 +101,7 @@ export const useAdmin = () => {
         excerpt: '',
         body: '',
         is_published: false,
-        thumbnail: null
+        image: null,
     });
 
     const [blogErrors, setBlogErrors] = useState({
@@ -128,7 +132,7 @@ export const useAdmin = () => {
 
             setBlogData((prev) => ({
                 ...prev,
-                thumbnail: file
+                image: file
             }));
         }
     };
@@ -504,7 +508,7 @@ export const useAdmin = () => {
             title: blogData.title.trim() === '',
             excerpt: blogData.excerpt.trim() === '',
             body: blogData.body.trim() === '',
-            thumbnail: blogData.thumbnail === null,
+            thumbnail: blogData.image === null,
         };
         
         setBlogErrors(newErrors);
@@ -582,6 +586,30 @@ export const useAdmin = () => {
             showErrorToast('Unexpected error occurred');
         }
     }
+
+    const deleteBlog = async () => {
+        try {
+            setButtonLoader(true)
+            const response = await delete_blog(blogId);
+            if (response.success) {
+                setButtonLoader(false)
+                showSuccessToast(response.message)
+                courseStore.getState().setNewUpdate('set');
+            } 
+
+            else {
+                setButtonLoader(false)
+                showErrorToast(response.message)
+                console.log(response)
+            }
+        }
+
+        catch (err: any) {
+            console.log(err)
+            setButtonLoader(false)
+            showErrorToast('Unexpected error occurred');
+        }
+    }
     
     return {
         buttonLoader,
@@ -614,5 +642,6 @@ export const useAdmin = () => {
         preview,
         handleFileChange,
         editBlog,
+        deleteBlog,
     }
 }
