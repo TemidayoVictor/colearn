@@ -7,6 +7,8 @@ import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 import { Swiper, SwiperSlide } from 'swiper/react'; 
 import { Pagination, Navigation } from 'swiper/modules';
+import { genralStore } from "@/zustand/generalStore";
+import EmptyPage from "./EmptyPage";
 
 const tutors  = [
     {
@@ -95,6 +97,14 @@ const tutors  = [
 ]
 
 const ViewTutorFooter = () => {
+    
+    const instructors = genralStore((state) => state.web?.instructors) 
+    const randomTenInstructors = instructors?.length
+    ? [...instructors]
+        .sort(() => 0.5 - Math.random()) // Shuffle
+        .slice(0, 11) // Take first 6
+    : [];
+    
     return (
         <div className="">
             <div className="section view-tutor-footer">
@@ -138,12 +148,12 @@ const ViewTutorFooter = () => {
                     >
         
                         {
-                            tutors.map((item, index) => (
+                            randomTenInstructors.map((item, index) => (
                                 <SwiperSlide  className="booking" key={index}>
                                     <div>
                                         <Image
                                             aria-hidden
-                                            src={item.image}
+                                            src={item?.profile_photo ? `${process.env.NEXT_PUBLIC_API_URL}/storage/${item?.profile_photo}` : "/assets/images/course-img-2.png"}
                                             alt="Colearn Logo"
                                             width={265}
                                             height={248}
@@ -151,7 +161,7 @@ const ViewTutorFooter = () => {
                                         />
                                     </div>
                                     <div className="mt-[1em] mb-[.5em] flex gap-2 items-center">
-                                        <p className="font-bold">{item.name}</p> <span className="text-[.9rem]">({item.country})</span>
+                                        <p className="font-bold">{`${item?.user?.first_name} ${item?.user?.last_name}`}</p> <span className="text-[.9rem]">({item?.user?.country_iso3})</span>
                                     </div>
                                     <div className="flex gap-2 items-start">
                                         <Image
@@ -162,10 +172,10 @@ const ViewTutorFooter = () => {
                                             height={24}
                                             className="object-cover"
                                         />
-                                        <p className="text-[.9rem]">{item.title}</p>
+                                        <p className="text-[.9rem]">{item?.professional_headline}</p>
                                     </div>
                                     <div className="flex gap-2 justify-between items-center">
-                                        <div className="flex gap-2 items-start">
+                                        {/* <div className="flex gap-2 items-start">
                                             <Image
                                                 aria-hidden
                                                 src="/assets/images/messages-2.png"
@@ -175,10 +185,10 @@ const ViewTutorFooter = () => {
                                                 className="object-cover"
                                             />
                                             <p className="text-[.9rem]">{item.courses} courses ({item.reviews} reviews)</p>
-                                        </div>
-                                        <div>
+                                        </div> */}
+                                        <div className="flex gap-2">
                                             <p className="text-[.9rem]">Experience</p>
-                                            <p className="text-[.9rem] font-bold">{item.experience} years</p>
+                                            <p className="text-[.9rem] font-bold">{item?.experience_years} years</p>
                                         </div>
                                     </div>
                                     
