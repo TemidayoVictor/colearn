@@ -1,5 +1,5 @@
 'use client';
-import React, {useState} from "react";
+import React, {useState, useRef} from "react";
 import { showErrorToast, showSuccessToast } from "@/utils/toastTypes";
 import { authStore } from "@/zustand/authStore";
 import { useRouter } from "next/navigation";
@@ -19,10 +19,12 @@ import {
     approve_withdrawal,
     reject_withdrawal,
     approve_consultant,
-    decline_consultant
+    decline_consultant,
+    create_blog,
+    edit_blog,
 } from "@/services/admin";
 import { genralStore } from "@/zustand/generalStore";
-import { GeneralSettings } from "@/app/Types/types";
+import { GeneralSettings, Blog } from "@/app/Types/types";
 
 export const useAdmin = () => {
     const router = useRouter();
@@ -87,6 +89,48 @@ export const useAdmin = () => {
         const { name, value } = e.target;
         setSettingsData((prev) => ({ ...prev, [name]: value }));
         setSettingsErrors((prev) => ({ ...prev, [name]: false }));
+    };
+
+    const [blogData, setBlogData] = useState<Blog>({
+        user_id: userId,
+        title: '',
+        excerpt: '',
+        body: '',
+        is_published: false,
+        thumbnail: null
+    });
+
+    const [blogErrors, setBlogErrors] = useState({
+        title: false,
+        excerpt: false,
+        body: false,
+        thumbnail: false,
+    });
+
+    const handleBlogChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+        const { name, value } = e.target;
+        setBlogData((prev) => ({ ...prev, [name]: value }));
+        setBlogErrors((prev) => ({ ...prev, [name]: false }));
+    };
+
+    const fileInputRef = useRef<HTMLInputElement | null>(null);
+    const [preview, setPreview] = useState<string | null>(null);
+
+    const handleClick = () => {
+        fileInputRef.current?.click(); // triggers hidden input
+    };
+
+    const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const file = event.target.files?.[0];
+        if (file && file.type.startsWith("image/")) {
+            const imageUrl = URL.createObjectURL(file);
+            setPreview(imageUrl);
+
+            setBlogData((prev) => ({
+                ...prev,
+                thumbnail: file
+            }));
+        }
     };
 
     const addAdminUser = async (e: React.FormEvent) => {
@@ -454,6 +498,90 @@ export const useAdmin = () => {
             showErrorToast('Unexpected error occurred');
         }
     }
+
+    const createBlog = async () => {
+        const newErrors = {
+            title: blogData.title.trim() === '',
+            excerpt: blogData.excerpt.trim() === '',
+            body: blogData.body.trim() === '',
+            thumbnail: blogData.thumbnail === null,
+        };
+        
+        setBlogErrors(newErrors);
+
+        const hasError = Object.values(newErrors).some(Boolean);
+
+        if (hasError) {
+            showErrorToast('Please fill in required fields');
+            return;
+        }
+
+        console.log(blogData)
+
+        try {
+            setButtonLoader(true)
+            const response = await create_blog(blogData);
+            if (response.success) {
+                setButtonLoader(false)
+                showSuccessToast(response.message)
+                courseStore.getState().setNewUpdate('set');
+            } 
+
+            else {
+                setButtonLoader(false)
+                showErrorToast(response.message)
+                console.log(response)
+            }
+        }
+
+        catch (err: any) {
+            console.log(err)
+            setButtonLoader(false)
+            showErrorToast('Unexpected error occurred');
+        }
+    }
+
+    const editBlog = async () => {
+        const newErrors = {
+            title: blogData.title.trim() === '',
+            excerpt: blogData.excerpt.trim() === '',
+            body: blogData.body.trim() === '',
+            thumbnail: false,
+        };
+        
+        setBlogErrors(newErrors);
+
+        const hasError = Object.values(newErrors).some(Boolean);
+
+        if (hasError) {
+            showErrorToast('Please fill in required fields');
+            return;
+        }
+
+        console.log(blogData)
+
+        try {
+            setButtonLoader(true)
+            const response = await edit_blog(blogData);
+            if (response.success) {
+                setButtonLoader(false)
+                showSuccessToast(response.message)
+                courseStore.getState().setNewUpdate('set');
+            } 
+
+            else {
+                setButtonLoader(false)
+                showErrorToast(response.message)
+                console.log(response)
+            }
+        }
+
+        catch (err: any) {
+            console.log(err)
+            setButtonLoader(false)
+            showErrorToast('Unexpected error occurred');
+        }
+    }
     
     return {
         buttonLoader,
@@ -476,5 +604,15 @@ export const useAdmin = () => {
         reason, 
         setReason,
         declineConsultant,
+        createBlog,
+        blogData,
+        blogErrors,
+        setBlogData,
+        handleBlogChange,
+        handleClick,
+        fileInputRef,
+        preview,
+        handleFileChange,
+        editBlog,
     }
 }

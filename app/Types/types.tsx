@@ -417,3 +417,13 @@ export type Web = {
     instructors?: Instructor[];
     consultants?: Consultant[];
 }
+
+export type Blog = {
+    id?: number;
+    user_id: number | undefined;
+    title: string;
+    excerpt: string;
+    body: string;
+    is_published: boolean;
+    thumbnail: File | null;
+}

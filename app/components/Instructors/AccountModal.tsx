@@ -26,6 +26,7 @@ import EditName from "../EditName";
 import EditDetails from "../EditDetails";
 import AddAdmin from "../Admin/AddAdmin";
 import TransactionUpdate from "../TransactionUpdate";
+import ManageUtilities from "../Admin/ManageUtilities";
 
 type AccountModalProps = {
     modalType: string;
@@ -585,6 +586,16 @@ const AccountModal = ({modalType, modalClose, experience, bank, subType}: Accoun
                 {
                     modalType == 'change-intro-video' &&
                     <ManageCertification type="intro-video" />
+                }
+
+                {
+                    modalType == 'create-blog' &&
+                    <ManageUtilities type={modalType} />
+                }
+
+                {
+                    modalType == 'edit-blog' &&
+                    <ManageUtilities type={modalType} />
                 }
                 
                 <div className="modal-close">

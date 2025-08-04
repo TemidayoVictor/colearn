@@ -186,6 +186,33 @@ const AdminSideBarContent = () => {
                 </div>
 
                 <div className="sidebar-break">
+                    
+                    <Link href='/admin/utilities' className={`sidebar-link ${pathname == '/admin/utilities' ? 'active' : ''}`}>
+                        {
+                            pathname == '/admin/utilities' ? (
+                                <Image
+                                    aria-hidden
+                                    src="/assets/images/profile-2user-active.png"
+                                    alt="Colearn Image"
+                                    width={20}
+                                    height={20}
+                                    className="object-cover"
+                                />
+
+                            ) : (
+                                <Image
+                                    aria-hidden
+                                    src="/assets/images/profile-2user.png"
+                                    alt="Colearn Image"
+                                    width={20}
+                                    height={20}
+                                    className="object-cover"
+                                />
+                            )
+                        }
+                        <p className="text-[.9rem]">Utilities</p>
+                    </Link>
+
                     <Link href='/admin/admin-users' className={`sidebar-link ${pathname == '/admin/admin-users' ? 'active' : ''}`}>
                         {
                             pathname == '/admin/admin-users' ? (

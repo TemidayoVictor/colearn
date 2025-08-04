@@ -1,6 +1,6 @@
 import axiosInstance from "@/utils/api";
 import { handleApiError, handleApiResponse } from "@/utils/handleApiResponse";
-import { GeneralSettings } from "@/app/Types/types";
+import { GeneralSettings, Blog } from "@/app/Types/types";
 
 export const admin_dashboard = async () => {
     try {
@@ -226,6 +226,60 @@ export const decline_consultant = async (instructorId: string | undefined, reaso
     
     try {
         const response = await axiosInstance.post("/decline-consultant", {instructorId, reason});
+        return handleApiResponse(response);
+    }
+
+    catch(error: any) {
+        return handleApiError(error)
+    }
+}
+
+export const create_blog = async (formData: Blog) => {
+    
+    try {
+        const data = new FormData();
+
+        if (formData.thumbnail) {
+            data.append('thumbnail', formData.thumbnail);
+        }
+
+        data.append('user_id', String(formData.user_id));
+        data.append('title', formData.title);
+        data.append('excerpt', formData.excerpt);
+        data.append('body', String(formData.body));
+        data.append('is_published', String(formData.is_published));
+
+        const response = await axiosInstance.post("/create-blog", data, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+        });
+        return handleApiResponse(response);
+    }
+
+    catch(error: any) {
+        return handleApiError(error)
+    }
+}
+
+export const edit_blog = async (formData: Blog) => {
+    
+    try {
+        const data = new FormData();
+
+        if (formData.thumbnail) {
+            data.append('thumbnail', formData.thumbnail);
+        }
+        
+        data.append('title', formData.title);
+        data.append('excerpt', formData.excerpt);
+        data.append('body', String(formData.body));
+
+        const response = await axiosInstance.post("/edit-blog", data, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+        });
         return handleApiResponse(response);
     }
 
