@@ -101,7 +101,7 @@ const ExplorePopular = ({title, type, tabs, addContainerClass, nav, loggedIn, we
                                                     <span className="font-semibold">${item.price}</span>
                                                 </div>
                                                 {/* <button className={`btn normal`} onClick={(e) => addToCartTrigger(item.id)}>Add to cart</button> */}
-                                                <Link href={ web ? `/view-courses/${item.id}` : `/students/course-details/${item.id}`} className="btn normal">View</Link>
+                                                <Link href={ web || type == 'sub' ? `/view-courses/${item.id}` : `/students/course-details/${item.id}`} className="btn normal">View</Link>
                                             </div>
                                             <div>
         

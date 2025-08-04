@@ -9,11 +9,8 @@ type ViewTutorsHeroProps = {
 }
 
 const ViewTutorsHero = ({marginTop}: ViewTutorsHeroProps) => {
-    const params = useParams();
-    const tutorId = params?.tutor as any;
 
-    const instructor = genralStore.getState().getTutorById(tutorId);
-    console.log(instructor);
+    const instructor = genralStore((state) => state.data?.instructor)
 
     return (
         <div className={`${marginTop ? 'view-tutor-banner' : ''}`}>

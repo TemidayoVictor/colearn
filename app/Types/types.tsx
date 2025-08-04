@@ -89,6 +89,7 @@ export type Instructor = {
     experience?: ExperienceType[] | null;
     schools?: School[] | null;
     reason?: string;
+    courses?: Course[];
 }
 
 export type Instructors = {
@@ -406,7 +407,8 @@ export type Dashboard = {
     total_pending_consultants?: number;
     total_verified_consultants?: number;
     total_declined_consultants?: number;
-
+    instructor?: Instructor;
+    reviews?: Review[];
 }
 
 export type Web = {

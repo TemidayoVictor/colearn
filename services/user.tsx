@@ -68,3 +68,17 @@ export const web_data = async () => {
     return handleApiError(error)
   }
 };
+
+export const instructor_data_web = async (id: number | undefined) => {
+    try {
+      await axiosInstanceWeb.get(`/sanctum/csrf-cookie?refresh=${Date.now()}`, {
+        withCredentials: true,
+      });
+      const response = await axiosInstanceWeb.post("/instructor-data-web", {id});
+      return handleApiResponse(response);
+    } 
+    
+    catch (error: any) {
+      return handleApiError(error)
+    }
+};
