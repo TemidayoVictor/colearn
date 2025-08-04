@@ -111,6 +111,8 @@ type GeneralState = {
 
   getCourseById: (id: number) => Course | undefined;
 
+  getTutorById: (id: number) => Instructor | undefined;
+
   setData: (data: Dashboard | null) => void;
 
   setWeb: (web: Web | null) => void;
@@ -213,6 +215,8 @@ export const genralStore = create<GeneralState>() (
       getConsultantById: (id) => get().consultants.find((c) => c.id === id),
 
       getCourseById: (id) => get().web?.courses?.find((c) => Number(c.id) === Number(id)),
+
+      getTutorById: (id) => get().web?.instructors?.find((c) => Number(c.id) === Number(id)),
 
       setData: (data) => set({data}),
 

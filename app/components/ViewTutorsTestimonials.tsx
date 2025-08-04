@@ -5,8 +5,16 @@ import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 import { Swiper, SwiperSlide } from 'swiper/react'; 
 import { Pagination, Navigation } from 'swiper/modules';
+import { useParams } from "next/navigation";
+import { genralStore } from "@/zustand/generalStore";
 
 const ViewTutorsTestimonials = () => {
+    const params = useParams();
+    const tutorId = params?.tutor as any;
+
+    const instructor = genralStore.getState().getTutorById(tutorId);
+    console.log(instructor);
+
     return (
         <div>
             <Swiper

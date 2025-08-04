@@ -32,7 +32,7 @@ const HomeTutors = ({page}: Props) => {
                             <div className="tutors-container">
                                 {
                                     dataUse?.map((item, index) => (
-                                        <div className="booking" key={index}>
+                                        <Link href={`view-tutors/${item.id}`} className="booking" key={index}>
                                             <div>
                                                 <Image
                                                     aria-hidden
@@ -78,7 +78,7 @@ const HomeTutors = ({page}: Props) => {
                                                     <p className="text-[.9rem] font-bold">{item.instructor?.experience_years} years</p>
                                                 </div> */}
                                             </div>
-                                        </div>
+                                        </Link>
                                     ))
                                 }
                             </div>

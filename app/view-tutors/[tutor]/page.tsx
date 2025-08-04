@@ -1,7 +1,6 @@
 import React from "react";
 import { Metadata } from "next";
-import ViewTutorsHero from "../components/ViewTutorsHero";
-import ViewTutorsBody from "../components/ViewTutorsBody";
+import TutorsViewBody from "@/app/components/TutorsViewBody";
 
 export const metadata: Metadata = {
     title: "View Tutors",
@@ -10,8 +9,7 @@ export const metadata: Metadata = {
 const ViewTutors = () => {
     return (
         <div>
-            <ViewTutorsHero marginTop/>
-            <ViewTutorsBody />
+            <TutorsViewBody />
         </div>
     )
 }

@@ -1,8 +1,17 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { useParams } from "next/navigation";
+import { genralStore } from "@/zustand/generalStore";
 
 const ViewTutorsOverview = () => {
+    
+    const params = useParams();
+    const tutorId = params?.tutor as any;
+
+    const instructor = genralStore.getState().getTutorById(tutorId);
+    console.log(instructor);
+    
     return (
         <div className="view-tutor-overview">
             <div className="view-course-content left">

@@ -1,11 +1,20 @@
+'use client';
 import React from "react";
 import Image from "next/image";
+import { useParams } from "next/navigation";
+import { genralStore } from "@/zustand/generalStore";
 
 type ViewTutorsHeroProps = {
     marginTop?: boolean;
 }
 
 const ViewTutorsHero = ({marginTop}: ViewTutorsHeroProps) => {
+    const params = useParams();
+    const tutorId = params?.tutor as any;
+
+    const instructor = genralStore.getState().getTutorById(tutorId);
+    console.log(instructor);
+
     return (
         <div className={`${marginTop ? 'view-tutor-banner' : ''}`}>
                 <div>
@@ -22,7 +31,7 @@ const ViewTutorsHero = ({marginTop}: ViewTutorsHeroProps) => {
                 <div className="left">
                     <Image
                         aria-hidden
-                        src="/assets/images/Frame 67.png"
+                        src={instructor?.user?.profile_photo ? `${process.env.NEXT_PUBLIC_API_URL}/storage/${instructor?.user?.profile_photo}` : "/assets/images/course-img-2.png"}
                         alt="Colearn Logo"
                         width={200}
                         height={200}
@@ -33,7 +42,7 @@ const ViewTutorsHero = ({marginTop}: ViewTutorsHeroProps) => {
                     <div className="flex justify-between">
                         <div>
                             <div className="flex items-center gap-2">
-                                <h3 className="font-bold">Favi Ayomide</h3>
+                                <h3 className="font-bold">{instructor?.user?.first_name} {instructor?.user?.last_name}</h3>
                                 <div className="verified">
                                     <p>Verified</p>
                                     <Image
@@ -83,14 +92,14 @@ const ViewTutorsHero = ({marginTop}: ViewTutorsHeroProps) => {
                             </div>
 
                             <div className="my-1 font-semibold">
-                                <p>UI/UX Designer, Certified Ux Designer Oxford.</p>
+                                <p> {instructor?.professional_headline} </p>
                             </div>
 
                             <div className="my-1 color-grey-text text-[.9rem]">
-                                <p>Washington DC, USA.</p>
+                                <p> {instructor?.country} </p>
                             </div>
 
-                            <div className="flex gap-2 my-1">
+                            {/* <div className="flex gap-2 my-1">
                                 <Image
                                     aria-hidden
                                     src="/assets/images/ic_deals-3.png"
@@ -100,7 +109,7 @@ const ViewTutorsHero = ({marginTop}: ViewTutorsHeroProps) => {
                                     className="object-contain rounded-[50%]"
                                 />
                                 <p className="font-semibold">UBSS LTD</p>
-                            </div>
+                            </div> */}
 
                             <div className="flex gap-2 my-1">
                                 <Image
@@ -111,7 +120,14 @@ const ViewTutorsHero = ({marginTop}: ViewTutorsHeroProps) => {
                                     height={16}
                                     className="object-contain rounded-[50%]"
                                 />
-                                <p>Speaks: <span className="font-semibold">English, French</span></p>
+                                <p>Speaks: <span className="font-semibold">
+                                        {
+                                            Array.isArray(instructor?.languages)
+                                            ? instructor?.languages.join(", ")
+                                            : JSON.parse(instructor?.languages || '[]').join(", ")
+                                        }
+                                    </span>
+                                </p>
                             </div>   
                         </div>
 
