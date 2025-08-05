@@ -17,6 +17,8 @@ import {
   Student,
   Web,
   Blog,
+  Category,
+  FAQ,
 } from '@/app/Types/types';
 
 type GeneralState = {
@@ -68,6 +70,12 @@ type GeneralState = {
 
   blog: Blog | null;
   blogs: Blog[];
+
+  category: Category | null;
+  categorys: Category[];
+
+  faq: FAQ | null;
+  faqs: FAQ[];
 
   setConsultant: (consultant: Consultant) => void
   setConsultants: (consultants: Consultant[]) => void
@@ -123,6 +131,12 @@ type GeneralState = {
 
   setBlog: (blog: Blog) => void
   setBlogs: (blogs: Blog[]) => void
+
+  setCategory: (category: Category) => void
+  setCategorys: (categorys: Category[]) => void
+
+  setFAQ: (faq: FAQ) => void
+  setFAQs: (faqs: FAQ[]) => void
 
   clearAll: () => void,
   
@@ -180,6 +194,12 @@ export const genralStore = create<GeneralState>() (
       blog: null,
       blogs: [],
 
+      category: null,
+      categorys: [],
+
+      faq: null,
+      faqs: [],
+
       setBooking: (booking) => set({booking}),
       setBookings: (bookings) => set({bookings}),
 
@@ -234,6 +254,12 @@ export const genralStore = create<GeneralState>() (
 
       setBlog: (blog) => set({blog}),
       setBlogs: (blogs) => set({blogs}),
+
+      setCategory: (category) => set({category}),
+      setCategorys: (categorys) => set({categorys}),
+
+      setFAQ: (faq) => set({faq}),
+      setFAQs: (faqs) => set({faqs}),
       
       clearAll: () => {
       set({
@@ -255,6 +281,8 @@ export const genralStore = create<GeneralState>() (
         data: null,
         web: null,
         blog: null, blogs: [],
+        category: null, categorys: [],
+        faq: null, faqs: [],
       }); 
 
       localStorage.removeItem('general-storage'); // Remove persisted state

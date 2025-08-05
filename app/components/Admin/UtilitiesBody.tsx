@@ -1,6 +1,8 @@
 'use client';
 import React, {useState, useEffect} from "react";
 import { get_all_blogs } from "@/services/admin";
+import { get_all_categories } from "@/services/admin";
+import { get_all_faqs } from "@/services/admin";
 import { useAuthAdmin } from "@/hooks/useAuth";
 import { showErrorToast } from "@/utils/toastTypes";
 import { useRouter } from "next/navigation";
@@ -8,6 +10,8 @@ import { courseStore } from "@/zustand/courseStore";
 import { genralStore } from "@/zustand/generalStore";
 import Loader from "../Loader";
 import BlogBody from "./BlogBody";
+import CategoryBody from "./CategoryBody";
+import FAQBody from "./FAQBody";
 
 const UtilitiesBody = () => {
     const [selectedTab, setSelectedTab] = useState<string>('categories');
@@ -21,16 +25,40 @@ const UtilitiesBody = () => {
             await useAuthAdmin(router); // ✅ valid usage
             
             try {
-                const response = await get_all_blogs();
-                
-                if (response.success) {
+                const [categoryRes, faqRes, blogRes] = await Promise.all([
+                    get_all_categories(),
+                    get_all_faqs(),
+                    get_all_blogs(),
+                ]);
+
+                if (categoryRes.success) {
                     // save state globally
-                    genralStore.getState().setBlogs(response.data.blogs);
+                    genralStore.getState().setCategorys(categoryRes.data.categories);
                 } 
     
                 else {
-                    showErrorToast(response.message)
-                    console.log(response)
+                    showErrorToast(categoryRes.message)
+                    console.log(categoryRes)
+                }
+
+                if (faqRes.success) {
+                    // save state globally
+                    genralStore.getState().setFAQs(faqRes.data.faqs);
+                } 
+    
+                else {
+                    showErrorToast(faqRes.message)
+                    console.log(faqRes)
+                }
+
+                if (blogRes.success) {
+                    // save state globally
+                    genralStore.getState().setBlogs(blogRes.data.blogs);
+                } 
+    
+                else {
+                    showErrorToast(blogRes.message)
+                    console.log(blogRes)
                 }
             }
 
@@ -59,6 +87,16 @@ const UtilitiesBody = () => {
             </div>
 
             <div>
+                {
+                    selectedTab == 'categories' &&
+                    <CategoryBody />
+                }
+
+                {
+                    selectedTab == 'faqs' &&
+                    <FAQBody />
+                }
+
                 {
                     selectedTab == 'blog' &&
                     <BlogBody />

@@ -4,7 +4,6 @@ import Link from "next/link";
 import { genralStore } from "@/zustand/generalStore";
 import { Blog } from "@/app/Types/types";
 import AccountModal from "../Instructors/AccountModal";
-import { faEdit, faTrashAlt, faTimes } from "@fortawesome/free-solid-svg-icons";
 import { motion, AnimatePresence } from 'framer-motion';
 import ButtonLoader from "../buttonLoader";
 import { useAdmin } from "@/hooks/useAdmin";
@@ -140,7 +139,7 @@ const BlogBody = () => {
                     </div>
                 </div> */}
 
-{
+                {
                     deleteModal &&
                     <div>
                         <AnimatePresence>

@@ -597,6 +597,26 @@ const AccountModal = ({modalType, modalClose, experience, bank, subType}: Accoun
                     modalType == 'edit-blog' &&
                     <ManageUtilities type={modalType} />
                 }
+
+                {
+                    modalType == 'add-category' &&
+                    <ManageUtilities type={modalType} />
+                }
+
+                {
+                    modalType == 'edit-category' &&
+                    <ManageUtilities type={modalType} />
+                }
+
+                {
+                    modalType == 'add-faq' &&
+                    <ManageUtilities type={modalType} />
+                }
+
+                {
+                    modalType == 'edit-faq' &&
+                    <ManageUtilities type={modalType} />
+                }
                 
                 <div className="modal-close">
                     <FontAwesomeIcon icon={faXmark} className="text-[1.5rem]" onClick={modalClose}/>

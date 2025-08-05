@@ -23,9 +23,15 @@ import {
     create_blog,
     edit_blog,
     delete_blog,
+    add_category,
+    edit_category,
+    delete_category,
+    add_faq,
+    edit_faq,
+    delete_faq
 } from "@/services/admin";
 import { genralStore } from "@/zustand/generalStore";
-import { GeneralSettings, Blog } from "@/app/Types/types";
+import { GeneralSettings, Blog, Category, FAQ } from "@/app/Types/types";
 
 export const useAdmin = () => {
     const router = useRouter();
@@ -44,6 +50,12 @@ export const useAdmin = () => {
 
     const blog = genralStore((state) => state.blog)
     const blogId = blog?.id
+
+    const category = genralStore((state) => state.category)
+    const categoryId = category?.id
+
+    const faq = genralStore((state) => state.faq)
+    const faqId = faq?.id
 
     const [buttonLoader, setButtonLoader] = useState<boolean>(false);
     const [amount, setAmount] = useState<number>(0);
@@ -117,6 +129,39 @@ export const useAdmin = () => {
         setBlogErrors((prev) => ({ ...prev, [name]: false }));
     };
 
+    const [categoryData, setCategoryData] = useState<Category>({
+        name: '',
+        image: null,
+        thumbnail: '',
+    });
+
+    const [categoryErrors, setCategoryErrors] = useState({
+        name: false,
+        image: false,
+    });
+
+    const handleCategoryChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+        const { name, value } = e.target;
+        setCategoryData((prev) => ({ ...prev, [name]: value }));
+        setCategoryErrors((prev) => ({ ...prev, [name]: false }));
+    };
+
+    const [faqData, setFaqData] = useState<FAQ>({
+        question: '',
+        answer: '',
+    });
+
+    const [faqErrors, setFaqErrors] = useState({
+        question: false,
+        answer: false,
+    });
+
+    const handleFaqChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+        const { name, value } = e.target;
+        setFaqData((prev) => ({ ...prev, [name]: value }));
+        setFaqErrors((prev) => ({ ...prev, [name]: false }));
+    };
+
     const fileInputRef = useRef<HTMLInputElement | null>(null);
     const [preview, setPreview] = useState<string | null>(null);
 
@@ -131,6 +176,19 @@ export const useAdmin = () => {
             setPreview(imageUrl);
 
             setBlogData((prev) => ({
+                ...prev,
+                image: file
+            }));
+        }
+    };
+
+    const handleCategoryFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const file = event.target.files?.[0];
+        if (file && file.type.startsWith("image/")) {
+            const imageUrl = URL.createObjectURL(file);
+            setPreview(imageUrl);
+
+            setCategoryData((prev) => ({
                 ...prev,
                 image: file
             }));
@@ -610,6 +668,214 @@ export const useAdmin = () => {
             showErrorToast('Unexpected error occurred');
         }
     }
+
+    const addCategory = async () => {
+        const newErrors = {
+            name: categoryData.name.trim() === '',
+            image: categoryData.image === null,
+        };
+        
+        setCategoryErrors(newErrors);
+
+        const hasError = Object.values(newErrors).some(Boolean);
+
+        if (hasError) {
+            showErrorToast('Please fill in required fields');
+            return;
+        }
+
+        console.log(categoryData)
+
+        try {
+            setButtonLoader(true)
+            const response = await add_category(categoryData);
+            if (response.success) {
+                setButtonLoader(false)
+                showSuccessToast(response.message)
+                courseStore.getState().setNewUpdate('set');
+            } 
+
+            else {
+                setButtonLoader(false)
+                showErrorToast(response.message)
+                console.log(response)
+            }
+        }
+
+        catch (err: any) {
+            console.log(err)
+            setButtonLoader(false)
+            showErrorToast('Unexpected error occurred');
+        }
+    }
+
+    const editCategory = async () => {
+        const newErrors = {
+            name: categoryData.name.trim() === '',
+            image: false,
+        };
+        
+        setCategoryErrors(newErrors);
+
+        const hasError = Object.values(newErrors).some(Boolean);
+
+        if (hasError) {
+            showErrorToast('Please fill in required fields');
+            return;
+        }
+
+        console.log(categoryData)
+
+        try {
+            setButtonLoader(true)
+            const response = await edit_category(categoryData);
+            if (response.success) {
+                setButtonLoader(false)
+                showSuccessToast(response.message)
+                courseStore.getState().setNewUpdate('set');
+            } 
+
+            else {
+                setButtonLoader(false)
+                showErrorToast(response.message)
+                console.log(response)
+            }
+        }
+
+        catch (err: any) {
+            console.log(err)
+            setButtonLoader(false)
+            showErrorToast('Unexpected error occurred');
+        }
+    }
+
+    const deleteCategory = async () => {
+        try {
+            setButtonLoader(true)
+            const response = await delete_category(categoryId);
+            if (response.success) {
+                setButtonLoader(false)
+                showSuccessToast(response.message)
+                courseStore.getState().setNewUpdate('set');
+            } 
+
+            else {
+                setButtonLoader(false)
+                showErrorToast(response.message)
+                console.log(response)
+            }
+        }
+
+        catch (err: any) {
+            console.log(err)
+            setButtonLoader(false)
+            showErrorToast('Unexpected error occurred');
+        }
+    }
+
+    const addFaq = async () => {
+        const newErrors = {
+            question: faqData.question.trim() === '',
+            answer: faqData.answer.trim() === '',
+        };
+        
+        setFaqErrors(newErrors);
+
+        const hasError = Object.values(newErrors).some(Boolean);
+
+        if (hasError) {
+            showErrorToast('Please fill in required fields');
+            return;
+        }
+
+        console.log(faqData)
+
+        try {
+            setButtonLoader(true)
+            const response = await add_faq(faqData);
+            if (response.success) {
+                setButtonLoader(false)
+                showSuccessToast(response.message)
+                courseStore.getState().setNewUpdate('set');
+            } 
+
+            else {
+                setButtonLoader(false)
+                showErrorToast(response.message)
+                console.log(response)
+            }
+        }
+
+        catch (err: any) {
+            console.log(err)
+            setButtonLoader(false)
+            showErrorToast('Unexpected error occurred');
+        }
+    }
+
+    const editFaq = async () => {
+        const newErrors = {
+            question: faqData.question.trim() === '',
+            answer: faqData.answer.trim() === '',
+        };
+        
+        setFaqErrors(newErrors);
+
+        const hasError = Object.values(newErrors).some(Boolean);
+
+        if (hasError) {
+            showErrorToast('Please fill in required fields');
+            return;
+        }
+
+        console.log(faqData)
+
+        try {
+            setButtonLoader(true)
+            const response = await edit_faq(faqData);
+            if (response.success) {
+                setButtonLoader(false)
+                showSuccessToast(response.message)
+                courseStore.getState().setNewUpdate('set');
+            } 
+
+            else {
+                setButtonLoader(false)
+                showErrorToast(response.message)
+                console.log(response)
+            }
+        }
+
+        catch (err: any) {
+            console.log(err)
+            setButtonLoader(false)
+            showErrorToast('Unexpected error occurred');
+        }
+    }
+
+    const deleteFaq = async () => {
+        try {
+            setButtonLoader(true)
+            const response = await delete_faq(faqId);
+            if (response.success) {
+                setButtonLoader(false)
+                showSuccessToast(response.message)
+                courseStore.getState().setNewUpdate('set');
+            } 
+
+            else {
+                setButtonLoader(false)
+                showErrorToast(response.message)
+                console.log(response)
+            }
+        }
+
+        catch (err: any) {
+            console.log(err)
+            setButtonLoader(false)
+            showErrorToast('Unexpected error occurred');
+        }
+    }
     
     return {
         buttonLoader,
@@ -643,5 +909,20 @@ export const useAdmin = () => {
         handleFileChange,
         editBlog,
         deleteBlog,
+        categoryData,
+        setCategoryData,
+        categoryErrors,
+        addCategory,
+        editCategory,
+        deleteCategory,
+        handleCategoryChange,
+        handleCategoryFileChange,
+        faqData,
+        setFaqData,
+        faqErrors,
+        addFaq,
+        editFaq,
+        deleteFaq,
+        handleFaqChange,
     }
 }

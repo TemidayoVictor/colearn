@@ -224,8 +224,10 @@ export type Resource = {
 }
 
 export type Category = {
-    id: number;
+    id?: number;
     name: string;
+    image: File | null;
+    thumbnail: string;
 }
 
 export type School = {
@@ -428,5 +430,10 @@ export type Blog = {
     thumbnail?: string;
     image: File | null;
     created_at?: string;
-    
+}
+
+export type FAQ = {
+    id?: number;
+    question: string;
+    answer: string;
 }

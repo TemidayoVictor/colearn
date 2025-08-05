@@ -1,6 +1,6 @@
 import axiosInstance from "@/utils/api";
 import { handleApiError, handleApiResponse } from "@/utils/handleApiResponse";
-import { GeneralSettings, Blog } from "@/app/Types/types";
+import { GeneralSettings, Blog, Category, FAQ } from "@/app/Types/types";
 
 export const admin_dashboard = async () => {
     try {
@@ -303,6 +303,138 @@ export const get_all_blogs = async () => {
 export const delete_blog = async (id: number | undefined) => {
     try {
         const response = await axiosInstance.post("/delete-blog", {
+            id,
+        });
+        return handleApiResponse(response);
+    }
+
+    catch(error: any) {
+        return handleApiError(error)
+    }
+}
+
+export const get_all_categories = async () => {
+    try {
+        const response = await axiosInstance.get("/get-all-categories");
+        return handleApiResponse(response);
+    }
+
+    catch(error: any) {
+        return handleApiError(error)
+    }
+}
+
+export const add_category = async (formData: Category) => {
+    
+    try {
+        const data = new FormData();
+
+        if (formData.image) {
+            data.append('thumbnail', formData.image);
+        }
+
+        data.append('name', formData.name);
+
+        const response = await axiosInstance.post("/create-category", data, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+        });
+        return handleApiResponse(response);
+    }
+
+    catch(error: any) {
+        return handleApiError(error)
+    }
+}
+
+export const edit_category = async (formData: Category) => {
+    
+    try {
+        const data = new FormData();
+
+        if (formData.image) {
+            data.append('thumbnail', formData.image);
+        }
+
+        data.append('name', formData.name);
+        data.append('id', String(formData.id));
+
+        const response = await axiosInstance.post("/edit-category", data, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+        });
+        return handleApiResponse(response);
+    }
+
+    catch(error: any) {
+        return handleApiError(error)
+    }
+}
+
+export const delete_category = async (id: number | undefined) => {
+    try {
+        const response = await axiosInstance.post("/delete-category", {
+            id,
+        });
+        return handleApiResponse(response);
+    }
+
+    catch(error: any) {
+        return handleApiError(error)
+    }
+}
+
+export const get_all_faqs = async () => {
+    try {
+        const response = await axiosInstance.get("/get-all-faqs");
+        return handleApiResponse(response);
+    }
+
+    catch(error: any) {
+        return handleApiError(error)
+    }
+}
+
+export const add_faq = async (formData: FAQ) => {
+    
+    try {
+        const data = new FormData();
+
+        data.append('question', formData.question);
+        data.append('answer', formData.answer);
+
+        const response = await axiosInstance.post("/create-faq", data);
+        return handleApiResponse(response);
+    }
+
+    catch(error: any) {
+        return handleApiError(error)
+    }
+}
+
+export const edit_faq = async (formData: FAQ) => {
+    
+    try {
+        const data = new FormData();
+
+        data.append('question', formData.question);
+        data.append('answer', formData.answer);
+        data.append('id', String(formData.id));
+
+        const response = await axiosInstance.post("/edit-faq", data);
+        return handleApiResponse(response);
+    }
+
+    catch(error: any) {
+        return handleApiError(error)
+    }
+}
+
+export const delete_faq = async (id: number | undefined) => {
+    try {
+        const response = await axiosInstance.post("/delete-faq", {
             id,
         });
         return handleApiResponse(response);
