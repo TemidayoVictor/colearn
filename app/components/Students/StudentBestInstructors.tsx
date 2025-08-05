@@ -35,7 +35,7 @@ const StudentBestInstructor = () => {
                                         </div>
                                     </div>
                                     <div className="right">
-                                        <Link href='/' className="bt-btn btn btn-primary-fill desktop">
+                                        <Link href={`/students/view-instructor/${item.user?.id}`} className="bt-btn btn btn-primary-fill desktop">
                                             <span>View Profile</span>
                                             <span>
                                                 <Image
@@ -49,8 +49,8 @@ const StudentBestInstructor = () => {
                                             </span>
                                         </Link>
         
-                                        <Link href='/' className="mobile">
-                                            <span className="underline text-[.8rem]">View Courses</span>
+                                        <Link href={`/students/view-tutor/${item.user?.id}`} className="mobile">
+                                            <span className="underline text-[.8rem]">View Profile</span>
                                         </Link>
                                     </div>
                                 </div>

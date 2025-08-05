@@ -44,9 +44,9 @@ const StudentSidebarContent = () => {
                         <p className="text-[.9rem]">Dashboard</p>
                     </Link>
 
-                    <Link href='/students/explore' className={`sidebar-link ${pathname.startsWith('/students/explore') || pathname.startsWith('/students/course-detail')  ? 'active' : ''}`} >
+                    <Link href='/students/explore' className={`sidebar-link ${pathname.startsWith('/students/explore') || pathname.startsWith('/students/course-detail') || pathname.startsWith('/students/view-instructor') ? 'active' : ''}`} >
                         {
-                            pathname.startsWith('/students/explore') || pathname.startsWith('/students/course-detail') ? (
+                            pathname.startsWith('/students/explore') || pathname.startsWith('/students/course-detail') || pathname.startsWith('/students/view-instructor') ? (
                                 <Image
                                     aria-hidden
                                     src="/assets/images/global--active.png"

@@ -74,7 +74,7 @@ const StudentPopularConsultant = () => {
                                                 <p className="font-bold" >${item.hourly_rate} / hr </p>
                                             )
                                         }
-                                        <Link href={`/students/bookings/session/${item.id}`} className="btn normal btn-small">Book Now</Link>
+                                        <Link href={`/students/view-instructor/${item.instructor?.user?.id}`} className="btn normal btn-small">View</Link>
                                     </div>
                                 </div>
                             ))
