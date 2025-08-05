@@ -47,7 +47,7 @@ const FAQBody = () => {
     return (
         <div>
             <div>
-                <div className="mt-2 flex justify-end">
+                <div className="my-2 flex justify-end">
                     <button className="btn btn-primary-fill" onClick={() => openModal("add-faq")}>Add FAQ</button>
                 </div>
             </div>
@@ -72,7 +72,7 @@ const FAQBody = () => {
                                             <tr key={index}>
                                                 <td>{index + 1}</td>
                                                 <td> {item.question} </td>
-                                                <td>{item?.answer}</td>
+                                                <td>{item.answer.length > 30 ? item.answer.slice(0, 30) + '...' : item.answer}</td>
                                                 <td>
                                                     <button className="btn btn-small btn-primary-fill" onClick={(e) => editFaqTrigger(item)}>Edit</button>
                                                     <button className="btn btn-small error two ml-2" onClick={(e) => deleteResourceTrigger(item)}>Delete</button>
@@ -85,7 +85,7 @@ const FAQBody = () => {
                         </div>
                     ) : (
                         <div>
-                            <EmptyPage image="/assets/images/empty-image.png" header="No category" content="No category found" imageWidth={400} imageHeight={240}/>
+                            <EmptyPage image="/assets/images/empty-image.png" header="No FAQs" content="No frequently asked questions found" imageWidth={400} imageHeight={240}/>
                         </div>
                     )
                 }
@@ -108,7 +108,7 @@ const FAQBody = () => {
                                 >
                                 <h2 className="title-3">Confirm Delete</h2>
                                 <p className="text-[.9rem] color-grey-text">
-                                    Are you sure you want to delete this category? This action cannot be undone.
+                                    Are you sure you want to delete this item? This action cannot be undone.
                                 </p>
 
                                 <div className="mt-6 flex justify-end gap-3">

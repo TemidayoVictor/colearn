@@ -24,7 +24,7 @@ const CategoryBody = () => {
 
     const editCategoryTrigger = (item: Category) => {
         genralStore.getState().setCategory(item);
-        openModal('edit-blog');
+        openModal('edit-category');
     }
 
     const deleteResourceTrigger = (item: Category): void => {
@@ -40,7 +40,7 @@ const CategoryBody = () => {
         <div>
             <div>
                 <div className="my-2 flex justify-end">
-                    <button className="btn btn-primary-fill" onClick={() => openModal("create-category")}>Add Category</button>
+                    <button className="btn btn-primary-fill" onClick={() => openModal("add-category")}>Add Category</button>
                 </div>
             </div>
 

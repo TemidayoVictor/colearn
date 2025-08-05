@@ -282,7 +282,7 @@ const ManageUtilities = ({type}: Props) => {
                         accept="image/*"
                         ref={fileInputRef}
                         className="hidden"
-                        onChange={handleFileChange}
+                        onChange={handleCategoryFileChange}
                     />
                     
                     <div className="mt-4">
@@ -383,7 +383,7 @@ const ManageUtilities = ({type}: Props) => {
                             <input 
                                 type="text" 
                                 className={`input-field ${faqErrors.question ? 'error' : ''}`} 
-                                name="name"
+                                name="question"
                                 value={faqData.question}
                                 placeholder="Question"
                                 onChange={handleFaqChange} 
@@ -427,7 +427,7 @@ const ManageUtilities = ({type}: Props) => {
                             <input 
                                 type="text" 
                                 className={`input-field ${faqErrors.question ? 'error' : ''}`} 
-                                name="name"
+                                name="question"
                                 value={faqData.question}
                                 placeholder="Question"
                                 onChange={handleFaqChange} 
@@ -453,7 +453,7 @@ const ManageUtilities = ({type}: Props) => {
                                 
                                 (
                                     <div className="bt-btn two">
-                                        <span>Create</span>
+                                        <span>Update</span>
                                     </div>                                        
                                 )
                             }
