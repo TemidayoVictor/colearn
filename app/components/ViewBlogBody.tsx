@@ -1,7 +1,21 @@
+'use client';
 import React from "react";
 import Image from "next/image";
+import { useParams } from "next/navigation";
+import { genralStore } from "@/zustand/generalStore";
+import dayjs from "dayjs";
+import customParseFormat from "dayjs/plugin/customParseFormat";
+import advancedFormat from "dayjs/plugin/advancedFormat";
+
+dayjs.extend(customParseFormat);
+dayjs.extend(advancedFormat);
 
 const ViewBlogBody = () => {
+    const params = useParams();
+    const blogId = params?.blog as any;
+
+    const blog = genralStore.getState().getBlogById(blogId);
+
     return (
         <div className="">
             <div className="container">
@@ -33,25 +47,23 @@ const ViewBlogBody = () => {
                 <div className="mt-[2em]">
                     <Image
                         aria-hidden
-                        src="/assets/images/blog-3.png"
+                        src={blog?.thumbnail ? `${process.env.NEXT_PUBLIC_API_URL}/storage/${blog?.thumbnail}` : "/assets/images/course-img-2.png"}
                         alt="Colearn Logo"
                         width={1280}
                         height={270}
-                        className="object-contain rounded-[.5em]"
+                        className="object-contain rounded-[.5em] blog-img"
                     />
-                    <h2 className="mt-[1em] title">Blog title goes here</h2>
+                    <h2 className="mt-[1em] title"> {blog?.title} </h2>
                     <div className="mt-4 flex gap-3 items-center">
-                        <span className="blog-tab">Technology</span>
+                        {/* <span className="blog-tab">Technology</span> */}
                         <div className="flex gap-3 text-[.8rem]">
-                            <p>July 16, 2024</p> <span className="font-bold">&middot;</span> <p>3 mins read</p>
+                            {/* <p>July 16, 2024</p> <span className="font-bold">&middot;</span> <p>3 mins read</p> */}
+                            <p>{ dayjs(blog?.created_at, "YYYY-MM-DD HH:mm:ss").format("MMM Do, YYYY")}</p>
                         </div>
                     </div>
 
                     <div className="blog-body mt-[1em]">
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Similique ullam reprehenderit perferendis nulla eum. Eum ipsa ipsam minus, vero optio reiciendis pariatur excepturi libero, totam maxime expedita. Odio culpa iure ea, nobis consectetur voluptas. Similique consequuntur minima porro nisi, harum molestias, libero quas necessitatibus fugiat natus voluptas assumenda dolores obcaecati.</p>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Similique ullam reprehenderit perferendis nulla eum. Eum ipsa ipsam minus, vero optio reiciendis pariatur excepturi libero, totam maxime expedita. Odio culpa iure ea, nobis consectetur voluptas. Similique consequuntur minima porro nisi, harum molestias, libero quas necessitatibus fugiat natus voluptas assumenda dolores obcaecati.</p>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Similique ullam reprehenderit perferendis nulla eum. Eum ipsa ipsam minus, vero optio reiciendis pariatur excepturi libero, totam maxime expedita. Odio culpa iure ea, nobis consectetur voluptas. Similique consequuntur minima porro nisi, harum molestias, libero quas necessitatibus fugiat natus voluptas assumenda dolores obcaecati.</p>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Similique ullam reprehenderit perferendis nulla eum. Eum ipsa ipsam minus, vero optio reiciendis pariatur excepturi libero, totam maxime expedita. Odio culpa iure ea, nobis consectetur voluptas. Similique consequuntur minima porro nisi, harum molestias, libero quas necessitatibus fugiat natus voluptas assumenda dolores obcaecati.</p>
+                        <p> {blog?.body} </p>
                     </div>
                 </div>
             </div>

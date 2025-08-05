@@ -57,7 +57,7 @@ const BlogBody = () => {
                 <div>
                     {
                         (blogs ?? []).length > 0 ? (
-                            <div className="blog-cont three mt-[2em]">
+                            <div className="blog-cont three mt-[1em]">
                                 {
                                     blogs?.map((item, index) => (
                                         <div className="blog flex flex-col justify-between gap-4" key={index}>
@@ -83,13 +83,14 @@ const BlogBody = () => {
                                                         <span className="blog-tab">IT</span>
                                                         <span className="blog-tab">Technology</span>
                                                     </div> */}
-                                                    <div className="flex gap-2">
+                                                    <div className="flex gap-2 items-center justify-between">
                                                         <button className="flex gap-2 btn btn-small btn-primary-fill" onClick={(e) => editBlogTrigger(item)}>
                                                             <p>Edit</p>                                                
                                                         </button>
                                                         <button className="flex gap-2 btn btn-small error two" onClick={(e) => deleteResourceTrigger(item)}>
                                                             <p>Delete</p>                                                
                                                         </button>
+                                                        <Link className="btn btn-small btn-primary-fill" href={`/view-blog/${item.id}`}> view</Link>
                                                     </div>
                                                 </div>
                                             </div>

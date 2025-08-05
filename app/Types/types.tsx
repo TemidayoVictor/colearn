@@ -90,6 +90,7 @@ export type Instructor = {
     schools?: School[] | null;
     reason?: string;
     courses?: Course[];
+    consultant: Consultant;
 }
 
 export type Instructors = {
@@ -418,6 +419,7 @@ export type Web = {
     courses?: Course[];
     instructors?: Instructor[];
     consultants?: Consultant[];
+    blogs?: Blog[];
 }
 
 export type Blog = {

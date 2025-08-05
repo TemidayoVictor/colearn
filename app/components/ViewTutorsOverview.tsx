@@ -25,7 +25,7 @@ const ViewTutorsOverview = () => {
                     <h2 className="title-2">Statistics</h2>
                     <div className="view-tutors-statistics">
                         <div className="flex items-start gap-2 stat-left">
-                            <div className="rocket flex items-center justify-center rounded-[.3em] p-2">
+                            {/* <div className="rocket flex items-center justify-center rounded-[.3em] p-2">
                                 <Image
                                     aria-hidden
                                     // src="/assets/images/rocket.png"
@@ -33,6 +33,16 @@ const ViewTutorsOverview = () => {
                                     alt="Colearn Logo"
                                     width={25}
                                     height={25}
+                                    className="object-contain"
+                                />
+                            </div> */}
+                            <div className="big-star flex items-center justify-center rounded-[.3em] p-2">
+                                <Image
+                                    aria-hidden
+                                    src="/assets/images/big-star.png"
+                                    alt="Colearn Logo"
+                                    width={28}
+                                    height={28}
                                     className="object-contain"
                                 />
                             </div>

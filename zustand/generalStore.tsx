@@ -132,6 +132,8 @@ type GeneralState = {
   setBlog: (blog: Blog) => void
   setBlogs: (blogs: Blog[]) => void
 
+  getBlogById: (id: number) => Blog | undefined;
+
   setCategory: (category: Category) => void
   setCategorys: (categorys: Category[]) => void
 
@@ -247,6 +249,8 @@ export const genralStore = create<GeneralState>() (
       getCourseById: (id) => get().web?.courses?.find((c) => Number(c.id) === Number(id)),
 
       getTutorById: (id) => get().web?.instructors?.find((c) => Number(c.id) === Number(id)),
+
+      getBlogById: (id) => get().web?.blogs?.find((c) => Number(c.id) === Number(id)),
 
       setData: (data) => set({data}),
 

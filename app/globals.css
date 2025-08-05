@@ -1843,6 +1843,10 @@ ol li {
   font-size: .8rem;
 }
 
+.verified.ins {
+  background-color: var(--color-primary-fill);
+}
+
 .view-tutor-body .right {
   width: 80%;
 }

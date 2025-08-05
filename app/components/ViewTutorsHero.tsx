@@ -2,6 +2,9 @@
 import React from "react";
 import Image from "next/image";
 import { useParams } from "next/navigation";
+import { useRouter } from "next/navigation";
+import { authStore } from "@/zustand/authStore";
+import { showErrorToast } from "@/utils/toastTypes";
 import { genralStore } from "@/zustand/generalStore";
 
 type ViewTutorsHeroProps = {
@@ -11,6 +14,21 @@ type ViewTutorsHeroProps = {
 const ViewTutorsHero = ({marginTop}: ViewTutorsHeroProps) => {
 
     const instructor = genralStore((state) => state.data?.instructor)
+    const router = useRouter();
+
+    const user = authStore((state) => state.user);
+    const loggedIn = authStore((state) => state.isInitialized);
+
+    const bookSessionTrigger = (id: number | undefined) => {
+        if(loggedIn && user?.type == 'student' ) {
+            router.push(`/students/bookings/session/${id}`)
+        }
+
+        else {
+            showErrorToast('Please login as Student to Book Session')
+            router.push('/authentication/login')
+        }
+    }
 
     return (
         <div className={`${marginTop ? 'view-tutor-banner' : ''}`}>
@@ -40,7 +58,7 @@ const ViewTutorsHero = ({marginTop}: ViewTutorsHeroProps) => {
                         <div>
                             <div className="flex items-center gap-2">
                                 <h3 className="font-bold">{instructor?.user?.first_name} {instructor?.user?.last_name}</h3>
-                                <div className="verified">
+                                {/* <div className="verified">
                                     <p>Verified</p>
                                     <Image
                                         aria-hidden
@@ -50,7 +68,35 @@ const ViewTutorsHero = ({marginTop}: ViewTutorsHeroProps) => {
                                         height={12}
                                         className="object-cover rounded-[50%]"
                                     />
-                                </div>
+                                </div> */}
+                                {
+                                    instructor?.consultant_active ? (
+                                        <div className="verified">
+                                            <p>Consultant</p>
+                                            <Image
+                                                aria-hidden
+                                                src="/assets/images/tick-circle-2.png"
+                                                alt="Colearn Logo"
+                                                width={12}
+                                                height={12}
+                                                className="object-cover rounded-[50%]"
+                                            />
+                                        </div>
+                                    ) : (
+                                        <div className="verified ins">
+                                            <p>Instructor</p>
+                                            <Image
+                                                aria-hidden
+                                                src="/assets/images/tick-circle-2.png"
+                                                alt="Colearn Logo"
+                                                width={12}
+                                                height={12}
+                                                className="object-cover rounded-[50%]"
+                                            />
+                                        </div>
+                                    )
+                                }
+                                
                                 <div className="flex desktop-flex">
                                     <Image
                                         aria-hidden
@@ -126,6 +172,13 @@ const ViewTutorsHero = ({marginTop}: ViewTutorsHeroProps) => {
                                     </span>
                                 </p>
                             </div>   
+                            
+                            {
+                                instructor?.consultant_active ? (
+                                    <button className="btn btn-primary-fill mt-2" onClick={() => bookSessionTrigger(instructor.consultant.id)}>Book Session</button>
+                                ) : ""
+                            }
+
                         </div>
 
                         <div className="copy-cont desktop">

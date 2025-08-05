@@ -32,7 +32,7 @@ const HomeBookings = ({page}: Props) => {
                             <div className="bookings-container">
                                 {
                                     randomSixConsultants?.map((item, index) => (
-                                        <div className="booking" key={index}>
+                                        <Link href={`view-tutors/${item?.instructor?.user?.id}`} className="booking" key={index}>
                                             <div>
                                                 <Image
                                                     aria-hidden
@@ -86,9 +86,9 @@ const HomeBookings = ({page}: Props) => {
                                                         <p className="font-bold" >${item.hourly_rate} / hr </p>
                                                     )
                                                 }
-                                                <Link href={`/students/bookings/session/${item.id}`} className="btn normal btn-small">Book Now</Link>
+                                                {/* <Link href={`/students/bookings/session/${item.id}`} className="btn normal btn-small">Book Now</Link> */}
                                             </div>
-                                        </div>
+                                        </Link>
                                     ))
                                 }
                             </div>
