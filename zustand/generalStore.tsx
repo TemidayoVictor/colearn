@@ -87,7 +87,7 @@ type GeneralState = {
   setBookings: (bookings: Booking[]) => void
 
   setCourse: (course: Course) => void
-  setCourses: (courses: Course[]) => void
+  setCourses: (courses: Course[] | []) => void
 
   setCartId: (cartId: string | undefined) => void
   setCart: (cart: Cart[]) => void

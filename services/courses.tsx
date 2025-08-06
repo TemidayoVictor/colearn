@@ -725,3 +725,18 @@ export const add_review = async (formData: Review) => {
     }
 }
 
+export const course_search = async (keyword: string) => {
+    try {
+        const data = new FormData();
+
+        data.append('keyword', keyword);
+
+        const response = await axiosInstance.post("/course-search", data);
+        return handleApiResponse(response);
+    }
+
+    catch(error: any) {
+        return handleApiError(error)
+    }
+}
+

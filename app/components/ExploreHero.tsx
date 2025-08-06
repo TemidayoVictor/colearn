@@ -1,6 +1,7 @@
-import React from "react";
+import React, { use } from "react";
 import Image from "next/image";
-import Link from "next/link";
+import { UseCourses } from "@/hooks/useCourses";
+import ButtonLoader from "./buttonLoader";
 
 type ExploreHeroProps = {
     loggedIn?: boolean
@@ -8,6 +9,12 @@ type ExploreHeroProps = {
 
 
 const ExploreHero = ({loggedIn}:ExploreHeroProps) => {
+    const {
+        buttonLoader,
+        search,
+        keyword,
+        setKeyword,
+    } = UseCourses();
     return (
         <div className={`${loggedIn ? 'bod-dark' : 'bg-dark'}`}>
             <div className={`${loggedIn ? '' : 'cover container'}`}>
@@ -38,20 +45,34 @@ const ExploreHero = ({loggedIn}:ExploreHeroProps) => {
                                     height={20}
                                     className="object-contain"
                                 />
-                                <input type="text" placeholder="Search" className="search-input w-[100%] placeholder-gray-400" />
+                                <input 
+                                    type="text" 
+                                    placeholder="Search" 
+                                    className="search-input w-[100%] placeholder-gray-400" 
+                                    value={keyword}
+                                    onChange={(e) => setKeyword(e.target.value)}
+                                />
                             </div>
                             <div>
-                                <Link href='/' className="flex gap-2 btn btn-primary-fill">
-                                    <Image
+                                <button className="flex gap-2 btn btn-primary-fill" onClick={search}>
+                                    {/* <Image
                                         aria-hidden
                                         src="/assets/images/search-light.png"
                                         alt="Colearn Logo"
                                         width={20}
                                         height={20}
                                         className="object-contain desktop"
-                                    />
-                                    <p>Search</p>
-                                </Link>
+                                    /> */}
+                                    {
+                                        buttonLoader ? (
+                                            <ButtonLoader content="" />
+                                        ) : 
+                                        
+                                        (
+                                            <p>Search</p>                                    
+                                        )
+                                    }
+                                </button>
                             </div>
                         </div>
                     </div>

@@ -13,7 +13,7 @@ import {
             upload_resource, edit_resource, delete_resource,
             publish_course, add_to_cart, remove_from_cart,
             create_coupon,delete_coupon, add_coupon, checkout_calcuate,
-            enroll, mark_video_as_complete, add_review,
+            enroll, mark_video_as_complete, add_review, course_search,
         } from "@/services/courses";
 import { Module, Video, Resource, Cart, Review } from "@/app/Types/types";
 
@@ -45,6 +45,8 @@ export const UseCourses = () => {
 
     const [checkoutVerified, setCheckoutVerified] = useState<boolean>(false);
     const [checkoutTotal, setCheckoutTotal] = useState<string>('');
+
+    const [keyword, setKeyword] = useState<string>('');
 
     const [formData, setFormData] = useState<{
         title: string;
@@ -1115,6 +1117,46 @@ export const UseCourses = () => {
         }
     }
 
+    const search = async () => {
+
+        if(!keyword) {
+            showErrorToast('Please add a keyword')
+            return
+        }
+
+        try {
+            setButtonLoader(true)
+            const response = await course_search(keyword);
+            if (response.success) {
+                // showSuccessToast(response.message)
+                if(response.data.courses.length > 0) {
+                    genralStore.getState().setCourses(response.data.courses);
+                }
+
+                else {
+                    showErrorToast("No course found. Please try another Keyword")
+                }
+                // courseStore.getState().setNewUpdate('set');
+                console.log(response.data);
+                setButtonLoader(false)
+            } 
+
+            else {
+                setButtonLoader(false)
+                showErrorToast(response.message)
+                console.log(response)
+                courseStore.getState().setNewUpdate('set');
+            }
+        }
+
+        catch (err: any) {
+            console.log(err)
+            setButtonLoader(false)
+            showErrorToast('Unexpected error occurred');
+            courseStore.getState().setNewUpdate('set');
+        }
+    }
+
     return {
         formData,
         errors,
@@ -1196,5 +1238,8 @@ export const UseCourses = () => {
         setReviewData,
         reviewError,
         handleReviewChange,
+        search,
+        keyword,
+        setKeyword,
     }
 }

@@ -22,7 +22,7 @@ const ExplorePopular = ({title, type, tabs, addContainerClass, nav, loggedIn, we
 
     const courses = web ? webCourses : generalCourses;
 
-    console.log(courses)
+    console.log((courses ?? []).length);
     
     const {addToCart} = UseCourses();
 
