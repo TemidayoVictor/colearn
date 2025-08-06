@@ -2,6 +2,7 @@
 import React, {useState}  from "react";
 import Image from "next/image";
 import Notification from "./Instructors/Notification";
+import { authStore } from "@/zustand/authStore";
 
 type UserHeaderProps = {
     onMenuClick: () => void;
@@ -10,12 +11,14 @@ type UserHeaderProps = {
 
 const UserHeader = ({onMenuClick}:UserHeaderProps) => {
     const [openNotification, setOpenNotification] = useState<boolean | null>(false);
+    const user = authStore((state) => state.user) 
+
     return (
         <div>
             <div className="container-3 two user-header desktop">
                 <div>
-                    <h2 className="text-[1.2rem]">Hello, Favi Ayomide ⛅</h2>
-                    <p className="color-grey-text text-[.8rem]">Welcome to your dashboard</p>
+                    <h2 className="text-[1.2rem]">Hello, {user?.first_name} {user?.last_name} ⛅</h2>
+                    <p className="color-grey-text text-[.8rem]">Welcome to your Colearn</p>
                 </div>
 
                 <div className="flex gap-2">   
