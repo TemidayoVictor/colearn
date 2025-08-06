@@ -7,7 +7,11 @@ import { web_data } from "@/services/user";
 import HomeTutors from "./HomeTutors";
 import Loader from "./Loader";
 
-const ConsultantBody = () => {
+type Props = {
+    loggedIn?: boolean
+}
+
+const ConsultantBody = ({loggedIn}: Props) => {
     const [loading, setLoading] = useState<Boolean>(true);
     
     useEffect(() => {
@@ -40,8 +44,8 @@ const ConsultantBody = () => {
     if(loading) return <Loader />
 
     return (
-        <div className="mt-[5em]">
-            <HomeBookings page={true}/>
+        <div className={`${!loggedIn ? 'mt-[5em]' : ''}`}>
+            <HomeBookings page={true} loggedIn={loggedIn}/>
         </div>
     )
 }

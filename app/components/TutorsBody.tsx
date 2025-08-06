@@ -6,7 +6,11 @@ import { web_data } from "@/services/user";
 import HomeTutors from "./HomeTutors";
 import Loader from "./Loader";
 
-const TutorsBody = () => {
+type Props = {
+    loggedIn?: boolean;
+}
+
+const TutorsBody = ({loggedIn}: Props) => {
 
     const [loading, setLoading] = useState<Boolean>(true);
     
@@ -40,8 +44,8 @@ const TutorsBody = () => {
     if(loading) return <Loader />
 
     return (
-        <div className="mt-[5em]">
-            <HomeTutors page={true}/>
+        <div className={`${!loggedIn ? 'mt-[5em]' : ''}`}>
+            <HomeTutors page={true} loggedIn={loggedIn}/>
         </div>
     )
 }

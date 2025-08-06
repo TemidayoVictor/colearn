@@ -11,7 +11,7 @@ const StudentPopularConsultant = () => {
         <div className="mt-[2em]">
             <div className="flex items-center justify-between mb-4">
                 <h2 className="title-3">Most Popular Consultants</h2>
-                <Link href="/" className="text-[.9rem] underline color-normal">All Consultants</Link>
+                <Link href="/students/consultants" className="text-[.9rem] underline color-normal">All Consultants</Link>
             </div>
 
             <div>

@@ -6,9 +6,10 @@ import EmptyPage from "./EmptyPage";
 
 type Props = {
     page?: boolean
+    loggedIn?: boolean
 }
 
-const HomeTutors = ({page}: Props) => {
+const HomeTutors = ({page, loggedIn}: Props) => {
     const instructors = genralStore((state) => state.web?.instructors) 
     const randomSixInstructors = instructors?.length
     ? [...instructors]
@@ -19,20 +20,26 @@ const HomeTutors = ({page}: Props) => {
     const dataUse = page == true ? instructors : randomSixInstructors;
 
     return (
-        <div className="section">
+        <div className={`${!loggedIn ? 'section' : ''}`}>
             <div className="container">
-                <div className="text-center">
-                    <h2 className="title">Discover The World’s Top Best Tutor and <br /> Instructor</h2>
-                    <p className="mt-[1em]">Engage with expert led courses curated by industry leaders to elevate your learning <br /> experiences.</p>
-                </div>
+                {
+                    !loggedIn ? (
+                        <div className="text-center">
+                            <h2 className="title">Discover The World’s Top Best Tutor and <br /> Instructor</h2>
+                            <p className="my-3">Engage with expert led courses curated by industry leaders to elevate your learning <br /> experiences.</p>
+                        </div>
+                    ) : (
+                        <h2 className="title-2 mb-3">Explore Top Instructors</h2>
+                    )
+                }
 
                 {
                     (instructors ?? []).length > 0 ? (
                         <div>
-                            <div className="tutors-container">
+                            <div className="tutors-container two">
                                 {
                                     dataUse?.map((item, index) => (
-                                        <Link href={`view-tutors/${item?.user?.id}`} className="booking" key={index}>
+                                        <Link href={ loggedIn ? `view-instructor/${item?.user?.id}` : `view-tutors/${item?.user?.id}`} className="booking" key={index}>
                                             <div>
                                                 <Image
                                                     aria-hidden

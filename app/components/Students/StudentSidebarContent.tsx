@@ -44,9 +44,9 @@ const StudentSidebarContent = () => {
                         <p className="text-[.9rem]">Dashboard</p>
                     </Link>
 
-                    <Link href='/students/explore' className={`sidebar-link ${pathname.startsWith('/students/explore') || pathname.startsWith('/students/course-detail') || pathname.startsWith('/students/view-instructor') ? 'active' : ''}`} >
+                    <Link href='/students/explore' className={`sidebar-link ${pathname.startsWith('/students/explore') || pathname.startsWith('/students/course-detail') || pathname.startsWith('/students/view-instructor') || pathname.startsWith('/students/instructor') || pathname.startsWith('/students/consultant') ? 'active' : ''}`} >
                         {
-                            pathname.startsWith('/students/explore') || pathname.startsWith('/students/course-detail') || pathname.startsWith('/students/view-instructor') ? (
+                            pathname.startsWith('/students/explore') || pathname.startsWith('/students/course-detail') || pathname.startsWith('/students/view-instructor') || pathname.startsWith('/students/instructor') || pathname.startsWith('/students/consultant') ? (
                                 <Image
                                     aria-hidden
                                     src="/assets/images/global--active.png"

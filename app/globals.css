@@ -979,9 +979,13 @@ ol li {
   gap: 1em;
 }
 
-.bookings-container.two {
+.bookings-container.two, .tutors-container.two {
   margin-top: 1em;
   grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr));
+}
+
+.tutors-container.two {
+  margin-top: 0;
 }
 
 .tutor, .booking {

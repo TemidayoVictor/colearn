@@ -10,7 +10,7 @@ const StudentBestInstructor = () => {
         <div className="mt-[2em]">
             <div className="flex items-center justify-between mb-4">
                 <h2 className="title-3">Best Instructors</h2>
-                <Link href="/" className="text-[.9rem] underline color-normal">See More</Link>
+                <Link href="/students/instructors" className="text-[.9rem] underline color-normal">See More</Link>
             </div>
             {
                 instructors.length > 0 ? (
