@@ -141,6 +141,8 @@ type GeneralState = {
   setFAQs: (faqs: FAQ[]) => void
 
   clearAll: () => void,
+
+  getReview: (id: string | undefined) => Review | undefined | null;
   
 }
 
@@ -251,6 +253,8 @@ export const genralStore = create<GeneralState>() (
       getTutorById: (id) => get().web?.instructors?.find((c) => Number(c.id) === Number(id)),
 
       getBlogById: (id) => get().web?.blogs?.find((c) => Number(c.id) === Number(id)),
+
+      getReview: (id) => get().reviews?.find((c) => Number(c.instructor_id) === Number(id)),
 
       setData: (data) => set({data}),
 

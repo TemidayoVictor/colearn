@@ -15,8 +15,8 @@ const AddInstructorReview = () => {
         handleReviewChange,
     } = useConsultant();
     
-    const review = genralStore((state) => state.review)
-    const course = genralStore((state) => state.course)
+    const instructor = genralStore((state) => state.instructor)
+    const review = genralStore.getState().getReview(instructor?.id)
 
     const userId = authStore((state) => (state.user?.id))
 
@@ -25,7 +25,8 @@ const AddInstructorReview = () => {
             setReviewData({
                 id: review?.id || "",
                 user_id: userId  || "",
-                course_id: course?.id || "",
+                course_id: "",
+                instructor_id: instructor?.id || "",
                 title: review?.title || "",
                 review: review?.review || "",
                 rating: review?.rating || 0
@@ -41,7 +42,7 @@ const AddInstructorReview = () => {
             <div>
                 <div>
                     <h2 className="title-3">Leave Review</h2>
-                    <p className="color-grey-text text-[.8rem]">Share your thoughts and rate your learning experience for this course.</p>
+                    <p className="color-grey-text text-[.8rem]">Share your thoughts and rate your learning experience for this instructor.</p>
                 </div>
 
                 <div className="mt-[1rem]">
@@ -52,7 +53,7 @@ const AddInstructorReview = () => {
                             <input 
                                 type="text" 
                                 className="input-field" 
-                                placeholder="Title e.g Very Good Course" 
+                                placeholder="Title e.g Very Educative" 
                                 name="title"
                                 onChange={handleReviewChange}
                                 value={reviewData.title}

@@ -128,12 +128,12 @@ const InstructorsBookingBody = ({userType}: StudentBookingBodyProps) => {
                 <p className="color-grey-text text-[.8rem]">The session timings are following your local timezone {userTimezone} </p>
             </div>
 
-            <div className="mt-[1.5em]">
+            {/* <div className="mt-[1.5em]">
                 <div className="in-nav scrollable">
                     <span className={`in-nav-link three flex gap-2 items-center two color-grey-text ${selectedTab == 'upcoming' ? 'active' : ''}`} onClick={() => setSelectedTab('upcoming')}>Upcoming Sessions</span>
                     <span className={`in-nav-link three flex gap-2 items-center two color-grey-text ${selectedTab == 'past' ? 'active' : ''}`} onClick={() => setSelectedTab('past')}> <span>Past & Completed Sessions</span></span>
                 </div>
-            </div>
+            </div> */}
 
             <div className="spacing-inter">
                 {
