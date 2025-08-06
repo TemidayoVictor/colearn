@@ -445,3 +445,33 @@ export const delete_faq = async (id: number | undefined) => {
     }
 }
 
+export const users_search = async (keyword: string) => {
+    try {
+        const data = new FormData();
+
+        data.append('keyword', keyword);
+
+        const response = await axiosInstance.post("/search-user", data);
+        return handleApiResponse(response);
+    }
+
+    catch(error: any) {
+        return handleApiError(error)
+    }
+}
+
+export const course_search_admin = async (keyword: string) => {
+    try {
+        const data = new FormData();
+
+        data.append('keyword', keyword);
+
+        const response = await axiosInstance.post("/search-course-admin", data);
+        return handleApiResponse(response);
+    }
+
+    catch(error: any) {
+        return handleApiError(error)
+    }
+}
+

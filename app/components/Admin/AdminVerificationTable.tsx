@@ -4,6 +4,8 @@ import Image from "next/image";
 import Link from "next/link";
 import AccountModal from "../Instructors/AccountModal";
 import { genralStore } from "@/zustand/generalStore";
+import { useAdmin } from "@/hooks/useAdmin";
+import ButtonLoader from "../buttonLoader";
 
 type AdminVerificationTableProps = {
     type?: string
@@ -23,6 +25,13 @@ const userLink = (type: string | undefined) => {
 }
 
 const AdminVerificationTable = ({type}: AdminVerificationTableProps) => {
+    const {
+        search,
+        keyword,
+        setKeyword,
+        buttonLoader,
+    } = useAdmin();
+
     const [showModal, setShowModal] = useState<string | null>(null);
     const openModal = (key: string) => {
         setShowModal(key);
@@ -46,9 +55,33 @@ const AdminVerificationTable = ({type}: AdminVerificationTableProps) => {
                         className="object-contain"
                     />
                     <div className="w-[100%]">
-                        <input type="text" placeholder="Search" className="w-[100%] color-grey-text text-[.9rem] p-[.3em]" />
+                        <input 
+                            type="text" 
+                            placeholder="Search" 
+                            className="w-[100%] color-grey-text text-[.9rem] p-[.3em]"
+                            value={keyword}
+                            onChange={(e) => setKeyword(e.target.value)} 
+                        />
                     </div>
-                    <button className="btn btn-small btn-primary-fill">Search</button>
+                    <button className="flex gap-2 btn btn-primary-fill" onClick={search}>
+                        {/* <Image
+                            aria-hidden
+                            src="/assets/images/search-light.png"
+                            alt="Colearn Logo"
+                            width={20}
+                            height={20}
+                            className="object-contain desktop"
+                        /> */}
+                        {
+                            buttonLoader ? (
+                                <ButtonLoader content="" />
+                            ) : 
+                            
+                            (
+                                <p>Search</p>                                    
+                            )
+                        }
+                    </button>
                 </div>
                 {
                     type != 'admin-users' &&

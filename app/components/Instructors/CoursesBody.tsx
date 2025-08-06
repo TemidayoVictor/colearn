@@ -79,7 +79,7 @@ const CoursesBody = () => {
             <div className="spacing-inter">
                 <div className="upload-course-top">
                     <div className="flex gap-2 left">
-                        <div className="search-container">
+                        {/* <div className="search-container">
                             <Image
                                 aria-hidden
                                 src="/assets/images/search-normal-2.png"
@@ -93,7 +93,7 @@ const CoursesBody = () => {
                             </div>
                         </div>
 
-                        <button className="btn btn-primary-fill">Search</button>
+                        <button className="btn btn-primary-fill">Search</button> */}
                     </div>
 
                     <div className="right">

@@ -28,6 +28,7 @@ const TableContent = ({type}: TableContentProps) => {
                                     <tr>
                                         <th>S/N</th>
                                         <th>Course Title</th>
+                                        <th>Status</th>
                                         {
                                             type == "admin" &&
                                             <>
@@ -71,6 +72,15 @@ const TableContent = ({type}: TableContentProps) => {
                                                         Data Science and. . .
                                                     </span> */}
                                                     </span>
+                                                </td>
+                                                <td>
+                                                    {
+                                                        item.is_published ? (
+                                                            <span className="success">Published</span>
+                                                        ) : (
+                                                            <span className="color-error">Unpublished</span>
+                                                        )
+                                                    }
                                                 </td>
                                                 {
                                                     type == "admin" &&
