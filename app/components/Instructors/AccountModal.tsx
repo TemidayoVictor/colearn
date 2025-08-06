@@ -27,6 +27,7 @@ import EditDetails from "../EditDetails";
 import AddAdmin from "../Admin/AddAdmin";
 import TransactionUpdate from "../TransactionUpdate";
 import ManageUtilities from "../Admin/ManageUtilities";
+import AddInstructorReview from "../AddInstructorReview";
 
 type AccountModalProps = {
     modalType: string;
@@ -361,6 +362,11 @@ const AccountModal = ({modalType, modalClose, experience, bank, subType}: Accoun
                 {
                     modalType == 'review' &&
                     <AddReview />
+                }
+
+                {
+                    modalType == 'instructor-review' &&
+                    <AddInstructorReview />
                 }
 
                 {

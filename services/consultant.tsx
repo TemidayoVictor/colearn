@@ -1,6 +1,6 @@
 import axiosInstance from "@/utils/api";
 import { handleApiResponse, handleApiError } from '@/utils/handleApiResponse';
-import { School, Certification, Slot } from "@/app/Types/types";
+import { School, Certification, Slot, Review } from "@/app/Types/types";
 import { courseStore } from "@/zustand/courseStore";
 
 export const submit_schools = async (schools: School[], instructorId: string | undefined) => {
@@ -369,6 +369,25 @@ export const update_payment = async (id: string | undefined) => {
 export const update_session_status = async (id: string | undefined, status: string | undefined, note?: string) => {
     try {
         const response = await axiosInstance.post("/update-session-status", {id, status, note});
+        return handleApiResponse(response);
+    }
+
+    catch(error: any) {
+        return handleApiError(error)
+    }
+}
+
+export const add_review = async (formData: Review) => {
+    try {
+        const data = new FormData();
+
+        data.append('user_id', String(formData.user_id));
+        data.append('instructor_id', String(formData.instructor_id));
+        data.append('title', formData.title);
+        data.append('rating', String(formData.rating));
+        data.append('review', formData.review);
+
+        const response = await axiosInstance.post("/instructor-review", data);
         return handleApiResponse(response);
     }
 

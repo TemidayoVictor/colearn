@@ -3,7 +3,7 @@ import React, {useState, useRef} from "react";
 import { showErrorToast, showSuccessToast } from "@/utils/toastTypes";
 import { authStore } from "@/zustand/authStore";
 import { useRouter } from "next/navigation";
-import { School, Certification, Slot } from "@/app/Types/types";
+import { School, Certification, Slot, Review } from "@/app/Types/types";
 import { 
     submit_schools, 
     submit_certs, 
@@ -22,7 +22,8 @@ import {
     reschedule_session_consultant,
     approve_reschedule,
     update_payment,
-    update_session_status
+    update_session_status,
+    add_review
 } from "@/services/consultant";
 import { courseStore } from "@/zustand/courseStore";
 import { consultantStore } from "@/zustand/consultantStore";
@@ -405,6 +406,22 @@ export const useConsultant = () => {
         note: false,
     });
 
+    const [reviewData, setReviewData] = useState<Review>({
+        id: '',
+        user_id: '',
+        course_id: '',
+        title: '',
+        review: '',
+        rating: 0,
+        instructor_id: '',
+    });
+
+    const [reviewError, setReviewError] = useState({
+        title: false,
+        review: false,
+        rating: false,
+    });
+
     const handleUpdateChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
     
@@ -434,6 +451,12 @@ export const useConsultant = () => {
         }));
 
         setRescheduleErrors((prev) => ({ ...prev, [name]: false }));
+    };
+
+    const handleReviewChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+        const { name, value } = e.target;
+        setReviewData((prev) => ({ ...prev, [name]: value }));
+        setReviewError((prev) => ({ ...prev, [name]: false }));
     };
 
 
@@ -997,7 +1020,6 @@ export const useConsultant = () => {
         };
 
         console.log(payload);
-        return
 
         // submit
         setButtonLoader(true);
@@ -1202,6 +1224,48 @@ export const useConsultant = () => {
         }
     }
 
+    const addReview = async () => {
+
+        const newErrors = {
+            title: reviewData.title.trim() === '',
+            rating: reviewData.rating === 0,
+            review: reviewData.review.trim() === '',
+        };
+        
+        setReviewError(newErrors);
+
+        const hasError = Object.values(newErrors).some(Boolean);
+
+        if (hasError) {
+            showErrorToast('Please fill in all required fields');
+            return;
+        }
+
+        try {
+            setButtonLoader(true)
+            const response = await add_review(reviewData);
+            if (response.success) {
+                setButtonLoader(false)
+                showSuccessToast(response.message)
+                courseStore.getState().setNewUpdate('set');
+            } 
+
+            else {
+                setButtonLoader(false)
+                showErrorToast(response.message)
+                console.log(response)
+                courseStore.getState().setNewUpdate('set');
+            }
+        }
+
+        catch (err: any) {
+            console.log(err)
+            setButtonLoader(false)
+            showErrorToast('Unexpected error occurred');
+            courseStore.getState().setNewUpdate('set');
+        }
+    }
+
 
     return {
         buttonLoader,
@@ -1288,5 +1352,10 @@ export const useConsultant = () => {
         feedbackNote, 
         setFeedbackNote,
         cancelSessionAdmin,
+        addReview,
+        reviewData,
+        setReviewData,
+        reviewError,
+        handleReviewChange,
     }
 }

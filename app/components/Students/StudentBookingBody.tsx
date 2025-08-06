@@ -17,7 +17,7 @@ import advancedFormat from "dayjs/plugin/advancedFormat";
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 import Loader from "../Loader";
 import { showErrorToast } from "@/utils/toastTypes";
-import { Booking } from "@/app/Types/types";
+import { Booking, Instructor } from "@/app/Types/types";
 import { useConsultant } from "@/hooks/useConsultant";
 import ButtonLoader from "../buttonLoader";
 
@@ -97,6 +97,12 @@ const StudentBookingBody = ({userType}: StudentBookingBodyProps) => {
         genralStore.getState().setBooking(item);
         // markAsComplete
         openModalTwo("mark-as-missed-user");
+    }
+
+    const reviewTrigger = (item: Instructor | null| undefined): void => {
+        if(!item) return
+        genralStore.getState().setInstructor(item);
+        openModalTwo("instructor-review");
     }
 
     useEffect(() => {
@@ -180,16 +186,21 @@ const StudentBookingBody = ({userType}: StudentBookingBodyProps) => {
                             <div className="booking-cont" key={index}>
                                 <div className="flex items-start justify-between">
                                     <p className="w-[70%]">Mentorship session with <span className="color-darker font-bold">{`${item.consultant?.instructor?.user?.first_name} ${item.consultant?.instructor?.user?.last_name}`}</span></p>
-                                    <div className="flex items-center gap-1 cursor-pointer" onClick={(e) => viewBookingTrigger(item)}>
-                                        <p>Details</p>
-                                        <Image
-                                            aria-hidden
-                                            src="/assets/images/arrow-right-5.png"
-                                            alt="Colearn Image"
-                                            width={16}
-                                            height={16}
-                                            className="object-cover"
-                                        />
+                                    <div className="flex gap-2">
+                                        <div className="flex items-center gap-1 cursor-pointer" onClick={(e) => viewBookingTrigger(item)}>
+                                            <p>Details</p>
+                                            <Image
+                                                aria-hidden
+                                                src="/assets/images/arrow-right-5.png"
+                                                alt="Colearn Image"
+                                                width={16}
+                                                height={16}
+                                                className="object-cover"
+                                            />
+                                        </div>
+                                        <button className="bt-btn btn btn-small normal" onClick={(e) => reviewTrigger(item.consultant?.instructor)}>
+                                            <span>Review</span>
+                                        </button>
                                     </div>
                                 </div>
                                 <div className="flex items-center gap-3">

@@ -324,6 +324,7 @@ export type Review = {
     title: string;
     rating: number;
     review: string;
+    instructor_id?: string;
     user?: User;
     created_at?: string;
 }
