@@ -4,6 +4,8 @@ import Image from "next/image";
 import Notification from "./Instructors/Notification";
 import { authStore } from "@/zustand/authStore";
 import { useAdmin } from "@/hooks/useAdmin";
+import { UseCourses } from "@/hooks/useCourses";
+import Stripe from 'stripe';
 
 type UserHeaderProps = {
     onMenuClick: () => void;
@@ -14,6 +16,7 @@ const UserHeader = ({onMenuClick}:UserHeaderProps) => {
     const [openNotification, setOpenNotification] = useState<boolean | null>(false);
     const user = authStore((state) => state.user) 
     const {sendMail} = useAdmin();
+    const {stripeCheckout} = UseCourses();
 
     return (
         <div>
@@ -23,7 +26,7 @@ const UserHeader = ({onMenuClick}:UserHeaderProps) => {
                     <p className="color-grey-text text-[.8rem]">Welcome to Colearn</p>
                 </div>
 
-                <button className="btn btn-primary-fill" onClick={sendMail}>Send Mail</button>
+                <button className="btn btn-primary-fill" onClick={stripeCheckout}>Stripe Test</button>
 
                 <div className="flex gap-2">   
                     <Image
@@ -63,6 +66,7 @@ const UserHeader = ({onMenuClick}:UserHeaderProps) => {
             </div>
 
             <div className="container-3 mobile user-header-mobile">
+            <button className="btn btn-primary-fill" onClick={stripeCheckout}>Stripe Test</button>
                 <div>
                     <Image
                         aria-hidden

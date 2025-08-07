@@ -17,6 +17,7 @@ const CartList = () => {
         checkoutVerified,
         checkoutTotal,
         enrollStudent,
+        stripeCheckout,
     } = UseCourses();
 
     const user = authStore((state) => state.user);
@@ -276,7 +277,7 @@ const CartList = () => {
 
                     {
                         checkoutVerified == true ? (
-                            <button className="bt-btn two btn btn-primary-fill" onClick={enrollStudent}>
+                            <button className="bt-btn two btn btn-primary-fill" onClick={stripeCheckout}>
                                 {
                                     buttonLoader ? (
                                         <ButtonLoader content="" />

@@ -640,6 +640,22 @@ export const checkout_calcuate = async (id: number | undefined, cart: Cart[]) =>
     }
 }
 
+export const stripe_checkout = async (id: number | undefined, cart: Cart[], total: number) => {
+    try {
+        const response = await axiosInstance.post("/stripe-checkout", {
+            id,
+            cart,
+            total,
+        });
+        return handleApiResponse(response);
+    }
+
+    catch(error: any) {
+        return handleApiError(error)
+    }
+}
+
+
 export const enroll = async (id: number | undefined, cart: Cart[]) => {
     try {
         const response = await axiosInstance.post("/enroll", {

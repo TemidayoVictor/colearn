@@ -13,7 +13,8 @@ import {
             upload_resource, edit_resource, delete_resource,
             publish_course, add_to_cart, remove_from_cart,
             create_coupon,delete_coupon, add_coupon, checkout_calcuate,
-            enroll, mark_video_as_complete, add_review, course_search,
+            enroll, mark_video_as_complete, add_review, course_search, 
+            stripe_checkout,
         } from "@/services/courses";
 import { Module, Video, Resource, Cart, Review } from "@/app/Types/types";
 
@@ -394,6 +395,42 @@ export const UseCourses = () => {
             }));
         }
     };
+
+    function calculateCartTotal(cartItems: Cart[]) {
+        let total = 0;
+        
+        const updatedCart = cartItems.map((item) => {
+            const price = item.course?.price || 0;
+            const coupon = item.coupon;
+        
+            let discountedPrice = price
+            
+            // Check if there's a valid coupon
+            if (coupon && coupon.status === "Valid") {
+                const value = Number(coupon.value || 0);
+
+                if (coupon.type === "percent") {
+                    discountedPrice = price - (price * value) / 100;
+                } else if (coupon.type === "fixed") {
+                    discountedPrice = price - value;
+                }
+        
+                // Avoid negative prices
+                if (discountedPrice < 0) discountedPrice = 0;
+            }
+
+            discountedPrice = Number(discountedPrice);
+            total += discountedPrice;
+        
+            // Optionally, return item with calculated price
+            return {
+            ...item,
+            calculatedPrice: discountedPrice,
+            };
+        });
+        
+        return { total };
+    }
 
     const uploadCourse = async () => {
         const newErrors = {
@@ -1020,6 +1057,35 @@ export const UseCourses = () => {
         }
     }
 
+    const stripeCheckout = async () => {
+
+        const {total} = calculateCartTotal(cart)
+        console.log(cart);
+
+        try {
+            setButtonLoader(true)
+            const response = await stripe_checkout(userId, cart, total);
+            if (response.success) {
+                setButtonLoader(false)
+                window.location.href = response.data.url;
+            } 
+
+            else {
+                setButtonLoader(false)
+                showErrorToast(response.message)
+                console.log(response)
+                courseStore.getState().setNewUpdate('set');
+            }
+        }
+
+        catch (err: any) {
+            console.log(err)
+            setButtonLoader(false)
+            showErrorToast('Unexpected error occurred');
+            courseStore.getState().setNewUpdate('set');
+        }
+    }
+
     const enrollStudent = async () => {
         try {
             setButtonLoader(true)
@@ -1241,5 +1307,6 @@ export const UseCourses = () => {
         search,
         keyword,
         setKeyword,
+        stripeCheckout,
     }
 }
