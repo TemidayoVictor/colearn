@@ -7,6 +7,8 @@ import { genralStore } from "@/zustand/generalStore";
 import { checkAuth } from "@/hooks/useAuth";
 import { showErrorToast } from "@/utils/toastTypes";
 import { enrolled_courses } from "@/services/courses";
+import { useSearchParams } from "next/navigation";
+import { showSuccessToast } from "@/utils/toastTypes";
 import StudentCoursePageBox from "./StudentCoursePageBox";
 import Loader from "../Loader";
 
@@ -21,6 +23,9 @@ const StudentCoursePageBody = () => {
     const [selectedTab, setSelectedTab] = useState<string>('inprogress');
 
     const newUpdate = courseStore((state) => state.newUpdate);
+
+    const searchParams = useSearchParams();
+    const message = searchParams.get('message');
 
     useEffect(() => {
         setLoading(true);
@@ -51,6 +56,12 @@ const StudentCoursePageBody = () => {
         init();
 
     }, [newUpdate, userId]);
+
+    useEffect(() => {
+        if (message) {
+            showSuccessToast(message);
+        }
+    }, [message]);
 
     if(loading) return <Loader />
 

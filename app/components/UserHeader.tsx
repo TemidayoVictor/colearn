@@ -26,8 +26,6 @@ const UserHeader = ({onMenuClick}:UserHeaderProps) => {
                     <p className="color-grey-text text-[.8rem]">Welcome to Colearn</p>
                 </div>
 
-                <button className="btn btn-primary-fill" onClick={stripeCheckout}>Stripe Test</button>
-
                 <div className="flex gap-2">   
                     <Image
                         aria-hidden
@@ -66,7 +64,6 @@ const UserHeader = ({onMenuClick}:UserHeaderProps) => {
             </div>
 
             <div className="container-3 mobile user-header-mobile">
-            <button className="btn btn-primary-fill" onClick={stripeCheckout}>Stripe Test</button>
                 <div>
                     <Image
                         aria-hidden

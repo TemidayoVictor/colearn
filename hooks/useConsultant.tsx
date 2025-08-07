@@ -23,7 +23,8 @@ import {
     approve_reschedule,
     update_payment,
     update_session_status,
-    add_review
+    add_review,
+    stripe_checkout,
 } from "@/services/consultant";
 import { courseStore } from "@/zustand/courseStore";
 import { consultantStore } from "@/zustand/consultantStore";
@@ -1077,11 +1078,11 @@ export const useConsultant = () => {
         setButtonLoader(true);
         
         try {
-            const response = await update_payment(bookingId);
+            const response = await stripe_checkout(bookingId);
             if (response.success) {
-                setButtonLoader(false)
-                showSuccessToast(response.message)
-                courseStore.getState().setNewUpdate('set');
+                // showSuccessToast(response.message)
+                // courseStore.getState().setNewUpdate('set');
+                window.location.href = response.data.url;
             } 
 
             else {

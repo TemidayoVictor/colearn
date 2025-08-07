@@ -19,6 +19,8 @@ import Loader from "../Loader";
 import { showErrorToast } from "@/utils/toastTypes";
 import { Booking, Instructor } from "@/app/Types/types";
 import { useConsultant } from "@/hooks/useConsultant";
+import { useSearchParams } from "next/navigation";
+import { showSuccessToast } from "@/utils/toastTypes";
 import ButtonLoader from "../buttonLoader";
 
 dayjs.extend(utc);
@@ -105,6 +107,9 @@ const StudentBookingBody = ({userType}: StudentBookingBodyProps) => {
         openModalTwo("instructor-review");
     }
 
+    const searchParams = useSearchParams();
+    const message = searchParams.get('message');
+
     useEffect(() => {
         setLoading(true);
         if (!userId) return;
@@ -143,6 +148,12 @@ const StudentBookingBody = ({userType}: StudentBookingBodyProps) => {
         init();
 
     }, [userId, newUpdate]);
+
+    useEffect(() => {
+        if (message) {
+            showSuccessToast(message);
+        }
+    }, [message]);
 
     if(loading) return <Loader />
     
@@ -187,7 +198,7 @@ const StudentBookingBody = ({userType}: StudentBookingBodyProps) => {
                             <div className="booking-cont" key={index}>
                                 <div className="flex items-start justify-between">
                                     <p className="w-[70%]">Mentorship session with <span className="color-darker font-bold">{`${item.consultant?.instructor?.user?.first_name} ${item.consultant?.instructor?.user?.last_name}`}</span></p>
-                                    <div className="flex gap-2">
+                                    <div className="res-flex gap-2">
                                         <div className="flex items-center gap-1 cursor-pointer" onClick={(e) => viewBookingTrigger(item)}>
                                             <p>Details</p>
                                             <Image
@@ -199,9 +210,12 @@ const StudentBookingBody = ({userType}: StudentBookingBodyProps) => {
                                                 className="object-cover"
                                             />
                                         </div>
-                                        <button className="bt-btn btn btn-small normal" onClick={(e) => reviewTrigger(item.consultant?.instructor)}>
-                                            <span>Review</span>
-                                        </button>
+                                        {
+                                            item.payment_status == 'paid' &&
+                                            <button className="bt-btn btn btn-small normal" onClick={(e) => reviewTrigger(item.consultant?.instructor)}>
+                                                <span>Review</span>
+                                            </button>
+                                        }
                                     </div>
                                 </div>
                                 <div className="flex items-center gap-3">
@@ -326,7 +340,17 @@ const StudentBookingBody = ({userType}: StudentBookingBodyProps) => {
                                                             <div className="res-flex items-center gap-2 ">
                                                                 {
                                                                     !isPaid ? (
-                                                                        <button className="bt-btn btn btn-success tw" onClick={(e) => makePaymentTrigger(item)}>Make Payment (${item.amount})</button>
+                                                                        <button className="bt-btn btn btn-success tw" onClick={(e) => makePaymentTrigger(item)}>
+                                                                            {
+                                                                                buttonLoader ? (
+                                                                                    <ButtonLoader content="Please wait . . . "/>
+                                                                                ) :
+
+                                                                                (
+                                                                                    <p> Make Payment (${item.amount})</p>
+                                                                                )
+                                                                            }
+                                                                        </button>
                                                                     ) : (
                                                                         <a 
                                                                             href={

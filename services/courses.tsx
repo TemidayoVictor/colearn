@@ -655,7 +655,6 @@ export const stripe_checkout = async (id: number | undefined, cart: Cart[], tota
     }
 }
 
-
 export const enroll = async (id: number | undefined, cart: Cart[]) => {
     try {
         const response = await axiosInstance.post("/enroll", {

@@ -355,6 +355,19 @@ export const approve_reschedule = async (id: string | undefined) => {
     }
 }
 
+export const stripe_checkout = async (id: string | undefined) => {
+    try {
+        const response = await axiosInstance.post("/stripe-checkout-booking", {
+            id,
+        });
+        return handleApiResponse(response);
+    }
+
+    catch(error: any) {
+        return handleApiError(error)
+    }
+}
+
 export const update_payment = async (id: string | undefined) => {
     try {
         const response = await axiosInstance.post("/update-payment", {id});
