@@ -3,6 +3,7 @@ import React, {useState}  from "react";
 import Image from "next/image";
 import Notification from "./Instructors/Notification";
 import { authStore } from "@/zustand/authStore";
+import { useAdmin } from "@/hooks/useAdmin";
 
 type UserHeaderProps = {
     onMenuClick: () => void;
@@ -12,14 +13,17 @@ type UserHeaderProps = {
 const UserHeader = ({onMenuClick}:UserHeaderProps) => {
     const [openNotification, setOpenNotification] = useState<boolean | null>(false);
     const user = authStore((state) => state.user) 
+    const {sendMail} = useAdmin();
 
     return (
         <div>
             <div className="container-3 two user-header desktop">
                 <div>
                     <h2 className="text-[1.2rem]">Hello, {user?.first_name} {user?.last_name} ⛅</h2>
-                    <p className="color-grey-text text-[.8rem]">Welcome to your Colearn</p>
+                    <p className="color-grey-text text-[.8rem]">Welcome to Colearn</p>
                 </div>
+
+                <button className="btn btn-primary-fill" onClick={sendMail}>Send Mail</button>
 
                 <div className="flex gap-2">   
                     <Image

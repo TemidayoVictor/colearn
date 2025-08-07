@@ -31,6 +31,7 @@ import {
     delete_faq,
     users_search,
     course_search_admin,
+    send_mail,
 } from "@/services/admin";
 import { genralStore } from "@/zustand/generalStore";
 import { GeneralSettings, Blog, Category, FAQ } from "@/app/Types/types";
@@ -921,45 +922,71 @@ export const useAdmin = () => {
         }
     }
 
-        const search_course = async () => {
-    
-            if(!keyword) {
-                showErrorToast('Please add a keyword')
-                return
-            }
-    
-            try {
-                setButtonLoader(true)
-                const response = await course_search_admin(keyword);
-                if (response.success) {
-                    // showSuccessToast(response.message)
-                    if(response.data.courses.length > 0) {
-                        genralStore.getState().setData(response.data);
-                    }
-    
-                    else {
-                        showErrorToast("No course found. Please try another Keyword")
-                    }
-                    // courseStore.getState().setNewUpdate('set');
-                    console.log(response.data);
-                    setButtonLoader(false)
-                } 
-    
-                else {
-                    setButtonLoader(false)
-                    showErrorToast(response.message)
-                    console.log(response)
-                    courseStore.getState().setNewUpdate('set');
+    const search_course = async () => {
+
+        if(!keyword) {
+            showErrorToast('Please add a keyword')
+            return
+        }
+
+        try {
+            setButtonLoader(true)
+            const response = await course_search_admin(keyword);
+            if (response.success) {
+                // showSuccessToast(response.message)
+                if(response.data.courses.length > 0) {
+                    genralStore.getState().setData(response.data);
                 }
-            }
-    
-            catch (err: any) {
-                console.log(err)
+
+                else {
+                    showErrorToast("No course found. Please try another Keyword")
+                }
+                // courseStore.getState().setNewUpdate('set');
+                console.log(response.data);
                 setButtonLoader(false)
-                showErrorToast('Unexpected error occurred');
+            } 
+
+            else {
+                setButtonLoader(false)
+                showErrorToast(response.message)
+                console.log(response)
                 courseStore.getState().setNewUpdate('set');
             }
         }
+
+        catch (err: any) {
+            console.log(err)
+            setButtonLoader(false)
+            showErrorToast('Unexpected error occurred');
+            courseStore.getState().setNewUpdate('set');
+        }
+    }
+
+    const sendMail = async () => {
+
+        try {
+            setButtonLoader(true)
+            const response = await send_mail();
+            if (response.success) {
+                setButtonLoader(false)
+                showSuccessToast(response.message)
+            } 
+
+            else {
+                setButtonLoader(false)
+                showErrorToast(response.message)
+                console.log(response)
+                courseStore.getState().setNewUpdate('set');
+            }
+        }
+
+        catch (err: any) {
+            console.log(err)
+            setButtonLoader(false)
+            showErrorToast('Unexpected error occurred');
+            courseStore.getState().setNewUpdate('set');
+        }
+    }
     
     return {
         buttonLoader,
@@ -1012,5 +1039,6 @@ export const useAdmin = () => {
         keyword,
         setKeyword,
         search_course,
+        sendMail,
     }
 }
