@@ -45,7 +45,7 @@ const StudentViewCourseBody = ({type}: Props) => {
         setLoading(true);
         const init = async () => {
             await checkAuth(router); // ✅ valid usage
-            if(!courseId) return
+            if(!courseId || !userId) return
             try {
                 const response = await get_course_details(courseId, userId);
                 if (response.success) {
@@ -72,7 +72,7 @@ const StudentViewCourseBody = ({type}: Props) => {
         };
         init();
 
-    }, [newUpdate, courseId]);
+    }, [newUpdate, courseId, userId]);
 
     if(loading) return <Loader />
 

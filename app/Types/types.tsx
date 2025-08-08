@@ -227,8 +227,8 @@ export type Resource = {
 export type Category = {
     id?: number;
     name: string;
-    image: File | null;
-    thumbnail: string;
+    image?: File | null;
+    thumbnail?: string;
 }
 
 export type School = {
@@ -342,6 +342,8 @@ export type Enrollment = {
 export type Options = {
     id: number;
     name: string;
+    image?: File | null;
+    thumbnail?: string;
 }
 
 export type Transaction = {

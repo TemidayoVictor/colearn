@@ -1,6 +1,6 @@
 import {create} from 'zustand';
 import { persist } from 'zustand/middleware';
-import { Course, Module, Video, Resource, Category } from '@/app/Types/types';
+import { Course, Module, Video, Resource, Category, Options } from '@/app/Types/types';
 
 type courseState = {
     courseId: string | undefined;
@@ -19,7 +19,7 @@ type courseState = {
     resource: Resource | null;
     resources: Resource[];
 
-    categories: Category[];
+    categories: Options[];
 
     uploading: boolean;
     progress: number;
@@ -42,7 +42,7 @@ type courseState = {
     setResource: (resource: Resource) => void;
     setResources: (resources: Resource[]) => void;
 
-    setCategories: (categories: Category[]) => void;
+    setCategories: (categories: Options[]) => void;
 
     setUploading: (uploading: boolean) => void;
     setProgress: (progress: number) => void;

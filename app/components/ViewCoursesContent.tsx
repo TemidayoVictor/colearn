@@ -5,10 +5,10 @@ const ViewCoursesContent = () => {
     const course = courseStore((state) => state.course)
     return (
         <div className="view-course-content">
-            <div className="content-sect">
-                <p>{course?.description}</p>
-            </div>
-            
+            <div
+                className="content-sect"
+                dangerouslySetInnerHTML={{ __html: course?.description || "" }}
+            />
         </div>
     )
 }

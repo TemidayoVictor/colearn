@@ -4,6 +4,10 @@ import MultiDropdownSelector from "../MultiDropdownSelector";
 import Image from "next/image";
 import ButtonLoader from "../buttonLoader";
 import { courseStore } from "@/zustand/courseStore";
+import dynamic from 'next/dynamic';
+const Editor = dynamic(() => import('@tinymce/tinymce-react').then(mod => mod.Editor), {
+  ssr: false,
+});
 
 type UploadCourseProps = {
     type?: string;
@@ -76,22 +80,44 @@ const UploadCourseStep1 = ({type}:UploadCourseProps) => {
 
                     <div className="upload-course-body">
                         <h2 className="title-3">Provide Course Overview</h2>
-                        <p className="text-[.8rem] color-grey-text">Give a clear overview of the course content and outline who can enroll, preferably in bullet points.</p>
+                        <p className="text-[.8rem] color-grey-text">Give a clear overview of the course content and outline who can enroll</p>
 
                         <div className="mt-4">
                             <label htmlFor="" className="text-[.9rem] font-semibold">Detailed Description of Course<span className="text-red-500">*</span> </label>
-                            <textarea
+                            <p className="text-[.8rem] color-grey-text mb-2">For the best results, create and format your content in a Word document first, then copy and paste it here.</p>
+                            {/* <textarea
                                 name="description"
                                 className={`upload-course-textarea ${errors.description ? 'error' : ''}`}
                                 placeholder="E.g  Course Fully Updated: Dive into animated videos, 50 writing assignments and 60 interactive quizzes in our comprehensive, updated copywriting course."
                                 value={formData.description}
                                 onChange={handleInputChange}
+                            /> */}
+                            <Editor
+                                apiKey="t87rwwndacrt9grg1jwlnfaxaabxw3cxj77od5l8m4dhkcox"
+                                value={formData.description}
+                                init={{
+                                    height: 400,
+                                    menubar: false,
+                                    // plugins: [
+                                    // 'advlist autolink lists link image charmap preview anchor',
+                                    // 'searchreplace visualblocks code fullscreen',
+                                    // 'insertdatetime media table code help wordcount',
+                                    // ],
+                                    toolbar:
+                                    'undo redo | formatselect | bold italic | alignleft aligncenter alignright | bullist numlist outdent indent | help',
+                                }}
+                                onEditorChange={(content) =>
+                                    setFormData((prev) => ({
+                                    ...prev,
+                                    description: content,
+                                    }))
+                                }
                             />
-
                         </div>
 
                         <div className="mt-4">
                             <label htmlFor="" className="text-[.9rem] font-semibold">Summary of Course<span className="text-red-500">*</span> </label>
+                            <p className="text-[.8rem] color-grey-text mb-2">For the best results, create and format your content in a Word document first, then copy and paste it here.</p>
                             <textarea
                                 name="summary"
                                 className={`upload-course-textarea ${errors.summary ? 'error' : ''}`}
@@ -99,16 +125,39 @@ const UploadCourseStep1 = ({type}:UploadCourseProps) => {
                                 value={formData.summary}
                                 onChange={handleInputChange}
                             />
+                            
                         </div>
 
                         <div className="mt-4">
                             <label htmlFor="" className="text-[.9rem] font-semibold">Who can enroll<span className="text-red-500">*</span> </label>
-                            <textarea
+                            <p className="text-[.8rem] color-grey-text mb-2">For the best results, create and format your content in a Word document first, then copy and paste it here.</p>
+                            {/* <textarea
                                 name="who_can_enroll"
                                 className={`upload-course-textarea ${errors.who_can_enroll ? 'error' : ''}`}
                                 placeholder="E.g  Course Fully Updated: Dive into animated videos, 50 writing assignments and 60 interactive quizzes in our comprehensive, updated copywriting course."
                                 value={formData.who_can_enroll}
                                 onChange={handleInputChange}
+                            /> */}
+                            <Editor
+                                apiKey="t87rwwndacrt9grg1jwlnfaxaabxw3cxj77od5l8m4dhkcox"
+                                value={formData.who_can_enroll}
+                                init={{
+                                    height: 400,
+                                    menubar: false,
+                                    // plugins: [
+                                    // 'advlist autolink lists link image charmap preview anchor',
+                                    // 'searchreplace visualblocks code fullscreen',
+                                    // 'insertdatetime media table code help wordcount',
+                                    // ],
+                                    toolbar:
+                                    'undo redo | formatselect | bold italic | alignleft aligncenter alignright | bullist numlist outdent indent | help',
+                                }}
+                                onEditorChange={(content) =>
+                                    setFormData((prev) => ({
+                                    ...prev,
+                                    who_can_enroll: content,
+                                    }))
+                                }
                             />
                         </div>
 
@@ -273,22 +322,44 @@ const UploadCourseStep1 = ({type}:UploadCourseProps) => {
 
                     <div className="upload-course-body">
                         <h2 className="title-3">Provide Course Overview</h2>
-                        <p className="text-[.8rem] color-grey-text">Give a clear overview of the course content and outline who can enroll, preferably in bullet points.</p>
+                        <p className="text-[.8rem] color-grey-text">Give a clear overview of the course content and outline who can enroll</p>
 
                         <div className="mt-4">
                             <label htmlFor="" className="text-[.9rem] font-semibold">Detailed Description of Course<span className="text-red-500">*</span> </label>
-                            <textarea
+                            <p className="text-[.8rem] color-grey-text mb-2">For the best results, create and format your content in a Word document first, then copy and paste it here.</p>
+                            {/* <textarea
                                 name="description"
                                 className={`upload-course-textarea ${errors.description ? 'error' : ''}`}
                                 placeholder="E.g  Course Fully Updated: Dive into animated videos, 50 writing assignments and 60 interactive quizzes in our comprehensive, updated copywriting course."
                                 value={formData.description}
                                 onChange={handleInputChange}
+                            /> */}
+                            <Editor
+                                apiKey="t87rwwndacrt9grg1jwlnfaxaabxw3cxj77od5l8m4dhkcox"
+                                value={formData.description}
+                                init={{
+                                    height: 400,
+                                    menubar: false,
+                                    // plugins: [
+                                    // 'advlist autolink lists link image charmap preview anchor',
+                                    // 'searchreplace visualblocks code fullscreen',
+                                    // 'insertdatetime media table code help wordcount',
+                                    // ],
+                                    toolbar:
+                                    'undo redo | formatselect | bold italic | alignleft aligncenter alignright | bullist numlist outdent indent | help',
+                                }}
+                                onEditorChange={(content) =>
+                                    setFormData((prev) => ({
+                                    ...prev,
+                                    description: content,
+                                    }))
+                                }
                             />
-
                         </div>
 
                         <div className="mt-4">
                             <label htmlFor="" className="text-[.9rem] font-semibold">Summary of Course<span className="text-red-500">*</span> </label>
+                            <p className="text-[.8rem] color-grey-text mb-2">For the best results, create and format your content in a Word document first, then copy and paste it here.</p>
                             <textarea
                                 name="summary"
                                 className={`upload-course-textarea ${errors.summary ? 'error' : ''}`}
@@ -296,16 +367,59 @@ const UploadCourseStep1 = ({type}:UploadCourseProps) => {
                                 value={formData.summary}
                                 onChange={handleInputChange}
                             />
+                            {/* <Editor
+                                apiKey="t87rwwndacrt9grg1jwlnfaxaabxw3cxj77od5l8m4dhkcox"
+                                value={formData.summary}
+                                init={{
+                                    height: 400,
+                                    menubar: false,
+                                    // plugins: [
+                                    // 'advlist autolink lists link image charmap preview anchor',
+                                    // 'searchreplace visualblocks code fullscreen',
+                                    // 'insertdatetime media table code help wordcount',
+                                    // ],
+                                    toolbar:
+                                    'undo redo | formatselect | bold italic | alignleft aligncenter alignright | bullist numlist outdent indent | help',
+                                }}
+                                onEditorChange={(content) =>
+                                    setFormData((prev) => ({
+                                    ...prev,
+                                    summary: content,
+                                    }))
+                                }
+                            /> */}
                         </div>
 
                         <div className="mt-4">
                             <label htmlFor="" className="text-[.9rem] font-semibold">Who can enroll<span className="text-red-500">*</span> </label>
-                            <textarea
+                            <p className="text-[.8rem] color-grey-text mb-2">For the best results, create and format your content in a Word document first, then copy and paste it here.</p>
+                            {/* <textarea
                                 name="who_can_enroll"
                                 className={`upload-course-textarea ${errors.who_can_enroll ? 'error' : ''}`}
                                 placeholder="E.g  Course Fully Updated: Dive into animated videos, 50 writing assignments and 60 interactive quizzes in our comprehensive, updated copywriting course."
                                 value={formData.who_can_enroll}
                                 onChange={handleInputChange}
+                            /> */}
+                            <Editor
+                                apiKey="t87rwwndacrt9grg1jwlnfaxaabxw3cxj77od5l8m4dhkcox"
+                                value={formData.who_can_enroll}
+                                init={{
+                                    height: 400,
+                                    menubar: false,
+                                    // plugins: [
+                                    // 'advlist autolink lists link image charmap preview anchor',
+                                    // 'searchreplace visualblocks code fullscreen',
+                                    // 'insertdatetime media table code help wordcount',
+                                    // ],
+                                    toolbar:
+                                    'undo redo | formatselect | bold italic | alignleft aligncenter alignright | bullist numlist outdent indent | help',
+                                }}
+                                onEditorChange={(content) =>
+                                    setFormData((prev) => ({
+                                    ...prev,
+                                    who_can_enroll: content,
+                                    }))
+                                }
                             />
                         </div>
 
