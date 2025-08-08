@@ -17,6 +17,7 @@ import {
     add_experiences,
     edit_experience,
     delete_experience,
+    update_bank,
 } from "@/services/onboarding";
 import { utilitiesStore } from "@/zustand/utilitiesStore";
 import { courseStore } from "@/zustand/courseStore";
@@ -44,6 +45,7 @@ export const useOnboarding = () => {
     const currentExperienceId = currentExperience?.id;
 
     const [selectedItems, setSelectedItems] = useState<string[]>([]);
+    const [bankId, setBankId] = useState<string | undefined>("")
 
     const [formData, setFormData] = useState<{
         profilePhoto: File | null;
@@ -805,6 +807,37 @@ export const useOnboarding = () => {
         }
     }
 
+    const updateBank = async () => {
+
+        if(!bankId) {
+            showErrorToast('Please add your ID')
+            return
+        }
+
+        // submit
+        setButtonLoader(true);
+        try {
+            const response = await update_bank(userId, bankId);
+            if (response.success) {
+                setButtonLoader(false)
+                showSuccessToast(response.message)
+                courseStore.getState().setNewUpdate('set');
+            } 
+
+            else {
+                setButtonLoader(false)
+                showErrorToast(response.message)
+                console.log(response)
+            }
+        }
+
+        catch (err: any) {
+            console.log(err)
+            setButtonLoader(false)
+            showErrorToast('Unexpected error occurred');
+        }
+    }
+
     const {logoutHook} = useLogout();
 
     const handleLogout = () => {
@@ -871,6 +904,9 @@ export const useOnboarding = () => {
         setExperience,
         experience,
         handleExpChange,
-        deleteExperience
+        deleteExperience,
+        bankId, 
+        setBankId,
+        updateBank,
     }
 }

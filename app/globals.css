@@ -3316,6 +3316,28 @@ td {
   background-color: var(--grey-lighter);
 }
 
+.payoneer-id-card {
+  background: var(--color-primary-dark);
+  padding: 1rem;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+  /* display: inline-block; */
+  color: var(--white);
+}
+
+.payoneer-id-card .label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+}
+
+.payoneer-id-card .id-number {
+  font-size: 1.4rem;
+  font-weight: bold;
+  /* color: #222; */
+  letter-spacing: 1px;
+}
+
 /* Footer */
 .footer-2 {
   display: flex;

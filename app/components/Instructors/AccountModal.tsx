@@ -28,6 +28,7 @@ import AddAdmin from "../Admin/AddAdmin";
 import TransactionUpdate from "../TransactionUpdate";
 import ManageUtilities from "../Admin/ManageUtilities";
 import AddInstructorReview from "../AddInstructorReview";
+import UpdateBank from "../UpdateBank";
 
 type AccountModalProps = {
     modalType: string;
@@ -227,45 +228,7 @@ const AccountModal = ({modalType, modalClose, experience, bank, subType}: Accoun
 
                 {
                     modalType == 'addBank' &&
-                    <div>
-                        <div>
-                            <h2 className="title-3">Add Bank Information</h2>
-                            <p className="color-grey-text text-[.8rem]">Select your country before you provide Bank Information</p>
-                        </div>
-
-                        <div className="mt-[1rem]">
-                            <div className="mt-4">
-                                <div className="input-box">
-                                    <label htmlFor="">Select Country <span className="text-red-500">*</span></label>
-                                    <select name="" id="" className="input-field">
-                                        <option value="">Select one</option>
-                                    </select>
-                                </div>
-
-                                <div className="input-box">
-                                    <label htmlFor="">Select Bank<span className="text-red-500">*</span></label>
-                                    <select name="" id="" className="input-field">
-                                        <option value="">Select one</option>
-                                    </select>
-                                </div>
-
-                                <div className="input-box">
-                                    <label htmlFor="">Account Name <span className="text-red-500">*</span></label>
-                                    <input name="" id="" className="input-field" />
-                                </div>
-
-                                <div className="input-box">
-                                    <label htmlFor="">Account Number <span className="text-red-500">*</span></label>
-                                    <input name="" id="" className="input-field" />
-                                </div>
-
-                                <div className="alert notification">
-                                    <p className="head">Note</p>
-                                    <p className="bod">Ensure your name on your CoLearn account is the same as your bank account details.</p>          
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <UpdateBank />
                 }
 
                 {

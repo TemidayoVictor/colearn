@@ -324,3 +324,17 @@ export const instructor_experiences = async (id: string | undefined) => {
         return handleApiError(error)
     }
 }
+
+export const update_bank = async (user_id: number | undefined, bank_id: string | null | undefined) => {
+    try {
+        const response = await axiosInstance.post("/update-bank", {
+            user_id,
+            bank_id,
+        });
+        return handleApiResponse(response);
+    }
+
+    catch(error: any) {
+        return handleApiError(error)
+    }
+}
