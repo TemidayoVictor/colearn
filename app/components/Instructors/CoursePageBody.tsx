@@ -1,7 +1,7 @@
 'use client';
 import React, {useEffect, useState} from "react";
 import { useAuthInstructors } from "@/hooks/useAuth";
-import { get_course_data } from "@/services/courses";
+import { get_course_data, get_course_student } from "@/services/courses";
 import { useParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 import { genralStore } from "@/zustand/generalStore";
@@ -25,16 +25,31 @@ const CoursePageBody = () => {
             await useAuthInstructors(router); // ✅ valid usage
             if(!courseId) return
             try {
-                const response = await get_course_data(courseId);
-                if (response.success) {
+                const [dataRes, courseRes] = await Promise.all([
+                    get_course_data(courseId),
+                    get_course_student(courseId),
+                ]);
+                
+                if (dataRes.success) {
                     // save state globally
-                    console.log(response.data)
-                    genralStore.getState().setData(response.data);
+                    console.log(dataRes.data)
+                    genralStore.getState().setData(dataRes.data);
                 } 
     
                 else {
-                    showErrorToast(response.message)
-                    console.log(response)
+                    showErrorToast(dataRes.message)
+                    console.log(dataRes)
+                }
+
+                if (courseRes.success) {
+                    // save state globally
+                    console.log(courseRes.data)
+                    genralStore.getState().setCourse(courseRes.data.course);
+                } 
+    
+                else {
+                    showErrorToast(courseRes.message)
+                    console.log(courseRes)
                 }
             }
 
@@ -57,7 +72,7 @@ const CoursePageBody = () => {
             </div>
             <div className="course-content container-3b">
                 <div className="left">
-                    <CourseContentBody />
+                    <CourseContentBody type="instructor" />
                 </div>
                 <div className="right">
                     <CourseContentReviews />

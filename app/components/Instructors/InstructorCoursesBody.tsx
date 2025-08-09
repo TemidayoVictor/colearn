@@ -35,7 +35,7 @@ const InstructorsCoursesBody = () => {
             await useAuthInstructors(router);
             const instructorId = authStore.getState().instructor?.id;
             
-            if (instructorId) {
+            if (instructorId && userId) {
                 try {
                     // const response = await 
                     const [courseRes, dataRes] = await Promise.all([
@@ -75,7 +75,7 @@ const InstructorsCoursesBody = () => {
 
         init();
 
-    }, [newUpdate]);
+    }, [newUpdate, userId]);
 
     if(loading) return <Loader />
 

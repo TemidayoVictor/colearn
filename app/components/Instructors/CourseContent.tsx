@@ -4,7 +4,11 @@ import { UseCourses } from "@/hooks/useCourses";
 import Image from "next/image";
 import Link from "next/link";
 
-const CourseContent = () => {
+type Props = {
+    type?: string
+}
+
+const CourseContent = ({type}: Props) => {
     const {addToCart} = UseCourses();
     const course = genralStore((state) => state.course);
 
@@ -101,10 +105,13 @@ const CourseContent = () => {
                             <p>English</p>         
                         </div>
                     </div>
-
-                    <div>
-                        <button className={`btn btn-primary-fill`} onClick={(e) => addToCartTrigger(course?.id)}>Add to cart (${course?.price})</button>
-                    </div>
+                    
+                    {
+                        type != 'instructor' &&
+                        <div>
+                            <button className={`btn btn-primary-fill`} onClick={(e) => addToCartTrigger(course?.id)}>Add to cart (${course?.price})</button>
+                        </div>
+                    }
                 </div>   
 
                 <div className="mt-4">

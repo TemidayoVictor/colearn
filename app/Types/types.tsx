@@ -339,6 +339,7 @@ export type Enrollment = {
     review: Review;
     completed_at: string | null;
     progress?: number | null;
+    user?: User;
 }
 
 export type Options = {
