@@ -9,12 +9,17 @@ import { authStore } from "@/zustand/authStore";
 import { courseStore } from "@/zustand/courseStore";
 import { useAuthInstructors } from "@/hooks/useAuth";
 import { get_all_instructor_courses } from "@/services/courses";
+import { instructor_dashboard } from "@/services/user";
 import { showErrorToast } from "@/utils/toastTypes";
+import { genralStore } from "@/zustand/generalStore";
 
 const InstructorsCoursesBody = () => {
 
     const router = useRouter();
     const newUpdate = courseStore((state) => state.newUpdate);
+
+    const user = authStore((state) => state.user);
+    const userId = user?.id;
 
     const {
         loading,
@@ -32,15 +37,29 @@ const InstructorsCoursesBody = () => {
             
             if (instructorId) {
                 try {
-                    const response = await get_all_instructor_courses(instructorId)
-                    if (response.success) {
+                    // const response = await 
+                    const [courseRes, dataRes] = await Promise.all([
+                        get_all_instructor_courses(instructorId),
+                        instructor_dashboard(userId),
+                    ]);
+                    if (courseRes.success) {
                         // save state globally
-                        courseStore.getState().setCourses(response.data.courses);
+                        courseStore.getState().setCourses(courseRes.data.courses);
                     } 
         
                     else {
-                        showErrorToast(response.message)
-                        console.log(response)
+                        showErrorToast(courseRes.message)
+                        console.log(courseRes)
+                    }
+
+                    if (dataRes.success) {
+                        // save state globally
+                        genralStore.getState().setData(dataRes.data);
+                    } 
+        
+                    else {
+                        showErrorToast(dataRes.message)
+                        console.log(dataRes)
                     }
                 }
 

@@ -53,7 +53,7 @@ const DashboardPerformance = ({type, user, subType}: DashboardPerformanceProps) 
                        type == "Course-2" &&
                         <div className="flex flex-col gap-1 perf-detail none">
                             <p className="color-grey-text text-[.9rem]">Total Course Sales</p>
-                            <h3 className="font-semibold">$3429.45</h3>
+                            <h3 className="font-semibold">${Number(data?.total_sales_amount).toLocaleString()}</h3>
                             <p className="color-grey-text text-[.7rem]">Total Course Sales</p>
                         </div> 
                     }

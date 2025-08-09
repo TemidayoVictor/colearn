@@ -151,6 +151,21 @@ export const get_course_student = async (courseId: string) => {
     }
 }
 
+export const get_course_data = async (courseId: string) => {
+    try {
+        const data = new FormData();
+
+        data.append('courseId', courseId);
+
+        const response = await axiosInstance.post("/get-course-data", data);
+        return handleApiResponse(response);
+    }
+
+    catch(error: any) {
+        return handleApiError(error)
+    }
+}
+
 export const get_course_details_edit = async (courseId: string) => {
     try {
         const data = new FormData();
