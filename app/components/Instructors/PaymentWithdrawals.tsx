@@ -133,6 +133,7 @@ const PaymentWithdrawals = ({type}: PaymentRevenueProps) => {
                                                         )}
                                                     </p>
                                                     <p className="color-grey-text text-[.7rem] my-[.3em] font-semibold"> Current Balance : ${item.wallet?.balance}</p>
+                                                    <p className="color-grey-text text-[.7rem] my-[.3em] font-semibold"> Payoneer ID : {item.user.bank_id}</p>
                                                     <div className="flex gap-2 mt-2">
                                                         <button className="btn btn-success tw btn-small" onClick={(e) => approveTrigger(item) }>Approve</button>
                                                         <button className="btn error two btn-small" onClick={(e) => declineTrigger(item) }>Decline</button>

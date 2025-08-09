@@ -1,26 +1,14 @@
 'use client';
 import React from "react";
 import UserLayout from "@/app/components/UserLayout";
-import CourseContentBody from "@/app/components/Instructors/CourseContentBody";
-import CourseContentReviews from "@/app/components/Instructors/CourseContentReviews";
-import CourseRevenue from "@/app/components/Instructors/CourseRevenue";
+import CoursePageBody from "@/app/components/Instructors/CoursePageBody";
 
 const CoursePage = () => {
     return (
         <div>
             <UserLayout>
                 <div>
-                    <div>
-                        <CourseRevenue link='/instructors/courses'/>
-                    </div>
-                    <div className="course-content container-3b">
-                        <div className="left">
-                            <CourseContentBody />
-                        </div>
-                        <div className="right">
-                            <CourseContentReviews />
-                        </div>
-                    </div>
+                    <CoursePageBody />
                 </div>
             </UserLayout>
         </div>

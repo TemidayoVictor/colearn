@@ -37,10 +37,12 @@ const PaymentInfo = ({type}: PaymentInfoProps) => {
                     />
                     <p className="title-2">Financial Information</p>
                 </div>
-                <p>Wallet Balance</p>
-                <div className="flex items-center justify-between"> 
-                    <h2 className="title-2">{showBalance ? '****' : '$'+formatNumber(wallet?.balance || 0)}</h2> 
-                    {/* <FontAwesomeIcon icon={showBalance ? faEye : faEyeSlash} className="w-5 h-5" onClick={toggleBalance} /> */}
+                <div>
+                    <p>Wallet Balance</p>
+                    <div className="flex items-center justify-between"> 
+                        <h2 className="title-2">{showBalance ? '****' : '$'+formatNumber(wallet?.balance || 0)}</h2> 
+                        {/* <FontAwesomeIcon icon={showBalance ? faEye : faEyeSlash} className="w-5 h-5" onClick={toggleBalance} /> */}
+                    </div>
                 </div>
                 {
                     type == 'admin' &&
