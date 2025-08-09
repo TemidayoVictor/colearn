@@ -9,12 +9,17 @@ import { genralStore } from "@/zustand/generalStore";
 
 type ViewTutorsHeroProps = {
     marginTop?: boolean;
+    type?: string;
 }
 
-const ViewTutorsHero = ({marginTop}: ViewTutorsHeroProps) => {
+const ViewTutorsHero = ({marginTop, type}: ViewTutorsHeroProps) => {
 
-    const instructor = genralStore((state) => state.data?.instructor)
     const router = useRouter();
+
+    const instructorGeneral = genralStore((state) => state.data?.instructor)
+    const instructorAuth = authStore((state) => state.instructor)
+
+    const instructor = type == 'instructor' ? instructorAuth : instructorGeneral;
 
     const user = authStore((state) => state.user);
     const loggedIn = authStore((state) => state.isInitialized);
@@ -174,7 +179,7 @@ const ViewTutorsHero = ({marginTop}: ViewTutorsHeroProps) => {
                             </div>   
                             
                             {
-                                instructor?.consultant_active ? (
+                                instructor?.consultant_active && type != 'instructor' ? (
                                     <button className="btn btn-primary-fill mt-2" onClick={() => bookSessionTrigger(instructor.consultant.id)}>Book Session</button>
                                 ) : ""
                             }

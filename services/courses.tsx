@@ -261,6 +261,7 @@ export const upload_video = async (formData: {
     duration: number;
     body: string,
     type: string,
+    intro_video: boolean,
 }, moduleId: string | undefined) => {
 
     // setUploading(true);
@@ -278,6 +279,7 @@ export const upload_video = async (formData: {
         data.append('type', formData.type);
         data.append('duration', String(formData.duration));
         data.append('moduleId', String(moduleId));
+        data.append('set_intro', String(formData.intro_video));
 
         const response = await axiosInstance.post("/upload-video", data, {
             headers: {
@@ -311,6 +313,7 @@ export const edit_video = async (formData: {
     videoId: string | undefined;
     body: string,
     type: string,
+    intro_video: boolean,
 }, moduleId: string | undefined) => {
 
     // setUploading(true);
@@ -330,6 +333,7 @@ export const edit_video = async (formData: {
         data.append('type', formData.type);
         data.append('videoId', String(formData.videoId));
         data.append('moduleId', String(moduleId));
+        data.append('set_intro', String(formData.intro_video));
 
         const response = await axiosInstance.post("/edit-video", data, {
             headers: {

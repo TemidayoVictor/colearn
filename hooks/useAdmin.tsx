@@ -417,6 +417,12 @@ export const useAdmin = () => {
             return
         }
 
+        if(!user?.bank_id) {
+            showErrorToast('Please add your bank details')
+            router.push('/instructors/settings');
+            return
+        }
+
         // submit
         setButtonLoader(true);
         try {

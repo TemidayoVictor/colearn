@@ -55,7 +55,7 @@ const InstructorAccountBody = () => {
     return (
         <div>
             <div>
-                <ViewTutorsHero />
+                <ViewTutorsHero type='instructor' />
                 <div>
                     <AccountBody />
                 </div>

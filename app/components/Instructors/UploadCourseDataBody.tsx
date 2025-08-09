@@ -9,6 +9,7 @@ import Loader from "../Loader";
 import { showErrorToast } from "@/utils/toastTypes";
 import { useParams } from 'next/navigation';
 import { courseStore } from "@/zustand/courseStore";
+import { authStore } from "@/zustand/authStore";
 import { get_course_details } from "@/services/courses";
 import { Course } from "@/app/Types/types";
 import UploadModuleBody from "./UploadModuleBody";
@@ -20,6 +21,9 @@ const UploadCourseDataBody = () => {
 
     const router = useRouter(); 
     const [course, setCourse] = useState<Course>();
+
+    const user = authStore((state) => state.user);
+    const userId = user?.id
 
     const [selectedTab, setSelectedTab] = useState<string>('Modules');
     const newUpdate = courseStore((state) => state.newUpdate);
@@ -37,9 +41,9 @@ const UploadCourseDataBody = () => {
 
         const init = async () => {
             await useAuthInstructors(router);
-            if (courseId) {
+            if (courseId && userId ) {
                 try {
-                    const response = await get_course_details(courseId)
+                    const response = await get_course_details(courseId, userId)
                     if (response.success) {
                         //  save state in page
                         setCourse(response.data.course);
@@ -75,7 +79,7 @@ const UploadCourseDataBody = () => {
 
         init();
 
-    }, [newUpdate]);
+    }, [newUpdate, courseId, userId]);
 
     if(loading) return <Loader />
     

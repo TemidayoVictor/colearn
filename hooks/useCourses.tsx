@@ -120,12 +120,14 @@ export const UseCourses = () => {
         duration: number;
         body: string,
         type: string,
+        intro_video: boolean
       }>({
         title: '',
         video: null,
         duration: 0,
         body: '',
         type: '',
+        intro_video: false
     });
 
     const [errors3, setErrors3] = useState({
@@ -144,6 +146,7 @@ export const UseCourses = () => {
         videoId: string | undefined;
         body: string,
         type: string,
+        intro_video: boolean
       }>({
         title: '',
         video: null,
@@ -152,6 +155,7 @@ export const UseCourses = () => {
         videoId: '',
         body: '',
         type: '',
+        intro_video: false,
     });
 
     const [errors3b, setErrors3b] = useState({
@@ -287,6 +291,16 @@ export const UseCourses = () => {
         const { name, checked } = e.target;
         setFormData((prev) => ({ ...prev, [name]: checked }));
         setErrors((prev) => ({ ...prev, [name]: false }));
+    };
+
+    const handleCheckChange3 = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, checked } = e.target;
+        setFormData3((prev) => ({ ...prev, [name]: checked }));
+    };
+
+    const handleCheckChange3b = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, checked } = e.target;
+        setFormData3b((prev) => ({ ...prev, [name]: checked }));
     };
 
     const handleInputChange2 = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
@@ -1250,11 +1264,13 @@ export const UseCourses = () => {
         errors3,
         uploadVideo,
         handleInputChange3,
+        handleCheckChange3,
         formData3b,
         errors3b,
         setFormData3b,
         handleInputChange3b,
         handleFileChangeb,
+        handleCheckChange3b,
         fileInputRef,
         handleImageClick,
         handleFileChange,

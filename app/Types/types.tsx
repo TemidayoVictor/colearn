@@ -170,6 +170,7 @@ export type Course = {
     total_revenue?: number;
     review_count?: number;
     enrollments_count?: number;
+    intro_video_url?: string | null;
 }
 
 export type Progress = {

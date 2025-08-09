@@ -25,6 +25,8 @@ const ManageVideo = ({type}: ManageVideoProps) => {
         handleFileChangeb,
         fileName,
         editVideo,
+        handleCheckChange3,
+        handleCheckChange3b,
     } = UseCourses();  
     
     const [contentType, setContentType] = useState<string | null>(null);
@@ -43,7 +45,8 @@ const ManageVideo = ({type}: ManageVideoProps) => {
                 duration: video?.duration || 0,
                 video: null,
                 body: video?.body || "",
-                type: video?.type || "",               
+                type: video?.type || "",
+                intro_video: false               
             });
 
             courseStore.getState().setVideoId(video?.id);
@@ -155,6 +158,26 @@ const ManageVideo = ({type}: ManageVideoProps) => {
                                     <span className="upload-course-input flex-1 font-bold">minutes</span>
                                 </div>
                             </div>
+
+                            {
+                                formData3.type == 'video' &&
+                                <div className="mt-4">
+                                    <label className="flex items-center gap-3 text-sm cursor-pointer">
+                                        <span className="text-[.95rem] font-medium text-gray-700">Set as Introductory Video</span>
+                                        <div className="relative inline-block w-12 h-6">
+                                        <input
+                                            type="checkbox"
+                                            name="intro_video"
+                                            checked={formData3.intro_video}
+                                            onChange={handleCheckChange3}
+                                            className="opacity-0 w-0 h-0 peer"
+                                        />
+                                        <div className="absolute top-0 left-0 w-12 h-6 bg-gray-300 rounded-full peer-checked:bg-green-500 transition-all duration-300"></div>
+                                        <div className="absolute top-[2px] left-[2px] w-5 h-5 bg-white rounded-full shadow-md transform peer-checked:translate-x-6 transition-all duration-300"></div>
+                                        </div>
+                                    </label>
+                                </div>
+                            }
 
                             {
                                 uploading && (
@@ -287,8 +310,28 @@ const ManageVideo = ({type}: ManageVideoProps) => {
                         </div>
                     </div>
 
+                    {
+                        formData3b.type == 'video' &&
+                        <div className="mt-4">
+                            <label className="flex items-center gap-3 text-sm cursor-pointer">
+                                <span className="text-[.95rem] font-medium text-gray-700">Set as Introductory Video</span>
+                                <div className="relative inline-block w-12 h-6">
+                                <input
+                                    type="checkbox"
+                                    name="intro_video"
+                                    checked={formData3b.intro_video}
+                                    onChange={handleCheckChange3b}
+                                    className="opacity-0 w-0 h-0 peer"
+                                />
+                                <div className="absolute top-0 left-0 w-12 h-6 bg-gray-300 rounded-full peer-checked:bg-green-500 transition-all duration-300"></div>
+                                <div className="absolute top-[2px] left-[2px] w-5 h-5 bg-white rounded-full shadow-md transform peer-checked:translate-x-6 transition-all duration-300"></div>
+                                </div>
+                            </label>
+                        </div>
+                    }
+
                     <div className="mt-4">
-                        <label htmlFor="" className="text-[.9rem] font-semibold">Video Position<span className="text-red-500">*</span> </label>
+                        <label htmlFor="" className="text-[.9rem] font-semibold"> {formData3b.type == 'video' ? 'Video' : 'Lecture'}  Position<span className="text-red-500">*</span> </label>
                         <input 
                             type="text" 
                             className={`upload-course-input ${errors3b.order ? 'error' : ''}`} 
