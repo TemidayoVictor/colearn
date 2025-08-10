@@ -3,6 +3,10 @@ import { UseCourses } from "@/hooks/useCourses";
 import Image from "next/image";
 import ButtonLoader from "../buttonLoader";
 import { courseStore } from "@/zustand/courseStore";
+import dynamic from 'next/dynamic';
+const Editor = dynamic(() => import('@tinymce/tinymce-react').then(mod => mod.Editor), {
+  ssr: false,
+});
 
 type ManageVideoProps = {
     type: string;
@@ -139,7 +143,28 @@ const ManageVideo = ({type}: ManageVideoProps) => {
                                 formData3.type == 'text' &&
                                 <div className="mt-4">
                                     <label htmlFor="" className="text-[.9rem] font-semibold"> Add Lecture Content<span className="text-red-500">*</span> </label>
-                                    <textarea name="body" id="" className={`textarea mt-2 ${errors3.body ? 'error' : ''}`} value={formData3.body} onChange={handleInputChange3}></textarea>
+                                    {/* <textarea name="body" id="" className={`textarea mt-2 ${errors3.body ? 'error' : ''}`} value={formData3.body} onChange={handleInputChange3}></textarea> */}
+                                    <Editor
+                                        apiKey="t87rwwndacrt9grg1jwlnfaxaabxw3cxj77od5l8m4dhkcox"
+                                        value={formData3b.body}
+                                        init={{
+                                            height: 400,
+                                            menubar: false,
+                                            // plugins: [
+                                            // 'advlist autolink lists link image charmap preview anchor',
+                                            // 'searchreplace visualblocks code fullscreen',
+                                            // 'insertdatetime media table code help wordcount',
+                                            // ],
+                                            toolbar:
+                                            'undo redo | formatselect | bold italic | alignleft aligncenter alignright | bullist numlist outdent indent | help',
+                                        }}
+                                        onEditorChange={(content) =>
+                                            setFormData3b((prev) => ({
+                                            ...prev,
+                                            body: content,
+                                            }))
+                                        }
+                                    />
                                 </div>
                             }
 
@@ -290,7 +315,28 @@ const ManageVideo = ({type}: ManageVideoProps) => {
                         formData3b.type == 'text' &&
                         <div className="mt-4">
                             <label htmlFor="" className="text-[.9rem] font-semibold">Lecture Content<span className="text-red-500">*</span> </label>
-                            <textarea name="body" id="" className={`textarea mt-2 ${errors3b.body ? 'error' : ''}`} value={formData3b.body} onChange={handleInputChange3b}></textarea>
+                            {/* <textarea name="body" id="" className={`textarea mt-2 ${errors3b.body ? 'error' : ''}`} value={formData3b.body} onChange={handleInputChange3b}></textarea> */}
+                            <Editor
+                                apiKey="t87rwwndacrt9grg1jwlnfaxaabxw3cxj77od5l8m4dhkcox"
+                                value={formData3b.body}
+                                init={{
+                                    height: 400,
+                                    menubar: false,
+                                    // plugins: [
+                                    // 'advlist autolink lists link image charmap preview anchor',
+                                    // 'searchreplace visualblocks code fullscreen',
+                                    // 'insertdatetime media table code help wordcount',
+                                    // ],
+                                    toolbar:
+                                    'undo redo | formatselect | bold italic | alignleft aligncenter alignright | bullist numlist outdent indent | help',
+                                }}
+                                onEditorChange={(content) =>
+                                    setFormData3b((prev) => ({
+                                    ...prev,
+                                    body: content,
+                                    }))
+                                }
+                            />
                         </div>
                     }
 

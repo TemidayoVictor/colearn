@@ -117,7 +117,7 @@ const UploadCourseStep1 = ({type}:UploadCourseProps) => {
 
                         <div className="mt-4">
                             <label htmlFor="" className="text-[.9rem] font-semibold">Summary of Course<span className="text-red-500">*</span> </label>
-                            <p className="text-[.8rem] color-grey-text mb-2">For the best results, create and format your content in a Word document first, then copy and paste it here.</p>
+                            {/* <p className="text-[.8rem] color-grey-text mb-2">For the best results, create and format your content in a Word document first, then copy and paste it here.</p> */}
                             <textarea
                                 name="summary"
                                 className={`upload-course-textarea ${errors.summary ? 'error' : ''}`}
@@ -359,7 +359,7 @@ const UploadCourseStep1 = ({type}:UploadCourseProps) => {
 
                         <div className="mt-4">
                             <label htmlFor="" className="text-[.9rem] font-semibold">Summary of Course<span className="text-red-500">*</span> </label>
-                            <p className="text-[.8rem] color-grey-text mb-2">For the best results, create and format your content in a Word document first, then copy and paste it here.</p>
+                            {/* <p className="text-[.8rem] color-grey-text mb-2">For the best results, create and format your content in a Word document first, then copy and paste it here.</p> */}
                             <textarea
                                 name="summary"
                                 className={`upload-course-textarea ${errors.summary ? 'error' : ''}`}

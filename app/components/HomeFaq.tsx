@@ -1,6 +1,7 @@
 'use client'
 import React, { useState } from "react";
 import Image from "next/image";
+import { genralStore } from "@/zustand/generalStore";
 
 const HomeFaq = () => {
     const [openIndex, setOpenIndex] = useState<number | null>(null);
@@ -8,6 +9,8 @@ const HomeFaq = () => {
     const toggleFAQ = (index: number) => {
         setOpenIndex(prev => (prev === index ? null : index));
     };
+
+    const faqs = genralStore((state) => state.web?.faqs) 
 
     return (
         <div className="section">
@@ -30,10 +33,10 @@ const HomeFaq = () => {
 
                     <div className="faq-right">
                         {
-                            [1,2,3,4,5].map((item, index) => (
+                            (faqs ?? [])?.map((item, index) => (
                                 <div className="faq-body" key={index}>
                                     <div className="flex items-center justify-between" onClick={() => toggleFAQ(index)}>
-                                        <h3 className="title-3">Lorem ipsum dolor sit amet consectetur.</h3>
+                                        <h3 className="title-3"> {item.question} </h3>
                                         <div className="faq-handler">
                                             <p className="mt-[-.2rem]">{openIndex === index ? '-' : '+'}</p>
                                         </div>
@@ -41,8 +44,7 @@ const HomeFaq = () => {
                                     {
                                         openIndex === index && (
                                             <p className="mt-2 text-gray-600">
-                                            Placerat augue id pellentesque fermentum. Elementum laoreet turpis elit pulvinar in sit ut. Placerat
-                                            augue id pellentesque fermentum. Elementum laoreet turpis elit pulvinar in sit ut.
+                                            {item.answer}
                                             </p>
                                         )
                                     }

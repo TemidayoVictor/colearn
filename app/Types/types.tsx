@@ -426,6 +426,7 @@ export type Web = {
     instructors?: Instructor[];
     consultants?: Consultant[];
     blogs?: Blog[];
+    faqs?: FAQ[];
 }
 
 export type Blog = {
