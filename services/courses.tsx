@@ -774,3 +774,20 @@ export const course_search = async (keyword: string) => {
     }
 }
 
+export const get_certificate = async (
+    userId: number | undefined,
+    courseId: string | undefined,
+) => {
+    try {
+        const response = await axiosInstance.post("/get-certificate", {
+            userId,
+            courseId,
+        });
+        return handleApiResponse(response);
+    }
+
+    catch(error: any) {
+        return handleApiError(error)
+    }
+}
+

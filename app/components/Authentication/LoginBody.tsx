@@ -92,7 +92,7 @@ const LoginBody = () => {
                         </div>
 
                         <div className="auth-bottom">
-                            <p className="text-center text-[.9rem]">Or Continue with</p>
+                            {/* <p className="text-center text-[.9rem]">Or Continue with</p>
 
                             <div className="flex items-center justify-between mt-[1.5em]">
                                 <div className="auth-bottom-cont">
@@ -117,7 +117,7 @@ const LoginBody = () => {
                                     />
                                     <p className="text-[.9rem]">Apple</p>
                                 </div>
-                            </div>
+                            </div> */}
                         </div>
 
                         <div className="mt-4">

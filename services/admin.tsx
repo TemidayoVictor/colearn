@@ -475,6 +475,17 @@ export const course_search_admin = async (keyword: string) => {
     }
 }
 
+export const subscribers = async () => {
+    try {
+        const response = await axiosInstance.get("/subscribers");
+        return handleApiResponse(response);
+    }
+
+    catch(error: any) {
+        return handleApiError(error)
+    }
+}
+
 export const send_mail = async () => {
     try {
         const response = await axiosInstance.post("/send-mail");

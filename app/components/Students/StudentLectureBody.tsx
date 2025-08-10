@@ -260,14 +260,19 @@ const StudentLectureBody = () => {
                         {
                             video?.type == 'video' ? (
                                 <div className="lecture-video">
-                                    <Image
-                                        aria-hidden
-                                        src="/assets/images/shadow.png"
-                                        alt="Colearn Logo"
-                                        width={790}
-                                        height={347}
-                                        className="object-contain"
-                                    />
+                                    <div className="relative aspect-video bg-black">
+                                        <video
+                                            src={
+                                                video?.video_url
+                                                ? `${process.env.NEXT_PUBLIC_API_URL}/storage/${video?.video_url}`
+                                                : undefined
+                                            }
+                                            controls
+                                            className="w-full h-full object-cover rounded-t-xl"
+                                        >
+                                            Your browser does not support the video tag.
+                                        </video>
+                                    </div>
                                 </div>
                             ) : (
                                 <div className="view-course-content mt-2">
@@ -278,25 +283,25 @@ const StudentLectureBody = () => {
                                 </div>
                             )
                         }
-                        <div className="res-flex gap-2 mt-3">
-                            <div className="flex gap-3 mt-4">
+                        <div className="res-flex justify-between items-center mt-3">
+                            <div className="flex gap-3 items-center flex-res">
                                 <button
-                                    className="bt-btn btn btn-primary-outline flex items-center gap-2"
+                                    className="btn-small btn btn-primary-fill flex items-center gap-2"
                                     onClick={handlePrevVideo}
                                     disabled={!prevVideo} // Optional: disable if no prev
                                 >
                                     <Image
                                     src="/assets/images/arrow-left.png"
                                     alt="Previous"
-                                    width={18}
-                                    height={18}
+                                    width={12}
+                                    height={12}
                                     className="object-contain"
                                     />
                                     <span>Previous</span>
                                 </button>
 
                                 <button
-                                    className="bt-btn btn btn-primary-outline flex items-center gap-2"
+                                    className="btn btn-small btn-primary-fill flex items-center gap-2"
                                     onClick={handleNextVideo}
                                     disabled={!nextVideo} // Optional: disable if no next
                                 >
@@ -304,13 +309,14 @@ const StudentLectureBody = () => {
                                     <Image
                                     src="/assets/images/arrow-right.png"
                                     alt="Next"
-                                    width={18}
-                                    height={18}
+                                    width={12}
+                                    height={12}
                                     className="object-contain"
                                     />
                                 </button>
                             </div>
-                            <button className="bt-btn btn btn-primary-fill" onClick={() => markVideoAsComplete(userId, lectureId, courseId)}>
+                            
+                            <button className="btn-small btn btn-success tw" onClick={() => markVideoAsComplete(userId, lectureId, courseId)}>
                                 {
                                     buttonLoader ? (
                                         <ButtonLoader content="Please wait . . ." />
@@ -318,7 +324,7 @@ const StudentLectureBody = () => {
                                     
                                     (
                                         <div className="bt-btn two">
-                                            <span>Mark Completed</span>
+                                            <span>Completed</span>
                                             <span>
                                                 <Image
                                                     aria-hidden
@@ -334,7 +340,7 @@ const StudentLectureBody = () => {
                                 }
                             </button>
 
-                            {
+                            {/* {
                                 video?.type == 'video' &&
                                 <button className="bt-btn btn normal">
                                     <span>
@@ -349,7 +355,7 @@ const StudentLectureBody = () => {
                                     </span>
                                     <span>Download Video</span>
                                 </button>
-                            }
+                            } */}
                             
                         </div>
                     </div>

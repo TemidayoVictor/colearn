@@ -82,3 +82,16 @@ export const instructor_data_web = async (id: number | undefined) => {
       return handleApiError(error)
     }
 };
+
+export const subscribe = async (email: string) => {
+    try {
+        const response = await axiosInstance.post("/subscribe", {
+            email,
+        });
+        return handleApiResponse(response);
+    }
+
+    catch(error: any) {
+        return handleApiError(error)
+    }
+}

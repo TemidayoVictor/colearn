@@ -21,7 +21,7 @@ const BecomeTutorHero = () => {
                     <p className="text-[1rem] text-justify">
                         Share your knowledge, skills, and experience to inspire and guide others. Become a mentor or tutor today and help shape the future of learning!
                     </p>
-                    <Link href='/' className="bt-btn btn btn-primary-fill">
+                    <Link href='/authentication/sign-up' className="bt-btn btn btn-primary-fill">
                         <span>Become a Tutor</span>
                         <span>
                             <Image

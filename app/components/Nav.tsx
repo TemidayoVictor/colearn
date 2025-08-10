@@ -5,8 +5,12 @@ import Link from "next/link";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { usePathname } from "next/navigation";
+import { authStore } from "@/zustand/authStore";
 
 const Nav = () => {
+    const user = authStore((state) => state.user);
+    const isLoggedIn = authStore((state) => state.isInitialized)
+    
     const [menuOpen, setMenuOpen] = useState<boolean | null>(false);
     const pathname = usePathname();
     const useVariation1 = ["/", "/about", "/blog", "/become-tutor", "/contact-us", "/explore", "/search", "/view-courses", "/find-consultant"].includes(pathname);
@@ -87,13 +91,29 @@ const Nav = () => {
                                 <Link href='/blog' className={`nav-link ${pathname.startsWith('/blog') ? 'active' : ''}`} onClick={() => setMenuOpen(!menuOpen)}>Blog</Link>
                                 <Link href='/become-tutor' className={`nav-link ${pathname.startsWith('/become-tutor') ? 'active' : ''}`} onClick={() => setMenuOpen(!menuOpen)}>Become a Tutor</Link>
                                 <Link href='/contact-us' className={`nav-link ${pathname.startsWith('/contact') ? 'active' : ''}`} onClick={() => setMenuOpen(!menuOpen)}>Contact Us</Link>
-                                <Link href='/cart' className={`nav-link mobile ${pathname.startsWith('/cart') ? 'active' : ''}`} onClick={() => setMenuOpen(!menuOpen)}>Cart</Link>
+                                {
+                                    isLoggedIn && user?.type === 'student' ? (
+                                        <Link href='/students/cart' className={`nav-link mobile ${pathname.startsWith('/cart') ? 'active' : ''}`} onClick={() => setMenuOpen(!menuOpen)}>Cart</Link>
+                                    ) : (
+                                        ""
+                                    )
+                                }
                             </div>
                         </div>
 
                         <div className="mobile-flex items-center justify-between w-full">
-                            <Link href='/authentication/login' className="btn normal spec">Login</Link>
-                            <Link href='/authentication/sign-up' className="btn btn-primary-fill spec">Create Account</Link>
+                            {
+                                isLoggedIn ? (
+                                    // <Link href={`/${user?.type}s/dashboard`} className="btn normal spec">Dashboard</Link> 
+                                    ""
+                                ) :
+                                (
+                                    <div className="flex items-center gap-2">
+                                        <Link href='/authentication/sign-up' className="btn btn-primary-fill spec">Create Account</Link>
+                                        <Link href='/authentication/login' className="btn normal spec">Login</Link>
+                                    </div>
+                                )
+                            }
                         </div>
 
                     </div>
@@ -101,67 +121,106 @@ const Nav = () => {
 
                 <div className="nav-links-other">
                     <div>
-                        <Link href='/cart'>
-                            {
-                                useVariation1 ? (
-                                    <Image
-                                        aria-hidden
-                                        src="/assets/images/shopping-cart.png"
-                                        alt="Colearn Logo"
-                                        width={40}
-                                        height={40}
-                                        className="object-contain desktop"
-                                    />
+                        {
+                            isLoggedIn && user?.type === 'student' ? (
+                                <>
+                                    <Link href='/students/cart'>
+                                        {
+                                            useVariation1 ? (
+                                                <Image
+                                                    aria-hidden
+                                                    src="/assets/images/shopping-cart.png"
+                                                    alt="Colearn Logo"
+                                                    width={40}
+                                                    height={40}
+                                                    className="object-contain desktop"
+                                                />
 
-                                ) : (
-                                    <Image
-                                        aria-hidden
-                                        src="/assets/images/shopping-cart-3.png"
-                                        alt="Colearn Logo"
-                                        width={40}
-                                        height={40}
-                                        className="object-contain desktop"
-                                    />
-                                )
-                            }
-                        </Link>
+                                            ) : (
+                                                <Image
+                                                    aria-hidden
+                                                    src="/assets/images/shopping-cart-3.png"
+                                                    alt="Colearn Logo"
+                                                    width={40}
+                                                    height={40}
+                                                    className="object-contain desktop"
+                                                />
+                                            )
+                                        }
+                                    </Link>
 
-                        <Link href='/cart' className={`mobile cart-cont ${useVariation1 ? 'white' : 'grey'}`}>
-                            <Image
-                                aria-hidden
-                                src="/assets/images/shopping-cart-2.png"
-                                alt="Colearn Logo"
-                                width={20}
-                                height={20}
-                                className="object-contain"
-                            />
-                        </Link>
+                                    <Link href='/students/cart' className={`mobile cart-cont ${useVariation1 ? 'white' : 'grey'}`}>
+                                        <Image
+                                            aria-hidden
+                                            src="/assets/images/shopping-cart-2.png"
+                                            alt="Colearn Logo"
+                                            width={20}
+                                            height={20}
+                                            className="object-contain"
+                                        />
+                                    </Link>
+                                </>
+                            ) : 
+                            
+                            (
+                                ''
+                            )
+                        }
                     </div>
                     <div>
-                        <Link href='/authentication/login' className={`flex items-center gap-2 ${useVariation1 ? 'login-btn-1' : 'login-btn-2'}`}>
-                            {
-                                useVariation1 ? (
-                                    <Image
-                                        aria-hidden
-                                        src="/assets/images/profile.png"
-                                        alt="Colearn Logo"
-                                        width={20}
-                                        height={20}
-                                        className="desktop"
-                                    />
-                                ) : (
-                                    <Image
-                                        aria-hidden
-                                        src="/assets/images/profile-2.png"
-                                        alt="Colearn Logo"
-                                        width={20}
-                                        height={20}
-                                        className="desktop"
-                                    />
-                                )
-                            }
-                            <p className="text-[1rem]">Login</p>
-                        </Link>
+                        {
+                            isLoggedIn ? (
+                                <Link href={`/${user?.type}s/dashboard`} className={`flex items-center gap-2 ${useVariation1 ? 'login-btn-1' : 'login-btn-2'}`}>
+                                    {
+                                        useVariation1 ? (
+                                            <Image
+                                                aria-hidden
+                                                src="/assets/images/profile.png"
+                                                alt="Colearn Logo"
+                                                width={20}
+                                                height={20}
+                                                className="desktop"
+                                            />
+                                        ) : (
+                                            <Image
+                                                aria-hidden
+                                                src="/assets/images/profile-2.png"
+                                                alt="Colearn Logo"
+                                                width={20}
+                                                height={20}
+                                                className="desktop"
+                                            />
+                                        )
+                                    }
+                                    <p className="text-[1rem]">Dashboard</p>
+                                </Link>
+                            ) : (
+                                <Link href='/authentication/login' className={`flex items-center gap-2 ${useVariation1 ? 'login-btn-1' : 'login-btn-2'}`}>
+                                    {
+                                        useVariation1 ? (
+                                            <Image
+                                                aria-hidden
+                                                src="/assets/images/profile.png"
+                                                alt="Colearn Logo"
+                                                width={20}
+                                                height={20}
+                                                className="desktop"
+                                            />
+                                        ) : (
+                                            <Image
+                                                aria-hidden
+                                                src="/assets/images/profile-2.png"
+                                                alt="Colearn Logo"
+                                                width={20}
+                                                height={20}
+                                                className="desktop"
+                                            />
+                                        )
+                                    }
+                                    <p className="text-[1rem]">Login</p>
+                                </Link>
+                            )
+                        }
                     </div>
                     <div onClick={() => setMenuOpen(!menuOpen)}>
                         {

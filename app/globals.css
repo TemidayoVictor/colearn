@@ -1102,6 +1102,13 @@ ol li {
   height: 20rem;
 }
 
+.blog-hero-right.video {
+  width: 60%;
+  border-radius: .5rem;
+  height: auto;
+  overflow: hidden;
+}
+
 .blog-hero-right.three {
   height: auto;
   gap: 1em;
@@ -3141,6 +3148,8 @@ td {
 
 .lecture-video {
   margin-top: 1em;
+  overflow: hidden;
+  border-radius: .5em;
 }
 
 /* Student Booking */
@@ -3756,7 +3765,7 @@ td {
     margin-top: 1em;
   }
   
-  .blog-hero-left, .blog-hero-right{
+  .blog-hero-left, .blog-hero-right, .blog-hero-right.video{
     width: 100%;
   }
 
@@ -4466,6 +4475,11 @@ td {
     display: flex;
     justify-content: space-between;
     width: 100%;
+  }
+
+  .flex-res {
+    width: 100%;
+    justify-content: space-between;
   }
 
   .footer-2, .footer-right {

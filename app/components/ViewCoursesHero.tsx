@@ -43,14 +43,30 @@ const ViewCoursesHero = ({loggedIn}: ViewCoursesHeroProps) => {
             <div className={`${loggedIn ? 'bod-dark' : 'bg-dark'}`}>
                 <div className={`${loggedIn ? '' : 'cover container'}`}>
                     <div className="bg-white rounded-[.5rem] blog-hero two p-[1em]">
-                        <Image
+                        
+                        {/* <Image
                             aria-hidden
                             src="/assets/images/course-img.png"
                             alt="Colearn Logo"
                             width={778}
                             height={456}
                             className="object-contain blog-hero-left"
-                        />
+                        /> */}
+                        <div className="blog-hero-right video">
+                            <div className="relative aspect-video bg-black">
+                                <video
+                                src={
+                                    course?.intro_video_url
+                                    ? `${process.env.NEXT_PUBLIC_API_URL}/storage/${course.intro_video_url}`
+                                    : undefined
+                                }
+                                controls
+                                className="w-full h-full object-cover rounded-t-xl"
+                                >
+                                Your browser does not support the video tag.
+                                </video>
+                            </div>
+                        </div>
 
                         <div className="blog-hero-right three">
                             <h2 className="title-2"> {course?.title} </h2>

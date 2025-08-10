@@ -83,7 +83,7 @@ const StudentCoursePageBox = ({courseType}: StudentCoursePageBoxProps) => {
                                                 className="object-contain rounded-[.5em]"
                                             />
                                         </div>
-                                        <div className={`right ${courseType == "completed" ? "" : "full"}`}>
+                                        <div className={`right ${item.completed_at ? "" : "full"}`}>
                                             <div>
                                                 <p className="font-semibold">{item.course.title}</p>
                                             </div>
@@ -94,9 +94,9 @@ const StudentCoursePageBox = ({courseType}: StudentCoursePageBoxProps) => {
                                             </div>
                                         </div>
                                         {
-                                            courseType == "completed" &&
+                                            item.completed_at  &&
                                             <div className="cert desktop">
-                                                <Link href="/students/courses/certificate" className="underline color-normal text-[.9rem]" >View Certificate</Link>
+                                                <Link href={`/students/courses/certificate/${item.course.id}`} className="underline color-normal text-[.9rem]" >View Certificate</Link>
                                             </div>
                                         }
                                     </div>
@@ -212,8 +212,8 @@ const StudentCoursePageBox = ({courseType}: StudentCoursePageBoxProps) => {
 
                                         <div>
                                             {
-                                                courseType == "completed" &&
-                                                <Link href='/students/courses/certificate' className="mt-3 bt-btn btn btn-primary-fill">
+                                                item.completed_at &&
+                                                <Link href={`/students/courses/certificate/${item.course.id}`} className="mt-3 bt-btn btn btn-primary-fill">
                                                     <span>View Certificate</span>
                                                 </Link>
                                             }

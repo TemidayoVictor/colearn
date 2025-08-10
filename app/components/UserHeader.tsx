@@ -1,6 +1,7 @@
 'use client';
 import React, {useState}  from "react";
 import Image from "next/image";
+import Link from "next/link";
 import Notification from "./Instructors/Notification";
 import { authStore } from "@/zustand/authStore";
 import { useAdmin } from "@/hooks/useAdmin";
@@ -63,8 +64,8 @@ const UserHeader = ({onMenuClick}:UserHeaderProps) => {
                 </div> */}
             </div>
 
-            {/* <div className="container-3 mobile user-header-mobile">
-                <div>
+            <div className="container-3 mobile user-header-mobile">
+                <Link href="/">
                     <Image
                         aria-hidden
                         src="/assets/images/logo-2.png"
@@ -73,9 +74,9 @@ const UserHeader = ({onMenuClick}:UserHeaderProps) => {
                         height={32}
                         className="object-contain mobile"
                     />
-                </div>
+                </Link>
                 <div className="flex items-center gap-2">
-                    <Image
+                    {/* <Image
                         aria-hidden
                         src="/assets/images/notification-bing.png"
                         alt="Colearn Logo"
@@ -83,7 +84,7 @@ const UserHeader = ({onMenuClick}:UserHeaderProps) => {
                         height={32}
                         className="object-contain mobile"
                         onClick={() => setOpenNotification(prev => !prev)}
-                    />
+                    /> */}
 
                     <Image
                         aria-hidden
@@ -96,7 +97,7 @@ const UserHeader = ({onMenuClick}:UserHeaderProps) => {
                     />
 
                 </div>
-            </div> */}
+            </div>
             <Notification onNotificationClick={() => setOpenNotification(prev => !prev)} openNotification={openNotification} />
         </div>
     )
