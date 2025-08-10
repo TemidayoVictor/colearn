@@ -1261,6 +1261,7 @@ export const UseCourses = () => {
         showModal,
         closeModal,
         formData3,
+        setFormData3,
         errors3,
         uploadVideo,
         handleInputChange3,

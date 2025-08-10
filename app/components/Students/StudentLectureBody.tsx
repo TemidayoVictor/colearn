@@ -257,16 +257,27 @@ const StudentLectureBody = () => {
                     }
                     <div className="right">
                         <h2 className="title-3 mt-1">{video?.title}</h2>
-                        <div className="lecture-video">
-                            <Image
-                                aria-hidden
-                                src="/assets/images/shadow.png"
-                                alt="Colearn Logo"
-                                width={790}
-                                height={347}
-                                className="object-contain"
-                            />
-                        </div>
+                        {
+                            video?.type == 'video' ? (
+                                <div className="lecture-video">
+                                    <Image
+                                        aria-hidden
+                                        src="/assets/images/shadow.png"
+                                        alt="Colearn Logo"
+                                        width={790}
+                                        height={347}
+                                        className="object-contain"
+                                    />
+                                </div>
+                            ) : (
+                                <div className="view-course-content mt-2">
+                                    <div
+                                        className="content-sect"
+                                        dangerouslySetInnerHTML={{ __html: video?.body || "" }}
+                                    />
+                                </div>
+                            )
+                        }
                         <div className="res-flex gap-2 mt-3">
                             <div className="flex gap-3 mt-4">
                                 <button
@@ -322,20 +333,23 @@ const StudentLectureBody = () => {
                                     )
                                 }
                             </button>
-                            
-                            <button className="bt-btn btn normal">
-                                <span>
-                                    <Image
-                                        aria-hidden
-                                        src="/assets/images/download-1.png"
-                                        alt="Colearn Logo"
-                                        width={20}
-                                        height={20}
-                                        className="object-contain"
-                                    />
-                                </span>
-                                <span>Download Video</span>
-                            </button>
+
+                            {
+                                video?.type == 'video' &&
+                                <button className="bt-btn btn normal">
+                                    <span>
+                                        <Image
+                                            aria-hidden
+                                            src="/assets/images/download-1.png"
+                                            alt="Colearn Logo"
+                                            width={20}
+                                            height={20}
+                                            className="object-contain"
+                                        />
+                                    </span>
+                                    <span>Download Video</span>
+                                </button>
+                            }
                             
                         </div>
                     </div>

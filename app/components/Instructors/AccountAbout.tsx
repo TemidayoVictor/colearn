@@ -133,7 +133,9 @@ const AccountAbout = ({type}:AccountAboutprops) => {
 
                 <div className="mt-4">
                     <p className="font-bold">Bio</p>
-                    <p> {instructor?.bio} </p>
+                    <div
+                        dangerouslySetInnerHTML={{ __html: instructor?.bio || "" }}
+                    />
                 </div>
 
                 <div className="mt-4">
@@ -160,7 +162,7 @@ const AccountAbout = ({type}:AccountAboutprops) => {
                                 <Link href={instructor?.linkedin_url && !instructor?.linkedin_url.startsWith("http") ? `https://${instructor?.linkedin_url}`: instructor?.linkedin_url || "#"}>
                                     <Image
                                         aria-hidden
-                                        src="/assets/images/facebook-2.png"
+                                        src="/assets/images/linkedin.png"
                                         alt="Colearn Logo"
                                         width={32}
                                         height={32}
@@ -190,7 +192,7 @@ const AccountAbout = ({type}:AccountAboutprops) => {
                                 <Link href={instructor?.youtube_url && !instructor?.youtube_url.startsWith("http") ? `https://${instructor?.youtube_url}`: instructor?.youtube_url || "#"}>
                                     <Image
                                         aria-hidden
-                                        src="/assets/images/instagram-2.png"
+                                        src="/assets/images/youtube.png"
                                         alt="Colearn Logo"
                                         width={32}
                                         height={32}
@@ -202,10 +204,10 @@ const AccountAbout = ({type}:AccountAboutprops) => {
 
                         {
                             instructor?.website && (
-                                <Link href={instructor?.website && !instructor?.website.startsWith("http") ? `https://${instructor?.website}`: instructor?.website || "#"}>
+                                <Link href={instructor?.website && !instructor?.website.startsWith("http") ? `https://${instructor?.website}`: instructor?.website || "#"} className="border border-blue-500 rounded-full">
                                     <Image
                                         aria-hidden
-                                        src="/assets/images/instagram-2.png"
+                                        src="/assets/images/google-1.png"
                                         alt="Colearn Logo"
                                         width={32}
                                         height={32}

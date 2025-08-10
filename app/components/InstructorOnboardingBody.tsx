@@ -10,6 +10,10 @@ import ButtonLoader from "./buttonLoader";
 import MultiDropdownSelector from "./MultiDropdownSelector";
 import SubjectSelector from "./SubjectSelector";
 import { useRouter } from "next/navigation";
+import dynamic from 'next/dynamic';
+const Editor = dynamic(() => import('@tinymce/tinymce-react').then(mod => mod.Editor), {
+  ssr: false,
+});
 
 const InstructorOnboardingBody = () => {
     const router = useRouter();
@@ -19,6 +23,7 @@ const InstructorOnboardingBody = () => {
     const {
         formData,
         formData2,
+        setFormData2,
         errors2,
         submitDetails,
         errors,
@@ -96,12 +101,33 @@ const InstructorOnboardingBody = () => {
 
                             <div className="input-box">
                                 <label htmlFor="description" className="font-semibold">Bio <span className="text-red-500">*</span></label>
-                                <textarea
+                                {/* <textarea
                                     name="bio"
                                     className={`textarea ${errors2.bio ? 'error' : ''}`}
                                     placeholder="Let us get to meet you."
                                     value={formData2.bio}
                                     onChange={handleInputChange2}
+                                /> */}
+                                <Editor
+                                    apiKey="t87rwwndacrt9grg1jwlnfaxaabxw3cxj77od5l8m4dhkcox"
+                                    value={formData2.bio}
+                                    init={{
+                                        height: 400,
+                                        menubar: false,
+                                        // plugins: [
+                                        // 'advlist autolink lists link image charmap preview anchor',
+                                        // 'searchreplace visualblocks code fullscreen',
+                                        // 'insertdatetime media table code help wordcount',
+                                        // ],
+                                        toolbar:
+                                        'undo redo | formatselect | bold italic | alignleft aligncenter alignright | bullist numlist outdent indent | help',
+                                    }}
+                                    onEditorChange={(content) =>
+                                        setFormData2((prev) => ({
+                                        ...prev,
+                                        bio: content,
+                                        }))
+                                    }
                                 />
                             </div>
                             <p className="font-semibold my-4">Add Social Media Accounts (Optional)</p>

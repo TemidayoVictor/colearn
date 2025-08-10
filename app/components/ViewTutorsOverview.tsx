@@ -13,10 +13,9 @@ const ViewTutorsOverview = () => {
         <div className="view-tutor-overview">
             <div className="view-course-content left">
                 <div className="content-sect">
-                    <div>
-                        <p>{instructor?.bio}</p>
-                        
-                    </div>
+                    <div
+                        dangerouslySetInnerHTML={{ __html: instructor?.bio || "" }}
+                    />
                 </div>
             </div>
 

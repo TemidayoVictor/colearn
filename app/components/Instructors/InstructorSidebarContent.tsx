@@ -146,7 +146,7 @@ const InstructorSidebarContent = () => {
                         <p className="text-[.9rem]">Account</p>
                     </Link>
 
-                    <Link href='/instructors/subscription' className={`sidebar-link ${pathname == '/instructors/subscription' ? 'active' : ''}`}>
+                    {/* <Link href='/instructors/subscription' className={`sidebar-link ${pathname == '/instructors/subscription' ? 'active' : ''}`}>
                         {
                             pathname == '/instructors/subscription' ? (
                                 <Image
@@ -169,7 +169,7 @@ const InstructorSidebarContent = () => {
                             )
                         }
                         <p className="text-[.9rem]">Subscription</p>
-                    </Link>
+                    </Link> */}
 
                     <Link href='/instructors/payment-transactions' className={`sidebar-link ${pathname == '/instructors/payment-transactions' ? 'active' : ''}`}>
                         {

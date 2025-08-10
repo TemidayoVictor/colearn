@@ -109,7 +109,7 @@ const UploadModuleBody = () => {
                                                     <FontAwesomeIcon icon={faEye} className="icon" /> View Course
                                                 </button> */}
                                                 <Link href={`/instructors/manage-video/${item.id}`} className="menu-btn">
-                                                    <FontAwesomeIcon icon={faEye} className="icon"/> View Videos
+                                                    <FontAwesomeIcon icon={faEye} className="icon"/> Lectures
                                                 </Link>
                                                 <button className="menu-btn" onClick={(e) => editModule(item)}>
                                                     <FontAwesomeIcon icon={faEdit} className="icon"/> Edit Module

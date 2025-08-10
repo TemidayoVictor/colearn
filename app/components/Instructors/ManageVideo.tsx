@@ -16,6 +16,7 @@ const ManageVideo = ({type}: ManageVideoProps) => {
     const {
         buttonLoader,
         formData3,
+        setFormData3,
         errors3,
         uploadVideo,
         formData3b,
@@ -146,7 +147,7 @@ const ManageVideo = ({type}: ManageVideoProps) => {
                                     {/* <textarea name="body" id="" className={`textarea mt-2 ${errors3.body ? 'error' : ''}`} value={formData3.body} onChange={handleInputChange3}></textarea> */}
                                     <Editor
                                         apiKey="t87rwwndacrt9grg1jwlnfaxaabxw3cxj77od5l8m4dhkcox"
-                                        value={formData3b.body}
+                                        value={formData3.body}
                                         init={{
                                             height: 400,
                                             menubar: false,
@@ -159,7 +160,7 @@ const ManageVideo = ({type}: ManageVideoProps) => {
                                             'undo redo | formatselect | bold italic | alignleft aligncenter alignright | bullist numlist outdent indent | help',
                                         }}
                                         onEditorChange={(content) =>
-                                            setFormData3b((prev) => ({
+                                            setFormData3((prev) => ({
                                             ...prev,
                                             body: content,
                                             }))

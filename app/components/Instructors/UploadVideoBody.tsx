@@ -212,7 +212,7 @@ const UploadVideoBody = () => {
                                                             <FontAwesomeIcon icon={faEye} className="icon" /> View Course
                                                         </button> */}
                                                         <button className="menu-btn" onClick={(e) => editVideo(item)}>
-                                                            <FontAwesomeIcon icon={faEdit} className="icon"/> Edit Video
+                                                            <FontAwesomeIcon icon={faEdit} className="icon"/> Edit Lecture
                                                         </button>
                                                         <button className="menu-btn delete" onClick={(e) => deleteVideoTrigger(item.id)}>
                                                             <FontAwesomeIcon icon={faTrashAlt} className="icon"/> Delete Video
