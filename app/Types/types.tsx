@@ -446,3 +446,9 @@ export type FAQ = {
     question: string;
     answer: string;
 }
+
+export type Subscriber = {
+    id: number;
+    email: string;
+    created_at: string;
+}

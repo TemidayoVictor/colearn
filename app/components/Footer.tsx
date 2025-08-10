@@ -1,13 +1,48 @@
 'use client';
-import React from "react";
+import React, {useState} from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { subscribe } from "@/services/user";
+import { showErrorToast } from "@/utils/toastTypes";
+import { showSuccessToast } from "@/utils/toastTypes";
 
 const Footer = () => {
     const pathname = usePathname();
     const hidesNavOn = ["/authentication/", "/onboarding/",  "/student", "/instructors", "/consultants", "/admin"].some(prefix => pathname.startsWith(prefix));
     
+    const [email, setEmail] = useState<string>("");
+    const [buttonLoader, setButtonLoader] = useState<boolean>(false)
+
+    const submit_subscription = async() => {
+        if(!email) {
+            showErrorToast("Please add email")
+            return
+        }
+
+        setButtonLoader(true)
+        try {
+            const response = await subscribe(email);
+            if (response.success) {
+                setButtonLoader(false)
+                setEmail('');
+                showSuccessToast(response.message)
+            } 
+
+            else {
+                setButtonLoader(false)
+                showErrorToast(response.message)
+                console.log(response)
+            }
+        }
+
+        catch (err: any) {
+            console.log(err)
+            setButtonLoader(false)
+            showErrorToast('Unexpected error occurred');
+        }
+    }
+
     return (
         <div className={`bg-black ${hidesNavOn ? 'd-none' : ''}`}>
             <div className="container">
@@ -30,12 +65,24 @@ const Footer = () => {
                         </div>
                         <div className="flex items-center justify-between my-[2em] py-[.5em] px-[1.5em] footer-input-cover">
                             <div className="flex items-center gap-2 w-[80%]">
-                                <input type="text" placeholder="Your Email" className="footer-input w-[100%] placeholder-white text-[.8rem]" />
+                                <input 
+                                    type="text" 
+                                    placeholder="Your Email" 
+                                    className="footer-input w-[100%] placeholder-white text-[.8rem]" 
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                />
                             </div>
                             <div>
-                                <Link href='/' className="flex gap-2 footer-btn">
-                                    Subscribe
-                                </Link>
+                                <button className="flex gap-2 footer-btn" onClick={submit_subscription}>
+                                    {
+                                        buttonLoader ? (
+                                            <p>. . .</p>
+                                        ) : (
+                                            <p>Subscribe</p>
+                                        )
+                                    }
+                                </button>
                             </div>
                         </div>
                     </div>

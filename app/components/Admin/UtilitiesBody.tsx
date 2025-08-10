@@ -8,10 +8,12 @@ import { showErrorToast } from "@/utils/toastTypes";
 import { useRouter } from "next/navigation";
 import { courseStore } from "@/zustand/courseStore";
 import { genralStore } from "@/zustand/generalStore";
+import { subscribers } from "@/services/admin";
 import Loader from "../Loader";
 import BlogBody from "./BlogBody";
 import CategoryBody from "./CategoryBody";
 import FAQBody from "./FAQBody";
+import SubscriberBody from "./SubscriberBody";
 
 const UtilitiesBody = () => {
     const [selectedTab, setSelectedTab] = useState<string>('categories');
@@ -25,10 +27,11 @@ const UtilitiesBody = () => {
             await useAuthAdmin(router); // ✅ valid usage
             
             try {
-                const [categoryRes, faqRes, blogRes] = await Promise.all([
+                const [categoryRes, faqRes, blogRes, subRes] = await Promise.all([
                     get_all_categories(),
                     get_all_faqs(),
                     get_all_blogs(),
+                    subscribers(),
                 ]);
 
                 if (categoryRes.success) {
@@ -60,6 +63,17 @@ const UtilitiesBody = () => {
                     showErrorToast(blogRes.message)
                     console.log(blogRes)
                 }
+
+                if (subRes.success) {
+                    // save state globally
+                    console.log(subRes)
+                    genralStore.getState().setSubscribers(subRes.data.subscribers);
+                } 
+    
+                else {
+                    showErrorToast(subRes.message)
+                    console.log(subRes)
+                }
             }
 
             catch(error: any) {
@@ -83,6 +97,7 @@ const UtilitiesBody = () => {
                     <span className={`in-nav-link three flex gap-2 items-center two color-grey-text ${selectedTab == 'categories' ? 'active' : ''}`} onClick={() => setSelectedTab('categories')}>Categories</span>
                     <span className={`in-nav-link three flex gap-2 items-center two color-grey-text ${selectedTab == 'faqs' ? 'active' : ''}`} onClick={() => setSelectedTab('faqs')}> <span>FAQs</span></span>
                     <span className={`in-nav-link three flex gap-2 items-center two color-grey-text ${selectedTab == 'blog' ? 'active' : ''}`} onClick={() => setSelectedTab('blog')}> <span>Blog</span></span>
+                    <span className={`in-nav-link three flex gap-2 items-center two color-grey-text ${selectedTab == 'subscribers' ? 'active' : ''}`} onClick={() => setSelectedTab('subscribers')}> <span>Subscribers</span></span>
                 </div>
             </div>
 
@@ -100,6 +115,11 @@ const UtilitiesBody = () => {
                 {
                     selectedTab == 'blog' &&
                     <BlogBody />
+                }
+
+                {
+                    selectedTab == 'subscribers' &&
+                    <SubscriberBody />
                 }
             </div>
         </div>

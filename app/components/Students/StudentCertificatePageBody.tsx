@@ -64,8 +64,6 @@ const StudentCertificatePageBody = () => {
 
     if(loading) return <Loader />
 
-
-
     return (
         <div>
             <div>

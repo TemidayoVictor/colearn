@@ -486,6 +486,17 @@ export const subscribers = async () => {
     }
 }
 
+export const admin_users = async () => {
+    try {
+        const response = await axiosInstance.get("/admin-users");
+        return handleApiResponse(response);
+    }
+
+    catch(error: any) {
+        return handleApiError(error)
+    }
+}
+
 export const send_mail = async () => {
     try {
         const response = await axiosInstance.post("/send-mail");
