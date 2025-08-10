@@ -26,7 +26,7 @@ const UserHeader = ({onMenuClick}:UserHeaderProps) => {
                     <p className="color-grey-text text-[.8rem]">Welcome to Colearn</p>
                 </div>
 
-                <div className="flex gap-2">   
+                {/* <div className="flex gap-2">   
                     <Image
                         aria-hidden
                         src="/assets/images/language-square.png"
@@ -60,10 +60,10 @@ const UserHeader = ({onMenuClick}:UserHeaderProps) => {
                         height={24}
                         className="object-cover"
                     />
-                </div>
+                </div> */}
             </div>
 
-            <div className="container-3 mobile user-header-mobile">
+            {/* <div className="container-3 mobile user-header-mobile">
                 <div>
                     <Image
                         aria-hidden
@@ -96,7 +96,7 @@ const UserHeader = ({onMenuClick}:UserHeaderProps) => {
                     />
 
                 </div>
-            </div>
+            </div> */}
             <Notification onNotificationClick={() => setOpenNotification(prev => !prev)} openNotification={openNotification} />
         </div>
     )
