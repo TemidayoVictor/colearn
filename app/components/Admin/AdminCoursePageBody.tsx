@@ -1,3 +1,4 @@
+'use client';
 import React from "react";
 import CourseRevenue from "../Instructors/CourseRevenue";
 import CourseContentBody from "../Instructors/CourseContentBody";
