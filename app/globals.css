@@ -3350,6 +3350,7 @@ td {
 .update-pro {
   height: 5em;
   width: 5em;
+  overflow: hidden;
 }
 
 /* Footer */
