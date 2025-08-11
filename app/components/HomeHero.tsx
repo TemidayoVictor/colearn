@@ -1,8 +1,17 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { UseCourses } from "@/hooks/useCourses";
+import ButtonLoader from "./buttonLoader";
 
 const HomeHero = () => {
+    const {
+        buttonLoader,
+        search,
+        keyword,
+        setKeyword,
+    } = UseCourses();
+
     return (
         <div className="cover bg-dark">
             <div className="text-white mt-[2rem] flex flex-col items-center justify-center gap-4 text-center">
@@ -39,8 +48,8 @@ const HomeHero = () => {
                     </Link>
                 </div>
 
-                <div>
-                    <div className="search-length flex items-center justify-between bg-white gradient-border my-[3em] py-[.5em] px-[1.5em] rounded-[.5rem]">
+                <div className="min-h-[15vh]">
+                    {/* <div className="search-length flex items-center justify-between bg-white gradient-border my-[3em] py-[.5em] px-[1.5em] rounded-[.5rem]">
                         <div className="flex items-center gap-2">
                             <Image
                                 aria-hidden
@@ -50,22 +59,38 @@ const HomeHero = () => {
                                 height={20}
                                 className="object-contain"
                             />
-                            <input type="text" placeholder="Search for anything" className="search-input w-[100%] placeholder-gray-400" />
+                            <input 
+                                type="text" 
+                                placeholder="Search for anything" 
+                                className="search-input text-black w-[100%] placeholder-gray-400" 
+                                value={keyword}
+                                onChange={(e) => setKeyword(e.target.value)}    
+                            />
                         </div>
                         <div>
-                            <Link href='/' className="flex gap-2 btn btn-primary-fill">
-                                <Image
-                                    aria-hidden
-                                    src="/assets/images/search-light.png"
-                                    alt="Colearn Logo"
-                                    width={20}
-                                    height={20}
-                                    className="object-contain"
-                                />
-                                <p>Search</p>
-                            </Link>
+                            <button onClick={search} className="flex gap-2 btn btn-primary-fill">
+                                {
+                                    buttonLoader ? (
+                                        <ButtonLoader content="" />
+                                    ) : 
+                                    
+                                    (
+                                        <div className="flex gap-2">
+                                            <Image
+                                                aria-hidden
+                                                src="/assets/images/search-light.png"
+                                                alt="Colearn Logo"
+                                                width={20}
+                                                height={20}
+                                                className="object-contain"
+                                            />
+                                            <p>Search</p>
+                                        </div>                                    
+                                    )
+                                }
+                            </button>
                         </div>
-                    </div>
+                    </div> */}
                 </div>
             </div>
         </div>

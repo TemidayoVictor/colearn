@@ -8,7 +8,6 @@ type ExploreHeroProps = {
     loggedIn?: boolean
 }
 
-
 const ExploreHero = ({loggedIn}:ExploreHeroProps) => {
     const {
         buttonLoader,

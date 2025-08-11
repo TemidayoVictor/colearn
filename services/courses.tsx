@@ -1,4 +1,5 @@
 import axiosInstance from "@/utils/api";
+import axiosInstanceWeb from "@/utils/web";
 import { handleApiResponse, handleApiError } from '@/utils/handleApiResponse';
 import { courseStore } from "@/zustand/courseStore";
 import { Cart, Review } from "@/app/Types/types";
@@ -765,7 +766,11 @@ export const course_search = async (keyword: string) => {
 
         data.append('keyword', keyword);
 
-        const response = await axiosInstance.post("/course-search", data);
+        await axiosInstanceWeb.get(`/sanctum/csrf-cookie?refresh=${Date.now()}`, {
+            withCredentials: true,
+        });
+
+        const response = await axiosInstanceWeb.post("/course-search", data);
         return handleApiResponse(response);
     }
 

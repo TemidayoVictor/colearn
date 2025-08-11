@@ -60,7 +60,7 @@ const HomeBody = () => {
 
             <HomeBooking />
 
-            <HomeBanner title="Become a Tutor and Instructor on CoLearn" subtitle="Lorem ipsum dolor sit amet consectetur. In senectus fames faucibus cursus risus in sit neque. Sed convallis amet est eget. Placerat augue id pellentesque fermentum. Elementum laoreet turpis elit pulvinar in sit ut." link="/" linkTitle="Register" />
+            <HomeBanner title="Become a Tutor and Instructor on CoLearn" subtitle="Lorem ipsum dolor sit amet consectetur. In senectus fames faucibus cursus risus in sit neque. Sed convallis amet est eget. Placerat augue id pellentesque fermentum. Elementum laoreet turpis elit pulvinar in sit ut." link="/authentication/sign-up" linkTitle="Register" />
 
             <HomeReviews />
 
