@@ -3353,6 +3353,12 @@ td {
   overflow: hidden;
 }
 
+.update-pro img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
 /* Footer */
 .footer-2 {
   display: flex;
