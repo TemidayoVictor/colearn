@@ -291,7 +291,7 @@ const InstructorOnboardingBody = () => {
                                     alt="Colearn Logo"
                                     width={64}
                                     height={64}
-                                    className="object-contain rounded-[50%]"
+                                    className="object-contain rounded-[50%] update-pro"
                                 />
                             </div>
                             <div>

@@ -3347,6 +3347,11 @@ td {
   letter-spacing: 1px;
 }
 
+.update-pro {
+  height: 5em;
+  width: 5em;
+}
+
 /* Footer */
 .footer-2 {
   display: flex;
