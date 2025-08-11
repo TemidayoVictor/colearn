@@ -2,7 +2,8 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 
 const axiosInstanceWeb = axios.create({
-    baseURL: 'http://localhost:8000',
+    // baseURL: 'http://localhost:8000',
+    baseURL: 'https://backend.colearnglobal.com',
     headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',

@@ -4,7 +4,8 @@ import Cookies from 'js-cookie';
 const token = Cookies.get('XSRF-TOKEN');
 
 const axiosInstance = axios.create({
-    baseURL: 'http://localhost:8000/api/v1',
+    // baseURL: 'http://localhost:8000/api/v1',
+    baseURL: 'https://backend.colearnglobal.com/api/v1',
     headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
