@@ -21,6 +21,7 @@ import { Booking, Instructor } from "@/app/Types/types";
 import { useConsultant } from "@/hooks/useConsultant";
 import { useSearchParams } from "next/navigation";
 import { showSuccessToast } from "@/utils/toastTypes";
+import { Suspense } from "react";
 import ButtonLoader from "../buttonLoader";
 
 dayjs.extend(utc);
@@ -158,6 +159,7 @@ const StudentBookingBody = ({userType}: StudentBookingBodyProps) => {
     if(loading) return <Loader />
     
     return (
+        <Suspense fallback={<div>Loading . . .</div>}>
         <div>
             <div>
                 <h2 className="title-2">Bookings</h2>
@@ -551,6 +553,7 @@ const StudentBookingBody = ({userType}: StudentBookingBodyProps) => {
             }
 
         </div>
+        </Suspense>
     )
 }
 
