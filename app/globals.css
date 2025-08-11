@@ -3348,15 +3348,9 @@ td {
 }
 
 .update-pro {
-  height: 5em;
-  width: 5em;
+  height: 3em;
+  width: 3em;
   overflow: hidden;
-}
-
-.update-pro img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
 }
 
 /* Footer */
