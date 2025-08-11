@@ -1,3 +1,4 @@
+'use client';
 import React from "react";
 import UserLayout from "@/app/components/UserLayout";
 import StudentBookingBody from "@/app/components/Students/StudentBookingBody";
