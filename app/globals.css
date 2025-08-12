@@ -3416,6 +3416,11 @@ td {
 /* Media Query */
 
 @media screen and (min-width: 768px) {
+  
+  html {
+    font-size: 82%;
+  }
+  
   .bottom-menu {
     position: absolute;
     bottom: auto;
