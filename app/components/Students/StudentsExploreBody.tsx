@@ -68,7 +68,7 @@ const StudentsExploreBody = ({title, type, tabs, addContainerClass, loggedIn}: S
     }, [newUpdate]);
       
 
-    if(loading || !courses || courses.length === 0) return <Loader />
+    if(loading) return <Loader />
     
     return (
         <div>
