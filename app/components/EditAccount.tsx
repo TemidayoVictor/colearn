@@ -66,14 +66,14 @@ const EditAccount = () => {
         <div>
             <p className="font-nomral text-[.9rem] mt-3">Update Profile Picture <span className="text-red-500">*</span></p>
             <div className="mt-3 flex items-center gap-3 cursor-pointer" onClick={handleClick}>
-                <div>
+                <div className="update-pro">
                     <Image
                         aria-hidden
                         src={preview || "/assets/images/upload-img.png"}
                         alt="Colearn Logo"
                         width={64}
                         height={64}
-                        className="object-contain rounded-[50%] update-pro"
+                        className="object-contain rounded-[50%]"
                     />
                 </div>
                 <div>

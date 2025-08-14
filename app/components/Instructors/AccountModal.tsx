@@ -81,14 +81,14 @@ const AccountModal = ({modalType, modalClose, experience, bank, subType}: Accoun
                         <div className="mt-[1rem]">
                             <p className="font-nomral text-[.9rem]">Update Profile Picture </p>
                             <div className="mt-3 flex items-center gap-3">
-                                <div>
+                                <div className="update-pro">
                                     <Image
                                         aria-hidden
                                         src="/assets/images/upload-img.png"
                                         alt="Colearn Logo"
                                         width={64}
                                         height={64}
-                                        className="object-contain rounded-[50%] update-pro"
+                                        className="object-contain rounded-[50%]"
                                     />
                                 </div>
                                 <div>
