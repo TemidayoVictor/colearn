@@ -5,6 +5,7 @@ import { motion, AnimatePresence, Variants  } from "framer-motion";
 import { createAccount } from "@/services/auth";
 import { showErrorToast, showSuccessToast } from "@/utils/toastTypes";
 import { useRouter } from 'next/navigation';
+import { utilitiesStore } from "@/zustand/utilitiesStore";
 
 export const useSignUpForm = () => {
     const router = useRouter();
@@ -138,6 +139,12 @@ export const useSignUpForm = () => {
                 if (response.success) {
                     setButtonLoader(false)
                     showSuccessToast(response.message)
+
+                    utilitiesStore.getState().setCountry(response.data.countries);
+                    utilitiesStore.getState().setLanguage(response.data.languages);
+                    utilitiesStore.getState().setPreference(response.data.preferences);
+                    utilitiesStore.getState().setCategory(response.data.categories);
+
                     router.push('/onboarding');
                 } 
 

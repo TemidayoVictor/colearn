@@ -1,5 +1,5 @@
 'use client';
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useAuth } from "@/hooks/useAuth";
@@ -12,6 +12,8 @@ import { useRouter } from "next/navigation";
 const OnboardingBody = () => {
     const router = useRouter();
     const user = authStore((state) => state.user);
+    const [canResend, setCanResend] = useState(false);
+        const [timer, setTimer] = useState(60);
     const {
         handleSelect,
         otp,
@@ -57,7 +59,23 @@ const OnboardingBody = () => {
                         ))}
                     </div>
                     <div className="mt-4">
-                        <p className="text-[.8rem] color-grey-text">Didn’t get Code? <span className="color-normal underline font-bold mx-2 cursor-pointer" onClick={resendOtp}>Resend in (0:09)</span></p>
+                        {/* <p className="text-[.8rem] color-grey-text">Didn’t get Code? <span className="color-normal underline font-bold mx-2 cursor-pointer" onClick={resendOtp}>Resend in (0:09)</span></p> */}
+                        <p className="text-[.8rem] color-grey-text">
+                            Didn’t get Code?{" "}
+                            <span
+                                onClick={canResend ? resendOtp : undefined}
+                                className={`font-semibold ${
+                                    canResend ? "text-blue-600 cursor-pointer" : "text-gray-400 cursor-not-allowed"
+                                }`}
+                            >
+                                Resend code
+                            </span>{" "}
+                            {!canResend && (
+                                <span className="font-bold text-black">
+                                    ({Math.floor(timer / 60)}:{String(timer % 60).padStart(2, "0")})
+                                </span>
+                            )}
+                        </p>
                     </div>
                 </div>
             );
@@ -229,6 +247,20 @@ const OnboardingBody = () => {
         };
         init();
     }, [newUpdate]);
+
+    useEffect(() => {
+        let countdown: NodeJS.Timeout;
+    
+        if (user?.email_verified_at == null) {
+            countdown = setTimeout(() => {
+                setTimer((prev) => prev - 1);
+            }, 1000);
+        } else if (timer === 0) {
+            setCanResend(true);
+        }
+    
+        return () => clearTimeout(countdown);
+    }, [user, timer]);
 
     if (loading) return <Loader />
     
