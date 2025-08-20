@@ -34,6 +34,9 @@ export const metadata: Metadata = {
     template: "Colearn - %s", 
   },
   description: "A modern e-learning platform for students and professionals to learn new skills and earn certifications.",
+  icons: {
+    icon: "/assets/images/favicon-logo.png",
+  },
 };
 
 export default function RootLayout({
@@ -45,6 +48,7 @@ export default function RootLayout({
     <html lang="en">
       <head>
         <link rel="icon" href="/assets/images/favicon-logo.png" type="image/png" />
+        <link rel='apple-touch-icon' href='/assets/images/favicon-logo.png' type="image/png"></link>
       </head>
       <body>
         <MainLayout>
