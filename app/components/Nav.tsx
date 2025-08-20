@@ -170,7 +170,7 @@ const Nav = () => {
                     <div>
                         {
                             isLoggedIn ? (
-                                <Link href={`/${user?.type}s/dashboard`} className={`flex items-center gap-2 ${useVariation1 ? 'login-btn-1' : 'login-btn-2'}`}>
+                                <Link href={`/${user?.type === "admin" ? "admin" : `${user?.type}s`}/dashboard`} className={`flex items-center gap-2 ${useVariation1 ? 'login-btn-1' : 'login-btn-2'}`}>
                                     {
                                         useVariation1 ? (
                                             <Image
