@@ -162,27 +162,27 @@ const DashboardPerformance = ({type, user, subType}: DashboardPerformanceProps) 
                 <div className="dashboard-grid one">
                     <div className="flex flex-col gap-1 perf-detail none">
                         <p className="color-grey-text text-[.9rem]">Total Users</p>
-                        <h3 className="font-semibold">4</h3>
+                        <h3 className="font-semibold">{Number(data?.total_users).toLocaleString()}</h3>
                         <p className="color-grey-text text-[.7rem]">Total Users</p>
                     </div>
-                    <div className="flex flex-col gap-1 perf-detail">
+                    {/* <div className="flex flex-col gap-1 perf-detail">
                         <p className="color-grey-text text-[.9rem]">Total Active Users</p>
-                        <h3 className="font-semibold">4</h3>
+                        <h3 className="font-semibold">{Number(data?.total_act).toLocaleString()}</h3>
                         <p className="color-grey-text text-[.7rem]">Total Active Users</p>
-                    </div>
+                    </div> */}
                     <div className="flex flex-col gap-1 perf-detail">
                         <p className="color-grey-text text-[.9rem]">Total Students</p>
-                        <h3 className="font-semibold">2</h3>
+                        <h3 className="font-semibold">{Number(data?.total_students).toLocaleString()}</h3>
                         <p className="color-grey-text text-[.7rem]">Total Students</p>
                     </div>
                     <div className="flex flex-col gap-1 perf-detail">
                         <p className="color-grey-text text-[.9rem]">Total Instructors</p>
-                        <h3 className="font-semibold">2</h3>
+                        <h3 className="font-semibold">{Number(data?.total_instructors).toLocaleString()}</h3>
                         <p className="color-grey-text text-[.7rem]">Total Instructors</p>
                     </div>
                     <div className="flex flex-col gap-1 perf-detail">
                         <p className="color-grey-text text-[.9rem]">Total Consultants</p>
-                        <h3 className="font-semibold">2</h3>
+                        <h3 className="font-semibold">{Number(data?.total_consultants).toLocaleString()}</h3>
                         <p className="color-grey-text text-[.7rem]">Total Consultants</p>
                     </div>
                 </div>
