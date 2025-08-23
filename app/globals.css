@@ -498,9 +498,10 @@ input, textarea, select {
   color: var(--white);
 }
 
-.sidebar::-webkit-scrollbar {
-  width: 8px;
-}
+/* aside::-webkit-scrollbar {
+  width: 2px;
+  background: var(--color-primary-normal);
+} */
 
 .bod-grey {
   border: var(--border-grey);
@@ -2120,7 +2121,7 @@ ol li {
   background-color: var(--white);
   position: fixed;
   top: 2%;
-  left: 21%;
+  left: 23%;
   right: 1%;
   height: auto;
   bottom: 3%;
@@ -2129,23 +2130,23 @@ ol li {
   overflow-y: auto;
 }
 
-.main::-webkit-scrollbar-track {
+.main::-webkit-scrollbar-track, aside::-webkit-scrollbar-track {
   background: #f1f1f1;
   border-radius: 10px;
 }
 
-.main::-webkit-scrollbar-thumb {
+.main::-webkit-scrollbar-thumb, aside::-webkit-scrollbar-thumb  {
   background-color: var(--color-primary-normal);
   border-radius: 10px;
 }
 
-.main::-webkit-scrollbar-thumb:hover {
+.main::-webkit-scrollbar-thumb:hover, aside::-webkit-scrollbar-thumb:hover {
   background-color:var(--color-primary-normal);;
 }
 
 /* Firefox */
-.main {
-  /* scrollbar-width: thin; */  
+.main, .sidebar {
+  scrollbar-width: thin;  
   scrollbar-color: var(--color-primary-normal) #fff;
 }
 
