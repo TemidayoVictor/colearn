@@ -173,7 +173,7 @@ const AdminVerificationTable = ({type}: AdminVerificationTableProps) => {
                                                                 alt="Colearn Logo"
                                                                 width={24}
                                                                 height={24}
-                                                                className="object-contain rounded-[50%] h-5 w-5 border"
+                                                                className="object-contain rounded-[50%] h-[2em] w-[2em] border"
                                                             />
                         
                                                             <span className="flex flex-col overflow-hidden">
